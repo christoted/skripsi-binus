@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.project_skripsi.ui.student.main.home.StHomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_st_home" />
+
+    <fragment
+        android:id="@+id/navigation_class"
+        android:name="com.example.project_skripsi.ui.student.main.stclass.StClassFragment"
+        android:label="Class"
+        tools:layout="@layout/fragment_st_class" />
+
+    <fragment
+        android:id="@+id/navigation_calendar"
+        android:name="com.example.project_skripsi.ui.student.main.calendar.StCalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_st_class" />
+
+    <fragment
+        android:id="@+id/navigation_score"
+        android:name="com.example.project_skripsi.ui.student.main.score.StScoreFragment"
+        android:label="Score"
+        tools:layout="@layout/fragment_st_score" />
+
+    <fragment
+        android:id="@+id/navigation_payment"
+        android:name="com.example.project_skripsi.ui.student.main.payment.StPaymentFragment"
+        android:label="Payment"
+        tools:layout="@layout/fragment_st_payment" />
+
+
+</navigation>
