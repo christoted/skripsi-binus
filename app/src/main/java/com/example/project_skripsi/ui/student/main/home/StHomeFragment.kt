@@ -22,11 +22,15 @@ class StHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(StHomeViewModel::class.java)
+        viewModel = ViewModelProvider(this)[StHomeViewModel::class.java]
         _binding = FragmentStHomeBinding.inflate(inflater, container, false)
 
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
+        viewModel.profileName.observe(viewLifecycleOwner, Observer {
+            binding.textviewProfileName.text = it
+        })
+
+        viewModel.profileClass.observe(viewLifecycleOwner, Observer {
+            binding.textviewProfileClass.text = it
         })
 
         return binding.root
