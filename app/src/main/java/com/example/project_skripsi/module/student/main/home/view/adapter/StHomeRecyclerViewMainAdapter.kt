@@ -1,13 +1,14 @@
 package com.example.project_skripsi.module.student.main.home.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.databinding.StItemHomeMainSectionBinding
 import com.example.project_skripsi.module.student.main.home.viewmodel.HomeMainSection
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import java.util.ArrayList
-
 
 class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
@@ -19,11 +20,9 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
     override fun onBindViewHolder(holder: StHomeMainSectionViewHolder, position: Int) {
         viewModel.sectionDatas.value?.let {
             val singleItemMainSection = it[position]
-            holder.bind(singleItemMainSection)
-
             // Declare the child adapter
-            var childAdapter: StHomeRecyclerViewChildAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection)
-
+            val childAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection)
+            holder.bind(singleItemMainSection, childAdapter)
         }
     }
 
@@ -39,14 +38,17 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
     inner class StHomeMainSectionViewHolder(private val binding: StItemHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-
+                Log.d("Test", absoluteAdapterPosition.toString())
             }
         }
 
-        fun bind(singleHomeMainSectionItem: HomeMainSection) {
+        fun bind(singleHomeMainSectionItem: HomeMainSection, adapter: StHomeRecyclerViewChildAdapter) {
             with(binding) {
                 sectionTitle.text = singleHomeMainSectionItem.sectionName
-
+                with(binding.sectionItemsRecyclerView) {
+                    sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
+                    sectionItemsRecyclerView.adapter = adapter
+                }
             }
         }
     }

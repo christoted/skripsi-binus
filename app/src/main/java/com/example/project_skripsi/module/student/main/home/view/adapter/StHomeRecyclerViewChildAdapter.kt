@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.main.home.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -26,10 +27,15 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
     }
 
     inner class StHomeRecyclerViewChildViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                Log.d("Test Child", absoluteAdapterPosition.toString())
+            }
+        }
         fun bind(singleItem: String) {
             with(binding) {
                 title.text = singleItem
-                
+
             }
         }
     }

@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
+import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 
 
@@ -18,7 +21,7 @@ class StHomeFragment : Fragment() {
     private lateinit var viewModel: StHomeViewModel
     private var _binding: FragmentStHomeBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var homeMainSectionAdapter: StHomeRecyclerViewMainAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +36,16 @@ class StHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        homeMainSectionAdapter = StHomeRecyclerViewMainAdapter(viewModel)
+
+        with(binding.recyclerviewClass) {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = homeMainSectionAdapter
+        }
+
+        binding.recyclerviewClass.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
 
         viewModel.profileName.observe(viewLifecycleOwner, Observer {
             binding.textviewProfileName.text = it
