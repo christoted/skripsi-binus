@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.stclass.subject
+package com.example.project_skripsi.module.student.main.stclass
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

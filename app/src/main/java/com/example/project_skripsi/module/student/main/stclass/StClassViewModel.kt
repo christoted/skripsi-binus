@@ -24,7 +24,19 @@ class StClassViewModel : ViewModel() {
             "PKn",
             "Sosiologi",
             "Geografi",
-            "Kesenian"
+            "Kesenian",
+            "Bisnis",
+            "IT",
+            "Kuliner",
+            "SI",
+            "Mobile",
+            "Game",
+            "Cyber",
+            "AI",
+            "Cloud",
+            "Finance",
+            "Dokter",
+            "Pengacara"
         )
     }
 

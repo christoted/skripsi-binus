@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.student.main.stclass
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,20 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.databinding.FragmentStClassBinding
 import com.example.project_skripsi.databinding.FragmentStClassSubjectBinding
-import com.example.project_skripsi.databinding.ItemStClassSubjectBinding
-import com.example.project_skripsi.module.student.main.stclass.subject.StClassSubjectFragment
-import com.example.project_skripsi.module.student.main.stclass.subject.SubjectAdapter
-import com.example.project_skripsi.module.student.subject_detail.assignment.StSubjectAssignmentFragment
-import com.example.project_skripsi.module.student.subject_detail.attendance.StSubjectAttendanceFragment
-import com.example.project_skripsi.module.student.subject_detail.exam.StSubjectExamFragment
-import com.example.project_skripsi.module.student.subject_detail.resource.StSubjectResourceFragment
-import com.google.android.material.tabs.TabLayoutMediator
-import android.view.View.MeasureSpec
-
-
 
 
 class StClassFragment : Fragment() {
@@ -37,8 +24,6 @@ class StClassFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d("12345", "cre");
-
         viewModel = ViewModelProvider(this).get(StClassViewModel::class.java)
         _binding = FragmentStClassBinding.inflate(inflater, container, false)
 
@@ -51,7 +36,6 @@ class StClassFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        Log.d("12345", "dest");
         super.onDestroyView()
         _binding = null
     }
