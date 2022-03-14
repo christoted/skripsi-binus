@@ -21,7 +21,7 @@ class TemplateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(TemplateViewModel::class.java)
+        viewModel = ViewModelProvider(this)[TemplateViewModel::class.java]
         _binding = FragmentTemplateBinding.inflate(inflater, container, false)
 
         viewModel.text.observe(viewLifecycleOwner, Observer {
