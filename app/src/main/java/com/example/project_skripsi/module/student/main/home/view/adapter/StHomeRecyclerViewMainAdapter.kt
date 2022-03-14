@@ -20,6 +20,10 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
         viewModel.sectionDatas.value?.let {
             val singleItemMainSection = it[position]
             holder.bind(singleItemMainSection)
+
+            // Declare the child adapter
+            var childAdapter: StHomeRecyclerViewChildAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection)
+
         }
     }
 
@@ -42,6 +46,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
         fun bind(singleHomeMainSectionItem: HomeMainSection) {
             with(binding) {
                 sectionTitle.text = singleHomeMainSectionItem.sectionName
+
             }
         }
     }
