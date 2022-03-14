@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.project_skripsi.ui.student.main.home.StHomeFragment"
+        android:name="com.example.project_skripsi.module.student.main.home.StHomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_st_home" />
 
     <fragment
         android:id="@+id/navigation_class"
-        android:name="com.example.project_skripsi.ui.student.main.stclass.StClassFragment"
+        android:name="com.example.project_skripsi.module.student.main.stclass.StClassFragment"
         android:label="Class"
         tools:layout="@layout/fragment_st_class" />
 
     <fragment
         android:id="@+id/navigation_calendar"
-        android:name="com.example.project_skripsi.ui.student.main.calendar.StCalendarFragment"
+        android:name="com.example.project_skripsi.module.student.main.calendar.StCalendarFragment"
         android:label="Calendar"
         tools:layout="@layout/fragment_st_class" />
 
     <fragment
         android:id="@+id/navigation_score"
-        android:name="com.example.project_skripsi.ui.student.main.score.StScoreFragment"
+        android:name="com.example.project_skripsi.module.student.main.score.StScoreFragment"
         android:label="Score"
         tools:layout="@layout/fragment_st_score" />
 
     <fragment
         android:id="@+id/navigation_payment"
-        android:name="com.example.project_skripsi.ui.student.main.payment.StPaymentFragment"
+        android:name="com.example.project_skripsi.module.student.main.payment.StPaymentFragment"
         android:label="Payment"
         tools:layout="@layout/fragment_st_payment" />
 

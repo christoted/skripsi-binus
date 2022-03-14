@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.student.subject_detail.StSubjectActivity">
+    tools:context=".module.student.subject_detail.StSubjectActivity">
 
     <TextView
         android:id="@+id/text_title"
