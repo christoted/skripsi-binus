@@ -1,6 +1,7 @@
-package com.example.project_skripsi.module.student.main.home
+package com.example.project_skripsi.module.student.main.home.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
+import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+
+
 
 class StHomeFragment : Fragment() {
 
@@ -24,6 +28,12 @@ class StHomeFragment : Fragment() {
         viewModel = ViewModelProvider(this)[StHomeViewModel::class.java]
         _binding = FragmentStHomeBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel.profileName.observe(viewLifecycleOwner, Observer {
             binding.textviewProfileName.text = it
         })
@@ -32,7 +42,10 @@ class StHomeFragment : Fragment() {
             binding.textviewProfileClass.text = it
         })
 
-        return binding.root
+        viewModel.sectionDatas.observe(viewLifecycleOwner, Observer {
+//            binding.textviewProfileClass.text = it.toString()
+        })
+
     }
 
     override fun onDestroyView() {
