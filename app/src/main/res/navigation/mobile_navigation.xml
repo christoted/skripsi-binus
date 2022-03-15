@@ -15,7 +15,11 @@
         android:id="@+id/navigation_class"
         android:name="com.example.project_skripsi.module.student.main.stclass.StClassFragment"
         android:label="Class"
-        tools:layout="@layout/fragment_st_class" />
+        tools:layout="@layout/fragment_st_class" >
+        <action
+            android:id="@+id/action_navigation_class_to_stSubjectActivity"
+            app:destination="@id/stSubjectActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_calendar"
@@ -34,6 +38,17 @@
         android:name="com.example.project_skripsi.module.student.main.payment.StPaymentFragment"
         android:label="Payment"
         tools:layout="@layout/fragment_st_payment" />
+
+    <activity
+        android:id="@+id/stSubjectActivity"
+        android:name="com.example.project_skripsi.module.student.subject_detail.StSubjectActivity"
+        android:label="activity_st_subject"
+        tools:layout="@layout/activity_st_subject" >
+        <argument
+            android:name="subjectName"
+            app:argType="string"
+            android:defaultValue="default_subject_name" />
+    </activity>
 
 
 </navigation>
