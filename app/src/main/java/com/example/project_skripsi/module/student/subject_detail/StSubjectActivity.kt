@@ -34,9 +34,7 @@ class StSubjectActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[StSubjectViewModel::class.java]
         supportActionBar?.hide()
 
-
-        val pagerAdapter = ScreenSlidePagerAdapter(this)
-        binding.viewPagerContainer.adapter = pagerAdapter
+        binding.viewPagerContainer.adapter = ScreenSlidePagerAdapter(this)
 
         TabLayoutMediator(binding.tabLayout, binding.viewPagerContainer) { tab, position ->
             tab.text = StSubjectViewModel.tabHeader[position]
