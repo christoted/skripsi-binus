@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.databinding.ActivityStSubjectBinding
 import com.example.project_skripsi.module.student.subject_detail.assignment.StSubjectAssignmentFragment
@@ -14,6 +15,13 @@ import com.example.project_skripsi.module.student.subject_detail.resource.StSubj
 import com.google.android.material.tabs.TabLayoutMediator
 
 class StSubjectActivity : AppCompatActivity() {
+
+    companion object {
+        const val EXTRA_SUBJECT_NAME = "extra_subject_name"
+    }
+
+
+
 
     private lateinit var binding : ActivityStSubjectBinding
     private lateinit var viewModel : StSubjectViewModel
@@ -32,6 +40,13 @@ class StSubjectActivity : AppCompatActivity() {
             tab.text = StSubjectViewModel.tabHeader[position]
         }.attach()
 
+        retrieveArgs()
+    }
+
+    private fun retrieveArgs(){
+        val args: StSubjectActivityArgs by navArgs()
+        binding.textTitle.text = args.subjectName
+        viewModel.pullAPI(args.subjectName)
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
