@@ -9,7 +9,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ItemStClassSubjectBinding
-import com.example.project_skripsi.module.student.subject_detail.StSubjectActivity.Companion.EXTRA_SUBJECT_NAME
 
 
 class SubjectAdapter(private val subjectList: List<String>) :

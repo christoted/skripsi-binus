@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.student.main.stclass
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,33 +13,35 @@ class StClassViewModel : ViewModel() {
     val subjectList: LiveData<List<String>> = _subjectList
 
     init {
-        _subjectList.value = listOf(
-            "Matematika",
-            "Fisika",
-            "Kimia",
-            "Biologi",
-            "B.Indonesia",
-            "B.Inggris",
-            "B.Mand",
-            "Sejarah",
-            "Ekonomi",
-            "PKn",
-            "Sosiologi",
-            "Geografi",
-            "Kesenian",
-            "Bisnis",
-            "IT",
-            "Kuliner",
-            "SI",
-            "Mobile",
-            "Game",
-            "Cyber",
-            "AI",
-            "Cloud",
-            "Finance",
-            "Dokter",
-            "Pengacara"
-        )
+        Handler(Looper.getMainLooper()).postDelayed({
+            _subjectList.value = listOf(
+                "Matematika",
+                "Fisika",
+                "Kimia",
+                "Biologi",
+                "B.Indonesia",
+                "B.Inggris",
+                "B.Mand",
+                "Sejarah",
+                "Ekonomi",
+                "PKn",
+                "Sosiologi",
+                "Geografi",
+                "Kesenian",
+                "Bisnis",
+                "IT",
+                "Kuliner",
+                "SI",
+                "Mobile",
+                "Game",
+                "Cyber",
+                "AI",
+                "Cloud",
+                "Finance",
+                "Dokter",
+                "Pengacara"
+            )
+        }, 1000)
     }
 
     fun getSubjects(page: Int): List<String> {
