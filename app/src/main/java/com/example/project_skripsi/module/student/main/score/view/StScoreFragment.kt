@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.score
+package com.example.project_skripsi.module.student.main.score.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.project_skripsi.databinding.FragmentStScoreBinding
+import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreViewPagerAdapter
+import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 
 class StScoreFragment : Fragment() {
 
@@ -25,8 +28,14 @@ class StScoreFragment : Fragment() {
         _binding = FragmentStScoreBinding.inflate(inflater, container, false)
 
         viewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
+
         })
+
+        binding.vpContainer.adapter = StScoreViewPagerAdapter(activity!!, viewModel)
+        TabLayoutMediator(binding.tabLayout, binding.vpContainer) {
+            tab, position ->
+            tab.text = StScoreViewModel.tabHeader[position]
+        }.attach()
 
         return binding.root
     }
