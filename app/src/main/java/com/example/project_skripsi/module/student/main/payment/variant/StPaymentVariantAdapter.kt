@@ -1,25 +1,32 @@
 package com.example.project_skripsi.module.student.main.payment.variant
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ItemStClassSubjectBinding
 import com.example.project_skripsi.databinding.ItemStPaymentVariantBinding
-
 class StPaymentVariantAdapter(private val paymentList: List<String>, private val viewType: Int) :
     RecyclerView.Adapter<StPaymentVariantAdapter.PaymentVariantViewHolder>() {
 
     companion object {
-        const val VIEW_UPCOMING = 1
-        const val VIEW_UNPAID = 2
-        const val VIEW_PAID = 3
+        const val VIEW_UPCOMING = 0
+        const val VIEW_UNPAID = 1
+        const val VIEW_PAID = 2
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PaymentVariantViewHolder =
-        PaymentVariantViewHolder(
+    private lateinit var mContext : Context
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PaymentVariantViewHolder {
+        mContext = viewGroup.context
+        return PaymentVariantViewHolder(
             ItemStPaymentVariantBinding.inflate(
                 LayoutInflater.from(viewGroup.context), viewGroup, false))
+    }
+
 
     override fun onBindViewHolder(holder: PaymentVariantViewHolder, position: Int) {
         holder.bind(paymentList[position])
@@ -33,14 +40,19 @@ class StPaymentVariantAdapter(private val paymentList: List<String>, private val
 
         fun bind(subjectName: String) {
             with(binding) {
-                this.tvName.text = subjectName
+                tvName.text = subjectName
             }
             when(viewType){
-                VIEW_PAID -> {}
-                VIEW_UNPAID -> {}
+                VIEW_PAID -> {
+                    binding.tvDateTitle.text = "Terbayar pada"
+                }
+                VIEW_UNPAID -> {
+                    binding.llContainer.setBackgroundColor(ContextCompat.getColor(mContext,R.color.warning_red))
+                }
             }
         }
     }
 
 
 }
+

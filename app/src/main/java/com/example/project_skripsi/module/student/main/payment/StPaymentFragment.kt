@@ -46,15 +46,8 @@ class StPaymentFragment : Fragment() {
         override fun getItemCount(): Int =
             StPaymentViewModel.tabCount
 
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> StPaymentVariantFragment(viewModel, position)
-                1 -> StPaymentVariantFragment(viewModel, position)
-                else -> StPaymentVariantFragment(viewModel, position)
-            }
-        }
-
-
+        override fun createFragment(position: Int): Fragment =
+            StPaymentVariantFragment(viewModel, position)
     }
 
 }
