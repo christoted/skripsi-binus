@@ -11,7 +11,7 @@ class StSubjectViewModel : ViewModel() {
         val tabHeader = arrayOf("Absen", "Materi", "Ujian", "Tugas")
     }
 
-    fun pullAPI(subjectId : String) {
+    fun getSubjectData(subjectId : String) {
         Log.d("12345", "call $subjectId")
     }
 

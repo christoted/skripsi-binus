@@ -16,13 +16,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class StSubjectActivity : AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_SUBJECT_NAME = "extra_subject_name"
-    }
-
-
-
-
     private lateinit var binding : ActivityStSubjectBinding
     private lateinit var viewModel : StSubjectViewModel
 
@@ -48,7 +41,7 @@ class StSubjectActivity : AppCompatActivity() {
     private fun retrieveArgs(){
         val args: StSubjectActivityArgs by navArgs()
         binding.textTitle.text = args.subjectName
-        viewModel.pullAPI(args.subjectName)
+        viewModel.getSubjectData(args.subjectName)
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
