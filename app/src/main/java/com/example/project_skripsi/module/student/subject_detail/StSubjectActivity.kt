@@ -45,13 +45,13 @@ class StSubjectActivity : AppCompatActivity() {
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = StSubjectViewModel.tabCount
 
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> StSubjectAttendanceFragment()
-                1 -> StSubjectResourceFragment()
-                2 -> StSubjectExamFragment()
-                else -> StSubjectAssignmentFragment()
+        override fun createFragment(position: Int): Fragment =
+            when (position) {
+                0 -> StSubjectAttendanceFragment(viewModel)
+                1 -> StSubjectResourceFragment(viewModel)
+                2 -> StSubjectExamFragment(viewModel)
+                else -> StSubjectAssignmentFragment(viewModel)
             }
-        }
+
     }
 }

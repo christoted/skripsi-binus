@@ -1,15 +1,10 @@
 package com.example.project_skripsi.module.student.main.stclass
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView.*
-import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ItemStClassSubjectBinding
-
 
 class SubjectAdapter(private val subjectList: List<String>) :
     Adapter<SubjectAdapter.SubjectViewHolder>() {
@@ -37,5 +32,4 @@ class SubjectAdapter(private val subjectList: List<String>) :
             }
         }
     }
-
 }
