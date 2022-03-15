@@ -2,12 +2,17 @@ package com.example.project_skripsi.module.student.main.payment
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.databinding.FragmentStPaymentBinding
+import com.example.project_skripsi.module.student.main.payment.variant.StPaymentVariantFragment
+import com.google.android.material.tabs.TabLayoutMediator
 
 class StPaymentFragment : Fragment() {
 
@@ -21,12 +26,13 @@ class StPaymentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this)[StPaymentViewModel::class.java]
         _binding = FragmentStPaymentBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[StPaymentViewModel::class.java]
 
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
-        })
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter(activity!!)
+        TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
+            tab.text = StPaymentViewModel.tabHeader[position]
+        }.attach()
 
         return binding.root
     }
@@ -34,6 +40,21 @@ class StPaymentFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int =
+            StPaymentViewModel.tabCount
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> StPaymentVariantFragment(viewModel, position)
+                1 -> StPaymentVariantFragment(viewModel, position)
+                else -> StPaymentVariantFragment(viewModel, position)
+            }
+        }
+
+
     }
 
 }
