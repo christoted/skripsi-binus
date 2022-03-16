@@ -28,6 +28,9 @@ class StScoreViewModel : ViewModel() {
             listExam.add("90")
             listExam.add("100")
             listExam.add("101")
+            listExam.add("102")
+            listExam.add("103")
+            listExam.add("104")
             _sectionDatas.value = listExam
         }, 1000)
     }

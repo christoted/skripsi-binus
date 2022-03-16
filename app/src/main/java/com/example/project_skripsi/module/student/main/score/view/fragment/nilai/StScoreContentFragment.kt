@@ -24,7 +24,7 @@ class StScoreContentFragment(private val viewModel: StScoreViewModel) : Fragment
     ): View? {
         // Inflate the layout for this fragment
        _binding = FragmentStScoreContentBinding.inflate(inflater, container, false)
-        contentAdapter = StScoreContentAdapter(viewModel)
+        contentAdapter = StScoreContentAdapter(viewModel,0)
 
         viewModel.sectionDatas.observe(viewLifecycleOwner, {
             with(binding.recyclerView) {

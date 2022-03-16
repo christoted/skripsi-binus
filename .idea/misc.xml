@@ -10,7 +10,9 @@
         <entry key="app/src/main/res/layout/fragment_st_payment.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/fragment_st_payment_variant.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_st_score.xml" value="0.14855072463768115" />
+        <entry key="app/src/main/res/layout/fragment_st_score_absensi.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_st_score_content.xml" value="0.17325227963525835" />
+        <entry key="app/src/main/res/layout/fragment_st_score_pencapain.xml" value="0.17375886524822695" />
         <entry key="app/src/main/res/layout/item_st_class_subject.xml" value="0.1111111111111111" />
         <entry key="app/src/main/res/layout/item_st_payment_variant.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/st_item_home_main_section.xml" value="0.17325227963525835" />

@@ -19,10 +19,10 @@ class StScoreViewPagerAdapter(fa: FragmentActivity, private val vm: StScoreViewM
                 return StScoreContentFragment(viewModel = vm)
             }
             1 -> {
-                return StScoreAbsensiFragment()
+                return StScoreAbsensiFragment(viewModel = vm)
             }
             2 -> {
-                return StScorePencapainFragment()
+                return StScorePencapainFragment(viewModel = vm)
             }
         }
         return StScoreContentFragment(viewModel = vm)
