@@ -52,7 +52,5 @@ class StPaymentVariantAdapter(private val paymentList: List<String>, private val
             }
         }
     }
-
-
 }
 

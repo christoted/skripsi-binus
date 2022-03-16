@@ -16,13 +16,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class StSubjectActivity : AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_SUBJECT_NAME = "extra_subject_name"
-    }
-
-
-
-
     private lateinit var binding : ActivityStSubjectBinding
     private lateinit var viewModel : StSubjectViewModel
 
@@ -46,19 +39,19 @@ class StSubjectActivity : AppCompatActivity() {
     private fun retrieveArgs(){
         val args: StSubjectActivityArgs by navArgs()
         binding.textTitle.text = args.subjectName
-        viewModel.pullAPI(args.subjectName)
+        viewModel.getSubjectData(args.subjectName)
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = StSubjectViewModel.tabCount
 
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> StSubjectAttendanceFragment()
-                1 -> StSubjectResourceFragment()
-                2 -> StSubjectExamFragment()
-                else -> StSubjectAssignmentFragment()
+        override fun createFragment(position: Int): Fragment =
+            when (position) {
+                0 -> StSubjectAttendanceFragment(viewModel)
+                1 -> StSubjectResourceFragment(viewModel)
+                2 -> StSubjectExamFragment(viewModel)
+                else -> StSubjectAssignmentFragment(viewModel)
             }
-        }
+
     }
 }

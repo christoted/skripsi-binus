@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStSubjectResourceBinding
+import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
+import com.example.project_skripsi.module.student.subject_detail.assignment.StSubjectAssignmentAdapter
 
-class StSubjectResourceFragment : Fragment() {
+class StSubjectResourceFragment(private val viewModel: StSubjectViewModel) : Fragment() {
 
-    private lateinit var viewModel: StSubjectResourceViewModel
     private var _binding: FragmentStSubjectResourceBinding? = null
     private val binding get() = _binding!!
 
@@ -21,11 +23,10 @@ class StSubjectResourceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(StSubjectResourceViewModel::class.java)
         _binding = FragmentStSubjectResourceBinding.inflate(inflater, container, false)
-
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
+        binding.rvResource.layoutManager = LinearLayoutManager(context)
+        viewModel.resourceList.observe(viewLifecycleOwner, {
+            binding.rvResource.adapter = StSubjectResourceAdapter(it)
         })
 
         return binding.root
