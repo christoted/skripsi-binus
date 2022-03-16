@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.student.main.score.viewmodel
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,11 +23,13 @@ class StScoreViewModel : ViewModel() {
     }
 
     init {
-        val listExam = arrayListOf<String>()
-        listExam.add("90")
-        listExam.add("100")
-        listExam.add("101")
-        _sectionDatas.value = listExam
+        Handler(Looper.getMainLooper()).postDelayed({
+            val listExam = arrayListOf<String>()
+            listExam.add("90")
+            listExam.add("100")
+            listExam.add("101")
+            _sectionDatas.value = listExam
+        }, 1000)
     }
 
 }

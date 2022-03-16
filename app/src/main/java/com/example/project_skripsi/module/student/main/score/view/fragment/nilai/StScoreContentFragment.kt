@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.score.view.fragment
+package com.example.project_skripsi.module.student.main.score.view.fragment.nilai
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -26,14 +26,19 @@ class StScoreContentFragment(private val viewModel: StScoreViewModel) : Fragment
        _binding = FragmentStScoreContentBinding.inflate(inflater, container, false)
         contentAdapter = StScoreContentAdapter(viewModel)
 
-        with(binding.recyclerView) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = contentAdapter
-        }
+        viewModel.sectionDatas.observe(viewLifecycleOwner, {
+            with(binding.recyclerView) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = contentAdapter
+            }
+        })
 
         return binding.root
     }
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -41,3 +46,4 @@ class StScoreContentFragment(private val viewModel: StScoreViewModel) : Fragment
     }
 
 }
+
