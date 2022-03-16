@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStSubjectAttendanceBinding
+import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
+import com.example.project_skripsi.module.student.subject_detail.assignment.StSubjectAssignmentAdapter
 
-class StSubjectAttendanceFragment : Fragment() {
+class StSubjectAttendanceFragment(private val viewModel : StSubjectViewModel) : Fragment() {
 
-    private lateinit var viewModel: StSubjectAttendanceViewModel
     private var _binding: FragmentStSubjectAttendanceBinding? = null
     private val binding get() = _binding!!
 
@@ -21,11 +23,10 @@ class StSubjectAttendanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(StSubjectAttendanceViewModel::class.java)
         _binding = FragmentStSubjectAttendanceBinding.inflate(inflater, container, false)
-
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
+        binding.rvAttendance.layoutManager = LinearLayoutManager(context)
+        viewModel.attendanceList.observe(viewLifecycleOwner, {
+            binding.rvAttendance.adapter = StSubjectAttendanceAdapter(it)
         })
 
         return binding.root
