@@ -38,28 +38,47 @@
                 android:layout_height="wrap_content"
                 tools:text="Devita"/>
 
-            <Button
-                android:id="@+id/button_teacher_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="40"/>
+<!--            <Button-->
+<!--                android:id="@+id/button_teacher_phone"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                tools:text="40"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/whatsapp" />-->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ketua kelas"/>
 
-            <TextView
-                android:id="@+id/textview_classchief_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Teddy"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-            <Button
-                android:id="@+id/button_classchief_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="40"/>
+                <TextView
+                    android:id="@+id/textview_classchief_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teddy"/>
+
+                <!--            <Button-->
+                <!--                android:id="@+id/button_classchief_phone"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                tools:text="40"/>-->
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/whatsapp"
+                    android:layout_marginStart="10dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -73,16 +92,36 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teman sekelas"
+                android:text="Teman kelas"
                 android:textAlignment="textEnd"/>
 
             <Button
                 android:id="@+id/button_student_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="40"/>
+                android:text="40"/>
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ujian"
+            android:layout_marginEnd="20dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tugas"/>
 
     </LinearLayout>
 

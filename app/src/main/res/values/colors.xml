@@ -9,4 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="warning_red">#ef5350</color>
+
+    <color name="indicator_blue">#29b6f6</color>
+    <color name="indicator_yellow">#fbc02d</color>
+    <color name="indicator_red">#f44336</color>
+    <color name="indicator_purple">#673ab7</color>
+    <color name="indicator_black">#000000</color>
+
+    <color name="calendar_selection_color">#e0f7fa</color>
 </resources>
