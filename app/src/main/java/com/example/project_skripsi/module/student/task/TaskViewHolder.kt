@@ -1,13 +1,12 @@
 package com.example.project_skripsi.module.student.task
 
-import android.util.Log
+import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import androidx.navigation.Navigation
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ItemStTaskBinding
-import com.example.project_skripsi.module.student.task.exam.GenericAdapter
 
-class TaskViewHolder(private val taskType : Int,private val dataSet : List<String>) {
+class TaskViewHolder(private val taskType : Int, private val dataSet : List<String>) {
 
     companion object{
         const val TYPE_EXAM = 1

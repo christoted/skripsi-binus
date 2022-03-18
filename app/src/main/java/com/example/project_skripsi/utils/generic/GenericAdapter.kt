@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.task.exam
+package com.example.project_skripsi.utils.generic
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
