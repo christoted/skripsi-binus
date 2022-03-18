@@ -39,7 +39,7 @@ class StSubjectActivity : AppCompatActivity() {
     private fun retrieveArgs(){
         val args: StSubjectActivityArgs by navArgs()
         binding.textTitle.text = args.subjectName
-        viewModel.getSubjectData(args.subjectName)
+        viewModel.setSubjectData(args.subjectName)
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

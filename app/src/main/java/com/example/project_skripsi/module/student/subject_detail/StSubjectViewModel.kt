@@ -36,7 +36,7 @@ class StSubjectViewModel : ViewModel() {
         }, 1000)
     }
 
-    fun getSubjectData(subjectId : String) {
+    fun setSubjectData(subjectId : String) {
         Log.d("12345", "call $subjectId")
     }
 
