@@ -10,13 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectskripsi">
-
         <activity
-            android:name=".module.student.subject_detail.StSubjectActivity"
+            android:name=".module.student.task.StTaskActivity"
             android:exported="true">
 
         </activity>
-
+        <activity
+            android:name=".module.student.subject_detail.StSubjectActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".module.student.main.StMainActivity"
             android:exported="true"

@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     app:cardCornerRadius="4dp"
-    app:cardElevation="8dp"
-    tools:context=".module.student.main.score.StScoreFragment">
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
