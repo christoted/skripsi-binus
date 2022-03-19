@@ -46,14 +46,25 @@ class StHomeViewModel : ViewModel() {
     }
 
     private fun initData() {
-        val listHomeSectionData = arrayListOf<HomeSectionData>()
+        val listHomeSectionDataClassSchedule = arrayListOf<HomeSectionData>()
+        listHomeSectionDataClassSchedule.add(HomeItemJadwalKelas(className = "Biologi"))
+        listHomeSectionDataClassSchedule.add(HomeItemJadwalKelas(className = "Bahasa Inggris"))
 
-        listHomeSectionData.add(HomeItemJadwalKelas(className = "Biologi"))
-        listHomeSectionData.add(HomeItemUjian(examSubject = "Fisika"))
-        listHomeSectionData.add(HomeItemTugas(assignmentSubject = "B Indo"))
-        listHomeSectionData.add(HomeItemPembayaran(paymentName = "Pembayaran bulan 1"))
-        listHomeSectionData.add(HomeItemPembayaran(paymentName = "Pembayaran bulan 1"))
+        val listHomeSectionDataExam = arrayListOf<HomeSectionData>()
+        listHomeSectionDataExam.add(HomeItemUjian(examSubject = "Matematika"))
 
+        val listHomeSectionDataAssignment = arrayListOf<HomeSectionData>()
+        listHomeSectionDataAssignment.add(HomeItemTugas(assignmentSubject = "Tugas 1"))
+
+        val listHomeSectionDataPembayaran = arrayListOf<HomeSectionData>()
+        listHomeSectionDataPembayaran.add(HomeItemPembayaran(paymentName = "Biaya Sekolah"))
+        listHomeSectionDataPembayaran.add(HomeItemPembayaran(paymentName = "Biaya Semester"))
+
+        val listHomeSectionDataPengumuman = arrayListOf<HomeSectionData>()
+        listHomeSectionDataPengumuman.add(HomeItemPengumuman(announcementName = "Libur"))
+        listHomeSectionDataPengumuman.add(HomeItemPengumuman(announcementName = "Lebaran"))
+
+        //////
         val listExam = arrayListOf<String>()
         listExam.add("Biology")
         listExam.add("Matematika")
@@ -73,13 +84,13 @@ class StHomeViewModel : ViewModel() {
         listPengumuman.add("Sekolah tatap wajah")
 
         val listDatas = arrayListOf<HomeMainSection>()
-        listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = listHomeSectionData))
-//        listDatas.add(HomeMainSection("Ujian", sectionItem = listExam))
-//        listDatas.add(HomeMainSection("Tugas", sectionItem = listAssignment))
-//        listDatas.add(HomeMainSection("Pembayaran", sectionItem = listPayment))
-//        listDatas.add(HomeMainSection("Pengumuman", sectionItem = listPengumuman))
-        _sectionDatas.value = listDatas
+        listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = listHomeSectionDataClassSchedule))
+        listDatas.add(HomeMainSection("Ujian", sectionItem = listHomeSectionDataExam))
+        listDatas.add(HomeMainSection("Tugas", sectionItem = listHomeSectionDataAssignment))
+        listDatas.add(HomeMainSection("Pembayaran", sectionItem = listHomeSectionDataPembayaran))
+        listDatas.add(HomeMainSection("Pengumuman", sectionItem = listHomeSectionDataPengumuman))
 
+        _sectionDatas.value = listDatas
     }
 
 }

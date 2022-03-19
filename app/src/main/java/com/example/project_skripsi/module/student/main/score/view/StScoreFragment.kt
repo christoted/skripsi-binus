@@ -20,12 +20,6 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.BarData
 
-
-
-
-
-
-
 class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
 
     private lateinit var viewModel: StScoreViewModel

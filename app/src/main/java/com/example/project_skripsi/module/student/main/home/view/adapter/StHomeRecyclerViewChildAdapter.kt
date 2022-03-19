@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_skripsi.databinding.StItemHomeMainSectionBinding
-import com.example.project_skripsi.databinding.StItemHomeSectionItemBinding
-import com.example.project_skripsi.databinding.StItemHomeSectionPembayaranBinding
-import com.example.project_skripsi.databinding.StItemHomeSectionPengumumanBinding
-import com.example.project_skripsi.module.student.main.home.viewmodel.HomeMainSection
+import com.example.project_skripsi.databinding.*
+import com.example.project_skripsi.module.student.main.home.viewmodel.*
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
 import com.example.project_skripsi.utils.Constant
 
@@ -29,6 +26,17 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 val itemPengumumanHomeSection = StItemHomeSectionPengumumanBinding.inflate(LayoutInflater.from(parent.context), parent, false )
                 return StHomeRecyclerViewChildPengumumanViewHolder(itemPengumumanHomeSection)
             }
+
+            Constant.SECTION_UJIAN -> {
+                val itemUjianHomeSection = StItemHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+                return StHomeRecyclerViewChildExamViewHolder(itemUjianHomeSection)
+            }
+
+            Constant.SECTION_TUGAS -> {
+                val itemPengumumanHomeSection = StItemHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+                return StHomeRecyclerViewChildAssignmentViewHolder(itemPengumumanHomeSection)
+            }
+
             else -> {
                 // Jadwal Kelas, Ujian, Tugas
                 val itemHomeSection = StItemHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -49,9 +57,19 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 (holder as StHomeRecyclerViewChildAdapter.StHomeRecyclerViewChildPengumumanViewHolder).bind(singleData)
             }
 
-            else -> {
+            Constant.SECTION_JADWAL_KELAS -> {
                 (holder as StHomeRecyclerViewChildAdapter.StHomeRecyclerViewChildViewHolder).bind(singleData)
             }
+
+            Constant.SECTION_UJIAN -> {
+                (holder as StHomeRecyclerViewChildAdapter.StHomeRecyclerViewChildExamViewHolder).bind(singleData)
+            }
+
+            Constant.SECTION_TUGAS -> {
+               (holder as StHomeRecyclerViewChildAdapter.StHomeRecyclerViewChildAssignmentViewHolder).bind(singleData)
+            }
+
+
         }
 
 
@@ -67,40 +85,53 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 Log.d("Test Child", absoluteAdapterPosition.toString())
             }
         }
-        fun bind(singleItem: String) {
+        fun bind(singleItem: HomeSectionData) {
             with(binding) {
-                title.text = singleItem
-                when(item.sectionName) {
-                    Constant.SECTION_JADWAL_KELAS -> {
-                        btnMateri.setOnClickListener {
-                            Log.d("JADWAL KELAS", "bind: Materi")
-                        }
-                        btnKelas.setOnClickListener {
-                            Log.d("JADWAL KELAS", "bind: Kelas")
-                        }
-                    }
-
-                    Constant.SECTION_UJIAN -> {
-                        btnMateri.isVisible = false
-                        btnKelas.text = "ujian"
-                        btnKelas.setOnClickListener {
-                            Log.d("Section Ujian", "bind: ujian")
-                        }
-
-                    }
-                    Constant.SECTION_TUGAS -> {
-                        btnMateri.isVisible = false
-                        btnKelas.text = "tugas"
-                        btnKelas.setOnClickListener {
-                            Log.d("Section Tugas", "bind: tugas")
-                        }
-
-                    }
+                val data = singleItem as HomeItemJadwalKelas
+                title.text = data.className
+                btnMateri.setOnClickListener {
+                    Log.d("JADWAL KELAS", "bind: Materi")
                 }
-
+                btnKelas.setOnClickListener {
+                    Log.d("JADWAL KELAS", "bind: Kelas")
+                }
             }
         }
     }
+
+    inner class StHomeRecyclerViewChildExamViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                Log.d("Test Child", absoluteAdapterPosition.toString())
+            }
+        }
+        fun bind(singleItem: HomeSectionData) {
+            with(binding) {
+                val data = singleItem as HomeItemUjian
+                title.text = data.examSubject
+                btnKelas.text = "Ujian"
+                btnMateri.isVisible = false
+            }
+        }
+    }
+
+    inner class StHomeRecyclerViewChildAssignmentViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                Log.d("Test Child", absoluteAdapterPosition.toString())
+            }
+        }
+        fun bind(singleItem: HomeSectionData) {
+            with(binding) {
+                val data = singleItem as HomeItemTugas
+                title.text = data.assignmentSubject
+                btnKelas.text = "Tugas"
+                btnMateri.isVisible = false
+            }
+        }
+    }
+
+
 
     inner class StHomeRecyclerViewChildPembayaranViewHolder(private val binding: StItemHomeSectionPembayaranBinding): RecyclerView.ViewHolder(binding.root) {
         init {
@@ -108,9 +139,10 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 Log.d("Test Child", absoluteAdapterPosition.toString())
             }
         }
-        fun bind(singleItem: String) {
+        fun bind(singleItem: HomeSectionData) {
             with(binding) {
-
+                val data = singleItem as HomeItemPembayaran
+                jumlahTagihan.text = data.paymentName
             }
         }
     }
@@ -121,9 +153,10 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 Log.d("Test Child", absoluteAdapterPosition.toString())
             }
         }
-        fun bind(singleItem: String) {
+        fun bind(singleItem: HomeSectionData) {
             with(binding) {
-
+                val data = singleItem as HomeItemPengumuman
+                judul.text = data.announcementName
             }
         }
     }
