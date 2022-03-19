@@ -45,6 +45,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:text="Agenda hari ini"
+        android:textColor="@color/white"
         android:background="@color/purple_500"/>
 
     <androidx.recyclerview.widget.RecyclerView
