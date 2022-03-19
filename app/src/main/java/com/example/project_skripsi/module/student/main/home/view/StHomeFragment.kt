@@ -57,6 +57,11 @@ class StHomeFragment : Fragment() {
 
         viewModel.sectionDatas.observe(viewLifecycleOwner, Observer {
 //            binding.textviewProfileClass.text = it.toString()
+            with(binding.recyclerviewClass) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = homeMainSectionAdapter
+            }
         })
 
     }

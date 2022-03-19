@@ -52,7 +52,10 @@
         android:id="@+id/recyclerview_class"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/st_item_home_main_section"/>
+        android:paddingBottom="?attr/actionBarSize"
+        tools:listitem="@layout/st_item_home_main_section"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
 
 </LinearLayout>
