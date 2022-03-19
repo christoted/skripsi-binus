@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.task
+package com.example.project_skripsi.module.student.task.sharing
 
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater

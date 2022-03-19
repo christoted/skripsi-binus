@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentDummyRvBinding
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
-import com.example.project_skripsi.module.student.task.TaskViewHolder
-import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
+import com.example.project_skripsi.module.student.task.sharing.TaskViewHolder
 
 class StTaskAssignmentFragment : Fragment() {
 

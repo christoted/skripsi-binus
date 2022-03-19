@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentDummyRvBinding
 import com.example.project_skripsi.databinding.FragmentStTaskExamBinding
-import com.example.project_skripsi.module.student.task.TaskViewHolder
+import com.example.project_skripsi.module.student.task.sharing.TaskViewHolder
 
 class StTaskExamFragment : Fragment() {
 
