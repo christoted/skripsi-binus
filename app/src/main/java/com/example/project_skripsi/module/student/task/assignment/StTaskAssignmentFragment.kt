@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.PagerAdapter
+import com.example.project_skripsi.databinding.FragmentDummyRvBinding
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
 import com.example.project_skripsi.module.student.task.TaskViewHolder
+import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
 
 class StTaskAssignmentFragment : Fragment() {
 
@@ -25,16 +28,49 @@ class StTaskAssignmentFragment : Fragment() {
         viewModel = ViewModelProvider(this)[StTaskAssignmentViewModel::class.java]
         _binding = FragmentStTaskAssignmentBinding.inflate(inflater, container, false)
 
-        binding.rvAssignment.layoutManager = LinearLayoutManager(context)
-        viewModel.list.observe(viewLifecycleOwner, {
-            binding.rvAssignment.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT,it).getAdapter()
-        })
+        viewModel.list.observe(viewLifecycleOwner, { refreshAdapter() })
+        refreshAdapter()
 
         return binding.root
+    }
+
+    private fun refreshAdapter(){
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
+        binding.tabLayout.setupWithViewPager(binding.vpContainer)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+
+        lateinit var layoutInflater: LayoutInflater
+
+        override fun getCount(): Int =
+            StTaskAssignmentViewModel.tabCount
+
+        override fun isViewFromObject(view: View, `object`: Any): Boolean =
+            view == `object`
+
+        override fun getPageTitle(position: Int): CharSequence =
+            StTaskAssignmentViewModel.tabHeader[position]
+
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            layoutInflater = LayoutInflater.from(context)
+            val binding2 = FragmentDummyRvBinding.inflate(layoutInflater, container, false)
+
+            binding2.rvContainer.layoutManager = LinearLayoutManager(context)
+            binding2.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT,viewModel.getAssignmentList(position)).getAdapter()
+
+            container.addView(binding2.root, 0)
+            return binding2.root
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
+        }
     }
 }

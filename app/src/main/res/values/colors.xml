@@ -23,5 +23,7 @@
     <color name="form_not_submit">#ef5350</color>
     <color name="form_submit">#4caf50</color>
 
+    <color name="recyclerview_background">#eeeeee</color>
+
 
 </resources>

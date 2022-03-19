@@ -48,8 +48,6 @@ class StClassFragment : Fragment() {
             binding.tablSubject.setupWithViewPager(binding.viewpagerSubject)
         })
 
-
-
         return binding.root
     }
 
@@ -58,7 +56,7 @@ class StClassFragment : Fragment() {
         _binding = null
     }
 
-    private inner class ScreenSlidePagerAdapter() : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
 
         lateinit var layoutInflater: LayoutInflater
 

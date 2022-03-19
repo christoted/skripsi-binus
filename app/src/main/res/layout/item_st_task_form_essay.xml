@@ -48,7 +48,7 @@
             android:layout_marginTop="4dp"
             android:hint="Isi jawaban disini"
             android:maxLines="10"
-            android:padding="8dp"/>
+            android:layout_margin="8dp"/>
 
     </LinearLayout>
 
