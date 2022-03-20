@@ -27,6 +27,7 @@ class StTaskFormFragment : Fragment() {
         _binding = FragmentStTaskFormBinding.inflate(inflater, container, false)
 
         binding.rvQuestion.layoutManager = LinearLayoutManager(context)
+        binding.rvQuestion.isNestedScrollingEnabled = true
         viewModel.formQuestion.observe(viewLifecycleOwner, {
             binding.rvQuestion.adapter = FormAdapter(it)
         })

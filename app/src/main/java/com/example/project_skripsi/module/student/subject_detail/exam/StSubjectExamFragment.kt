@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStSubjectExamBinding
 import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
-import com.example.project_skripsi.module.student.subject_detail.assignment.StSubjectAssignmentAdapter
+import com.example.project_skripsi.module.student.subject_detail.sharing.TaskViewHolder
 
 class StSubjectExamFragment(private val viewModel: StSubjectViewModel) : Fragment() {
 
@@ -26,7 +24,7 @@ class StSubjectExamFragment(private val viewModel: StSubjectViewModel) : Fragmen
         _binding = FragmentStSubjectExamBinding.inflate(inflater, container, false)
         binding.rvExam.layoutManager = LinearLayoutManager(context)
         viewModel.examList.observe(viewLifecycleOwner, {
-            binding.rvExam.adapter = StSubjectExamAdapter(it)
+            binding.rvExam.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
         })
 
         return binding.root
