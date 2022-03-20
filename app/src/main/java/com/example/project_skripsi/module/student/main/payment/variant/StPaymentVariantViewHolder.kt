@@ -7,8 +7,8 @@ import androidx.navigation.Navigation
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ItemStPaymentVariantBinding
 import com.example.project_skripsi.databinding.ItemStTaskBinding
-import com.example.project_skripsi.module.student.task.exam.GenericAdapter
 import com.example.project_skripsi.utils.app.App
+import com.example.project_skripsi.utils.generic.GenericAdapter
 
 class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet : List<String>) {
 
