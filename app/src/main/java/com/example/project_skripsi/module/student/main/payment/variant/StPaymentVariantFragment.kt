@@ -27,7 +27,7 @@ class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, privat
 
         binding.rvSubjectContainer.layoutManager = LinearLayoutManager(context)
         getPaymentVariant().observe(viewLifecycleOwner, {
-            binding.rvSubjectContainer.adapter = StPaymentVariantAdapter(getPaymentVariant().value!!, viewType)
+            binding.rvSubjectContainer.adapter = StPaymentVariantViewHolder(viewType, getPaymentVariant().value!!).getAdapter()
         })
 
         return binding.root
@@ -35,8 +35,8 @@ class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, privat
 
     private fun getPaymentVariant() : LiveData<List<String>> {
         return when (viewType) {
-            StPaymentVariantAdapter.VIEW_UPCOMING -> viewModel.upcomingPayment
-            StPaymentVariantAdapter.VIEW_UNPAID -> viewModel.unpaidPayment
+            StPaymentVariantViewHolder.TYPE_UPCOMING -> viewModel.upcomingPayment
+            StPaymentVariantViewHolder.TYPE_UNPAID -> viewModel.unpaidPayment
             else -> viewModel.paidPayment
         }
     }
