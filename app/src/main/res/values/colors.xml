@@ -17,4 +17,6 @@
     <color name="indicator_black">#000000</color>
 
     <color name="calendar_selection_color">#e0f7fa</color>
+
+    <color name="payment_late">#ff5350</color>
 </resources>
