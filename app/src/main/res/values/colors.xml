@@ -16,5 +16,14 @@
     <color name="indicator_purple">#673ab7</color>
     <color name="indicator_black">#000000</color>
 
-    <color name="calendar_selection_color">#e0f7fa</color>
+    <color name="form_multiple_choice">#90caf9</color>
+    <color name="form_essay">#c5e1a5</color>
+    <color name="form_header">#ff8a65</color>
+
+    <color name="form_not_submit">#ef5350</color>
+    <color name="form_submit">#4caf50</color>
+
+    <color name="recyclerview_background">#eeeeee</color>
+
+
 </resources>

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStSubjectAssignmentBinding
 import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
+import com.example.project_skripsi.module.student.subject_detail.sharing.TaskViewHolder
 
 class StSubjectAssignmentFragment(private val viewModel: StSubjectViewModel) : Fragment() {
 
@@ -26,7 +27,7 @@ class StSubjectAssignmentFragment(private val viewModel: StSubjectViewModel) : F
 
         binding.rvAssignment.layoutManager = LinearLayoutManager(context)
         viewModel.assignmentList.observe(viewLifecycleOwner, {
-            binding.rvAssignment.adapter = StSubjectAssignmentAdapter(it)
+            binding.rvAssignment.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
         })
 
         return binding.root

@@ -1,15 +1,8 @@
 package com.example.project_skripsi.module.student.task
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import com.example.project_skripsi.R
-import com.example.project_skripsi.databinding.ActivityStMainBinding
-import com.example.project_skripsi.databinding.ActivityStTaskBinding
 
 class StTaskViewModel : ViewModel() {
 
