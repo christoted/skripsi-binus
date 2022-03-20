@@ -86,6 +86,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         fun bind(item: String) {
             with(binding) {
                 text.text = item
+
             }
         }
     }

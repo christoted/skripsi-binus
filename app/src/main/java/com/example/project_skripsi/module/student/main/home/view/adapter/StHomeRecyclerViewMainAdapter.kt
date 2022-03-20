@@ -27,6 +27,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
     }
 
     override fun getItemCount(): Int {
+
        viewModel.sectionDatas.value?.let {
          return it.size
        } ?: run {
