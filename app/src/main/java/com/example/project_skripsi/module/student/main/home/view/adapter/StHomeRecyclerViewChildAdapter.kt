@@ -10,7 +10,7 @@ import com.example.project_skripsi.module.student.main.home.viewmodel.*
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
 import com.example.project_skripsi.utils.Constant
 
-class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: ItemListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -83,6 +83,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
         init {
             itemView.setOnClickListener {
                 Log.d("Test Child", absoluteAdapterPosition.toString())
+
             }
         }
         fun bind(singleItem: HomeSectionData) {
@@ -91,9 +92,11 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 title.text = data.className
                 btnMateri.setOnClickListener {
                     Log.d("JADWAL KELAS", "bind: Materi")
+                    listener.onMaterialItemClicked(absoluteAdapterPosition)
                 }
                 btnKelas.setOnClickListener {
                     Log.d("JADWAL KELAS", "bind: Kelas")
+                    listener.onClassItemClicked(absoluteAdapterPosition)
                 }
             }
         }
@@ -102,7 +105,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
     inner class StHomeRecyclerViewChildExamViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                Log.d("Test Child", absoluteAdapterPosition.toString())
+                Log.d("Exam", absoluteAdapterPosition.toString())
             }
         }
         fun bind(singleItem: HomeSectionData) {
@@ -111,6 +114,9 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 title.text = data.examSubject
                 btnKelas.text = "Ujian"
                 btnMateri.isVisible = false
+                btnKelas.setOnClickListener {
+                    listener.onExamItemClicked(absoluteAdapterPosition)
+                }
             }
         }
     }
@@ -118,7 +124,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
     inner class StHomeRecyclerViewChildAssignmentViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                Log.d("Test Child", absoluteAdapterPosition.toString())
+                Log.d("Assignment", absoluteAdapterPosition.toString())
             }
         }
         fun bind(singleItem: HomeSectionData) {
@@ -127,11 +133,12 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection): RecyclerView.Ad
                 title.text = data.assignmentSubject
                 btnKelas.text = "Tugas"
                 btnMateri.isVisible = false
+                btnKelas.setOnClickListener {
+                    listener.onAssignmentItemClicked(absoluteAdapterPosition)
+                }
             }
         }
     }
-
-
 
     inner class StHomeRecyclerViewChildPembayaranViewHolder(private val binding: StItemHomeSectionPembayaranBinding): RecyclerView.ViewHolder(binding.root) {
         init {

@@ -10,7 +10,7 @@ import com.example.project_skripsi.module.student.main.home.viewmodel.HomeMainSe
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import java.util.ArrayList
 
-class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
+class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener: ItemListener): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder {
        val itemHomeMainSection = StItemHomeMainSectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,7 +21,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
         viewModel.sectionDatas.value?.let {
             val singleItemMainSection = it[position]
             // Declare the child adapter
-            val childAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection)
+            val childAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection, listener)
             holder.bind(singleItemMainSection, childAdapter)
         }
     }

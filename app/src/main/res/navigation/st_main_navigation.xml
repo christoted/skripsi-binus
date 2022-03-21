@@ -8,7 +8,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.project_skripsi.module.student.main.home.view.StHomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_st_home" />
+        tools:layout="@layout/fragment_st_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_stTaskActivity"
+            app:destination="@id/stTaskActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_class"
