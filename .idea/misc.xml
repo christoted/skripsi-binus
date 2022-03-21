@@ -21,7 +21,6 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_assignment.xml" value="0.176" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_exam.xml" value="0.20923913043478262" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_form.xml" value="0.6" />
-
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_template.xml" value="0.1458966565349544" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/halohalobandung.xml" value="0.21965579710144928" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_calendar.xml" value="0.18958333333333333" />
@@ -31,7 +30,6 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_attendance.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_exam.xml" value="0.1458966565349544" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_resource.xml" value="0.4632258064516129" />
-
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_task.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_task_form.xml" value="0.20923913043478262" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_task_form_essay.xml" value="0.4" />
@@ -60,7 +58,9 @@
         <entry key="app/src/main/res/layout/st_item_home_section_item.xml" value="0.18795289855072464" />
         <entry key="app/src/main/res/layout/st_item_home_section_pembayaran.xml" value="0.18795289855072464" />
         <entry key="app/src/main/res/layout/st_item_home_section_pengumuman.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/st_item_score_absensi.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/st_item_score_content.xml" value="0.3020833333333333" />
+        <entry key="app/src/main/res/layout/st_item_score_pencapaian.xml" value="0.19895833333333332" />
       </map>
     </option>
   </component>

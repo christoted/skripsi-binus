@@ -94,7 +94,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
     inner class StScoreAbsensiViewHolder(private val binding: StItemScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             with(binding) {
-                title.text = item
+                //title.text = item
             }
         }
     }
