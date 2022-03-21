@@ -8,22 +8,22 @@
 
     <item
         android:id="@+id/navigation_class"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_bottom_navigation_class"
         android:title="Class" />
 
     <item
         android:id="@+id/navigation_calendar"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_bottom_navigation_calendar"
         android:title="Calendar" />
 
     <item
         android:id="@+id/navigation_score"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_bottom_navigation_score"
         android:title="Score" />
 
     <item
         android:id="@+id/navigation_payment"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_bottom_navigation_payment"
         android:title="Payment" />
 
 </menu>
