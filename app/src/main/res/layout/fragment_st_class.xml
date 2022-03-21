@@ -1,150 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".module.student.main.stclass.StClassFragment"
-    android:orientation="vertical"
-    android:padding="8dp">
+    tools:context=".module.student.main.stclass.StClassFragment">
 
-    <TextView
-        android:id="@+id/textview_class_title"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        tools:text="XII - IPA - 1" />
+        android:layout_height="320dp"
+        android:background="@drawable/class_background3"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Guru"/>
-
-            <TextView
-                android:id="@+id/textview_teacher_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Devita"/>
-
-<!--            <Button-->
-<!--                android:id="@+id/button_teacher_phone"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                tools:text="40"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@drawable/whatsapp" />-->
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ketua kelas"/>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapse_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:contentScrim="@color/purple_500"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="200dp">
 
                 <TextView
-                    android:id="@+id/textview_classchief_name"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_class"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Teddy"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="XII - IPA - 2"
+                    android:textSize="25sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
 
-                <!--            <Button-->
-                <!--                android:id="@+id/button_classchief_phone"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                tools:text="40"/>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/whatsapp"
-                    android:layout_marginStart="10dp"/>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/title_teacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Guru Wali Kelas"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textAlignment="center"/>
+
+
+                        <ImageView
+                            android:id="@+id/imv_teacher_phone"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/title_teacher"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:src="@drawable/whatsapp" />
+
+                        <TextView
+                            android:id="@+id/tv_teacher_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/title_teacher"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_toEndOf="@id/imv_teacher_phone"
+                            android:text="Devita"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <androidx.legacy.widget.Space
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"/>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/title_chief"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ketua Kelas"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textAlignment="center"/>
+
+                        <ImageView
+                            android:id="@+id/imv_chief_phone"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/title_chief"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:src="@drawable/whatsapp" />
+
+                        <TextView
+                            android:id="@+id/tv_chief_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/title_chief"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_toEndOf="@id/imv_chief_phone"
+                            android:text="Teddy"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|center"
+        app:srcCompat="@drawable/ic_baseline_people_24" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="end">
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_exam"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ujian"/>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/btn_assignment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tugas"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teman kelas"
-                android:textAlignment="textEnd"/>
+                android:text="Mata Pelajaran"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="center"/>
 
-            <Button
-                android:id="@+id/button_student_count"
-                android:layout_width="wrap_content"
+            <com.example.project_skripsi.utils.custom_views.WrapContentViewPager
+                android:id="@+id/viewpager_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabl_subject"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="40"/>
+                android:layout_gravity="bottom"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_exam"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Ujian"
-            android:layout_marginEnd="20dp"/>
-
-        <Button
-            android:id="@+id/btn_assignment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Tugas"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mata Pelajaran"/>
-
-    <com.example.project_skripsi.utils.custom_views.WrapContentViewPager
-        android:id="@+id/viewpager_subject"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabl_subject"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"/>
-
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

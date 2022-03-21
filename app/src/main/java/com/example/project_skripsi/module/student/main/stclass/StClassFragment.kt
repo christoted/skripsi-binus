@@ -1,6 +1,8 @@
 package com.example.project_skripsi.module.student.main.stclass
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,8 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStClassBinding
 import com.example.project_skripsi.databinding.FragmentStClassSubjectBinding
 import com.example.project_skripsi.module.student.task.StTaskViewModel
+import com.google.android.material.appbar.AppBarLayout
+import kotlin.math.abs
 
 
 class StClassFragment : Fragment() {
@@ -22,14 +26,28 @@ class StClassFragment : Fragment() {
     private var _binding: FragmentStClassBinding? = null
     private val binding get() = _binding!!
 
+    private var isExpanded = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(StClassViewModel::class.java)
+        viewModel = ViewModelProvider(this)[StClassViewModel::class.java]
         _binding = FragmentStClassBinding.inflate(inflater, container, false)
+
+        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                isExpanded = false
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (!isExpanded) binding.collapseLayout.title = "XII - IPA - 2"
+                }, 750)
+            } else {
+                binding.collapseLayout.title = ""
+                isExpanded = true
+            }
+        })
 
         binding.btnAssignment.setOnClickListener{ view ->
             val toTaskActivity = StClassFragmentDirections.actionNavigationClassToStTaskActivity()
