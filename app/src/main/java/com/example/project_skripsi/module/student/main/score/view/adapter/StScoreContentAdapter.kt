@@ -91,8 +91,8 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         init {
             itemView.setOnClickListener {
                 with(binding) {
-                    binding.sectionItemsRecyclerView.addItemDecoration(DividerItemDecoration(itemView.context, DividerItemDecoration.VERTICAL))
-                    sectionItemsRecyclerView.isVisible = ! sectionItemsRecyclerView.isVisible
+
+                    sectionItemsRecyclerView.isVisible = !sectionItemsRecyclerView.isVisible
 
                 }
             }
@@ -104,6 +104,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 with(binding.sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
                     sectionItemsRecyclerView.adapter = adapter
+                    binding.sectionItemsRecyclerView.addItemDecoration(DividerItemDecoration(itemView.context, DividerItemDecoration.VERTICAL))
                 }
             }
         }
