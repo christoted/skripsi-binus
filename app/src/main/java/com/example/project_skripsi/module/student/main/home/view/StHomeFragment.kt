@@ -8,15 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
+import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+import com.example.project_skripsi.module.student.main.stclass.StClassFragmentDirections
+import com.example.project_skripsi.module.student.task.StTaskViewModel
 
 
-
-class StHomeFragment : Fragment() {
+class StHomeFragment : Fragment(), ItemListener {
 
     private lateinit var viewModel: StHomeViewModel
     private var _binding: FragmentStHomeBinding? = null
@@ -37,7 +40,7 @@ class StHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeMainSectionAdapter = StHomeRecyclerViewMainAdapter(viewModel)
+        homeMainSectionAdapter = StHomeRecyclerViewMainAdapter(viewModel, this)
 
         with(binding.recyclerviewClass) {
             layoutManager = LinearLayoutManager(context)
@@ -69,5 +72,27 @@ class StHomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onExamItemClicked(Position: Int) {
+        Log.d("Exam", "onExamItemClicked: " )
+        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity()
+        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_EXAM
+        view?.findNavController()?.navigate(toTaskActivity)
+    }
+
+    override fun onAssignmentItemClicked(Position: Int) {
+      Log.d("Assignment", "onAssignmentItemClicked: ")
+        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity()
+        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_ASSIGNMENT
+        view?.findNavController()?.navigate(toTaskActivity)
+    }
+
+    override fun onClassItemClicked(Position: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMaterialItemClicked(Position: Int) {
+        TODO("Not yet implemented")
     }
 }
