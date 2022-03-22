@@ -14,6 +14,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Ujian Tersusah"
+            android:textSize="16sp"
+            android:padding="8dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +46,7 @@
                 android:text="B. Indonesia"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="19sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/text_class"
@@ -54,13 +71,16 @@
             android:layout_height="2dp"
             android:background="@color/black"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -88,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="09 : 00"/>
+                    android:text="09:00"/>
 
             </LinearLayout>
 
@@ -140,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="09 : 00"/>
+                    android:text="09:00"/>
 
             </LinearLayout>
 

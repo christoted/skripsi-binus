@@ -3,6 +3,7 @@ package com.example.project_skripsi.module.student.main.home.view.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.databinding.StItemHomeMainSectionBinding
@@ -40,6 +41,9 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
         init {
             itemView.setOnClickListener {
                 Log.d("Test", absoluteAdapterPosition.toString())
+                with(binding) {
+//                    sectionItemsRecyclerView.isVisible = !sectionItemsRecyclerView.isVisible
+                }
             }
         }
 

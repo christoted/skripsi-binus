@@ -89,10 +89,10 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     override fun onClassItemClicked(Position: Int) {
-        TODO("Not yet implemented")
+       
     }
 
     override fun onMaterialItemClicked(Position: Int) {
-        TODO("Not yet implemented")
+
     }
 }
