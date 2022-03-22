@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_skripsi.databinding.StItemHomeMainSectionBinding
+import com.example.project_skripsi.databinding.ItemStHomeMainSectionBinding
 import com.example.project_skripsi.module.student.main.home.viewmodel.HomeMainSection
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import java.util.ArrayList
@@ -14,7 +14,7 @@ import java.util.ArrayList
 class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener: ItemListener): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder {
-       val itemHomeMainSection = StItemHomeMainSectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+       val itemHomeMainSection = ItemStHomeMainSectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StHomeMainSectionViewHolder(itemHomeMainSection)
     }
 
@@ -37,7 +37,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
     }
 
 
-    inner class StHomeMainSectionViewHolder(private val binding: StItemHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StHomeMainSectionViewHolder(private val binding: ItemStHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
                 Log.d("Test", absoluteAdapterPosition.toString())

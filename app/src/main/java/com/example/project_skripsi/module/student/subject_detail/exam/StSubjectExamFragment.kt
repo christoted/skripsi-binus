@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStSubjectExamBinding
 import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
-import com.example.project_skripsi.module.student.subject_detail.sharing.TaskViewHolder
+import com.example.project_skripsi.module.student.subject_detail._sharing.TaskViewHolder
 
 class StSubjectExamFragment(private val viewModel: StSubjectViewModel) : Fragment() {
 

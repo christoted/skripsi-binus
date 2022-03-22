@@ -17,24 +17,42 @@
         android:padding="8dp"
         android:textSize="22sp"
         android:textAlignment="center"
+        android:textStyle="bold"
         android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guru:"
+        android:text="Guru Pengajar:"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:textSize="18sp"
-        android:textColor="@color/black"/>
+        android:textSize="18sp"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textSize="18sp"
-        tools:text="Teddy"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/imv_chief_phone"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:clickable="true"
+            android:src="@drawable/whatsapp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Teddy"/>
+
+    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"

@@ -6,9 +6,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_skripsi.databinding.StItemScoreAbsensiBinding
-import com.example.project_skripsi.databinding.StItemScoreContentBinding
-import com.example.project_skripsi.databinding.StItemScorePencapaianBinding
+import com.example.project_skripsi.databinding.ItemStScoreAbsensiBinding
+import com.example.project_skripsi.databinding.ItemStScoreContentBinding
+import com.example.project_skripsi.databinding.ItemStScorePencapaianBinding
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
 
 
@@ -18,7 +18,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
 
         when(tab) {
             0 -> {
-                val item = StItemScoreContentBinding.inflate(
+                val item = ItemStScoreContentBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -26,7 +26,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 return StScoreContentViewHolder(item)
             }
             1 -> {
-                val item = StItemScoreAbsensiBinding.inflate(
+                val item = ItemStScoreAbsensiBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -34,7 +34,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 return StScoreAbsensiViewHolder(item)
             }
             2 -> {
-                val item = StItemScorePencapaianBinding.inflate(
+                val item = ItemStScorePencapaianBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -42,7 +42,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 return StScorePencapaianViewHolder(item)
             }
         }
-        val item = StItemScoreContentBinding.inflate(
+        val item = ItemStScoreContentBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -86,7 +86,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         }
     }
 
-    inner class StScoreContentViewHolder(private val binding: StItemScoreContentBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreContentViewHolder(private val binding: ItemStScoreContentBinding): RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
@@ -110,7 +110,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         }
     }
 
-    inner class StScoreAbsensiViewHolder(private val binding: StItemScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreAbsensiViewHolder(private val binding: ItemStScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             with(binding) {
                 //title.text = item
@@ -118,7 +118,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         }
     }
 
-    inner class StScorePencapaianViewHolder(private val binding: StItemScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScorePencapaianViewHolder(private val binding: ItemStScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             with(binding) {
                 title.text = item
