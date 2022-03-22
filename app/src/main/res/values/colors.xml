@@ -25,5 +25,6 @@
 
     <color name="recyclerview_background">#eeeeee</color>
 
+    <color name="payment_late">#ff5350</color>
 
 </resources>

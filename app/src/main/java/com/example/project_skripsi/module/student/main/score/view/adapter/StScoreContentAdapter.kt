@@ -2,6 +2,9 @@ package com.example.project_skripsi.module.student.main.score.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.databinding.StItemScoreAbsensiBinding
 import com.example.project_skripsi.databinding.StItemScoreContentBinding
@@ -53,7 +56,8 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
             0 -> {
                 viewModel.sectionDatas.value?.let {
                     val singleData = it[position]
-                    (holder as StScoreContentViewHolder).bind(singleData)
+                    val adapter = StScoreContentChildAdapter(viewModel)
+                    (holder as StScoreContentViewHolder).bind(singleData, adapter)
                 }
             }
             1 -> {
@@ -83,10 +87,25 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
     }
 
     inner class StScoreContentViewHolder(private val binding: StItemScoreContentBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: String) {
-            with(binding) {
-                text.text = item
 
+        init {
+            itemView.setOnClickListener {
+                with(binding) {
+
+                    sectionItemsRecyclerView.isVisible = !sectionItemsRecyclerView.isVisible
+
+                }
+            }
+        }
+
+        fun bind(item: String, adapter: StScoreContentChildAdapter) {
+            with(binding) {
+                //text.text = item
+                with(binding.sectionItemsRecyclerView) {
+                    sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
+                    sectionItemsRecyclerView.adapter = adapter
+                    binding.sectionItemsRecyclerView.addItemDecoration(DividerItemDecoration(itemView.context, DividerItemDecoration.VERTICAL))
+                }
             }
         }
     }
@@ -94,7 +113,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
     inner class StScoreAbsensiViewHolder(private val binding: StItemScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             with(binding) {
-                title.text = item
+                //title.text = item
             }
         }
     }

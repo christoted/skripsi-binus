@@ -3,32 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="16dp"
-    android:layout_margin="16dp"
-    app:cardBackgroundColor="@color/warning_red">
+    app:cardCornerRadius="6dp"
+    android:layout_margin="4dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lomba Renang"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
             android:textSize="24sp"
+            android:textStyle="bold"
             />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/deskripsi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="24 November 2022"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:textSize="16dp"
+            android:textAlignment="textStart"
             android:layout_below="@+id/title"
             />
 

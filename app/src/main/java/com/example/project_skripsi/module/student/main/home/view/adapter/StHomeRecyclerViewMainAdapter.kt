@@ -3,6 +3,7 @@ package com.example.project_skripsi.module.student.main.home.view.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.databinding.StItemHomeMainSectionBinding
@@ -10,7 +11,7 @@ import com.example.project_skripsi.module.student.main.home.viewmodel.HomeMainSe
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import java.util.ArrayList
 
-class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
+class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener: ItemListener): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder {
        val itemHomeMainSection = StItemHomeMainSectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,7 +22,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
         viewModel.sectionDatas.value?.let {
             val singleItemMainSection = it[position]
             // Declare the child adapter
-            val childAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection)
+            val childAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection, listener)
             holder.bind(singleItemMainSection, childAdapter)
         }
     }
@@ -40,6 +41,9 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel): RecyclerVie
         init {
             itemView.setOnClickListener {
                 Log.d("Test", absoluteAdapterPosition.toString())
+                with(binding) {
+//                    sectionItemsRecyclerView.isVisible = !sectionItemsRecyclerView.isVisible
+                }
             }
         }
 
