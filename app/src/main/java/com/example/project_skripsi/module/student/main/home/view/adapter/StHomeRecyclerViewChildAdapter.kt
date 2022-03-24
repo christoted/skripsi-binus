@@ -18,28 +18,28 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
 
         when(item.sectionName) {
             Constant.SECTION_PEMBAYARAN -> {
-                val itemPembayaranHomeSection = StItemHomeSectionPembayaranBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+                val itemPembayaranHomeSection = ItemStHomeSectionPembayaranBinding.inflate(LayoutInflater.from(parent.context), parent, false )
                 return StHomeRecyclerViewChildPembayaranViewHolder(itemPembayaranHomeSection)
             }
 
             Constant.SECTION_PENGUMUMAN -> {
-                val itemPengumumanHomeSection = StItemHomeSectionPengumumanBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+                val itemPengumumanHomeSection = ItemStHomeSectionPengumumanBinding.inflate(LayoutInflater.from(parent.context), parent, false )
                 return StHomeRecyclerViewChildPengumumanViewHolder(itemPengumumanHomeSection)
             }
 
             Constant.SECTION_UJIAN -> {
-                val itemUjianHomeSection = StItemHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+                val itemUjianHomeSection = ItemStHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
                 return StHomeRecyclerViewChildExamViewHolder(itemUjianHomeSection)
             }
 
             Constant.SECTION_TUGAS -> {
-                val itemPengumumanHomeSection = StItemHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+                val itemPengumumanHomeSection = ItemStHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
                 return StHomeRecyclerViewChildAssignmentViewHolder(itemPengumumanHomeSection)
             }
 
             else -> {
                 // Jadwal Kelas, Ujian, Tugas
-                val itemHomeSection = StItemHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val itemHomeSection = ItemStHomeSectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return StHomeRecyclerViewChildViewHolder(itemHomeSection)
             }
         }
@@ -79,7 +79,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
        return item.sectionItem.size
     }
 
-    inner class StHomeRecyclerViewChildViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StHomeRecyclerViewChildViewHolder(private val binding: ItemStHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
                 Log.d("Test Child", absoluteAdapterPosition.toString())
@@ -102,7 +102,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
         }
     }
 
-    inner class StHomeRecyclerViewChildExamViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StHomeRecyclerViewChildExamViewHolder(private val binding: ItemStHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
                 Log.d("Exam", absoluteAdapterPosition.toString())
@@ -121,7 +121,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
         }
     }
 
-    inner class StHomeRecyclerViewChildAssignmentViewHolder(private val binding: StItemHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StHomeRecyclerViewChildAssignmentViewHolder(private val binding: ItemStHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
                 Log.d("Assignment", absoluteAdapterPosition.toString())
@@ -140,7 +140,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
         }
     }
 
-    inner class StHomeRecyclerViewChildPembayaranViewHolder(private val binding: StItemHomeSectionPembayaranBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StHomeRecyclerViewChildPembayaranViewHolder(private val binding: ItemStHomeSectionPembayaranBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
                 Log.d("Test Child", absoluteAdapterPosition.toString())
@@ -154,7 +154,7 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
         }
     }
 
-    inner class StHomeRecyclerViewChildPengumumanViewHolder(private val binding: StItemHomeSectionPengumumanBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StHomeRecyclerViewChildPengumumanViewHolder(private val binding: ItemStHomeSectionPengumumanBinding): RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
                 Log.d("Test Child", absoluteAdapterPosition.toString())

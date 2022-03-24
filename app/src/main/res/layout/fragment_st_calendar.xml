@@ -13,9 +13,16 @@
         android:layout_height="wrap_content"
         app:mcv_tileHeight="40dp"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_event"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/recyclerview_background"
+        android:paddingBottom="?attr/actionBarSize"/>
 
 </LinearLayout>

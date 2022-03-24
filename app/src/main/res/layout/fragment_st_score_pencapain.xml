@@ -10,7 +10,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/st_item_score_pencapaian"
+        tools:listitem="@layout/item_st_score_pencapaian"
         android:paddingBottom="?attr/actionBarSize"/>
 
 </LinearLayout>

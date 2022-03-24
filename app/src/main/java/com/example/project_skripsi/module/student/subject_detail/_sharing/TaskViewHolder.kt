@@ -1,8 +1,7 @@
-package com.example.project_skripsi.module.student.task.sharing
+package com.example.project_skripsi.module.student.subject_detail._sharing
 
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
-import androidx.navigation.Navigation
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ItemStTaskBinding
 
@@ -25,11 +24,9 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Stri
         }
         adapter.expressionViewHolderBinding = { item,viewBinding->
             val view = viewBinding as ItemStTaskBinding
-            view.textClass.text = item
+            view.tvName.text = item
             view.root.setOnClickListener {
-                Navigation
-                    .findNavController(view.root)
-                    .navigate(TASK_NAVIGATION[taskType]!!)
+
             }
         }
         return adapter

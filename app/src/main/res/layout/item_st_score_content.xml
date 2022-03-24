@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/score_card"
-        tools:listitem="@layout/st_item_score_content_collapse"
+        tools:listitem="@layout/item_st_score_content_collapse"
         android:visibility="gone"/>
 
 

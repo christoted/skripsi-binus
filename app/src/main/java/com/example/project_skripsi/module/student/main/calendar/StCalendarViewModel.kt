@@ -17,6 +17,7 @@ class StCalendarViewModel : ViewModel() {
         const val TYPE_EXAM = 1
         const val TYPE_ASSIGNMENT = 2
         const val TYPE_PAYMENT = 3
+        const val TYPE_ANNOUNCEMENT = 4
         const val TYPE_MORE = 10
     }
 
