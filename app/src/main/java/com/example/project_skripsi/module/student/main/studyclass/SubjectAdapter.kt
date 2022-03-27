@@ -1,8 +1,7 @@
-package com.example.project_skripsi.module.student.main.stclass
+package com.example.project_skripsi.module.student.main.studyclass
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.databinding.ItemStClassSubjectBinding
 

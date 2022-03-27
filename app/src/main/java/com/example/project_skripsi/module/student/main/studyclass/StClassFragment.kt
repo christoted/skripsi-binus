@@ -1,18 +1,15 @@
-package com.example.project_skripsi.module.student.main.stclass
+package com.example.project_skripsi.module.student.main.studyclass
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.PagerAdapter
-import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStClassBinding
 import com.example.project_skripsi.databinding.FragmentStClassSubjectBinding
 import com.example.project_skripsi.module.student.task.StTaskViewModel

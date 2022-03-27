@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.stclass
+package com.example.project_skripsi.module.student.main.studyclass
 
 import android.os.Handler
 import android.os.Looper
@@ -43,6 +43,11 @@ class StClassViewModel : ViewModel() {
             )
         }, 1000)
     }
+
+    fun refreshStudyClass(){
+
+    }
+
 
     fun getSubjects(page: Int): List<String> {
         val startIdx = page * 8

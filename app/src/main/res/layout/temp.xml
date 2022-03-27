@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".module.student.main.stclass.StClassFragment"
+    tools:context=".module.student.main.studyclass.StClassFragment"
     android:orientation="vertical"
     android:padding="8dp">
 
