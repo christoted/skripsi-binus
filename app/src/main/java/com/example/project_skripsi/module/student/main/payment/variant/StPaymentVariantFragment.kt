@@ -1,17 +1,15 @@
 package com.example.project_skripsi.module.student.main.payment.variant
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.databinding.FragmentStPaymentVariantBinding
 import com.example.project_skripsi.module.student.main.payment.StPaymentViewModel
-import kotlin.math.atan
 
 class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, private val viewType: Int) : Fragment() {
 
@@ -33,7 +31,7 @@ class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, privat
         return binding.root
     }
 
-    private fun getPaymentVariant() : LiveData<List<String>> {
+    private fun getPaymentVariant() : LiveData<List<Payment>> {
         return when (viewType) {
             StPaymentVariantViewHolder.TYPE_UPCOMING -> viewModel.upcomingPayment
             StPaymentVariantViewHolder.TYPE_UNPAID -> viewModel.unpaidPayment

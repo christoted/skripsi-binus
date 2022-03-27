@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.databinding.FragmentStPaymentBinding
 import com.example.project_skripsi.module.student.main.payment.variant.StPaymentVariantFragment
+import com.example.project_skripsi.utils.helper.CurrencyHelper
 import com.google.android.material.tabs.TabLayoutMediator
 
 class StPaymentFragment : Fragment() {
@@ -28,6 +29,18 @@ class StPaymentFragment : Fragment() {
 
         _binding = FragmentStPaymentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[StPaymentViewModel::class.java]
+
+        viewModel.totalCharge.observe(viewLifecycleOwner, {
+            binding.tvTotalCharge.text = CurrencyHelper.toRupiah(it)
+        })
+
+        viewModel.totalPaid.observe(viewLifecycleOwner, {
+            binding.tvTotalPaid.text = CurrencyHelper.toRupiah(it)
+        })
+
+        viewModel.accountNumber.observe(viewLifecycleOwner, {
+            binding.tvAccountNumber.text = it
+        })
 
         binding.vpContainer.adapter = ScreenSlidePagerAdapter(activity!!)
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->

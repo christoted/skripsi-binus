@@ -1,16 +1,16 @@
 package com.example.project_skripsi.module.student.main.payment.variant
 
 import android.view.LayoutInflater
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.navigation.Navigation
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.databinding.ItemStPaymentVariantBinding
-import com.example.project_skripsi.databinding.ItemStTaskBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
+import com.example.project_skripsi.utils.helper.CurrencyHelper
+import com.example.project_skripsi.utils.helper.DateHelper
 
-class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet : List<String>) {
+class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet : List<Payment>) {
 
     companion object {
         const val TYPE_UPCOMING = 0
@@ -19,7 +19,7 @@ class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet
     }
 
 
-    fun getAdapter(): GenericAdapter<String> {
+    fun getAdapter(): GenericAdapter<Payment> {
         val adapter = GenericAdapter(dataSet)
         adapter.expressionOnCreateViewHolder = {
             ItemStPaymentVariantBinding.inflate(LayoutInflater.from(it.context), it, false)
@@ -27,7 +27,9 @@ class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet
         adapter.expressionViewHolderBinding = { item,viewBinding->
             val view = viewBinding as ItemStPaymentVariantBinding
             with(view) {
-                tvName.text = item
+                tvTitle.text = item.title
+                tvNominal.text = CurrencyHelper.toRupiah(item.nominal!!)
+                tvDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, item.paymentDeadline!!)
             }
             when(taskType){
                 TYPE_PAID -> {
