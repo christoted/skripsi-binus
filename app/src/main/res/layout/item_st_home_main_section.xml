@@ -10,28 +10,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:textStyle="bold"
+        android:text="Jadwal Kelas"
+        android:textColor="@color/black"
         android:textSize="16sp"
-        android:text="Jadwal Kelas" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/sectionTitleCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/sectionTitle"
-        android:layout_marginTop="16dp"
-        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/sectionTitle"
+        android:text="7"
         android:textSize="16sp"
-        android:text="7" />
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sectionItemsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sectionTitle"
-        android:layout_marginTop="-16dp"
-        tools:listitem="@layout/st_item_home_section_item" />
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/item_st_home_section_item"/>
+
 </RelativeLayout>

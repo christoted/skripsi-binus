@@ -77,11 +77,11 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/title_teacher"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="8dp"
                             android:layout_toEndOf="@id/imv_teacher_phone"
                             android:text="Devita"
                             android:textColor="@color/black"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
@@ -100,9 +100,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Ketua Kelas"
+                            android:textAlignment="center"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textAlignment="center"/>
+                            android:textSize="16sp" />
 
                         <ImageView
                             android:id="@+id/imv_chief_phone"
@@ -119,11 +119,11 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/title_chief"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="8dp"
                             android:layout_toEndOf="@id/imv_chief_phone"
                             android:text="Teddy"
                             android:textColor="@color/black"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
@@ -148,7 +148,9 @@
         android:layout_height="wrap_content"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|center"
-        app:srcCompat="@drawable/ic_baseline_people_24" />
+        app:srcCompat="@drawable/ic_baseline_people_24"
+        android:backgroundTint="@color/purple_500"
+        android:tintMode="@color/white"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -190,7 +192,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mata Pelajaran"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginTop="12dp"
