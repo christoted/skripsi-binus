@@ -10,6 +10,7 @@ class DateHelper {
     companion object {
 
         const val DMY = "dd - MM - yyyy"
+        const val hm = "hh:mm"
 
         fun getCurrentDate() : Date = Calendar.getInstance().time
 

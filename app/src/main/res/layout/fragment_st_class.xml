@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".module.student.main.stclass.StClassFragment">
+    tools:context=".module.student.main.studyclass.StClassFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -29,12 +29,12 @@
                 android:layout_marginTop="200dp">
 
                 <TextView
-                    android:id="@+id/tv_class"
+                    android:id="@+id/tv_class_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="XII - IPA - 2"
+                    tools:text="XII - IPA - 2"
                     android:textSize="25sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -69,7 +69,7 @@
                             android:layout_below="@id/title_teacher"
                             android:layout_marginTop="8dp"
                             android:clickable="true"
-                            android:src="@drawable/whatsapp" />
+                            android:src="@drawable/whatsapp_gray" />
 
                         <TextView
                             android:id="@+id/tv_teacher_name"
@@ -79,7 +79,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_toEndOf="@id/imv_teacher_phone"
-                            android:text="Devita"
+                            tools:text="Devita"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -111,7 +111,7 @@
                             android:layout_below="@id/title_chief"
                             android:layout_marginTop="8dp"
                             android:clickable="true"
-                            android:src="@drawable/whatsapp" />
+                            android:src="@drawable/whatsapp_gray" />
 
                         <TextView
                             android:id="@+id/tv_chief_name"
@@ -121,7 +121,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_toEndOf="@id/imv_chief_phone"
-                            android:text="Teddy"
+                            tools:text="Teddy"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />

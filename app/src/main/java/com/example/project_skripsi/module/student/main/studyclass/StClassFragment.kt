@@ -1,9 +1,8 @@
-package com.example.project_skripsi.module.student.main.stclass
+package com.example.project_skripsi.module.student.main.studyclass
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,7 @@ class StClassFragment : Fragment() {
             if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
                 isExpanded = false
                 Handler(Looper.getMainLooper()).postDelayed({
-                    if (!isExpanded) binding.collapseLayout.title = "XII - IPA - 2"
+                    if (!isExpanded) binding.collapseLayout.title = binding.tvClassName.text
                 }, 750)
             } else {
                 binding.collapseLayout.title = ""
@@ -61,9 +60,18 @@ class StClassFragment : Fragment() {
             view.findNavController().navigate(toTaskActivity)
         }
 
+        viewModel.className.observe(viewLifecycleOwner, {binding.tvClassName.text = it})
+        viewModel.teacherName.observe(viewLifecycleOwner, {binding.tvTeacherName.text = it})
+        viewModel.teacherPhoneNumber.observe(viewLifecycleOwner, {
+            binding.imvTeacherPhone.setImageResource(R.drawable.whatsapp) })
+        viewModel.classChiefName.observe(viewLifecycleOwner, {binding.tvChiefName.text = it})
+        viewModel.classChiefPhoneNumber.observe(viewLifecycleOwner, {
+            binding.imvChiefPhone.setImageResource(R.drawable.whatsapp) })
+
         viewModel.subjectList.observe(viewLifecycleOwner, {
             binding.viewpagerSubject.adapter = ScreenSlidePagerAdapter()
             binding.tablSubject.setupWithViewPager(binding.viewpagerSubject)
+            if (viewModel.getSubjectPageCount() <= 1) binding.tablSubject.visibility = View.GONE
         })
 
         return binding.root

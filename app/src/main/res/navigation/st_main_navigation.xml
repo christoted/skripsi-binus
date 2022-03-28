@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/navigation_class"
-        android:name="com.example.project_skripsi.module.student.main.stclass.StClassFragment"
+        android:name="com.example.project_skripsi.module.student.main.studyclass.StClassFragment"
         android:label="Class"
         tools:layout="@layout/fragment_st_class" >
         <action

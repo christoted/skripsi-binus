@@ -35,11 +35,11 @@ data class Student(
 
     @get: PropertyName("assigned_exams")
     @set: PropertyName("assigned_exams")
-    var assignedExams: List<AssignedExam>? = null,
+    var assignedExams: List<AssignedTaskForm>? = null,
 
     @get: PropertyName("assigned_assignments")
     @set: PropertyName("assigned_assignments")
-    var assignedAssignments: List<AssignedAssignment>? = null,
+    var assignedAssignments: List<AssignedTaskForm>? = null,
 
 )
 
@@ -65,22 +65,7 @@ data class Payment(
 )
 
 @IgnoreExtraProperties
-data class AssignedExam(
-
-    val id: String? = null,
-
-    @get: PropertyName("task_checked")
-    @set: PropertyName("task_checked")
-    var taskChecked: Boolean? = null,
-
-    val score: Int? = null,
-
-    val answer: List<Any>? = null,
-
-)
-
-@IgnoreExtraProperties
-data class AssignedAssignment(
+data class AssignedTaskForm(
 
     val id: String? = null,
 

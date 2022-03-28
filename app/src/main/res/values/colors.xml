@@ -23,6 +23,14 @@
     <color name="form_not_submit">#ef5350</color>
     <color name="form_submit">#4caf50</color>
 
+    <color name="task_not_submit">#ef5350</color>
+    <color name="task_submit">#4caf50</color>
+    <color name="task_ongoing">#8e8e8e</color>
+
+    <color name="attendance_attend">#4caf50</color>
+    <color name="attendance_not_attend">#ef5350</color>
+    <color name="attendance_incoming">#8e8e8e</color>
+
     <color name="recyclerview_background">#eeeeee</color>
 
     <color name="payment_late">#ff5350</color>

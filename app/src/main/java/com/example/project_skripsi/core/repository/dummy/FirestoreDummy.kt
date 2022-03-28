@@ -2,14 +2,14 @@ package com.example.project_skripsi.core.repository.dummy
 
 import android.util.Log
 import com.example.project_skripsi.core.model.firestore.*
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_ADMINISTRATOR
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_ANNOUNCEMENT
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_PARENT
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_RESOURCE
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_STUDENT
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_STUDY_CLASS
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_TASK_FORM
-import com.example.project_skripsi.core.repository.FirestoreRepository.Companion.COLLECTION_TEACHER
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_ADMINISTRATOR
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_ANNOUNCEMENT
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_PARENT
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_RESOURCE
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_STUDENT
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_STUDY_CLASS
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_TASK_FORM
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_TEACHER
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -39,14 +39,14 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     listOf("MEET001"),
                     emptyList(),
                     listOf(
-                        AssignedExam("HaWuFgmvLAuZYeG5JuVw",
+                        AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
                             false,
                             0,
                             listOf("Ok Siap Essai")
                         ),
                     ),
                     listOf(
-                        AssignedAssignment("ripyBsBZObBfarZpd085",
+                        AssignedTaskForm("ripyBsBZObBfarZpd085",
                             true,
                             70,
                             listOf("Minyak adalah mata uang",

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ActivityStSubjectBinding
 import com.example.project_skripsi.module.student.subject_detail.assignment.StSubjectAssignmentFragment
 import com.example.project_skripsi.module.student.subject_detail.attendance.StSubjectAttendanceFragment
@@ -28,10 +29,13 @@ class StSubjectActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         binding.viewPagerContainer.adapter = ScreenSlidePagerAdapter(this)
-
         TabLayoutMediator(binding.tabLayout, binding.viewPagerContainer) { tab, position ->
             tab.text = StSubjectViewModel.tabHeader[position]
         }.attach()
+
+        viewModel.teacherName.observe(this, { binding.tvTeacherName.text = it })
+        viewModel.teacherPhoneNumber.observe(this, {
+            binding.imvTeacherPhone.setImageResource(R.drawable.whatsapp) })
 
         retrieveArgs()
     }
@@ -39,7 +43,7 @@ class StSubjectActivity : AppCompatActivity() {
     private fun retrieveArgs(){
         val args: StSubjectActivityArgs by navArgs()
         binding.textTitle.text = args.subjectName
-        viewModel.setSubjectData(args.subjectName)
+        viewModel.setSubject(args.subjectName)
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
@@ -54,4 +58,5 @@ class StSubjectActivity : AppCompatActivity() {
             }
 
     }
+
 }

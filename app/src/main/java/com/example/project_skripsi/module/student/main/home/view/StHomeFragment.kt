@@ -17,7 +17,6 @@ import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import com.example.project_skripsi.module.student.main.stclass.StClassFragmentDirections
 import com.example.project_skripsi.module.student.task.StTaskViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase

@@ -5,10 +5,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.example.project_skripsi.core.model.firestore.Student
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import kotlin.math.log
 
 
 class AuthRepository {
@@ -50,7 +48,7 @@ class AuthRepository {
 
                         firebaseAuth.currentUser?.let { user ->
                             currentUser = firebaseAuth.currentUser
-                            FirestoreRepository.instance
+                            FireRepository.instance
                                 .let {
                                     when (loginAs) {
                                         LOGIN_STUDENT -> it.getStudent(user.uid)
