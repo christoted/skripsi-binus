@@ -1,9 +1,6 @@
 package com.example.project_skripsi.module.student.subject_detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.core.model.firestore.Resource
@@ -11,6 +8,7 @@ import com.example.project_skripsi.core.model.local.Attendance
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
 class StSubjectViewModel : ViewModel() {
 
@@ -80,9 +78,10 @@ class StSubjectViewModel : ViewModel() {
 
 
 
+
     private fun loadTeacher(uid: String) {
         FireRepository.instance.getTeacher(uid).let { response ->
-            response.first.observeForever { teacher ->
+            response.first.observeOnce { teacher ->
                 with(teacher) {
                     name?.let { _teacherName.postValue(it) }
                     phoneNumber?.let { _teacherPhoneNumber.postValue(it) }
