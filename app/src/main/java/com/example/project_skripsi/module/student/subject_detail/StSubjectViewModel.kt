@@ -1,12 +1,16 @@
 package com.example.project_skripsi.module.student.subject_detail
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.firestore.ClassMeeting
+import com.example.project_skripsi.core.model.firestore.Resource
+import com.example.project_skripsi.core.model.local.Attendance
+import com.example.project_skripsi.core.model.local.TaskFormStatus
+import com.example.project_skripsi.core.repository.AuthRepository
+import com.example.project_skripsi.core.repository.FireRepository
 
 class StSubjectViewModel : ViewModel() {
 
@@ -15,29 +19,116 @@ class StSubjectViewModel : ViewModel() {
         val tabHeader = arrayOf("Absen", "Materi", "Ujian", "Tugas")
     }
 
-    private val _attendanceList = MutableLiveData<List<String>>()
-    val attendanceList : LiveData<List<String>> = _attendanceList
+    private val _teacherName = MutableLiveData<String>()
+    val teacherName: LiveData<String> = _teacherName
 
-    private val _resourceList = MutableLiveData<List<String>>()
-    val resourceList : LiveData<List<String>> = _resourceList
+    private val _teacherPhoneNumber = MutableLiveData<String>()
+    val teacherPhoneNumber: LiveData<String> = _teacherPhoneNumber
 
-    private val _examList = MutableLiveData<List<String>>()
-    val examList : LiveData<List<String>> = _examList
+    private val _attendanceList = MutableLiveData<List<Attendance>>()
+    val attendanceList : LiveData<List<Attendance>> = _attendanceList
 
-    private val _assignmentList = MutableLiveData<List<String>>()
-    val assignmentList : LiveData<List<String>> = _assignmentList
+    private val _resourceList = MutableLiveData<List<Resource>>()
+    val resourceList : LiveData<List<Resource>> = _resourceList
 
-    init {
-        Handler(Looper.getMainLooper()).postDelayed({
-            _attendanceList.value = listOf("hadir", "hadir", "absen")
-            _resourceList.value = listOf("materi susah", "materi penting", "materi kelulusan")
-            _examList.value = listOf("tebak-tebak", "mikir", "berantem")
-            _assignmentList.value = listOf("cari nyamuk", "cari kecoa", "cari air")
-        }, 1000)
+    private val _examList = MutableLiveData<List<TaskFormStatus>>()
+    val examList : LiveData<List<TaskFormStatus>> = _examList
+
+    private val _assignmentList = MutableLiveData<List<TaskFormStatus>>()
+    val assignmentList : LiveData<List<TaskFormStatus>> = _assignmentList
+
+    private var className = ""
+    private var subjectName = ""
+    private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
+    private val mAttendedMeetings = HashSet<String>()
+
+    fun setSubject(subjectName : String) {
+        this.subjectName = subjectName
+        loadStudent(AuthRepository.instance.getCurrentUser().uid)
     }
 
-    fun setSubjectData(subjectId : String) {
-        Log.d("12345", "call $subjectId")
+
+    private fun loadStudent(uid: String) {
+        FireRepository.instance.getStudent(uid).let { response ->
+            response.first.observeForever { student ->
+                with(student) {
+                    attendedMeetings?.map { meeting -> mAttendedMeetings.add(meeting)}
+                    assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) }}
+                    assignedAssignments?.map { asg -> asg.id?.let { mAssignedTaskForms.put(it, asg) }}
+                    studyClass?.let { loadStudyClass(it) }
+                }
+            }
+        }
     }
 
+    private fun loadStudyClass(uid: String) {
+        FireRepository.instance.getStudyClass(uid).let { response ->
+            response.first.observeForever { studyClass ->
+                studyClass.name?.let { className = it }
+                studyClass.subjects?.filter { it.subjectName == this.subjectName }?.map { subject ->
+                    with(subject) {
+                        classAssignments?.let { loadTaskForms(it, _assignmentList) }
+                        classExams?.let { loadTaskForms(it, _examList) }
+                        classMeetings?.let { loadAttendances(it) }
+                        classResources?.let { loadResources(it) }
+                        teacher?.let { loadTeacher(it) }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    private fun loadTeacher(uid: String) {
+        FireRepository.instance.getTeacher(uid).let { response ->
+            response.first.observeForever { teacher ->
+                with(teacher) {
+                    name?.let { _teacherName.postValue(it) }
+                    phoneNumber?.let { _teacherPhoneNumber.postValue(it) }
+                }
+            }
+        }
+    }
+
+    private fun loadAttendances(meetings: List<ClassMeeting>) {
+        val attendanceList = ArrayList<Attendance>()
+        meetings.map { meeting ->
+            attendanceList.add(Attendance(meeting, mAttendedMeetings.contains(meeting.id)))
+            if (attendanceList.size == meetings.size)
+                _attendanceList.postValue(attendanceList.toList())
+        }
+    }
+
+
+
+    private fun loadResources(uids: List<String>) {
+        val resourceList = ArrayList<Resource>()
+        uids.map { uid ->
+            FireRepository.instance.getResource(uid).let { response ->
+                response.first.observeForever {
+                    resourceList.add(it)
+                    if (resourceList.size == uids.size) {
+                        _resourceList.postValue(resourceList.toList())
+                        response.first.removeObserver {  }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskFormStatus>>) {
+        val taskFormList = ArrayList<TaskFormStatus>()
+        uids.map { uid ->
+            FireRepository.instance.getTaskForm(uid).let { response ->
+                response.first.observeForever { taskForm ->
+                    mAssignedTaskForms[uid]?.let {
+                        taskFormList.add(TaskFormStatus(className, taskForm, it))
+                    }
+                    if (taskFormList.size == uids.size)
+                        _taskFormList.postValue(taskFormList.toList())
+                }
+            }
+        }
+    }
 }

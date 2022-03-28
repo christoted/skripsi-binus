@@ -2,18 +2,15 @@ package com.example.project_skripsi.core.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.project_skripsi.core.model.firestore.Administrator
-import com.example.project_skripsi.core.model.firestore.Parent
-import com.example.project_skripsi.core.model.firestore.Student
-import com.example.project_skripsi.core.model.firestore.Teacher
+import com.example.project_skripsi.core.model.firestore.*
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FirestoreRepository {
+class FireRepository {
 
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
     companion object {
-        var instance = FirestoreRepository()
+        var instance = FireRepository()
 
         const val COLLECTION_STUDENT = "students"
         const val COLLECTION_TEACHER = "teachers"
@@ -76,6 +73,48 @@ class FirestoreRepository {
             .addOnSuccessListener { administrator ->
                 if (administrator.data != null) data.postValue(administrator.toObject(Administrator::class.java))
                 else exception.postValue(java.lang.Exception("administrator uid not found"))
+            }
+            .addOnFailureListener { ex -> exception.postValue(ex)}
+        return Pair(data, exception)
+    }
+
+    fun getStudyClass(uid: String) : Pair<LiveData<StudyClass>, LiveData<Exception>> {
+        val data = MutableLiveData<StudyClass>()
+        val exception = MutableLiveData<Exception>()
+        db.collection(COLLECTION_STUDY_CLASS)
+            .document(uid)
+            .get()
+            .addOnSuccessListener { studyClass ->
+                if (studyClass.data != null) data.postValue(studyClass.toObject(StudyClass::class.java))
+                else exception.postValue(java.lang.Exception("study class uid not found"))
+            }
+            .addOnFailureListener { ex -> exception.postValue(ex)}
+        return Pair(data, exception)
+    }
+
+    fun getTaskForm(uid: String) : Pair<LiveData<TaskForm>, LiveData<Exception>> {
+        val data = MutableLiveData<TaskForm>()
+        val exception = MutableLiveData<Exception>()
+        db.collection(COLLECTION_TASK_FORM)
+            .document(uid)
+            .get()
+            .addOnSuccessListener { taskForm ->
+                if (taskForm.data != null) data.postValue(taskForm.toObject(TaskForm::class.java))
+                else exception.postValue(java.lang.Exception("task form uid not found"))
+            }
+            .addOnFailureListener { ex -> exception.postValue(ex)}
+        return Pair(data, exception)
+    }
+
+    fun getResource(uid: String) : Pair<LiveData<Resource>, LiveData<Exception>> {
+        val data = MutableLiveData<Resource>()
+        val exception = MutableLiveData<Exception>()
+        db.collection(COLLECTION_RESOURCE)
+            .document(uid)
+            .get()
+            .addOnSuccessListener { resource ->
+                if (resource.data != null) data.postValue(resource.toObject(Resource::class.java))
+                else exception.postValue(java.lang.Exception("resource uid not found"))
             }
             .addOnFailureListener { ex -> exception.postValue(ex)}
         return Pair(data, exception)

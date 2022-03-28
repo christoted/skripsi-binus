@@ -25,7 +25,7 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Stri
         }
         adapter.expressionViewHolderBinding = { item,viewBinding->
             val view = viewBinding as ItemStTaskBinding
-            view.textClass.text = item
+//            view.textClass.text = item
             view.root.setOnClickListener {
                 Navigation
                     .findNavController(view.root)
