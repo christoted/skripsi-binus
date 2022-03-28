@@ -7,7 +7,6 @@ import com.example.project_skripsi.databinding.ItemStHomeSectionPengumumanBindin
 import com.example.project_skripsi.module.student.main.calendar.DayEvent
 import com.example.project_skripsi.module.student.main.home.viewmodel.HomeItemJadwalKelas
 import com.example.project_skripsi.module.student.main.home.viewmodel.HomeItemPengumuman
-import com.example.project_skripsi.module.student.main.home.viewmodel.HomeSectionData
 
 class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionPengumumanBinding): RecyclerView.ViewHolder(binding.root) {
 

@@ -48,7 +48,7 @@ data class Subject (
     @set: PropertyName("class_resources")
     var classResources: List<String>? = null,
 
-)
+) : HomeSectionData()
 
 @IgnoreExtraProperties
 data class ClassMeeting (

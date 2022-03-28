@@ -12,4 +12,4 @@ data class Announcement(
 
     val date: Date? = null,
 
-)
+) : HomeSectionData()

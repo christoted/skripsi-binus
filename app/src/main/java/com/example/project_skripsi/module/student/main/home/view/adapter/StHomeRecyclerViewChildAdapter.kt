@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.core.model.firestore.Announcement
+import com.example.project_skripsi.core.model.firestore.HomeSectionData
+import com.example.project_skripsi.core.model.firestore.Payment
+import com.example.project_skripsi.core.model.firestore.Subject
 import com.example.project_skripsi.databinding.*
 import com.example.project_skripsi.module.student.main.home.viewmodel.*
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
@@ -88,8 +92,8 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
         }
         fun bind(singleItem: HomeSectionData) {
             with(binding) {
-                val data = singleItem as HomeItemJadwalKelas
-                title.text = data.className
+                val data = singleItem as Subject
+                title.text = data.subjectName
                 btnMateri.setOnClickListener {
                     Log.d("JADWAL KELAS", "bind: Materi")
                     listener.onMaterialItemClicked(absoluteAdapterPosition)
@@ -148,8 +152,8 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
         }
         fun bind(singleItem: HomeSectionData) {
             with(binding) {
-                val data = singleItem as HomeItemPembayaran
-                jumlahTagihan.text = data.paymentName
+                val data = singleItem as Payment
+                jumlahTagihan.text = data.title
             }
         }
     }
@@ -162,8 +166,8 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
         }
         fun bind(singleItem: HomeSectionData) {
             with(binding) {
-                val data = singleItem as HomeItemPengumuman
-                judul.text = data.announcementName
+                val data = singleItem as Announcement
+                judul.text = data.title
             }
         }
     }

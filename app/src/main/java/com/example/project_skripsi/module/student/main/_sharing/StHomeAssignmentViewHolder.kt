@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.databinding.ItemStHomeSectionItemBinding
 import com.example.project_skripsi.module.student.main.home.viewmodel.HomeItemJadwalKelas
 import com.example.project_skripsi.module.student.main.home.viewmodel.HomeItemTugas
-import com.example.project_skripsi.module.student.main.home.viewmodel.HomeSectionData
 
 class StHomeAssignmentViewHolder(private val binding: ItemStHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
 

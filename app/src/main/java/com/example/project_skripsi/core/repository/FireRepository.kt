@@ -1,9 +1,11 @@
 package com.example.project_skripsi.core.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.project_skripsi.core.model.firestore.*
 import com.google.firebase.firestore.FirebaseFirestore
+
 
 class FireRepository {
 
@@ -117,6 +119,25 @@ class FireRepository {
                 else exception.postValue(java.lang.Exception("resource uid not found"))
             }
             .addOnFailureListener { ex -> exception.postValue(ex)}
+        return Pair(data, exception)
+    }
+
+    fun getAnnouncement() : Pair<LiveData<List<Announcement>> , LiveData<Exception>> {
+        val announcements = arrayListOf<Announcement>()
+        val data = MutableLiveData<List<Announcement>>()
+        val exception = MutableLiveData<Exception>()
+        db.collection(COLLECTION_ANNOUNCEMENT)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("Data Announcement", "${document.id} => ${document.data}")
+                    announcements.add(document.toObject(Announcement::class.java))
+                }
+                data.postValue(announcements)
+            }
+            .addOnFailureListener { exc ->
+                 exception.postValue(exc)
+            }
         return Pair(data, exception)
     }
 

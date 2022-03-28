@@ -76,9 +76,6 @@ class StSubjectViewModel : ViewModel() {
         }
     }
 
-
-
-
     private fun loadTeacher(uid: String) {
         FireRepository.instance.getTeacher(uid).let { response ->
             response.first.observeOnce { teacher ->
