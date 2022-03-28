@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.core.repository.AuthRepository
-import com.example.project_skripsi.core.repository.FirestoreRepository
+import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.helper.DateHelper
 
 class StPaymentViewModel : ViewModel() {
@@ -38,7 +38,7 @@ class StPaymentViewModel : ViewModel() {
     }
 
     fun refreshPayment() {
-        FirestoreRepository.instance.getStudent(AuthRepository.instance.getCurrentUser().uid).let { response ->
+        FireRepository.instance.getStudent(AuthRepository.instance.getCurrentUser().uid).let { response ->
             response.first.observeForever{ student ->
                 var totalCharge = 0
                 var totalPaid = 0
