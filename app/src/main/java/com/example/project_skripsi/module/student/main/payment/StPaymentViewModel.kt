@@ -1,22 +1,32 @@
 package com.example.project_skripsi.module.student.main.payment
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.project_skripsi.core.model.firestore.Payment
+import com.example.project_skripsi.core.repository.AuthRepository
+import com.example.project_skripsi.core.repository.FirestoreRepository
+import com.example.project_skripsi.utils.helper.DateHelper
 
 class StPaymentViewModel : ViewModel() {
 
-    private val _upcomingPayment = MutableLiveData<List<String>>()
-    val upcomingPayment : LiveData<List<String>> = _upcomingPayment
+    private val _totalCharge = MutableLiveData<Int>()
+    val totalCharge : LiveData<Int> = _totalCharge
 
-    private val _unpaidPayment = MutableLiveData<List<String>>()
-    val unpaidPayment : LiveData<List<String>> = _unpaidPayment
+    private val _totalPaid = MutableLiveData<Int>()
+    val totalPaid : LiveData<Int> = _totalPaid
 
-    private val _paidPayment = MutableLiveData<List<String>>()
-    val paidPayment : LiveData<List<String>> = _paidPayment
+    private val _accountNumber = MutableLiveData<String>()
+    val accountNumber : LiveData<String> = _accountNumber
+
+    private val _upcomingPayment = MutableLiveData<List<Payment>>()
+    val upcomingPayment : LiveData<List<Payment>> = _upcomingPayment
+
+    private val _unpaidPayment = MutableLiveData<List<Payment>>()
+    val unpaidPayment : LiveData<List<Payment>> = _unpaidPayment
+
+    private val _paidPayment = MutableLiveData<List<Payment>>()
+    val paidPayment : LiveData<List<Payment>> = _paidPayment
 
     companion object {
         const val tabCount = 3
@@ -24,12 +34,36 @@ class StPaymentViewModel : ViewModel() {
     }
 
     init {
-        Handler(Looper.getMainLooper()).postDelayed({
-            _upcomingPayment.value = listOf("Uang sekolah", "Uang guru")
-            _unpaidPayment.value = listOf("Uang berenang", "Uang main")
-            _paidPayment.value = listOf("Uang libur", "Uang ortu")
-        }, 1000)
+        refreshPayment()
     }
 
+    fun refreshPayment() {
+        FirestoreRepository.instance.getStudent(AuthRepository.instance.getCurrentUser().uid).let { response ->
+            response.first.observeForever{ student ->
+                var totalCharge = 0
+                var totalPaid = 0
+                val upcomingPayment = ArrayList<Payment>()
+                val unpaidPayment = ArrayList<Payment>()
+                val paidPayment = ArrayList<Payment>()
+                student.payments?.map { payment ->
+                    if (payment.paymentDate == null) {
+                        if (payment.paymentDeadline!! > DateHelper.getCurrentDate()) upcomingPayment.add(payment)
+                        else unpaidPayment.add(payment)
+                        totalCharge += (payment.nominal ?: 0)
+                    } else {
+                        paidPayment.add(payment)
+                        totalPaid += (payment.nominal?:0)
+                    }
+                    _accountNumber.postValue(payment.accountNumber?: "null" )
+                }
+                _totalCharge.postValue(totalCharge)
+                _totalPaid.postValue(totalPaid)
+                _upcomingPayment.postValue(upcomingPayment.toList())
+                _unpaidPayment.postValue(unpaidPayment.toList())
+                _paidPayment.postValue(paidPayment.toList())
+            }
+
+        }
+    }
 
 }
