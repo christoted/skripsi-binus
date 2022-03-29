@@ -27,17 +27,11 @@ class StTaskExamFragment : Fragment() {
         viewModel = ViewModelProvider(this)[StTaskExamViewModel::class.java]
         _binding = FragmentStTaskExamBinding.inflate(inflater, container, false)
 
-        viewModel.list.observe(viewLifecycleOwner, { refreshAdapter() })
-        refreshAdapter()
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
+        binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
         return binding.root
     }
-
-    private fun refreshAdapter(){
-        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
-        binding.tabLayout.setupWithViewPager(binding.vpContainer)
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -60,13 +54,24 @@ class StTaskExamFragment : Fragment() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             layoutInflater = LayoutInflater.from(context)
-            val binding2 = FragmentDummyRvBinding.inflate(layoutInflater, container, false)
+            val bindingRV = FragmentDummyRvBinding.inflate(layoutInflater, container, false)
 
-            binding2.rvContainer.layoutManager = LinearLayoutManager(context)
-            binding2.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM,viewModel.getExamList(position)).getAdapter()
+            bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
+            when(position) {
+                StTaskExamViewModel.EXAM_ONGOING -> {
+                    viewModel.ongoingList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
+                    })
+                }
+                StTaskExamViewModel.EXAM_PAST -> {
+                    viewModel.pastList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
+                    })
+                }
+            }
 
-            container.addView(binding2.root, 0)
-            return binding2.root
+            container.addView(bindingRV.root, 0)
+            return bindingRV.root
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {

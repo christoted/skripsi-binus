@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.repository.AuthRepository
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
 class AuthViewModel : ViewModel() {
 
@@ -15,8 +16,8 @@ class AuthViewModel : ViewModel() {
 
     fun login(email : String, password : String , loginAs : Int) {
         AuthRepository.instance.login(email, password, loginAs).let { response ->
-            response.first.observeForever{ _successLoginAs.postValue(loginAs) }
-            response.second.observeForever{ _errorLogin.postValue(true) }
+            response.first.observeOnce{ _successLoginAs.postValue(loginAs) }
+            response.second.observeOnce{ _errorLogin.postValue(true) }
         }
     }
 

@@ -1,27 +1,16 @@
 package com.example.project_skripsi.module.student.subject_detail._sharing
 
+
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
-import com.example.project_skripsi.R
-import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.databinding.ItemStTaskBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class TaskViewHolder(private val taskType : Int, private val dataSet : List<TaskFormStatus>) {
-
-    companion object{
-        const val TYPE_EXAM = 1
-        const val TYPE_ASSIGNMENT = 2
-        val TASK_NAVIGATION = mapOf(
-            TYPE_EXAM to R.id.action_stTaskExamFragment_to_stTaskFormFragment,
-            TYPE_ASSIGNMENT to R.id.action_stTaskAssignmentFragment_to_stTaskFormFragment
-        )
-    }
-
+class TaskViewHolder(private val dataSet : List<TaskFormStatus>, private val taskFormListener: TaskFormListener) {
 
     fun getAdapter(): GenericAdapter<TaskFormStatus> {
         val adapter = GenericAdapter(dataSet)
@@ -53,10 +42,11 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Task
                 }
 
                 tvDuration.text = ("${item.duration} menit")
-
-            }
-            view.root.setOnClickListener {
-
+                item.id?.let { id ->
+                    root.setOnClickListener {
+                        taskFormListener.onTaskFormClicked(id)
+                    }
+                }
             }
         }
         return adapter

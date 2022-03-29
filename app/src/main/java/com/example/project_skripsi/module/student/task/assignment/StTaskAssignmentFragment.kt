@@ -11,6 +11,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentDummyRvBinding
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
 import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
+import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
 
 class StTaskAssignmentFragment : Fragment() {
 
@@ -27,16 +28,12 @@ class StTaskAssignmentFragment : Fragment() {
         viewModel = ViewModelProvider(this)[StTaskAssignmentViewModel::class.java]
         _binding = FragmentStTaskAssignmentBinding.inflate(inflater, container, false)
 
-        viewModel.list.observe(viewLifecycleOwner, { refreshAdapter() })
-        refreshAdapter()
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
+        binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
         return binding.root
     }
 
-    private fun refreshAdapter(){
-        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
-        binding.tabLayout.setupWithViewPager(binding.vpContainer)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -59,13 +56,23 @@ class StTaskAssignmentFragment : Fragment() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             layoutInflater = LayoutInflater.from(context)
-            val binding2 = FragmentDummyRvBinding.inflate(layoutInflater, container, false)
+            val bindingRV = FragmentDummyRvBinding.inflate(layoutInflater, container, false)
 
-            binding2.rvContainer.layoutManager = LinearLayoutManager(context)
-            binding2.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT,viewModel.getAssignmentList(position)).getAdapter()
-
-            container.addView(binding2.root, 0)
-            return binding2.root
+            bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
+            when(position) {
+                StTaskExamViewModel.EXAM_ONGOING -> {
+                    viewModel.ongoingList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
+                    })
+                }
+                StTaskExamViewModel.EXAM_PAST -> {
+                    viewModel.pastList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
+                    })
+                }
+            }
+            container.addView(bindingRV.root, 0)
+            return bindingRV.root
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
