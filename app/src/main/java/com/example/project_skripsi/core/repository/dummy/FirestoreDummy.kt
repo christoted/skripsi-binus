@@ -22,7 +22,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getStudents() = mapOf(
         "P4T9d2CagYdNmhc7xFiGYh3l2oH2" to
-                Student("123456789",
+                Student("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                    "123456789",
                     "Luis B",
                     "082363007520",
                     18,
@@ -53,7 +54,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                                 2
                             )
                         ),
-                        AssignedTaskForm("tedytedeydyyd", // ini juga
+                        AssignedTaskForm("xaxaxaxa", // ini juga
                             true,
                             70,
                             listOf()
@@ -65,7 +66,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getParents() = mapOf(
         "Zslqzb1vN1cehlD7TYaQBWHERo72" to
-            Parent("Arum",
+            Parent("Zslqzb1vN1cehlD7TYaQBWHERo72",
+                "Arum",
                 "0821123123",
                 listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2")
             )
@@ -74,7 +76,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getTeachers() = mapOf(
         "EAwxIDeIQfRWuNHW4P92B6Ko5G53" to
-            Teacher("Devita",
+            Teacher("EAwxIDeIQfRWuNHW4P92B6Ko5G53",
+                "Devita",
                 "0821123123",
                 "perempuan",
                 "eMsulnik6kEpW0ESKI9V",
@@ -94,7 +97,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getAdministrators() = mapOf(
         "zriNod2GJUSY1EZpqexfZCLlUwt2" to
-            Administrator("Admin",
+            Administrator("zriNod2GJUSY1EZpqexfZCLlUwt2",
+                "Admin",
                 "0821123123",
             )
     )
@@ -102,11 +106,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getAnnouncements() = mapOf(
         "1UYvc8ji8ip4Zoejke9d" to
-            Announcement("Lomba Sekolah 2",
+            Announcement("1UYvc8ji8ip4Zoejke9d",
+                "Lomba Sekolah 2",
                 "Kategori lomba dibagi menjadi 4 cabang",
                 DateHelper.getCurrentDate()),
         "5vlpa3hwTPQcfHZ2L66z" to
-            Announcement("Pengumuman Sekolah 2",
+            Announcement("5vlpa3hwTPQcfHZ2L66z",
+                "Pengumuman Sekolah 2",
                 "Pembelajaran jarak jauh dikarenakan covid 19",
                 DateHelper.getCurrentDate()),
     )
@@ -114,14 +120,16 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getResources() = mapOf(
         "dxXTXZcrj0yVh8PpzYk2" to
-            Resource("Pertemuan 1",
+            Resource("dxXTXZcrj0yVh8PpzYk2",
+                "Pertemuan 1",
                 "recording",
                 "<<url>>",
                 "Biologi",
                 listOf("b1Ty3EisH2bkMlnBWGmp"),
                 listOf("eMsulnik6kEpW0ESKI9V")),
         "feiaZB0ds1rbaWT1g8hJ" to
-            Resource("Bab 1 Reproduksi",
+            Resource("feiaZB0ds1rbaWT1g8hJ",
+                "Bab 1 Reproduksi",
                 "slide",
                 "<<url>>",
                 "Biologi",
@@ -132,7 +140,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getTaskForms() = mapOf(
             "HaWuFgmvLAuZYeG5JuVw" to
-                TaskForm("Ujian Tengah Semester 2",
+                TaskForm("HaWuFgmvLAuZYeG5JuVw",
+                    "Ujian Tengah Semester 2",
                 "ujian tengah semester",
                 DateHelper.getCurrentDate(),
                 DateHelper.getCurrentDate(),
@@ -147,7 +156,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 listOf("eMsulnik6kEpW0ESKI9V")),
 
             "ripyBsBZObBfarZpd085" to
-                TaskForm("Tugas tentang minyak hewani",
+                TaskForm("ripyBsBZObBfarZpd085",
+                    "Tugas tentang minyak hewani",
                     "tugas",
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
@@ -170,8 +180,9 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     ),
                     listOf("eMsulnik6kEpW0ESKI9V")),
 
-        "tedytedeydyyd" to
-                TaskForm("bebas", // sesuaikan
+        "xaxaxaxa" to
+                TaskForm("xaxaxaxa",
+                    "bebas", // sesuaikan
                     "tugas", // sesuaikan  asg / exam
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
@@ -182,7 +193,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private fun getClasses() = mapOf(
         "eMsulnik6kEpW0ESKI9V" to
-            StudyClass("XII-IPA-2",
+            StudyClass("eMsulnik6kEpW0ESKI9V",
+                "XII-IPA-2",
                 "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
                 "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
                 listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2"),
@@ -199,7 +211,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             )
                         ),
                         listOf("HaWuFgmvLAuZYeG5JuVw"), // exam
-                        listOf("ripyBsBZObBfarZpd085","tedytedeydyyd"), // asg
+                        listOf("ripyBsBZObBfarZpd085","xaxaxaxa"), // asg
                         listOf("dxXTXZcrj0yVh8PpzYk2",
                             "feiaZB0ds1rbaWT1g8hJ"
                         )
@@ -230,11 +242,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     }
 
     override fun onSuccess(p0: Any?) {
-        Log.d("12345-FirestoreDummy", "ok");
+        Log.d("12345-FirestoreDummy", "ok")
     }
 
     override fun onFailure(p0: Exception) {
-        Log.d("12345-FirestoreDummy", "failed $p0");
+        Log.d("12345-FirestoreDummy", "failed $p0")
     }
 
 }

@@ -34,7 +34,7 @@
                 android:layout_marginStart="8dp">
 
                 <TextView
-                    android:id="@+id/textview_profile_name"
+                    android:id="@+id/tv_profile_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Luis (21)"
@@ -43,7 +43,7 @@
                     android:textSize="18sp"/>
 
                 <TextView
-                    android:id="@+id/textview_profile_class"
+                    android:id="@+id/tv_profile_class"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="XII - IPA - 1"/>
