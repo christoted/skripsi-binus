@@ -24,7 +24,7 @@ data class TaskForm(
     @get: PropertyName("assigned_classes")
     @set: PropertyName("assigned_classes")
     var assignedClasses: List<String>? = null,
-)
+): HomeSectionData()
 
 @IgnoreExtraProperties
 data class Question(

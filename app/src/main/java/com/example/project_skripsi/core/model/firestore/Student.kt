@@ -62,7 +62,7 @@ data class Payment(
     @set: PropertyName("payment_date")
     var paymentDate: Date? = null,
 
-)
+): HomeSectionData()
 
 @IgnoreExtraProperties
 data class AssignedTaskForm(
