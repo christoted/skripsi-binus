@@ -5,21 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import com.example.project_skripsi.module.student.task.StTaskViewModel
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -61,7 +57,7 @@ class StHomeFragment : Fragment(), ItemListener {
             binding.textviewProfileClass.text = it
         })
 
-        viewModel.sectionDatas.observe(viewLifecycleOwner, Observer {
+        viewModel.sectionData.observe(viewLifecycleOwner, Observer {
 //            binding.textviewProfileClass.text = it.toString()
             with(binding.recyclerviewClass) {
                 layoutManager = LinearLayoutManager(context)

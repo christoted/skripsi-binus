@@ -3,13 +3,11 @@ package com.example.project_skripsi.module.student.main.home.view.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.databinding.ItemStHomeMainSectionBinding
 import com.example.project_skripsi.module.student.main.home.viewmodel.HomeMainSection
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import java.util.ArrayList
 
 class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener: ItemListener): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
@@ -19,7 +17,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
     }
 
     override fun onBindViewHolder(holder: StHomeMainSectionViewHolder, position: Int) {
-        viewModel.sectionDatas.value?.let {
+        viewModel.sectionData.value?.let {
             val singleItemMainSection = it[position]
             // Declare the child adapter
             val childAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection, listener)
@@ -29,7 +27,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
 
     override fun getItemCount(): Int {
 
-       viewModel.sectionDatas.value?.let {
+       viewModel.sectionData.value?.let {
          return it.size
        } ?: run {
            return 0

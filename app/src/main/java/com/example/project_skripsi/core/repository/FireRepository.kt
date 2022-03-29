@@ -125,7 +125,7 @@ class FireRepository {
         return Pair(data, exception)
     }
 
-    fun getAnnouncement() : Pair<LiveData<List<Announcement>> , LiveData<Exception>> {
+    fun getAnnouncements() : Pair<LiveData<List<Announcement>> , LiveData<Exception>> {
         val announcements = arrayListOf<Announcement>()
         val data = MutableLiveData<List<Announcement>>()
         val exception = MutableLiveData<Exception>()

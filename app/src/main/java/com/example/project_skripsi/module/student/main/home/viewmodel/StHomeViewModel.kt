@@ -1,12 +1,11 @@
 package com.example.project_skripsi.module.student.main.home.viewmodel
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -23,25 +22,18 @@ class StHomeViewModel : ViewModel() {
     private val _profileClass = MutableLiveData<String>()
     val profileClass : LiveData<String> = _profileClass
 
-    private val _sectionDatas = MutableLiveData<List<HomeMainSection>>()
-    val sectionDatas: LiveData<List<HomeMainSection>> = _sectionDatas
+    private val _sectionData = MutableLiveData<List<HomeMainSection>>()
+    val sectionData: LiveData<List<HomeMainSection>> = _sectionData
 
     private val _listHomeSectionDataClassSchedule = MutableLiveData<List<Subject>>()
-    private val _listHomeSectionDataExamId = MutableLiveData<List<String>>()
     private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
-    private val _listHomeSectionDataAssignmentId = MutableLiveData<List<String>>()
     private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
 
-    private val listHomeSectionDataClassSchedule = arrayListOf<HomeSectionData>()
-    private val listHomeSectionDataPayment = arrayListOf<HomeSectionData>()
-    private val listHomeSectionDataAnnouncement = arrayListOf<HomeSectionData>()
     private var listHomeSectionDataExam = arrayListOf<TaskForm>()
     private var listHomeSectionDataAssignment = arrayListOf<TaskForm>()
 
-    private var tempListHomeSectionDataAssignment = arrayListOf<TaskForm>()
-    private var tempHomeSectionDataExam = arrayListOf<TaskForm>()
 
     init {
         _profileName.value = "Luis Anthonie Alkins (21)"
@@ -52,57 +44,39 @@ class StHomeViewModel : ViewModel() {
     }
 
     private fun initData() {
-        val listDatas = arrayListOf<HomeMainSection>()
-        listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = emptyList()))
-        listDatas.add(HomeMainSection("Ujian", sectionItem = emptyList()))
-        listDatas.add(HomeMainSection("Tugas", sectionItem = emptyList()))
-        listDatas.add(HomeMainSection("Pembayaran", sectionItem = emptyList()))
-        listDatas.add(HomeMainSection("Pengumuman", sectionItem = emptyList()))
+        val listData = arrayListOf<HomeMainSection>()
+        listData.add(HomeMainSection("Jadwal Kelas", sectionItem = emptyList()))
+        listData.add(HomeMainSection("Ujian", sectionItem = emptyList()))
+        listData.add(HomeMainSection("Tugas", sectionItem = emptyList()))
+        listData.add(HomeMainSection("Pembayaran", sectionItem = emptyList()))
+        listData.add(HomeMainSection("Pengumuman", sectionItem = emptyList()))
 
         _listHomeSectionDataClassSchedule.observeOnce {
-          //  listHomeSectionDataClassSchedule.addAll(it)
-            listDatas[0] = HomeMainSection("Jadwal Kelas", sectionItem = it)
-            _sectionDatas.postValue(listDatas)
+            listData[0] = HomeMainSection("Jadwal Kelas", sectionItem = it)
+            _sectionData.postValue(listData)
+        }
+
+        _listHomeSectionDataExam.observeOnce {
+            listData[1] = (HomeMainSection("Ujian", sectionItem = it))
+            _sectionData.postValue(listData)
+        }
+
+        _listHomeSectionDataAssignment.observeOnce {
+            listData[2] = (HomeMainSection("Tugas", sectionItem = it))
+            _sectionData.postValue(listData)
         }
 
         _listPaymentSectionDataPayment.observeOnce {
-        //    listHomeSectionDataPayment.addAll(it)
-            listDatas[3] =  HomeMainSection("Pembayaran", sectionItem = it)
-            _sectionDatas.postValue(listDatas)
+            listData[3] =  HomeMainSection("Pembayaran", sectionItem = it)
+            _sectionData.postValue(listData)
         }
 
         _listPaymentSectionDataAnnouncement.observeOnce {
-       //     listHomeSectionDataAnnouncement.addAll(it)
-            listDatas[4] = HomeMainSection("Pengumuman", sectionItem = it)
-            _sectionDatas.postValue(listDatas)
+            listData[4] = HomeMainSection("Pengumuman", sectionItem = it)
+            _sectionData.postValue(listData)
         }
 
-     //   listHomeSectionDataAssignment = arrayListOf()
-        _listHomeSectionDataAssignment.observeOnce {
-       //     tempListHomeSectionDataAssignment.addAll(it)
-            listDatas[2] = (HomeMainSection("Tugas", sectionItem = it))
-            _sectionDatas.postValue(listDatas)
-        }
-
-     //   listHomeSectionDataExam = arrayListOf()
-        _listHomeSectionDataExam.observeOnce {
-      //      tempHomeSectionDataExam.addAll(it)
-            listDatas[1] = (HomeMainSection("Ujian", sectionItem = it))
-            _sectionDatas.postValue(listDatas)
-        }
-
-
-
-        /*
-
-            listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = listHomeSectionDataClassSchedule))
-        listDatas.add(HomeMainSection("Ujian", sectionItem = tempHomeSectionDataExam))
-        listDatas.add(HomeMainSection("Tugas", sectionItem = tempListHomeSectionDataAssignment))
-        listDatas.add(HomeMainSection("Pembayaran", sectionItem = listHomeSectionDataPayment))
-        listDatas.add(HomeMainSection("Pengumuman", sectionItem = listHomeSectionDataAnnouncement))
-         */
-
-        _sectionDatas.postValue(listDatas)
+        _sectionData.postValue(listData)
     }
 
     private fun loadCurrentStudent(uid: String) {
@@ -111,14 +85,10 @@ class StHomeViewModel : ViewModel() {
             response.first.observeOnce {
                 student ->
                 Log.d("Data Student", "${student}")
-                student.studyClass?.let {
-                    // TODO: Take the Class id
-                    loadStudyClass(it)
-                }
+                // TODO: Take the Class id
+                student.studyClass?.let { loadStudyClass(it) }
                 // TODO: Load the Payment
-                student.payments?.let {
-                    _listPaymentSectionDataPayment.postValue(it)
-                }
+                student.payments?.let { _listPaymentSectionDataPayment.postValue(it) }
             }
         }
     }
@@ -132,13 +102,13 @@ class StHomeViewModel : ViewModel() {
                 studyClass.subjects?.let {
                     _listHomeSectionDataClassSchedule.postValue(it)
                     it.map { subject ->
-                        // TODO: Take the class assignments
-                        subject.classExams?.map {
-                            loadTaskForms(it)
-                        }
                         // TODO: Take the class exams
-                        subject.classAssignments?.map {
-                            loadTaskForms(it)
+                        subject.classExams?.let { exams ->
+                            loadTaskForms(exams, _listHomeSectionDataExam)
+                        }
+                        // TODO: Take the class assignments
+                        subject.classAssignments?.let { assignments ->
+                            loadTaskForms(assignments, _listHomeSectionDataAssignment)
                         }
                     }
                 }
@@ -147,7 +117,7 @@ class StHomeViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.instance.getAnnouncement().let {
+        FireRepository.instance.getAnnouncements().let {
             response ->
             response.first.observeOnce {
                 // TODO: Load Announcement
@@ -156,21 +126,18 @@ class StHomeViewModel : ViewModel() {
         }
     }
 
-    private fun loadTaskForms(uid: String) {
-        FireRepository.instance.getTaskForm(uid).let {
-            response ->
-            response.first.observeOnce {
-                it.type?.let { type ->
-                    if (type == "tugas") {
-                        listHomeSectionDataAssignment.add(it)
-                    } else {
-                        listHomeSectionDataExam.add(it)
-                    }
+    private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
+        val taskFormList = ArrayList<TaskForm>()
+        uids.map { uid ->
+            FireRepository.instance.getTaskForm(uid).let { response ->
+                response.first.observeForever { taskForm ->
+                    taskFormList.add(taskForm)
+                    if (taskFormList.size == uids.size)
+                        _taskFormList.postValue(taskFormList.toList())
                 }
-                _listHomeSectionDataAssignment.postValue(listHomeSectionDataAssignment)
-                _listHomeSectionDataExam.postValue(listHomeSectionDataExam)
             }
         }
     }
+
 
 }
