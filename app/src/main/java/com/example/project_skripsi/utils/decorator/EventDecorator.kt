@@ -15,10 +15,11 @@ import java.util.*
 class EventDecorator(private val eventDay: CalendarDay, private val dayEventList : List<DayEvent>) : DayViewDecorator {
 
     val color = mapOf(
-        StCalendarViewModel.TYPE_CLASS to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_blue, null),
+        StCalendarViewModel.TYPE_MEETING to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_blue, null),
         StCalendarViewModel.TYPE_EXAM to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_red, null),
         StCalendarViewModel.TYPE_ASSIGNMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_yellow, null),
         StCalendarViewModel.TYPE_PAYMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_purple, null),
+        StCalendarViewModel.TYPE_ANNOUNCEMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_brown, null),
         StCalendarViewModel.TYPE_MORE to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_black, null),
     )
 

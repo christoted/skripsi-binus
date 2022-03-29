@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -125,7 +126,7 @@ class StHomeViewModel : ViewModel() {
         val taskFormList = ArrayList<TaskForm>()
         uids.map { uid ->
             FireRepository.instance.getTaskForm(uid).let { response ->
-                response.first.observeForever { taskForm ->
+                response.first.observeOnce { taskForm ->
                     taskFormList.add(taskForm)
                     if (taskFormList.size == uids.size)
                         _taskFormList.postValue(taskFormList.toList())

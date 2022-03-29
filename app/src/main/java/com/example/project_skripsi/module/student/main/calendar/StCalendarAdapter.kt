@@ -2,28 +2,29 @@ package com.example.project_skripsi.module.student.main.calendar
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.databinding.*
 import com.example.project_skripsi.module.student.main._sharing.*
-import com.example.project_skripsi.module.student.task.form.FormAdapter
-import java.util.*
+import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_ASSIGNMENT
+import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_MEETING
+import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_EXAM
+import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_PAYMENT
 
 class StCalendarAdapter(private val dayEventList: List<DayEvent>) :
     Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
-            StCalendarViewModel.TYPE_CLASS -> StHomeClassViewHolder(
+            TYPE_MEETING -> StHomeClassViewHolder(
                 ItemStHomeSectionItemBinding.inflate(
                 LayoutInflater.from(viewGroup.context), viewGroup, false))
-            StCalendarViewModel.TYPE_EXAM -> StHomeExamViewHolder(
+            TYPE_EXAM -> StHomeExamViewHolder(
                 ItemStHomeSectionItemBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
-            StCalendarViewModel.TYPE_ASSIGNMENT -> StHomeAssignmentViewHolder(
+            TYPE_ASSIGNMENT -> StHomeAssignmentViewHolder(
                 ItemStHomeSectionItemBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
-            StCalendarViewModel.TYPE_PAYMENT -> StHomePaymentViewHolder(
+            TYPE_PAYMENT -> StHomePaymentViewHolder(
                 ItemStHomeSectionPembayaranBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
             else -> StHomeAnnouncementViewHolder(
@@ -31,14 +32,12 @@ class StCalendarAdapter(private val dayEventList: List<DayEvent>) :
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
         }
 
-
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (dayEventList[position].viewType) {
-            StCalendarViewModel.TYPE_CLASS -> (holder as StHomeClassViewHolder).bind()
-            StCalendarViewModel.TYPE_EXAM -> (holder as StHomeExamViewHolder).bind()
-            StCalendarViewModel.TYPE_ASSIGNMENT -> (holder as StHomeAssignmentViewHolder).bind()
-            StCalendarViewModel.TYPE_PAYMENT -> (holder as StHomePaymentViewHolder).bind()
+            TYPE_MEETING -> (holder as StHomeClassViewHolder).bind()
+            TYPE_EXAM -> (holder as StHomeExamViewHolder).bind()
+            TYPE_ASSIGNMENT -> (holder as StHomeAssignmentViewHolder).bind()
+            TYPE_PAYMENT -> (holder as StHomePaymentViewHolder).bind()
             else -> (holder as StHomeAnnouncementViewHolder).bind()
         }
     }
@@ -49,21 +48,4 @@ class StCalendarAdapter(private val dayEventList: List<DayEvent>) :
         return dayEventList[position].viewType
     }
 
-//    inner class CalendarViewHolder(private val binding : ItemStCalendarBinding) :
-//        RecyclerView.ViewHolder(binding.root) {
-//
-//        fun bind(dayEvent: DayEvent) {
-//            with(binding) {
-//                tvName.text = dayEvent.viewType.toString()
-//                val c : Calendar = Calendar.getInstance().let {
-//                    it.time = dayEvent.eventTime
-
-//                    it
-//                }
-//
-//                tvDate.text = "${c.get(Calendar.HOUR_OF_DAY)} ${c.get(Calendar.MINUTE)}"
-//            }
-//
-//        }
-//    }
 }

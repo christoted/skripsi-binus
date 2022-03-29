@@ -203,11 +203,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
                         listOf(
                             ClassMeeting("MEET001",
+                                "Biologi",
                                 DateHelper.getCurrentDate(),
                                 DateHelper.getCurrentDate(),
                                 "online",
                                 "berlangsung",
                                 "feiaZB0ds1rbaWT1g8hJ",
+                                "123",
                             )
                         ),
                         listOf("HaWuFgmvLAuZYeG5JuVw"), // exam

@@ -6,21 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.project_skripsi.databinding.FragmentStCalendarBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
-import android.R
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import java.text.ParseException
-import java.util.*
 
 
 class StCalendarFragment : Fragment(), OnDateSelectedListener {
-
-
 
     private lateinit var viewModel: StCalendarViewModel
     private var _binding: FragmentStCalendarBinding? = null
@@ -32,7 +25,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel = ViewModelProvider(this)[StCalendarViewModel::class.java]
         _binding = FragmentStCalendarBinding.inflate(inflater, container, false)
