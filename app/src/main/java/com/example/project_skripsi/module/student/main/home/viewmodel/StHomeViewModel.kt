@@ -11,12 +11,6 @@ import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
-// Dummy Class
-data class HomeItemJadwalKelas(val className: String): HomeSectionData()
-data class HomeItemUjian(val examSubject: String) : HomeSectionData()
-data class HomeItemTugas(val assignmentSubject: String) : HomeSectionData()
-data class HomeItemPengumuman(val announcementName: String): HomeSectionData()
-
 data class HomeMainSection(val sectionName: String, val sectionItem: List<HomeSectionData>)
 
 // Use the abstract class
@@ -46,50 +40,69 @@ class StHomeViewModel : ViewModel() {
     private var listHomeSectionDataExam = arrayListOf<TaskForm>()
     private var listHomeSectionDataAssignment = arrayListOf<TaskForm>()
 
+    private var tempListHomeSectionDataAssignment = arrayListOf<TaskForm>()
+    private var tempHomeSectionDataExam = arrayListOf<TaskForm>()
+
     init {
         _profileName.value = "Luis Anthonie Alkins (21)"
         _profileClass.value = "XII - IPA - 1"
         loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
         loadAnnouncements()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            initData()
-        }, 1000)
+        initData()
     }
 
     private fun initData() {
         val listDatas = arrayListOf<HomeMainSection>()
+        listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = emptyList()))
+        listDatas.add(HomeMainSection("Ujian", sectionItem = emptyList()))
+        listDatas.add(HomeMainSection("Tugas", sectionItem = emptyList()))
+        listDatas.add(HomeMainSection("Pembayaran", sectionItem = emptyList()))
+        listDatas.add(HomeMainSection("Pengumuman", sectionItem = emptyList()))
 
         _listHomeSectionDataClassSchedule.observeOnce {
-            listHomeSectionDataClassSchedule.addAll(it)
+          //  listHomeSectionDataClassSchedule.addAll(it)
+            listDatas[0] = HomeMainSection("Jadwal Kelas", sectionItem = it)
+            _sectionDatas.postValue(listDatas)
         }
 
-
         _listPaymentSectionDataPayment.observeOnce {
-            listHomeSectionDataPayment.addAll(it)
+        //    listHomeSectionDataPayment.addAll(it)
+            listDatas[3] =  HomeMainSection("Pembayaran", sectionItem = it)
+            _sectionDatas.postValue(listDatas)
         }
 
         _listPaymentSectionDataAnnouncement.observeOnce {
-            listHomeSectionDataAnnouncement.addAll(it)
+       //     listHomeSectionDataAnnouncement.addAll(it)
+            listDatas[4] = HomeMainSection("Pengumuman", sectionItem = it)
+            _sectionDatas.postValue(listDatas)
         }
 
-        listHomeSectionDataAssignment = arrayListOf()
+     //   listHomeSectionDataAssignment = arrayListOf()
         _listHomeSectionDataAssignment.observeOnce {
-            listHomeSectionDataAssignment.addAll(it)
+       //     tempListHomeSectionDataAssignment.addAll(it)
+            listDatas[2] = (HomeMainSection("Tugas", sectionItem = it))
+            _sectionDatas.postValue(listDatas)
         }
 
-        listHomeSectionDataExam = arrayListOf()
+     //   listHomeSectionDataExam = arrayListOf()
         _listHomeSectionDataExam.observeOnce {
-            listHomeSectionDataExam.addAll(it)
+      //      tempHomeSectionDataExam.addAll(it)
+            listDatas[1] = (HomeMainSection("Ujian", sectionItem = it))
+            _sectionDatas.postValue(listDatas)
         }
 
-        listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = listHomeSectionDataClassSchedule))
-        listDatas.add(HomeMainSection("Ujian", sectionItem = listHomeSectionDataExam))
-        listDatas.add(HomeMainSection("Tugas", sectionItem = listHomeSectionDataAssignment))
+
+
+        /*
+
+            listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = listHomeSectionDataClassSchedule))
+        listDatas.add(HomeMainSection("Ujian", sectionItem = tempHomeSectionDataExam))
+        listDatas.add(HomeMainSection("Tugas", sectionItem = tempListHomeSectionDataAssignment))
         listDatas.add(HomeMainSection("Pembayaran", sectionItem = listHomeSectionDataPayment))
         listDatas.add(HomeMainSection("Pengumuman", sectionItem = listHomeSectionDataAnnouncement))
+         */
 
-        _sectionDatas.value = listDatas
+        _sectionDatas.postValue(listDatas)
     }
 
     private fun loadCurrentStudent(uid: String) {
@@ -118,23 +131,15 @@ class StHomeViewModel : ViewModel() {
 
                 studyClass.subjects?.let {
                     _listHomeSectionDataClassSchedule.postValue(it)
-                    it.forEach { subject ->
-
+                    it.map { subject ->
                         // TODO: Take the class assignments
-                        subject.classExams?.let {
-                            it.forEach { uid ->
-                                loadTaskForms(uid)
-                            }
-                            _listHomeSectionDataExamId.postValue(it)
+                        subject.classExams?.map {
+                            loadTaskForms(it)
                         }
                         // TODO: Take the class exams
-                        subject.classAssignments?.let {
-                            it.forEach { uid ->
-                                loadTaskForms(uid)
-                            }
-                            _listHomeSectionDataAssignmentId.postValue(it)
+                        subject.classAssignments?.map {
+                            loadTaskForms(it)
                         }
-
                     }
                 }
             }

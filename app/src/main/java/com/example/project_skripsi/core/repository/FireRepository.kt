@@ -103,8 +103,11 @@ class FireRepository {
             .addOnSuccessListener { taskForm ->
                 if (taskForm.data != null) data.postValue(taskForm.toObject(TaskForm::class.java))
                 else exception.postValue(java.lang.Exception("task form uid not found"))
+                Log.d("Data Task", "${taskForm.id} ")
             }
-            .addOnFailureListener { ex -> exception.postValue(ex)}
+            .addOnFailureListener { ex -> exception.postValue(ex)
+                Log.d("Error", "getTaskForm: $ex")
+            }
         return Pair(data, exception)
     }
 
