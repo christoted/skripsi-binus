@@ -9,9 +9,6 @@ import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-
-data class HomeMainSection(val sectionName: String, val sectionItem: List<HomeSectionData>)
-
 // Use the abstract class
 
 class StHomeViewModel : ViewModel() {
@@ -81,6 +78,7 @@ class StHomeViewModel : ViewModel() {
             response.first.observeOnce {
                 student ->
                 Log.d("Data Student", "${student}")
+                student.name?.let { _profileName.postValue(it) }
                 // TODO: Take the Class id
                 student.studyClass?.let { loadStudyClass(it) }
                 // TODO: Load the Payment
@@ -95,6 +93,7 @@ class StHomeViewModel : ViewModel() {
             response ->
             response.first.observeOnce { studyClass ->
 
+                studyClass.name?.let { _profileClass.postValue(it) }
                 studyClass.subjects?.let {
                     _listHomeSectionDataClassSchedule.postValue(it)
                     it.map { subject ->

@@ -1,11 +1,15 @@
 package com.example.project_skripsi.core.model.firestore
 
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
 import java.util.*
 
 @IgnoreExtraProperties
 data class StudyClass(
+
+    @DocumentId
+    val id : String? = null,
 
     val name: String? = null,
 

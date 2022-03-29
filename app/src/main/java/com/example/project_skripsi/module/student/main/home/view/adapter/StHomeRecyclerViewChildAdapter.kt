@@ -111,8 +111,8 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
                 title.text = data.subjectName
                 btnKelas.text = "Ujian"
                 btnMateri.isVisible = false
-                btnKelas.setOnClickListener {
-                    listener.onExamItemClicked(absoluteAdapterPosition)
+                singleItem.id?.let { id ->
+                    btnKelas.setOnClickListener { listener.onTaskFormItemClicked(id) }
                 }
             }
         }
@@ -130,8 +130,8 @@ class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: It
                 title.text = data.subjectName
                 btnKelas.text = "Tugas"
                 btnMateri.isVisible = false
-                btnKelas.setOnClickListener {
-                    listener.onAssignmentItemClicked(absoluteAdapterPosition)
+                singleItem.id?.let { id ->
+                    btnKelas.setOnClickListener { listener.onTaskFormItemClicked(id) }
                 }
             }
         }

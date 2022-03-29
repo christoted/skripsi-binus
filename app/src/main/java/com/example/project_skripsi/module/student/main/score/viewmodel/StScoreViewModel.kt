@@ -5,7 +5,6 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.module.student.main.home.viewmodel.HomeMainSection
 
 class StScoreViewModel : ViewModel() {
 

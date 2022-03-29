@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -45,25 +44,14 @@ class StHomeFragment : Fragment(), ItemListener {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = homeMainSectionAdapter
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
 
-        binding.recyclerviewClass.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        viewModel.profileName.observe(viewLifecycleOwner, { binding.tvProfileName.text = it })
+        viewModel.profileClass.observe(viewLifecycleOwner, { binding.tvProfileClass.text = it })
 
-        viewModel.profileName.observe(viewLifecycleOwner, Observer {
-            binding.textviewProfileName.text = it
-        })
-
-        viewModel.profileClass.observe(viewLifecycleOwner, Observer {
-            binding.textviewProfileClass.text = it
-        })
-
-        viewModel.sectionData.observe(viewLifecycleOwner, Observer {
-//            binding.textviewProfileClass.text = it.toString()
-            with(binding.recyclerviewClass) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = homeMainSectionAdapter
-            }
+        viewModel.sectionData.observe(viewLifecycleOwner, {
+            binding.recyclerviewClass.adapter = homeMainSectionAdapter
         })
 
     }
@@ -73,16 +61,9 @@ class StHomeFragment : Fragment(), ItemListener {
         _binding = null
     }
 
-    override fun onExamItemClicked(Position: Int) {
-        Log.d("Exam", "onExamItemClicked: " )
-        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity("HaWuFgmvLAuZYeG5JuVw")
-        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
-        view?.findNavController()?.navigate(toTaskActivity)
-    }
-
-    override fun onAssignmentItemClicked(Position: Int) {
-        Log.d("Assignment", "onAssignmentItemClicked: ")
-        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity("ripyBsBZObBfarZpd085")
+    override fun onTaskFormItemClicked(taskFormId: String) {
+        Log.d("TaskForm", "onTaskFormItemClicked: ")
+        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity(taskFormId)
         toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
         view?.findNavController()?.navigate(toTaskActivity)
     }
