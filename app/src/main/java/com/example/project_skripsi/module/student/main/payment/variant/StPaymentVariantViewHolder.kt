@@ -18,7 +18,6 @@ class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet
         const val TYPE_PAID = 2
     }
 
-
     fun getAdapter(): GenericAdapter<Payment> {
         val adapter = GenericAdapter(dataSet)
         adapter.expressionOnCreateViewHolder = {

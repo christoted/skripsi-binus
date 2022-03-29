@@ -33,14 +33,19 @@ class StHomeViewModel : ViewModel() {
     val sectionDatas: LiveData<List<HomeMainSection>> = _sectionDatas
 
     private val _listHomeSectionDataClassSchedule = MutableLiveData<List<Subject>>()
-    private val listHomeSectionDataExam = arrayListOf<TaskForm>()
-    private val listHomeSectionDataAssignment = arrayListOf<TaskForm>()
+    private val _listHomeSectionDataExamId = MutableLiveData<List<String>>()
+    private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
+    private val _listHomeSectionDataAssignmentId = MutableLiveData<List<String>>()
+    private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
 
     private val listHomeSectionDataClassSchedule = arrayListOf<HomeSectionData>()
     private val listHomeSectionDataPayment = arrayListOf<HomeSectionData>()
     private val listHomeSectionDataAnnouncement = arrayListOf<HomeSectionData>()
+    private var listHomeSectionDataExam = arrayListOf<TaskForm>()
+    private var listHomeSectionDataAssignment = arrayListOf<TaskForm>()
+
     init {
         _profileName.value = "Luis Anthonie Alkins (21)"
         _profileClass.value = "XII - IPA - 1"
@@ -59,12 +64,6 @@ class StHomeViewModel : ViewModel() {
             listHomeSectionDataClassSchedule.addAll(it)
         }
 
-        val listHomeSectionDataExam = arrayListOf<HomeSectionData>()
-        listHomeSectionDataExam.add(HomeItemUjian(examSubject = "Matematika"))
-
-        val listHomeSectionDataAssignment = arrayListOf<HomeSectionData>()
-        listHomeSectionDataAssignment.add(HomeItemTugas(assignmentSubject = "Tugas 1"))
-
 
         _listPaymentSectionDataPayment.observeOnce {
             listHomeSectionDataPayment.addAll(it)
@@ -72,6 +71,16 @@ class StHomeViewModel : ViewModel() {
 
         _listPaymentSectionDataAnnouncement.observeOnce {
             listHomeSectionDataAnnouncement.addAll(it)
+        }
+
+        listHomeSectionDataAssignment = arrayListOf()
+        _listHomeSectionDataAssignment.observeOnce {
+            listHomeSectionDataAssignment.addAll(it)
+        }
+
+        listHomeSectionDataExam = arrayListOf()
+        _listHomeSectionDataExam.observeOnce {
+            listHomeSectionDataExam.addAll(it)
         }
 
         listDatas.add(HomeMainSection("Jadwal Kelas", sectionItem = listHomeSectionDataClassSchedule))
@@ -116,12 +125,14 @@ class StHomeViewModel : ViewModel() {
                             it.forEach { uid ->
                                 loadTaskForms(uid)
                             }
+                            _listHomeSectionDataExamId.postValue(it)
                         }
                         // TODO: Take the class exams
                         subject.classAssignments?.let {
                             it.forEach { uid ->
                                 loadTaskForms(uid)
                             }
+                            _listHomeSectionDataAssignmentId.postValue(it)
                         }
 
                     }
@@ -151,6 +162,8 @@ class StHomeViewModel : ViewModel() {
                         listHomeSectionDataExam.add(it)
                     }
                 }
+                _listHomeSectionDataAssignment.postValue(listHomeSectionDataAssignment)
+                _listHomeSectionDataExam.postValue(listHomeSectionDataExam)
             }
         }
     }
