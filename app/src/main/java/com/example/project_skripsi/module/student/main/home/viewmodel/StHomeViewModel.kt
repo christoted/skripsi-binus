@@ -30,11 +30,7 @@ class StHomeViewModel : ViewModel() {
     private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
-
-    private var listHomeSectionDataExam = arrayListOf<TaskForm>()
-    private var listHomeSectionDataAssignment = arrayListOf<TaskForm>()
-
-
+    
     init {
         _profileName.value = "Luis Anthonie Alkins (21)"
         _profileClass.value = "XII - IPA - 1"
