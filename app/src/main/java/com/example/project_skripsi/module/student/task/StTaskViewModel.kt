@@ -15,8 +15,12 @@ class StTaskViewModel : ViewModel() {
     private val _navType = MutableLiveData<Int>()
     val navType : LiveData<Int> = _navType
 
-    fun setNavigationType(type : Int) {
+    private val _taskFormId = MutableLiveData<String?>()
+    val taskFormId : LiveData<String?> = _taskFormId
+
+    fun setNavigationData(type : Int, taskFormId : String?) {
         _navType.value = type
+        _taskFormId.value = taskFormId
     }
 
 

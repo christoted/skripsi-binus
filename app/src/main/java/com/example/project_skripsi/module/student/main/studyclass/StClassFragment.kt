@@ -31,9 +31,9 @@ class StClassFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        viewModel = ViewModelProvider(this)[StClassViewModel::class.java]
+         viewModel = ViewModelProvider(this)[StClassViewModel::class.java]
         _binding = FragmentStClassBinding.inflate(inflater, container, false)
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -49,29 +49,38 @@ class StClassFragment : Fragment() {
         })
 
         binding.btnAssignment.setOnClickListener{ view ->
-            val toTaskActivity = StClassFragmentDirections.actionNavigationClassToStTaskActivity()
+            val toTaskActivity = StClassFragmentDirections.actionNavigationClassToStTaskActivity(null)
             toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_ASSIGNMENT
             view.findNavController().navigate(toTaskActivity)
         }
 
         binding.btnExam.setOnClickListener{ view ->
-            val toTaskActivity = StClassFragmentDirections.actionNavigationClassToStTaskActivity()
+            val toTaskActivity = StClassFragmentDirections.actionNavigationClassToStTaskActivity(null)
             toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_EXAM
             view.findNavController().navigate(toTaskActivity)
         }
 
-        viewModel.className.observe(viewLifecycleOwner, {binding.tvClassName.text = it})
-        viewModel.teacherName.observe(viewLifecycleOwner, {binding.tvTeacherName.text = it})
-        viewModel.teacherPhoneNumber.observe(viewLifecycleOwner, {
-            binding.imvTeacherPhone.setImageResource(R.drawable.whatsapp) })
-        viewModel.classChiefName.observe(viewLifecycleOwner, {binding.tvChiefName.text = it})
-        viewModel.classChiefPhoneNumber.observe(viewLifecycleOwner, {
-            binding.imvChiefPhone.setImageResource(R.drawable.whatsapp) })
+        viewModel.studyClass.observe(viewLifecycleOwner, {
+            with(binding) {
+                tvClassName.text = it.name
+                viewpagerSubject.adapter = ScreenSlidePagerAdapter()
+                tablSubject.setupWithViewPager(binding.viewpagerSubject)
+                if (viewModel.getSubjectPageCount() <= 1) binding.tablSubject.visibility = View.GONE
+            }
+        })
 
-        viewModel.subjectList.observe(viewLifecycleOwner, {
-            binding.viewpagerSubject.adapter = ScreenSlidePagerAdapter()
-            binding.tablSubject.setupWithViewPager(binding.viewpagerSubject)
-            if (viewModel.getSubjectPageCount() <= 1) binding.tablSubject.visibility = View.GONE
+        viewModel.teacher.observe(this, {
+            with(binding) {
+                tvTeacherName.text = it.name
+                it.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+            }
+        })
+
+        viewModel.classChief.observe(this, {
+            with(binding) {
+                tvChiefName.text = it.name
+                it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
+            }
         })
 
         return binding.root

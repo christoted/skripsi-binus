@@ -29,17 +29,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="1."
+                tools:text="1."
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginEnd="4dp"/>
 
             <TextView
-                android:id="@+id/tv_question"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Jika manusia adalah makhluk. Apakah kamu suka pertanyaan ini?"
+                tools:text="Jika manusia adalah makhluk. Apakah kamu suka pertanyaan ini?"
                 android:textSize="15sp"/>
 
         </LinearLayout>
@@ -49,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint="Isi jawaban disini"
+            tools:hint="Isi jawaban disini"
+            android:textSize="16sp"
             android:maxLines="10"
             android:layout_margin="8dp"/>
 

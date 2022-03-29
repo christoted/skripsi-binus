@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.core.model.firestore.Resource
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.model.local.Attendance
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
@@ -17,11 +18,8 @@ class StSubjectViewModel : ViewModel() {
         val tabHeader = arrayOf("Absen", "Materi", "Ujian", "Tugas")
     }
 
-    private val _teacherName = MutableLiveData<String>()
-    val teacherName: LiveData<String> = _teacherName
-
-    private val _teacherPhoneNumber = MutableLiveData<String>()
-    val teacherPhoneNumber: LiveData<String> = _teacherPhoneNumber
+    private val _teacher = MutableLiveData<Teacher>()
+    val teacher: LiveData<Teacher> = _teacher
 
     private val _attendanceList = MutableLiveData<List<Attendance>>()
     val attendanceList : LiveData<List<Attendance>> = _attendanceList
@@ -48,7 +46,7 @@ class StSubjectViewModel : ViewModel() {
 
     private fun loadStudent(uid: String) {
         FireRepository.instance.getStudent(uid).let { response ->
-            response.first.observeForever { student ->
+            response.first.observeOnce { student ->
                 with(student) {
                     attendedMeetings?.map { meeting -> mAttendedMeetings.add(meeting)}
                     assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) }}
@@ -61,7 +59,7 @@ class StSubjectViewModel : ViewModel() {
 
     private fun loadStudyClass(uid: String) {
         FireRepository.instance.getStudyClass(uid).let { response ->
-            response.first.observeForever { studyClass ->
+            response.first.observeOnce { studyClass ->
                 studyClass.name?.let { className = it }
                 studyClass.subjects?.filter { it.subjectName == this.subjectName }?.map { subject ->
                     with(subject) {
@@ -76,17 +74,9 @@ class StSubjectViewModel : ViewModel() {
         }
     }
 
-
-
-
     private fun loadTeacher(uid: String) {
         FireRepository.instance.getTeacher(uid).let { response ->
-            response.first.observeOnce { teacher ->
-                with(teacher) {
-                    name?.let { _teacherName.postValue(it) }
-                    phoneNumber?.let { _teacherPhoneNumber.postValue(it) }
-                }
-            }
+            response.first.observeOnce { _teacher.postValue(it) }
         }
     }
 
@@ -99,13 +89,11 @@ class StSubjectViewModel : ViewModel() {
         }
     }
 
-
-
     private fun loadResources(uids: List<String>) {
         val resourceList = ArrayList<Resource>()
         uids.map { uid ->
             FireRepository.instance.getResource(uid).let { response ->
-                response.first.observeForever {
+                response.first.observeOnce {
                     resourceList.add(it)
                     if (resourceList.size == uids.size) {
                         _resourceList.postValue(resourceList.toList())
@@ -120,7 +108,7 @@ class StSubjectViewModel : ViewModel() {
         val taskFormList = ArrayList<TaskFormStatus>()
         uids.map { uid ->
             FireRepository.instance.getTaskForm(uid).let { response ->
-                response.first.observeForever { taskForm ->
+                response.first.observeOnce { taskForm ->
                     mAssignedTaskForms[uid]?.let {
                         taskFormList.add(TaskFormStatus(className, taskForm, it))
                     }

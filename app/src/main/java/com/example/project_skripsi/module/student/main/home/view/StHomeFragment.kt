@@ -79,15 +79,15 @@ class StHomeFragment : Fragment(), ItemListener {
 
     override fun onExamItemClicked(Position: Int) {
         Log.d("Exam", "onExamItemClicked: " )
-        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity()
-        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_EXAM
+        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity("HaWuFgmvLAuZYeG5JuVw")
+        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
         view?.findNavController()?.navigate(toTaskActivity)
     }
 
     override fun onAssignmentItemClicked(Position: Int) {
-      Log.d("Assignment", "onAssignmentItemClicked: ")
-        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity()
-        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_ASSIGNMENT
+        Log.d("Assignment", "onAssignmentItemClicked: ")
+        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity("ripyBsBZObBfarZpd085")
+        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
         view?.findNavController()?.navigate(toTaskActivity)
     }
 

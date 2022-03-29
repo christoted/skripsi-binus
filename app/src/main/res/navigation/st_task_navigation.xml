@@ -26,11 +26,19 @@
         android:id="@+id/navigation_st_task_form_fragment"
         android:name="com.example.project_skripsi.module.student.task.form.StTaskFormFragment"
         android:label="fragment_st_task_form"
-        tools:layout="@layout/fragment_st_task_form" />
+        tools:layout="@layout/fragment_st_task_form" >
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dummy_fragment"
         android:name="com.example.project_skripsi.utils.custom_views.DummyFragment"
-        android:label="DummyFragment" />
+        android:label="DummyFragment" >
+        <action
+            android:id="@+id/action_navigation_dummy_fragment_to_navigation_st_task_form_fragment"
+            app:destination="@id/navigation_st_task_form_fragment" />
+    </fragment>
 
 </navigation>

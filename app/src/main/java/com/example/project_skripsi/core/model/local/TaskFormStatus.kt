@@ -8,6 +8,8 @@ import java.util.*
 
 data class TaskFormStatus(
 
+    val id : String? = null,
+
     val title: String? = null,
 
     val type: String? = null,
@@ -30,6 +32,7 @@ data class TaskFormStatus(
 
 ) {
     constructor(className: String, taskForm: TaskForm, assignedTaskForm: AssignedTaskForm) : this(
+        id = assignedTaskForm.id,
         title = taskForm.title,
         type = taskForm.type,
         startTime = taskForm.startTime,
@@ -48,7 +51,7 @@ data class TaskFormStatus(
             (taskForm.endTime!!.time - taskForm.startTime!!.time) / (1000 * 60)
 
 
-        private fun getStatus(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm) : String =
+        fun getStatus(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm) : String =
             when {
                 taskForm.endTime!! < DateHelper.getCurrentDate() -> "selesai"
                 taskForm.startTime!! > DateHelper.getCurrentDate() -> "belum dimulai"
@@ -56,7 +59,7 @@ data class TaskFormStatus(
                 else -> "terkumpul"
             }
 
-        private fun getStatusColor(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm): Int =
+        fun getStatusColor(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm): Int =
             when {
                 assignedTaskForm.answer!!.isNotEmpty() -> R.color.task_submit
                 assignedTaskForm.answer.isEmpty() &&

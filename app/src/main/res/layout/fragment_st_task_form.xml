@@ -18,21 +18,22 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
             tools:context=".module.student.task.form.StTaskFormFragment">
 
             <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:background="@color/recyclerview_background">
+                android:layout_height="wrap_content"
+                android:background="@color/recyclerview_background"
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="4dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
                     app:cardCornerRadius="6dp"
                     app:cardElevation="4dp">
 
@@ -42,53 +43,55 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_type"
+                            android:id="@+id/tv_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
-                            android:text="UJIAN TENGAH SEMESTER"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
                             android:background="@color/form_header"
-                            android:paddingTop="8dp"/>
+                            android:paddingTop="8dp"
+                            tools:text="UJIAN TENGAH SEMESTER"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_class"
+                            android:id="@+id/tv_class_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
-                            android:text="XII - IPA - 1"
-                            android:textStyle="bold"
-                            android:textSize="15sp"
-                            android:textColor="@color/black"
                             android:background="@color/form_header"
-                            android:paddingBottom="4dp"/>
+                            android:paddingBottom="4dp"
+                            tools:text="XII - IPA - 1"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp">
+                            android:layout_marginBottom="4dp"
+                            android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/tv_subject_name"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                tools:text="BIOLOGI"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
-                                android:textStyle="bold"
-                                android:text="BIOLOGI"/>
+                                android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_status"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                tools:text="TERKUMPUL"
                                 android:textAlignment="center"
                                 android:textColor="@color/form_submit"
-                                android:textStyle="bold"
-                                android:text="TERKUMPUL"/>
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -103,25 +106,25 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="mulai pada"/>
+                                android:text="mulai pada" />
 
                             <TextView
                                 android:id="@+id/tv_start_date"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                tools:text="12 - 03 - 2022"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:text="12 - 03 - 2022"/>
+                                android:textColor="@color/black" />
 
                             <TextView
                                 android:id="@+id/tv_start_time"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                tools:text="09:00"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:text="09:00"/>
+                                android:textColor="@color/black" />
 
                         </LinearLayout>
 
@@ -137,25 +140,25 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="selesai pada"/>
+                                android:text="selesai pada" />
 
                             <TextView
                                 android:id="@+id/tv_end_date"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                tools:text="13 - 03 - 2022"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:text="13 - 03 - 2022"/>
+                                android:textColor="@color/black" />
 
                             <TextView
                                 android:id="@+id/tv_end_time"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                tools:text="09:00"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:text="09:00"/>
+                                android:textColor="@color/black" />
 
                         </LinearLayout>
 
@@ -167,18 +170,18 @@
                     android:id="@+id/rv_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/recyclerview_background"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:listitem="@layout/item_st_task_form_mc"
-                    android:background="@color/recyclerview_background"/>
+                    tools:listitem="@layout/item_st_task_form_mc" />
 
                 <Button
                     android:id="@+id/btn_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kumpulkan"
                     android:layout_gravity="end"
                     android:layout_marginEnd="8dp"
-                    android:padding="15dp"/>
+                    android:padding="15dp"
+                    android:text="Kumpulkan" />
 
             </LinearLayout>
 

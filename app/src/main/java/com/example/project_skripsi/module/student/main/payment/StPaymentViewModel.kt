@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 
 class StPaymentViewModel : ViewModel() {
@@ -34,12 +35,12 @@ class StPaymentViewModel : ViewModel() {
     }
 
     init {
-        refreshPayment()
+        loadPayments()
     }
 
-    fun refreshPayment() {
+    private fun loadPayments() {
         FireRepository.instance.getStudent(AuthRepository.instance.getCurrentUser().uid).let { response ->
-            response.first.observeForever{ student ->
+            response.first.observeOnce{ student ->
                 var totalCharge = 0
                 var totalPaid = 0
                 val upcomingPayment = ArrayList<Payment>()

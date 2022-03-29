@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_home_fragment">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_home_fragment"
         android:name="com.example.project_skripsi.module.student.main.home.view.StHomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_st_home" >
@@ -15,7 +15,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_class"
+        android:id="@+id/navigation_class_fragment"
         android:name="com.example.project_skripsi.module.student.main.studyclass.StClassFragment"
         android:label="Class"
         tools:layout="@layout/fragment_st_class" >
@@ -28,19 +28,19 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_calendar"
+        android:id="@+id/navigation_calendar_fragment"
         android:name="com.example.project_skripsi.module.student.main.calendar.StCalendarFragment"
         android:label="Calendar"
         tools:layout="@layout/fragment_st_class" />
 
     <fragment
-        android:id="@+id/navigation_score"
+        android:id="@+id/navigation_score_fragment"
         android:name="com.example.project_skripsi.module.student.main.score.view.StScoreFragment"
         android:label="Score"
         tools:layout="@layout/fragment_st_score" />
 
     <fragment
-        android:id="@+id/navigation_payment"
+        android:id="@+id/navigation_payment_fragment"
         android:name="com.example.project_skripsi.module.student.main.payment.StPaymentFragment"
         android:label="Payment"
         tools:layout="@layout/fragment_st_payment" />
@@ -64,6 +64,10 @@
             android:name="navigationType"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string"
+            app:nullable="true" />
     </activity>
 
 

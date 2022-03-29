@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 
@@ -57,8 +58,8 @@ class AuthRepository {
                                         else -> it.getAdministrator(user.uid)
                                     }
                                 }.let { response ->
-                                    response.first.observeForever{ data.postValue(user) }
-                                    response.second.observeForever{ failure.postValue(true)
+                                    response.first.observeOnce{ data.postValue(user) }
+                                    response.second.observeOnce{ failure.postValue(true)
                                 }
                             }
                         } ?: failure.postValue(true)

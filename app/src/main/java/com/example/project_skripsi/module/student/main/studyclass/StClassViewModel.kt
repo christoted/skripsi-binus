@@ -3,30 +3,25 @@ package com.example.project_skripsi.module.student.main.studyclass
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.project_skripsi.core.model.firestore.Student
+import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.model.firestore.Subject
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import kotlin.math.min
 
 class StClassViewModel : ViewModel() {
 
-    private val _className = MutableLiveData<String>()
-    val className: LiveData<String> = _className
+    private val _studyClass = MutableLiveData<StudyClass>()
+    val studyClass: LiveData<StudyClass> = _studyClass
 
-    private val _teacherName = MutableLiveData<String>()
-    val teacherName: LiveData<String> = _teacherName
+    private val _teacher = MutableLiveData<Teacher>()
+    val teacher: LiveData<Teacher> = _teacher
 
-    private val _teacherPhoneNumber = MutableLiveData<String>()
-    val teacherPhoneNumber: LiveData<String> = _teacherPhoneNumber
-
-    private val _classChiefName = MutableLiveData<String>()
-    val classChiefName: LiveData<String> = _classChiefName
-
-    private val _classChiefPhoneNumber = MutableLiveData<String>()
-    val classChiefPhoneNumber: LiveData<String> = _classChiefPhoneNumber
-
-    private val _subjectList = MutableLiveData<List<Subject>>()
-    val subjectList: LiveData<List<Subject>> = _subjectList
+    private val _classChief = MutableLiveData<Student>()
+    val classChief: LiveData<Student> = _classChief
 
     init {
         loadStudent(AuthRepository.instance.getCurrentUser().uid)
@@ -34,7 +29,7 @@ class StClassViewModel : ViewModel() {
 
     private fun loadStudent(uid: String) {
         FireRepository.instance.getStudent(uid).let { response ->
-            response.first.observeForever { student ->
+            response.first.observeOnce { student ->
                 student.studyClass?.let { loadStudyClass(it) }
             }
         }
@@ -42,42 +37,37 @@ class StClassViewModel : ViewModel() {
 
     private fun loadStudyClass(uid: String) {
         FireRepository.instance.getStudyClass(uid).let { response ->
-            response.first.observeForever { studyClass ->
-                studyClass.name?.let { _className.postValue(it) }
-                studyClass.homeroomTeacher?.let { loadTeacher(it) }
-                studyClass.classChief?.let { loadClassChief(it) }
-                studyClass.subjects?.let { _subjectList.postValue(it) }
+            response.first.observeOnce { studyClass ->
+                with(studyClass) {
+                    _studyClass.postValue(this)
+                    homeroomTeacher?.let { loadTeacher(it) }
+                    classChief?.let { loadClassChief(it) }
+                }
             }
         }
     }
 
     private fun loadTeacher(uid: String) {
         FireRepository.instance.getTeacher(uid).let { response ->
-            response.first.observeForever { teacher ->
-                teacher.name?.let { _teacherName.postValue(it) }
-                teacher.phoneNumber?.let { _teacherPhoneNumber.postValue(it) }
-            }
+            response.first.observeOnce { _teacher.postValue(it) }
         }
     }
 
     private fun loadClassChief(uid: String) {
         FireRepository.instance.getStudent(uid).let { response ->
-            response.first.observeForever { classChief ->
-                classChief.name?.let { _classChiefName.postValue(it) }
-                classChief.phoneNumber?.let { _classChiefPhoneNumber.postValue(it) }
-            }
+            response.first.observeOnce { _classChief.postValue(it) }
         }
     }
 
 
     fun getSubjects(page: Int): List<Subject> {
         val startIdx = page * 8
-        val endIdx = min(startIdx + 8, subjectList.value?.size?:0)
-        return subjectList.value?.subList(startIdx, endIdx)?: emptyList()
+        val endIdx = min(startIdx + 8, studyClass.value?.subjects?.size?:0)
+        return studyClass.value?.subjects?.subList(startIdx, endIdx)?: emptyList()
     }
 
     fun getSubjectPageCount() : Int{
-        val subjects = subjectList.value?.size ?: 0
+        val subjects = studyClass.value?.subjects?.size ?: 0
         return (subjects + 8 - 1) / 8
     }
 

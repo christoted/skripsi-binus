@@ -7,11 +7,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.navArgs
 import com.example.project_skripsi.R
-import com.example.project_skripsi.databinding.ActivityStMainBinding
 import com.example.project_skripsi.databinding.ActivityStTaskBinding
-import com.example.project_skripsi.module.student.subject_detail.StSubjectActivityArgs
-import com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentViewModel
-import com.example.project_skripsi.module.student.task.form.StTaskFormViewModel
+import com.example.project_skripsi.utils.custom_views.DummyFragmentDirections
 
 class StTaskActivity : AppCompatActivity() {
 
@@ -33,19 +30,28 @@ class StTaskActivity : AppCompatActivity() {
         val navOptions = NavOptions.Builder()
                             .setPopUpTo(R.id.navigation_dummy_fragment,true)
                             .build()
-        when (viewModel.navType.value) {
-            StTaskViewModel.NAVIGATION_EXAM ->
-                navController.navigate(R.id.navigation_st_task_exam_fragment,null, navOptions)
-            StTaskViewModel.NAVIGATION_ASSIGNMENT ->
-                navController.navigate(R.id.navigation_st_task_assignment_fragment,null, navOptions)
-            StTaskViewModel.NAVIGATION_FORM ->
-                navController.navigate(R.id.navigation_st_task_form_fragment,null, navOptions)
-        }
+
+        viewModel.navType.observe(this, {
+            when(it) {
+                StTaskViewModel.NAVIGATION_EXAM ->
+                    navController.navigate(R.id.navigation_st_task_exam_fragment,null, navOptions)
+                StTaskViewModel.NAVIGATION_ASSIGNMENT ->
+                    navController.navigate(R.id.navigation_st_task_assignment_fragment,null, navOptions)
+                StTaskViewModel.NAVIGATION_FORM -> {
+                    val toTaskFormFragment = DummyFragmentDirections.actionNavigationDummyFragmentToNavigationStTaskFormFragment(
+                        viewModel.taskFormId.value!!
+                    )
+                    navController.navigate(toTaskFormFragment,navOptions)
+                }
+
+            }
+        })
+
     }
 
     private fun retrieveArgs(){
         val args: StTaskActivityArgs by navArgs()
-        viewModel.setNavigationType(args.navigationType)
+        viewModel.setNavigationData(args.navigationType, args.taskFormId)
     }
 
 }

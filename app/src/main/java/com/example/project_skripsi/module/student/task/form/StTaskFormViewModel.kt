@@ -1,20 +1,95 @@
 package com.example.project_skripsi.module.student.task.form
 
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.firestore.Student
+import com.example.project_skripsi.core.model.firestore.StudyClass
+import com.example.project_skripsi.core.model.firestore.TaskForm
+import com.example.project_skripsi.core.model.local.AssignedQuestion
+import com.example.project_skripsi.core.model.local.TaskFormStatus
+import com.example.project_skripsi.core.repository.AuthRepository
+import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
 class StTaskFormViewModel : ViewModel() {
 
-    private val _formQuestion = MutableLiveData<List<Int>>()
-    val formQuestion : LiveData<List<Int>> = _formQuestion
+    companion object {
 
-    init {
-        Handler(Looper.getMainLooper()).postDelayed({
-            _formQuestion.value = listOf(1,0,1,1,1,1,0,0)
-        }, 2000)
+        const val TASK_FORM_ESSAY = "essai"
+        const val TASK_FORM_MC = "pilihan berganda"
+
+        val TASK_FORM_TYPE = mapOf(
+            "pilihan berganda" to 0,
+            "essai" to 1,
+        )
+    }
+
+    private val _taskForm = MutableLiveData<TaskForm>()
+    val taskForm: LiveData<TaskForm> = _taskForm
+
+    private val _formStatus = MutableLiveData<Pair<String, Int>>()
+    val formStatus: LiveData<Pair<String, Int>> = _formStatus
+
+    private val _studyClass = MutableLiveData<StudyClass>()
+    val studyClass: LiveData<StudyClass> = _studyClass
+
+    private val _questionList = MutableLiveData<List<AssignedQuestion>>()
+    val questionList: LiveData<List<AssignedQuestion>> = _questionList
+
+    private var taskFormId = ""
+
+    fun setTaskForm(taskFormId : String) {
+        this.taskFormId = taskFormId
+        loadTaskForm(taskFormId)
+    }
+
+    private fun loadTaskForm(uid: String) {
+        FireRepository.instance.getTaskForm(uid).let { response ->
+            response.first.observeOnce {
+                _taskForm.postValue(it)
+                loadStudent(AuthRepository.instance.getCurrentUser().uid)
+            }
+        }
+    }
+
+    private fun loadStudent(uid: String) {
+        FireRepository.instance.getStudent(uid).let { response ->
+            response.first.observeOnce { student ->
+                student.studyClass?.let { loadStudyClass(it) }
+
+                var assignedTaskForm : AssignedTaskForm? = null
+                student.assignedExams?.filter { it.id == taskFormId }?.getOrNull(0).let {
+                    it?.let { item -> assignedTaskForm = item }
+                }
+                student.assignedAssignments?.filter { it.id == taskFormId }?.getOrNull(0).let {
+                    it?.let { item -> assignedTaskForm = item }
+                }
+
+                _formStatus.postValue(
+                    Pair(
+                        TaskFormStatus.getStatus(taskForm.value!!,
+                            assignedTaskForm!!),
+                        TaskFormStatus.getStatusColor(taskForm.value!!,
+                            assignedTaskForm!!)
+                    )
+                )
+
+                val questionList = ArrayList<AssignedQuestion>()
+                taskForm.value?.questions?.mapIndexed { index, question ->
+                    questionList.add(AssignedQuestion(question, assignedTaskForm?.answer?.getOrNull(index)))
+                }
+                _questionList.postValue(questionList.toList())
+            }
+        }
+    }
+
+    private fun loadStudyClass(uid: String) {
+        FireRepository.instance.getStudyClass(uid).let { response ->
+            response.first.observeOnce { _studyClass.postValue(it) }
+        }
     }
 
 }

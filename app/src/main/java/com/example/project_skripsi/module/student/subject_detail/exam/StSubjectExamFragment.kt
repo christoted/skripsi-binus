@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStSubjectExamBinding
-import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
 import com.example.project_skripsi.module.student.subject_detail._sharing.TaskViewHolder
+import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
+import com.example.project_skripsi.module.student.subject_detail._sharing.TaskFormListener
 
-class StSubjectExamFragment(private val viewModel: StSubjectViewModel) : Fragment() {
+class StSubjectExamFragment(private val viewModel: StSubjectViewModel, private val taskFormListener: TaskFormListener) : Fragment() {
 
     private var _binding: FragmentStSubjectExamBinding? = null
     private val binding get() = _binding!!
@@ -24,7 +25,7 @@ class StSubjectExamFragment(private val viewModel: StSubjectViewModel) : Fragmen
         _binding = FragmentStSubjectExamBinding.inflate(inflater, container, false)
         binding.rvExam.layoutManager = LinearLayoutManager(context)
         viewModel.examList.observe(viewLifecycleOwner, {
-            binding.rvExam.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
+            binding.rvExam.adapter = TaskViewHolder(it, taskFormListener).getAdapter()
         })
 
         return binding.root

@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStSubjectAssignmentBinding
-import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
+import com.example.project_skripsi.module.student.subject_detail.StSubjectFragment
 import com.example.project_skripsi.module.student.subject_detail._sharing.TaskViewHolder
+import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
+import com.example.project_skripsi.module.student.subject_detail._sharing.TaskFormListener
 
-class StSubjectAssignmentFragment(private val viewModel: StSubjectViewModel) : Fragment() {
+class StSubjectAssignmentFragment(private val viewModel: StSubjectViewModel, private val taskFormListener: TaskFormListener) : Fragment() {
 
     private var _binding: FragmentStSubjectAssignmentBinding? = null
     private val binding get() = _binding!!
@@ -25,7 +27,7 @@ class StSubjectAssignmentFragment(private val viewModel: StSubjectViewModel) : F
 
         binding.rvAssignment.layoutManager = LinearLayoutManager(context)
         viewModel.assignmentList.observe(viewLifecycleOwner, {
-            binding.rvAssignment.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
+            binding.rvAssignment.adapter = TaskViewHolder(it, taskFormListener).getAdapter()
         })
 
         return binding.root
