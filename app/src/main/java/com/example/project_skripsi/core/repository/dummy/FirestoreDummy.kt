@@ -52,7 +52,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             listOf("Minyak adalah mata uang",
                                 2
                             )
-                        )
+                        ),
+                        AssignedTaskForm("tedytedeydyyd", // ini juga
+                            true,
+                            70,
+                            listOf()
+                        ),
+
                     )
                 )
     )
@@ -163,6 +169,15 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         )
                     ),
                     listOf("eMsulnik6kEpW0ESKI9V")),
+
+        "tedytedeydyyd" to
+                TaskForm("bebas", // sesuaikan
+                    "tugas", // sesuaikan  asg / exam
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Biologi", // sesuaikan
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
     )
 
     private fun getClasses() = mapOf(
@@ -183,8 +198,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                                 "feiaZB0ds1rbaWT1g8hJ",
                             )
                         ),
-                        listOf("HaWuFgmvLAuZYeG5JuVw"),
-                        listOf("ripyBsBZObBfarZpd085"),
+                        listOf("HaWuFgmvLAuZYeG5JuVw"), // exam
+                        listOf("ripyBsBZObBfarZpd085","tedytedeydyyd"), // asg
                         listOf("dxXTXZcrj0yVh8PpzYk2",
                             "feiaZB0ds1rbaWT1g8hJ"
                         )
