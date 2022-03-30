@@ -42,9 +42,15 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     listOf(
                         AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
                             false,
-                            0,
+                            95,
                             listOf("Ok Siap Essai")
                         ),
+                        AssignedTaskForm("ujian002",
+                            false,
+                            85,
+                            listOf("Ok Siap Essai")
+                        ),
+
                     ),
                     listOf(
                         AssignedTaskForm("ripyBsBZObBfarZpd085",
@@ -59,7 +65,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             70,
                             listOf()
                         ),
-
+                        AssignedTaskForm("bebebebebe", // ini juga
+                            true,
+                            70,
+                            listOf()
+                        )
                     )
                 )
     )
@@ -155,6 +165,22 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 ),
                 listOf("eMsulnik6kEpW0ESKI9V")),
 
+            "ujian002" to
+                TaskForm("ujian002",
+                    "Ujian Tengah Semester 3",
+                    "ujian tengah semester",
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Biologi",
+                    listOf(
+                        Question("Essai ini",
+                            "essai",
+                            emptyList(),
+                            -1
+                        )
+                    ),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+
             "ripyBsBZObBfarZpd085" to
                 TaskForm("ripyBsBZObBfarZpd085",
                     "Tugas tentang minyak hewani",
@@ -182,19 +208,29 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
         "xaxaxaxa" to
                 TaskForm("xaxaxaxa",
-                    "bebas", // sesuaikan
+                    "Tugas Biology 001", // sesuaikan
                     "tugas", // sesuaikan  asg / exam
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
                     "Biologi", // sesuaikan
                     listOf(),
                     listOf("eMsulnik6kEpW0ESKI9V")),
+        "bebebebebe" to
+                TaskForm("bebebebebe",
+                    "Tugas Biology 1", // sesuaikan
+                    "tugas", // sesuaikan  asg / exam
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Biologi", // sesuaikan
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V"))
+
     )
 
     private fun getClasses() = mapOf(
         "eMsulnik6kEpW0ESKI9V" to
             StudyClass("eMsulnik6kEpW0ESKI9V",
-                "XII-IPA-2",
+                "XII-IPA-3",
                 "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
                 "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
                 listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2"),
@@ -210,8 +246,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                                 "feiaZB0ds1rbaWT1g8hJ",
                             )
                         ),
-                        listOf("HaWuFgmvLAuZYeG5JuVw"), // exam
-                        listOf("ripyBsBZObBfarZpd085","xaxaxaxa"), // asg
+                        listOf("HaWuFgmvLAuZYeG5JuVw", "ujian002"), // exam
+                        listOf("ripyBsBZObBfarZpd085","xaxaxaxa", "bebebebebe"), // asg
                         listOf("dxXTXZcrj0yVh8PpzYk2",
                             "feiaZB0ds1rbaWT1g8hJ"
                         )
