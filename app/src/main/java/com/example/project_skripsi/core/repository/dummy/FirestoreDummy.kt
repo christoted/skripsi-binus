@@ -151,7 +151,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     private fun getTaskForms() = mapOf(
             "HaWuFgmvLAuZYeG5JuVw" to
                 TaskForm("HaWuFgmvLAuZYeG5JuVw",
-                    "Ujian Tengah Semester 2",
+                    "Ujian Tengah Semester",
                 "ujian tengah semester",
                 DateHelper.getCurrentDate(),
                 DateHelper.getCurrentDate(),
@@ -167,8 +167,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
             "ujian002" to
                 TaskForm("ujian002",
-                    "Ujian Tengah Semester 3",
-                    "ujian tengah semester",
+                    "Ujian Akhir Semester",
+                    "ujian akhir semester",
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
                     "Biologi",
@@ -180,7 +180,66 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         )
                     ),
                     listOf("eMsulnik6kEpW0ESKI9V")),
-
+        "UJ-Sej-01" to
+                TaskForm("UJ-Sej-01",
+                    "Ujian Tengah Semester",
+                    "ujian tengah semester",
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Sejarah",
+                    listOf(
+                        Question("Essai ini",
+                            "essai",
+                            emptyList(),
+                            -1
+                        )
+                    ),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "UJ-Sej-02" to
+                TaskForm("UJ-Sej-02",
+                    "Ujian Akhir Semester",
+                    "ujian akhir semester",
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Sejarah",
+                    listOf(
+                        Question("Essai ini",
+                            "essai",
+                            emptyList(),
+                            -1
+                        )
+                    ),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "UJ-Fis-01" to
+                TaskForm("UJ-Fis-01",
+                    "Ujian Tengah Semester",
+                    "ujian tengah semester",
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Fisika",
+                    listOf(
+                        Question("Essai ini",
+                            "essai",
+                            emptyList(),
+                            -1
+                        )
+                    ),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "UJ-Fis-02" to
+                TaskForm("UJ-Fis-01",
+                    "Ujian Akhir Semester",
+                    "ujian akhir semester",
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Fisika",
+                    listOf(
+                        Question("Essai ini",
+                            "essai",
+                            emptyList(),
+                            -1
+                        )
+                    ),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
             "ripyBsBZObBfarZpd085" to
                 TaskForm("ripyBsBZObBfarZpd085",
                     "Tugas tentang minyak hewani",
@@ -208,7 +267,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
         "xaxaxaxa" to
                 TaskForm("xaxaxaxa",
-                    "Tugas Biology 001", // sesuaikan
+                    "Tugas Biology Hewani", // sesuaikan
                     "tugas", // sesuaikan  asg / exam
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
@@ -217,32 +276,50 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     listOf("eMsulnik6kEpW0ESKI9V")),
         "bebebebebe" to
                 TaskForm("bebebebebe",
-                    "Tugas Biology 1", // sesuaikan
+                    "Tugas Biology Tumbuhan", // sesuaikan
                     "tugas", // sesuaikan  asg / exam
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
                     "Biologi", // sesuaikan
                     listOf(),
                     listOf("eMsulnik6kEpW0ESKI9V")),
-        "testanehkali" to
-                TaskForm("testanehkali",
-                    "Tugas Aneh", // sesuaikan
+
+        "AS-Sej-01" to
+                TaskForm("AS-Sej-01",
+                    "Tugas Sejarah 01", // sesuaikan
                     "tugas", // sesuaikan  asg / exam
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
-                    "Pelajaran Aneh", // sesuaikan
+                    "Sejarah", // sesuaikan
                     listOf(),
                     listOf("eMsulnik6kEpW0ESKI9V")),
-        "testanehkali2" to
-                TaskForm("testanehkali2",
-                    "Tugas Aneh", // sesuaikan
+        "AS-Sej-02" to
+                TaskForm("AS-Sej-02",
+                    "Tugas Sejarah 02", // sesuaikan
                     "tugas", // sesuaikan  asg / exam
                     DateHelper.getCurrentDate(),
                     DateHelper.getCurrentDate(),
-                    "Pelajaran Aneh", // sesuaikan
+                    "Sejarah", // sesuaikan
                     listOf(),
-                    listOf("eMsulnik6kEpW0ESKI9V"))
-
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "AS-Fis-01" to
+                TaskForm("AS-Fis-01",
+                    "Tugas Fisika 01", // sesuaikan
+                    "tugas", // sesuaikan  asg / exam
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Fisika", // sesuaikan
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "AS-Fis-02" to
+                TaskForm("AS-Fis-02",
+                    "Tugas Fisika 02", // sesuaikan
+                    "tugas", // sesuaikan  asg / exam
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Fisika", // sesuaikan
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
     )
 
     private fun getClasses() = mapOf(
