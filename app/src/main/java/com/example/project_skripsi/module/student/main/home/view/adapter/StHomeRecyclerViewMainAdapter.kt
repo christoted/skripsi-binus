@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_skripsi.core.model.firestore.HomeMainSection
+import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.ItemStHomeMainSectionBinding
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 

@@ -1,10 +1,12 @@
-package com.example.project_skripsi.module.student.main.calendar
+package com.example.project_skripsi.utils.decorator
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.text.style.LineBackgroundSpan
 import androidx.core.content.res.ResourcesCompat
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.local.DayEvent
+import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel
 import com.example.project_skripsi.utils.app.App
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -15,10 +17,11 @@ import java.util.*
 class EventDecorator(private val eventDay: CalendarDay, private val dayEventList : List<DayEvent>) : DayViewDecorator {
 
     val color = mapOf(
-        StCalendarViewModel.TYPE_CLASS to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_blue, null),
+        StCalendarViewModel.TYPE_MEETING to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_blue, null),
         StCalendarViewModel.TYPE_EXAM to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_red, null),
         StCalendarViewModel.TYPE_ASSIGNMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_yellow, null),
         StCalendarViewModel.TYPE_PAYMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_purple, null),
+        StCalendarViewModel.TYPE_ANNOUNCEMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_brown, null),
         StCalendarViewModel.TYPE_MORE to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_black, null),
     )
 
@@ -26,7 +29,7 @@ class EventDecorator(private val eventDay: CalendarDay, private val dayEventList
         const val EVENT_LIMIT = 4
         private const val INDICATOR_START = 7
         const val INDICATOR_DISTANCE = 14
-        val startX = {x : Int -> INDICATOR_START - x * INDICATOR_START}
+        val startX = {x : Int -> INDICATOR_START - x * INDICATOR_START }
         const val startY = 10
     }
 
@@ -40,8 +43,8 @@ class EventDecorator(private val eventDay: CalendarDay, private val dayEventList
             var sx = startX(4)
             for(i in 0..3) {
                 val it = dayEventList[i]
-                val color = if (i == EVENT_LIMIT-1) color[StCalendarViewModel.TYPE_MORE] else color[it.viewType]
-                val span: LineBackgroundSpan = CustomSpan(color!!, sx, startY, (i == EVENT_LIMIT-1))
+                val color = if (i == EVENT_LIMIT -1) color[StCalendarViewModel.TYPE_MORE] else color[it.viewType]
+                val span: LineBackgroundSpan = CustomSpan(color!!, sx, startY, (i == EVENT_LIMIT -1))
                 view!!.addSpan(span)
                 sx += INDICATOR_DISTANCE
             }
@@ -112,6 +115,5 @@ class EventDecorator(private val eventDay: CalendarDay, private val dayEventList
     }
 }
 
-data class DayEvent(val eventTime : Date, val viewType : Int)
 
 

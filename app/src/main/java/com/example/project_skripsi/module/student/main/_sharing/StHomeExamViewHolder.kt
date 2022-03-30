@@ -1,20 +1,27 @@
 package com.example.project_skripsi.module.student.main._sharing
 
-import android.util.Log
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.core.model.firestore.TaskForm
+import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.example.project_skripsi.databinding.ItemStHomeSectionItemBinding
+import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
+import com.example.project_skripsi.utils.helper.DateHelper
 
-class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding): RecyclerView.ViewHolder(binding.root) {
+class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, private val listener: ItemListener):
+    RecyclerView.ViewHolder(binding.root) {
 
-    fun bind() {
+    fun bind(item: HomeSectionData) {
+        val data = item as TaskForm
         with(binding) {
-//            val data = singleItem as HomeItemUjian
-            title.text = "Ujian"
-            btnKelas.text = "Ujian"
+            title.text = data.subjectName
+            status.text = data.type
+            jamKelas.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
+                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
+            btnKelas.text = ("Ujian")
             btnMateri.isVisible = false
             btnKelas.setOnClickListener {
-//                listener.onExamItemClicked(absoluteAdapterPosition)
+                data.id?.let { id -> listener.onTaskFormItemClicked(id) }
             }
         }
     }

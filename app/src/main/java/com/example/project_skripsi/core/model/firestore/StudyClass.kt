@@ -1,5 +1,6 @@
 package com.example.project_skripsi.core.model.firestore
 
+import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
@@ -59,6 +60,10 @@ data class ClassMeeting (
 
     val id: String? = null,
 
+    @get: PropertyName("subject_name")
+    @set: PropertyName("subject_name")
+    var subjectName: String? = null,
+
     @get: PropertyName("start_time")
     @set: PropertyName("start_time")
     var startTime: Date? = null,
@@ -75,5 +80,9 @@ data class ClassMeeting (
     @set: PropertyName("meeting_resource")
     var meetingResource: String? = null,
 
-)
+    @get: PropertyName("meeting_link")
+    @set: PropertyName("meeting_link")
+    var meetingLink: String? = null,
+
+) : HomeSectionData()
 
