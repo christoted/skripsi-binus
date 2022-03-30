@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.local.HomeMainSection
+import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.example.project_skripsi.databinding.*
 import com.example.project_skripsi.module.student.main.home.viewmodel.*
-import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
 import com.example.project_skripsi.utils.Constant
 
 class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, val listener: ItemListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
