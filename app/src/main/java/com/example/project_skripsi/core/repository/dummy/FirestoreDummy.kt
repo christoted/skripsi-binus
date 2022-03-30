@@ -223,6 +223,24 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     DateHelper.getCurrentDate(),
                     "Biologi", // sesuaikan
                     listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "testanehkali" to
+                TaskForm("testanehkali",
+                    "Tugas Aneh", // sesuaikan
+                    "tugas", // sesuaikan  asg / exam
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Pelajaran Aneh", // sesuaikan
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "testanehkali2" to
+                TaskForm("testanehkali2",
+                    "Tugas Aneh", // sesuaikan
+                    "tugas", // sesuaikan  asg / exam
+                    DateHelper.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
+                    "Pelajaran Aneh", // sesuaikan
+                    listOf(),
                     listOf("eMsulnik6kEpW0ESKI9V"))
 
     )
