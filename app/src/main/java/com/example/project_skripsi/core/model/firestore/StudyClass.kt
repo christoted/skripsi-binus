@@ -24,7 +24,7 @@ data class StudyClass(
 
     val students: List<String>? = null,
 
-    val subjects: List<Subject>? = null,
+    val subjects: MutableList<Subject>? = null,
 
 )
 
@@ -39,19 +39,19 @@ data class Subject (
 
     @get: PropertyName("class_meetings")
     @set: PropertyName("class_meetings")
-    var classMeetings: List<ClassMeeting>? = null,
+    var classMeetings: MutableList<ClassMeeting>? = null,
 
     @get: PropertyName("class_exams")
     @set: PropertyName("class_exams")
-    var classExams: List<String>? = null,
+    var classExams: MutableList<String>? = null,
 
     @get: PropertyName("class_assignments")
     @set: PropertyName("class_assignments")
-    var classAssignments: List<String>? = null,
+    var classAssignments: MutableList<String>? = null,
 
     @get: PropertyName("class_resources")
     @set: PropertyName("class_resources")
-    var classResources: List<String>? = null,
+    var classResources: MutableList<String>? = null,
 
 ) : HomeSectionData()
 

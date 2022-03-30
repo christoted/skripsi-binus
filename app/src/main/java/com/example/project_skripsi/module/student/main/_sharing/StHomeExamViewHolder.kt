@@ -15,7 +15,7 @@ class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, pr
         val data = item as TaskForm
         with(binding) {
             title.text = data.subjectName
-            status.text = data.type
+            status.text = data.location
             jamKelas.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
             btnKelas.text = ("Ujian")

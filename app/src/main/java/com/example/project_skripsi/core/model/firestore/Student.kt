@@ -40,11 +40,11 @@ data class Student(
 
     @get: PropertyName("assigned_exams")
     @set: PropertyName("assigned_exams")
-    var assignedExams: List<AssignedTaskForm>? = null,
+    var assignedExams: MutableList<AssignedTaskForm>? = null,
 
     @get: PropertyName("assigned_assignments")
     @set: PropertyName("assigned_assignments")
-    var assignedAssignments: List<AssignedTaskForm>? = null,
+    var assignedAssignments: MutableList<AssignedTaskForm>? = null,
 
 )
 
