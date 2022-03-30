@@ -96,16 +96,16 @@ class StHomeViewModel : ViewModel() {
                 studyClass.name?.let { _profileClass.postValue(it) }
                 studyClass.subjects?.let {
                     _listHomeSectionDataClassSchedule.postValue(it)
+                    val examList = mutableListOf<String>()
+                    val assignmentList = mutableListOf<String>()
                     it.map { subject ->
                         // TODO: Take the class exams
-                        subject.classExams?.let { exams ->
-                            loadTaskForms(exams, _listHomeSectionDataExam)
-                        }
+                        subject.classExams?.let { exams -> examList.addAll(exams) }
                         // TODO: Take the class assignments
-                        subject.classAssignments?.let { assignments ->
-                            loadTaskForms(assignments, _listHomeSectionDataAssignment)
-                        }
+                        subject.classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                     }
+                    loadTaskForms(examList, _listHomeSectionDataExam)
+                    loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
                 }
             }
         }

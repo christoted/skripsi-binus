@@ -55,6 +55,7 @@ class StSubjectFragment : Fragment(), TaskFormListener {
 
     private fun retrieveArgs() {
         val args: StSubjectFragmentArgs by navArgs()
+        binding.subjectName.text = args.subjectName
         viewModel.setSubject(args.subjectName)
     }
 
