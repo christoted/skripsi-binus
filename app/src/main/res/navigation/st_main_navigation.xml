@@ -31,7 +31,11 @@
         android:id="@+id/navigation_calendar_fragment"
         android:name="com.example.project_skripsi.module.student.main.calendar.StCalendarFragment"
         android:label="Calendar"
-        tools:layout="@layout/fragment_st_class" />
+        tools:layout="@layout/fragment_st_class" >
+        <action
+            android:id="@+id/action_navigation_calendar_fragment_to_stTaskActivity"
+            app:destination="@id/stTaskActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_score_fragment"

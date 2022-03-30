@@ -84,5 +84,5 @@ data class ClassMeeting (
     @set: PropertyName("meeting_link")
     var meetingLink: String? = null,
 
-)
+) : HomeSectionData()
 

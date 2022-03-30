@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.local.CalendarItem
+import com.example.project_skripsi.core.model.local.DayEvent
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -26,7 +28,9 @@ class StCalendarViewModel : ViewModel() {
     val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
 
+
     private val currentList : MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
+    val currentDataList : MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
 
     private val _meetingList = MutableLiveData<List<ClassMeeting>>()
     private val _examList = MutableLiveData<List<TaskForm>>()
@@ -37,27 +41,57 @@ class StCalendarViewModel : ViewModel() {
     init {
 
         _meetingList.observeOnce {
-            it.map { meeting -> propagateCalendarEvent(meeting.startTime, TYPE_MEETING) }
+            it.map { meeting ->
+                meeting.startTime?.let { date ->
+                    propagateCalendarEvent(date, TYPE_MEETING)
+                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
+                        .add(CalendarItem(meeting, TYPE_MEETING))
+                }
+            }
             _eventList.postValue(currentList)
         }
 
         _examList.observeOnce {
-            it.map { taskForm -> propagateCalendarEvent(taskForm.startTime, TYPE_EXAM) }
+            it.map { taskForm ->
+                taskForm.startTime?.let { date ->
+                    propagateCalendarEvent(date, TYPE_EXAM)
+                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
+                        .add(CalendarItem(taskForm, TYPE_EXAM))
+                }
+            }
             _eventList.postValue(currentList)
         }
 
         _assignmentList.observeOnce {
-            it.map { taskForm -> propagateCalendarEvent(taskForm.startTime, TYPE_ASSIGNMENT) }
+            it.map { taskForm ->
+                taskForm.startTime?.let { date ->
+                    propagateCalendarEvent(date, TYPE_ASSIGNMENT)
+                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
+                        .add(CalendarItem(taskForm, TYPE_ASSIGNMENT))
+                }
+            }
             _eventList.postValue(currentList)
         }
 
         _paymentList.observeOnce {
-            it.map { payment -> propagateCalendarEvent(payment.paymentDeadline, TYPE_PAYMENT) }
+            it.map { payment ->
+                payment.paymentDeadline?.let { date ->
+                    propagateCalendarEvent(date, TYPE_PAYMENT)
+                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
+                        .add(CalendarItem(payment, TYPE_PAYMENT))
+                }
+            }
             _eventList.postValue(currentList)
         }
 
         _announcementList.observeOnce {
-            it.map { announcement -> propagateCalendarEvent(announcement.date, TYPE_ANNOUNCEMENT) }
+            it.map { announcement ->
+                announcement.date?.let { date ->
+                    propagateCalendarEvent(date, TYPE_ANNOUNCEMENT)
+                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
+                        .add(CalendarItem(announcement, TYPE_ANNOUNCEMENT))
+                }
+            }
             _eventList.postValue(currentList)
         }
 
@@ -114,8 +148,8 @@ class StCalendarViewModel : ViewModel() {
         }
     }
 
-    fun propagateCalendarEvent(date : Date?, type: Int) {
-        date?.let { currentList.getOrPut(CalendarDay.from(it)) { ArrayList() }.add(DayEvent(it, type)) }
+    private fun propagateCalendarEvent(date : Date, type: Int) {
+         currentList.getOrPut(CalendarDay.from(date)) { ArrayList() }.add(DayEvent(date, type))
     }
 
 

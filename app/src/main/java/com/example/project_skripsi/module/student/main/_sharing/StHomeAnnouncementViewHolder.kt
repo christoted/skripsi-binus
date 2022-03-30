@@ -1,17 +1,18 @@
 package com.example.project_skripsi.module.student.main._sharing
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_skripsi.databinding.ItemStHomeSectionItemBinding
+import com.example.project_skripsi.core.model.firestore.Announcement
+import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.example.project_skripsi.databinding.ItemStHomeSectionPengumumanBinding
-import com.example.project_skripsi.module.student.main.calendar.DayEvent
 
-class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionPengumumanBinding): RecyclerView.ViewHolder(binding.root) {
+class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionPengumumanBinding):
+    RecyclerView.ViewHolder(binding.root) {
 
-    fun bind() {
+    fun bind(item: HomeSectionData) {
+        val data = item as Announcement
         with(binding) {
-//            val data = singleItem as HomeItemPengumuman
-            judul.text = "Pengumuman"
+            judul.text = data.title
+            deskripsi.text = data.description
         }
     }
 }

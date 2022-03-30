@@ -6,14 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.project_skripsi.databinding.FragmentStCalendarBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.module.student.main.home.view.StHomeFragmentDirections
+import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
+import com.example.project_skripsi.module.student.task.StTaskViewModel
+import com.example.project_skripsi.utils.decorator.EventDecorator
 
 
-class StCalendarFragment : Fragment(), OnDateSelectedListener {
+class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
 
     private lateinit var viewModel: StCalendarViewModel
     private var _binding: FragmentStCalendarBinding? = null
@@ -39,7 +44,6 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener {
             }
         })
 
-
         return binding.root
     }
 
@@ -48,14 +52,27 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener {
         date: CalendarDay,
         selected: Boolean
     ) {
-        binding.rvEvent.adapter = StCalendarAdapter(viewModel.eventList.value?.get(date) ?: listOf())
-//        Toast.makeText(context, date.day.toString() + " " + date.month + " " + date.year, Toast.LENGTH_SHORT).show()
+        binding.rvEvent.adapter = StCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
     }
 
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onTaskFormItemClicked(taskFormId: String) {
+        val toTaskActivity = StCalendarFragmentDirections.actionNavigationCalendarFragmentToStTaskActivity(taskFormId)
+        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
+        view?.findNavController()?.navigate(toTaskActivity)
+    }
+
+    override fun onClassItemClicked(Position: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMaterialItemClicked(Position: Int) {
+        TODO("Not yet implemented")
     }
 
 }
