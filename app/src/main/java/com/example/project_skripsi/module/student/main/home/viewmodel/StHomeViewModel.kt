@@ -96,6 +96,7 @@ class StHomeViewModel : ViewModel() {
 
                 studyClass.name?.let { _profileClass.postValue(it) }
                 studyClass.subjects?.let {
+                    // TODO: Should be change to List of Meetings
                     _listHomeSectionDataClassSchedule.postValue(it)
                     val examList = mutableListOf<String>()
                     val assignmentList = mutableListOf<String>()

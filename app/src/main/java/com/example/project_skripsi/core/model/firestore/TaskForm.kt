@@ -20,6 +20,8 @@ data class TaskForm(
 
     val endTime: Date? = null,
 
+    val location: String? = null,
+
     @get: PropertyName("subject_name")
     @set: PropertyName("subject_name")
     var subjectName: String? = null,

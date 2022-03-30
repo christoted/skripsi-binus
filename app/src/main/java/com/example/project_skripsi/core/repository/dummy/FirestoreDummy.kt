@@ -140,6 +140,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         "ujian_tengah_semester",
                         DateHelper.getCurrentDate(),
                         DateHelper.getCurrentDate(),
+                        "Online",
                         "Biologi",
                         listOf(
                             Question("Essai ini",
@@ -155,6 +156,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         "tugas",
                         DateHelper.getCurrentDate(),
                         DateHelper.getCurrentDate(),
+                        "Online",
                         "Biologi",
                         listOf(
                             Question("Jelaskan maksud minyak hewan ",
@@ -277,6 +279,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     "ujian_tengah_semester",
                     date.first,
                     date.second,
+                    if (rnd50to50()) "Online" else "Offline",
                     subjects[idx],
                     listOf(),
                     listOf("eMsulnik6kEpW0ESKI9V")
@@ -307,6 +310,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     "ujian_akhir_semester",
                     date.first,
                     date.second,
+                    if (rnd50to50()) "Online" else "Offline",
                     subjects[idx],
                     listOf(),
                     listOf("eMsulnik6kEpW0ESKI9V")
@@ -338,6 +342,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     "tugas",
                     date.first,
                     date.second,
+                    if (rnd50to50()) "Online" else "Offline",
                     subjects[idx],
                     listOf(),
                     listOf("eMsulnik6kEpW0ESKI9V")
