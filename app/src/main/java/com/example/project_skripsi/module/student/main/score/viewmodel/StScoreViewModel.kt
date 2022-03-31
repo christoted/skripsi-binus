@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.Subject
 import com.example.project_skripsi.core.model.firestore.TaskForm
+import com.example.project_skripsi.core.model.local.DayEvent
 import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class StScoreViewModel : ViewModel() {
 
@@ -33,8 +35,9 @@ class StScoreViewModel : ViewModel() {
     private val _subjects = MutableLiveData<List<Subject>>()
     private val _assignedAssignmentStudent = MutableLiveData<List<AssignedTaskForm>>()
     private val _assignedExamStudent = MutableLiveData<List<AssignedTaskForm>>()
-    private val _taskForms = MutableLiveData<List<TaskForm>>()
-    private val listForm = arrayListOf<TaskForm>()
+    private var _mapAssignmentExamBySubject = MutableLiveData<Map<String, List<AssignedTaskForm>>>()
+    private var _listExamAssignment = MutableLiveData<List<AssignedTaskForm>>()
+    private var listExamAssignment = arrayListOf<AssignedTaskForm>()
 
     companion object {
         const val tabCount = 3
@@ -43,26 +46,41 @@ class StScoreViewModel : ViewModel() {
 
     init {
         val listData = arrayListOf<ScoreMainSection>()
+
         loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
         _subjects.observeOnce {
-            it.map { subject ->
+            it.forEach { subject ->
                 subject.subjectName?.let {
-                    // Section Item -> Score Section Data By Subject *Hint via _taskForms
-                    _taskForms.observeOnce {
-                        it.map {
-                            if (it.subjectName == subject.subjectName ) {
+                    // Section Item -> Score Section Data By Subject
+                    _assignedAssignmentStudent.observeOnce {
+                      _mapAssignmentExamBySubject.postValue(
+                          it.groupBy {
+                              it.subjectName!!
+                          }
+                      )
+                    }
 
+                    _assignedExamStudent.observeOnce {
+                        _mapAssignmentExamBySubject.postValue(
+                            it.groupBy {
+                                it.subjectName!!
                             }
+                        )
+                    }
+
+                    _mapAssignmentExamBySubject.observeOnce {
+                       val datas = it[subject.subjectName]
+                        datas?.let {
+                            _listExamAssignment.postValue(it)
                         }
                     }
-                    // For the score section
-                    _assignedAssignmentStudent.observeOnce {
-
+                    _listExamAssignment.observeOnce {
+                        listExamAssignment.addAll(it)
                     }
-               //     listData.add(ScoreMainSection(subjectName = it, mid_exam = 0.0, exam = 0.0, total_assignment = 0.0, total_score = 0.0, sectionItem = ))
                 }
+                    listData.add(ScoreMainSection(subjectName = subject.subjectName!!, mid_exam = 0.0, exam = 0.0, total_assignment = 0.0, total_score = 0.0, sectionItem = listExamAssignment ))
             }
-        //    _sectionDatas.postValue()
+            _sectionDatas.postValue(listData)
         }
     }
 
@@ -82,19 +100,6 @@ class StScoreViewModel : ViewModel() {
                 student.assignedExams?.let {
                     _assignedExamStudent.postValue(it)
                 }
-
-                // MARK: Link to the task Forms
-                // Assignment
-                _assignedAssignmentStudent.value?.map {
-                    it.id?.let { id -> loadTaskForm(id) }
-                }
-                // Exam
-                _assignedExamStudent.value?.map {
-                    it.id?.let { id ->
-                        loadTaskForm(id)
-                    }
-                }
-
             }
         }
     }
@@ -107,16 +112,6 @@ class StScoreViewModel : ViewModel() {
                     _subjects.postValue(subjects)
                 }
             }
-        }
-    }
-
-    private fun loadTaskForm(uid: String) {
-        FireRepository.instance.getTaskForm(uid).let {
-            response ->
-            response.first.observeOnce {
-                listForm.add(it)
-            }
-            _taskForms.postValue(listForm)
         }
     }
 
