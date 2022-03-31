@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tcHomeFragment"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/tcStudyClassFragment"
+        android:icon="@drawable/ic_bottom_navigation_class"
+        android:title="Class" />
+
+    <item
+        android:id="@+id/tcCalendarFragment"
+        android:icon="@drawable/ic_bottom_navigation_calendar"
+        android:title="Calendar" />
+
+    <item
+        android:id="@+id/tcResourceFragment"
+        android:icon="@drawable/ic_bottom_navigation_score"
+        android:title="Resource" />
+
+    <item
+        android:id="@+id/tcTaskFragment"
+        android:icon="@drawable/ic_bottom_navigation_payment"
+        android:title="Task" />
+
+</menu>

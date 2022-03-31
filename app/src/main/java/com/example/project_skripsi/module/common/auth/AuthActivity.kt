@@ -11,6 +11,7 @@ import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGI
 import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGIN_TEACHER
 import com.example.project_skripsi.core.repository.dummy.FirestoreDummy
 import com.example.project_skripsi.module.student.main.StMainActivity
+import com.example.project_skripsi.module.teacher.TcMainActivity
 
 class AuthActivity : AppCompatActivity() {
 
@@ -33,8 +34,8 @@ class AuthActivity : AppCompatActivity() {
         viewModel.errorLogin.observe(this, {
             Toast.makeText(applicationContext, "Error Login", Toast.LENGTH_SHORT).show()
         })
-
         viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT)
+//        viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
 
         FirestoreDummy()
     }
@@ -47,6 +48,8 @@ class AuthActivity : AppCompatActivity() {
 
     private fun redirectToTeacher() {
         Toast.makeText(applicationContext, "Login Success as Teacher", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this,TcMainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun redirectToParent() {

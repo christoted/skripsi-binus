@@ -24,8 +24,9 @@ class TemplateFragment : Fragment() {
         viewModel = ViewModelProvider(this)[TemplateViewModel::class.java]
         _binding = FragmentTemplateBinding.inflate(inflater, container, false)
 
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
+        binding.tvTest.text = this.toString().split("{")[0]
+        viewModel.text.observe(viewLifecycleOwner, {
+            binding.tvTest.text = it
         })
 
         return binding.root

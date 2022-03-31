@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStTaskFormBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
@@ -58,7 +57,7 @@ class StTaskFormFragment : Fragment() {
             }
         })
 
-        viewModel.questionList.observe(viewLifecycleOwner, { binding.rvQuestion.adapter = FormAdapter(it) })
+        viewModel.questionList.observe(viewLifecycleOwner, { binding.rvQuestion.adapter = StFormAdapter(it) })
 
         return binding.root
     }
