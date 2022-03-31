@@ -9,12 +9,14 @@ import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.ItemStHomeMainSectionBinding
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 
-class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener: ItemListener): RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
+class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener: ItemListener):
+    RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder {
-       val itemHomeMainSection = ItemStHomeMainSectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StHomeMainSectionViewHolder(itemHomeMainSection)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder =
+        StHomeMainSectionViewHolder(
+            ItemStHomeMainSectionBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false))
+
 
     override fun onBindViewHolder(holder: StHomeMainSectionViewHolder, position: Int) {
         viewModel.sectionData.value?.let {
@@ -25,26 +27,10 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
         }
     }
 
-    override fun getItemCount(): Int {
-
-       viewModel.sectionData.value?.let {
-         return it.size
-       } ?: run {
-           return 0
-       }
-    }
+    override fun getItemCount(): Int = viewModel.sectionData.value?.size ?: 0
 
 
     inner class StHomeMainSectionViewHolder(private val binding: ItemStHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {
-        init {
-            itemView.setOnClickListener {
-                Log.d("Test", absoluteAdapterPosition.toString())
-                with(binding) {
-//                    sectionItemsRecyclerView.isVisible = !sectionItemsRecyclerView.isVisible
-                }
-            }
-        }
-
         fun bind(singleHomeMainSectionItem: HomeMainSection, adapter: StHomeRecyclerViewChildAdapter) {
             with(binding) {
                 sectionTitle.text = singleHomeMainSectionItem.sectionName

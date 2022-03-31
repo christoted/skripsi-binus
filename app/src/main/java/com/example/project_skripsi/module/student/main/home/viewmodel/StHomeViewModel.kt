@@ -6,11 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.HomeMainSection
-import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-// Use the abstract class
 
 class StHomeViewModel : ViewModel() {
 
@@ -23,7 +26,7 @@ class StHomeViewModel : ViewModel() {
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
 
-    private val _listHomeSectionDataClassSchedule = MutableLiveData<List<Subject>>()
+    private val _listHomeSectionDataClassSchedule = MutableLiveData<List<ClassMeeting>>()
     private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
     private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
@@ -39,34 +42,34 @@ class StHomeViewModel : ViewModel() {
 
     private fun initData() {
         val listData = arrayListOf<HomeMainSection>()
-        listData.add(HomeMainSection("Jadwal Kelas", sectionItem = emptyList()))
-        listData.add(HomeMainSection("Ujian", sectionItem = emptyList()))
-        listData.add(HomeMainSection("Tugas", sectionItem = emptyList()))
-        listData.add(HomeMainSection("Pembayaran", sectionItem = emptyList()))
-        listData.add(HomeMainSection("Pengumuman", sectionItem = emptyList()))
+        listData.add(HomeMainSection(SECTION_MEETING, sectionItem = emptyList()))
+        listData.add(HomeMainSection(SECTION_EXAM, sectionItem = emptyList()))
+        listData.add(HomeMainSection(SECTION_ASSIGNMENT, sectionItem = emptyList()))
+        listData.add(HomeMainSection(SECTION_PAYMENT, sectionItem = emptyList()))
+        listData.add(HomeMainSection(SECTION_ANNOUNCEMENT, sectionItem = emptyList()))
 
         _listHomeSectionDataClassSchedule.observeOnce {
-            listData[0] = HomeMainSection("Jadwal Kelas", sectionItem = it)
+            listData[0] = HomeMainSection(SECTION_MEETING, sectionItem = it)
             _sectionData.postValue(listData)
         }
 
         _listHomeSectionDataExam.observeOnce {
-            listData[1] = (HomeMainSection("Ujian", sectionItem = it))
+            listData[1] = (HomeMainSection(SECTION_EXAM, sectionItem = it))
             _sectionData.postValue(listData)
         }
 
         _listHomeSectionDataAssignment.observeOnce {
-            listData[2] = (HomeMainSection("Tugas", sectionItem = it))
+            listData[2] = (HomeMainSection(SECTION_ASSIGNMENT, sectionItem = it))
             _sectionData.postValue(listData)
         }
 
         _listPaymentSectionDataPayment.observeOnce {
-            listData[3] =  HomeMainSection("Pembayaran", sectionItem = it)
+            listData[3] =  HomeMainSection(SECTION_PAYMENT, sectionItem = it)
             _sectionData.postValue(listData)
         }
 
         _listPaymentSectionDataAnnouncement.observeOnce {
-            listData[4] = HomeMainSection("Pengumuman", sectionItem = it)
+            listData[4] = HomeMainSection(SECTION_ANNOUNCEMENT, sectionItem = it)
             _sectionData.postValue(listData)
         }
 
@@ -95,20 +98,21 @@ class StHomeViewModel : ViewModel() {
             response.first.observeOnce { studyClass ->
 
                 studyClass.name?.let { _profileClass.postValue(it) }
-                studyClass.subjects?.let {
-                    // TODO: Should be change to List of Meetings
-                    _listHomeSectionDataClassSchedule.postValue(it)
-                    val examList = mutableListOf<String>()
-                    val assignmentList = mutableListOf<String>()
-                    it.map { subject ->
+                val meetingList = mutableListOf<ClassMeeting>()
+                val examList = mutableListOf<String>()
+                val assignmentList = mutableListOf<String>()
+                studyClass.subjects?.map { subject ->
+                    with(subject) {
+                        subject.classMeetings?.let { meetingList.addAll(it) }
                         // TODO: Take the class exams
-                        subject.classExams?.let { exams -> examList.addAll(exams) }
+                        classExams?.let { exams -> examList.addAll(exams) }
                         // TODO: Take the class assignments
-                        subject.classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
+                        classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                     }
-                    loadTaskForms(examList, _listHomeSectionDataExam)
-                    loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
                 }
+                _listHomeSectionDataClassSchedule.postValue(meetingList)
+                loadTaskForms(examList, _listHomeSectionDataExam)
+                loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
             }
         }
     }

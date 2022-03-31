@@ -1,18 +1,23 @@
 package com.example.project_skripsi.module.student.main._sharing
 
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Announcement
 import com.example.project_skripsi.core.model.local.HomeSectionData
-import com.example.project_skripsi.databinding.ItemStHomeSectionPengumumanBinding
+import com.example.project_skripsi.databinding.ItemStHomeSectionAnnouncementBinding
+import com.example.project_skripsi.utils.app.App
 
-class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionPengumumanBinding):
+class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionAnnouncementBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: HomeSectionData) {
         val data = item as Announcement
         with(binding) {
-            judul.text = data.title
-            deskripsi.text = data.description
+            viewIndicator.setBackgroundColor(
+                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_announcement, null))
+            tvTitle.text = data.title
+            tvDescription.text = data.description
         }
     }
 }
