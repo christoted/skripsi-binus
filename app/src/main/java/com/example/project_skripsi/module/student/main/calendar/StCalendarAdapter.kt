@@ -17,7 +17,7 @@ class StCalendarAdapter(private val dataList: List<CalendarItem>, private val li
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
-            TYPE_MEETING -> StHomeClassViewHolder(
+            TYPE_MEETING -> StHomeMeetingViewHolder(
                 ItemStHomeSectionItemBinding.inflate(
                 LayoutInflater.from(viewGroup.context), viewGroup, false),listener)
             TYPE_EXAM -> StHomeExamViewHolder(
@@ -27,16 +27,16 @@ class StCalendarAdapter(private val dataList: List<CalendarItem>, private val li
                 ItemStHomeSectionItemBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false),listener)
             TYPE_PAYMENT -> StHomePaymentViewHolder(
-                ItemStHomeSectionPembayaranBinding.inflate(
+                ItemStHomeSectionPaymentBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
             else -> StHomeAnnouncementViewHolder(
-                ItemStHomeSectionPengumumanBinding.inflate(
+                ItemStHomeSectionAnnouncementBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
         }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (dataList[position].viewType) {
-            TYPE_MEETING -> (holder as StHomeClassViewHolder).bind(dataList[position].item)
+            TYPE_MEETING -> (holder as StHomeMeetingViewHolder).bind(dataList[position].item)
             TYPE_EXAM -> (holder as StHomeExamViewHolder).bind(dataList[position].item)
             TYPE_ASSIGNMENT -> (holder as StHomeAssignmentViewHolder).bind(dataList[position].item)
             TYPE_PAYMENT -> (holder as StHomePaymentViewHolder).bind(dataList[position].item)
