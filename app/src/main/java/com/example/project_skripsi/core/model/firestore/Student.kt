@@ -76,6 +76,10 @@ data class AssignedTaskForm(
     val id: String? = null,
 
     val title: String? = null,
+    
+    val type: String? = null,
+
+    val startTime: Date? = null,
 
     @get: PropertyName("task_checked")
     @set: PropertyName("task_checked")

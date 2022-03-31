@@ -17,9 +17,9 @@ import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreVi
 
 
 class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val tab: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val isExpanded = BooleanArray(viewModel.sectionDatas.value!!.size)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         when(tab) {
             0 -> {
                 val item = ItemStScoreContentBinding.inflate(
@@ -62,7 +62,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                     Log.d("Data Subject", ": " + position)
                     val singleData = it[position]
                     val adapter = StScoreContentChildAdapter(viewModel, singleData)
-                    (holder as StScoreContentViewHolder).bind(singleData, adapter)
+                    (holder as StScoreContentViewHolder).bind(singleData, adapter, position)
                 }
             }
             1 -> {
@@ -93,23 +93,22 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
 
     inner class StScoreContentViewHolder(private val binding: ItemStScoreContentBinding): RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            itemView.setOnClickListener {
-                with(binding) {
-
-                    sectionItemsRecyclerView.isVisible = !sectionItemsRecyclerView.isVisible
-
-                }
-            }
-        }
-
-        fun bind(item: ScoreMainSection, adapter: StScoreContentChildAdapter) {
+        fun bind(item: ScoreMainSection, adapter: StScoreContentChildAdapter, position: Int) {
             with(binding) {
                 subject.text = item.subjectName
+                tvMid.text =  item.mid_exam?.toString() ?: "-"
+                tvFinal.text = item.final_exam?.toString() ?: "-"
+                tvAssignment.text = item.total_assignment?.toString() ?: "-"
+                tvTotal.text = item.total_score?.toString() ?: "-"
                 with(binding.sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
                     sectionItemsRecyclerView.adapter = adapter
                     binding.sectionItemsRecyclerView.addItemDecoration(DividerItemDecoration(itemView.context, DividerItemDecoration.VERTICAL))
+                }
+                sectionItemsRecyclerView.isVisible = isExpanded[position]
+                root.setOnClickListener {
+                    isExpanded[position] = !isExpanded[position]
+                    sectionItemsRecyclerView.isVisible = isExpanded[position]
                 }
             }
         }

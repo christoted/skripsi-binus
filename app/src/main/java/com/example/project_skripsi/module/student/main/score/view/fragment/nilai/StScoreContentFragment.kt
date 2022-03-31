@@ -14,7 +14,6 @@ import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreVi
 
 class StScoreContentFragment(private val viewModel: StScoreViewModel) : Fragment() {
 
-    private lateinit var contentAdapter: StScoreContentAdapter
     private var _binding: FragmentStScoreContentBinding? = null
     private val binding get() = _binding!!
 
@@ -24,13 +23,11 @@ class StScoreContentFragment(private val viewModel: StScoreViewModel) : Fragment
     ): View? {
         // Inflate the layout for this fragment
        _binding = FragmentStScoreContentBinding.inflate(inflater, container, false)
-        contentAdapter = StScoreContentAdapter(viewModel,0)
-
         viewModel.sectionDatas.observe(viewLifecycleOwner, {
             with(binding.recyclerView) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = contentAdapter
+                adapter = StScoreContentAdapter(viewModel,0)
             }
         })
 

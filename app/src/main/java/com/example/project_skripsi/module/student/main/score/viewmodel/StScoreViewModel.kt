@@ -33,14 +33,9 @@ class StScoreViewModel : ViewModel() {
 
     private val _sectionDatas = MutableLiveData<List<ScoreMainSection>>()
     val sectionDatas: LiveData<List<ScoreMainSection>> = _sectionDatas
-
     private val _subjects = MutableLiveData<List<Subject>>()
-    private val _assignedAssignmentStudent = MutableLiveData<List<AssignedTaskForm>>()
-    private val _assignedExamStudent = MutableLiveData<List<AssignedTaskForm>>()
     private var _mapAssignmentExamBySubject = MutableLiveData<Map<String, List<AssignedTaskForm>>>()
-    private var _listExamAssignment = MutableLiveData<List<AssignedTaskForm>>()
-    private var listExamAssignment = arrayListOf<AssignedTaskForm>()
-    private var listExamAssignmentBySubject = arrayListOf<AssignedTaskForm>()
+    private val mutableListOfTask: MutableList<AssignedTaskForm> = mutableListOf()
 
     companion object {
         const val tabCount = 3
@@ -50,43 +45,47 @@ class StScoreViewModel : ViewModel() {
     init {
         val listData = arrayListOf<ScoreMainSection>()
         _subjects.observeOnce {
+            Log.d("Subject", ": " + it.map {
+                it.subjectName
+            })
+
             it.forEach { subject ->
-                listExamAssignment = arrayListOf()
-                subject.subjectName?.let {
-                    // Section Item -> Score Section Data By Subject
-                    _assignedAssignmentStudent.observeOnce {
-                        _mapAssignmentExamBySubject.postValue(
-                            it.groupBy {
-                                it.subjectName!!
-                            }
-                        )
+                subject.subjectName?.let { subjectName ->
+                    val midExam: Int? = mutableListOfTask.filter { it.type == "ujian_tengah_semester" && it.taskChecked == true && it.subjectName == subjectName}.let {
+                        if (it.isEmpty()) null else it[0].score ?: 0
                     }
-                    _assignedExamStudent.observeOnce {
-                        _mapAssignmentExamBySubject.postValue(
-                            it.groupBy {
-                                it.subjectName!!
-                            }
-                        )
+                    val finalExam: Int? = mutableListOfTask.filter { it.type == "ujian_akhir_semester" && it.taskChecked == true && it.subjectName == subjectName}.let {
+                        if (it.isEmpty()) null else it[0].score ?: 0
+                    }
+                    val totalAssignment : Int? = mutableListOfTask.filter { it.type == "tugas" && it.taskChecked == true && it.subjectName == subjectName}.let {
+                        if (it.isEmpty()) null else it.sumOf { it.score ?: 0  } / it.size
                     }
 
-                    _mapAssignmentExamBySubject.observeForever {
-                        it.keys.map { key ->
-                            if (key == subject.subjectName) {
-                                Log.d("Data Score", ": " + it[key])
-                            //    listExamAssignment.addAll(it[key]!!)
-                                _listExamAssignment.value = it[key]!!
-                            }
-                        }
+                    var totalScore = 0
+                    var scoreWeight = 0
 
-                        _listExamAssignment.observeOnce {
-                            it.map {
-                                if (it.subjectName == subject.subjectName!!) {
-                                    listExamAssignmentBySubject.add(it)
-                                }
-                            }
-                        }
-                        listData.add(ScoreMainSection(subjectName = subject.subjectName!!, mid_exam = 0.0, exam = 0.0, total_assignment = 0.0, total_score = 0.0, sectionItem = listExamAssignmentBySubject.filter { it.subjectName == subject.subjectName }))
+                    if (midExam != null) {
+                        scoreWeight += 40
+                        totalScore += 40 * midExam
                     }
+
+                    if (finalExam != null) {
+                        scoreWeight += 40
+                        totalScore += 40 * finalExam
+                    }
+
+                    if (totalAssignment != null) {
+                        scoreWeight += 20
+                        totalScore += 20 * totalAssignment
+                    }
+
+                    listData.add(ScoreMainSection(
+                        subjectName = subjectName,
+                        mid_exam = midExam,
+                        final_exam = finalExam,
+                        total_assignment = totalAssignment,
+                        total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
+                        sectionItem = mutableListOfTask.filter { it.subjectName == subjectName }))
                 }
             }
             _sectionDatas.postValue(listData)
@@ -99,17 +98,19 @@ class StScoreViewModel : ViewModel() {
                 response ->
             response.first.observeOnce {
                     student ->
-                Log.d("Data Student", "${student}")
-                // TODO: Take the Class id
                 student.studyClass?.let {
                     loadStudyClass(it)
                 }
-                student.assignedAssignments?.let {
-                    _assignedAssignmentStudent.postValue(it)
+                val assignedTask: MutableMap<String, MutableList<AssignedTaskForm>> = mutableMapOf()
+
+                student.assignedAssignments?.filter { it.taskChecked == true }?.let {
+                    mutableListOfTask.addAll(it)
                 }
-                student.assignedExams?.let {
-                    _assignedExamStudent.postValue(it)
+
+                student.assignedExams?.filter { it.taskChecked == true }?.let {
+                    mutableListOfTask.addAll(it)
                 }
+                _mapAssignmentExamBySubject.postValue(assignedTask)
             }
         }
     }

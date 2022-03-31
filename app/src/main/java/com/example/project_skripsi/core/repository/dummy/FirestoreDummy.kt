@@ -45,6 +45,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     mutableListOf(
                         AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
                             "Ujian Tengah Semester",
+                            "ujian_tengah_semester",
+                            DateHelper.getCurrentDate(),
                             false,
                             "Biologi",
                             95,
@@ -54,6 +56,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     mutableListOf(
                         AssignedTaskForm("ripyBsBZObBfarZpd085",
                             "Tugas tentang minyak hewani",
+                            "tugas",
+                            DateHelper.getCurrentDate(),
                             true,
                             "Biologi",
                             70,
@@ -300,6 +304,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .assignedExams!!
                     .add(AssignedTaskForm(taskId,
                         title,
+                        "ujian_tengah_semester",
+                        date.first,
                         isChecked,
                         subjects[idx],
                         if (isChecked) rnd(0,100) else 0,
@@ -334,6 +340,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .assignedExams!!
                     .add(AssignedTaskForm(taskId,
                         title,
+                        "ujian_akhir_semester",
+                        date.first,
                         isChecked,
                         subjects[idx],
                         if (isChecked) rnd(0,100) else 0,
@@ -369,6 +377,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .assignedAssignments!!
                     .add(AssignedTaskForm(taskId,
                         title,
+                        "tugas",
+                        date.first,
                         isChecked,
                         subjects[idx],
                         if (isChecked) rnd(0,100) else 0,

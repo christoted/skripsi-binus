@@ -33,7 +33,7 @@
                 android:layout_weight="1"/>
 
             <TextView
-                android:id="@+id/mid"
+                android:id="@+id/tv_mid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="80"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <TextView
-                android:id="@+id/uas"
+                android:id="@+id/tv_final"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="90"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <TextView
-                android:id="@+id/assignment"
+                android:id="@+id/tv_assignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100"
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <TextView
-                android:id="@+id/total"
+                android:id="@+id/tv_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="90"
