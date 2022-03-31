@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.main.score.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStScoreAbsensiBinding
 import com.example.project_skripsi.databinding.ItemStScoreContentBinding
@@ -57,20 +59,21 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         when(tab) {
             0 -> {
                 viewModel.sectionDatas.value?.let {
-                    val singleData = it[position].sectionItem[position]
-                    val adapter = StScoreContentChildAdapter(viewModel)
+                    Log.d("Data Subject", ": " + position)
+                    val singleData = it[position]
+                    val adapter = StScoreContentChildAdapter(viewModel, singleData)
                     (holder as StScoreContentViewHolder).bind(singleData, adapter)
                 }
             }
             1 -> {
                 viewModel.sectionDatas.value?.let {
-                    val singleData = it[position].sectionItem[position]
+                    val singleData = it[position]
                     (holder as StScoreAbsensiViewHolder).bind(singleData)
                 }
             }
             2 -> {
                 viewModel.sectionDatas.value?.let {
-                    val singleData =  it[position].sectionItem[position]
+                    val singleData =  it[position]
                     (holder as StScorePencapaianViewHolder).bind(singleData)
                 }
             }
@@ -100,9 +103,9 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
             }
         }
 
-        fun bind(item: ScoreSectionData, adapter: StScoreContentChildAdapter) {
+        fun bind(item: ScoreMainSection, adapter: StScoreContentChildAdapter) {
             with(binding) {
-                subject.text = (item as AssignedTaskForm).subjectName
+                subject.text = item.subjectName
                 with(binding.sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
                     sectionItemsRecyclerView.adapter = adapter
@@ -113,7 +116,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
     }
 
     inner class StScoreAbsensiViewHolder(private val binding: ItemStScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ScoreSectionData) {
+        fun bind(item: ScoreMainSection) {
             with(binding) {
                 //title.text = item
             }
@@ -121,7 +124,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
     }
 
     inner class StScorePencapaianViewHolder(private val binding: ItemStScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ScoreSectionData) {
+        fun bind(item: ScoreMainSection) {
             with(binding) {
 
             }

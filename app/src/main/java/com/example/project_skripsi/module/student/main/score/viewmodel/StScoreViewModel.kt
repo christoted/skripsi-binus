@@ -16,6 +16,8 @@ import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class StScoreViewModel : ViewModel() {
 
@@ -38,6 +40,7 @@ class StScoreViewModel : ViewModel() {
     private var _mapAssignmentExamBySubject = MutableLiveData<Map<String, List<AssignedTaskForm>>>()
     private var _listExamAssignment = MutableLiveData<List<AssignedTaskForm>>()
     private var listExamAssignment = arrayListOf<AssignedTaskForm>()
+    private var listExamAssignmentBySubject = arrayListOf<AssignedTaskForm>()
 
     companion object {
         const val tabCount = 3
@@ -46,20 +49,18 @@ class StScoreViewModel : ViewModel() {
 
     init {
         val listData = arrayListOf<ScoreMainSection>()
-
-        loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
         _subjects.observeOnce {
             it.forEach { subject ->
+                listExamAssignment = arrayListOf()
                 subject.subjectName?.let {
                     // Section Item -> Score Section Data By Subject
                     _assignedAssignmentStudent.observeOnce {
-                      _mapAssignmentExamBySubject.postValue(
-                          it.groupBy {
-                              it.subjectName!!
-                          }
-                      )
+                        _mapAssignmentExamBySubject.postValue(
+                            it.groupBy {
+                                it.subjectName!!
+                            }
+                        )
                     }
-
                     _assignedExamStudent.observeOnce {
                         _mapAssignmentExamBySubject.postValue(
                             it.groupBy {
@@ -68,20 +69,29 @@ class StScoreViewModel : ViewModel() {
                         )
                     }
 
-                    _mapAssignmentExamBySubject.observeOnce {
-                       val datas = it[subject.subjectName]
-                        datas?.let {
-                            _listExamAssignment.postValue(it)
+                    _mapAssignmentExamBySubject.observeForever {
+                        it.keys.map { key ->
+                            if (key == subject.subjectName) {
+                                Log.d("Data Score", ": " + it[key])
+                            //    listExamAssignment.addAll(it[key]!!)
+                                _listExamAssignment.value = it[key]!!
+                            }
                         }
-                    }
-                    _listExamAssignment.observeOnce {
-                        listExamAssignment.addAll(it)
+
+                        _listExamAssignment.observeOnce {
+                            it.map {
+                                if (it.subjectName == subject.subjectName!!) {
+                                    listExamAssignmentBySubject.add(it)
+                                }
+                            }
+                        }
+                        listData.add(ScoreMainSection(subjectName = subject.subjectName!!, mid_exam = 0.0, exam = 0.0, total_assignment = 0.0, total_score = 0.0, sectionItem = listExamAssignmentBySubject.filter { it.subjectName == subject.subjectName }))
                     }
                 }
-                    listData.add(ScoreMainSection(subjectName = subject.subjectName!!, mid_exam = 0.0, exam = 0.0, total_assignment = 0.0, total_score = 0.0, sectionItem = listExamAssignment ))
             }
             _sectionDatas.postValue(listData)
         }
+        loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
     }
 
     private fun loadCurrentStudent(uid: String) {
@@ -114,7 +124,5 @@ class StScoreViewModel : ViewModel() {
             }
         }
     }
-
-    // Absent
 
 }
