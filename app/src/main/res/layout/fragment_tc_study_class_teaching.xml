@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.template.TemplateFragment">
+    tools:context=".module.teacher.study_class.TcStudyClassTeachingFragment">
 
     <TextView
         android:id="@+id/tv_test"
@@ -16,6 +16,24 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:text="123"/>
+
+    <Button
+        android:id="@+id/btn_resource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="materi"/>
+
+    <Button
+        android:id="@+id/btn_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ujian &amp; tugas"/>
+
+    <Button
+        android:id="@+id/btn_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="example item student"/>
 
 </LinearLayout>
 

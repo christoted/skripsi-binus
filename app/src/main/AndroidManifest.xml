@@ -11,8 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectskripsi">
         <activity
+            android:name=".module.teacher.TcMainActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".module.common.auth.AuthActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,16 +26,14 @@
         </activity>
         <activity
             android:name=".module.student.task.StTaskActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".module.student.subject_detail.StSubjectActivity"
             android:exported="true" />
         <activity
             android:name=".module.student.main.StMainActivity"
             android:exported="true"
-            android:label="@string/title_activity_student_main">
-
-        </activity>
+            android:label="@string/title_activity_student_main"></activity>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@ import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
 
-class FormAdapter(private val questionList: List<AssignedQuestion>) :
+class StFormAdapter(private val questionList: List<AssignedQuestion>) :
     Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =

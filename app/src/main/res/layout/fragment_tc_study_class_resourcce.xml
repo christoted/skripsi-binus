@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.template.TemplateFragment">
+    tools:context=".module.teacher.study_class.TcStudyClassResourceFragment">
 
     <TextView
         android:id="@+id/tv_test"
@@ -16,6 +16,8 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:text="123"/>
+
+
 
 </LinearLayout>
 
