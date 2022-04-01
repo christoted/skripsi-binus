@@ -44,14 +44,22 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     emptyList(),
                     mutableListOf(
                         AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
+                            "Ujian Tengah Semester",
+                            "ujian_tengah_semester",
+                            DateHelper.getCurrentDate(),
                             false,
+                            "Biologi",
                             95,
                             listOf("Ok Siap Essai")
                         ),
                     ),
                     mutableListOf(
                         AssignedTaskForm("ripyBsBZObBfarZpd085",
+                            "Tugas tentang minyak hewani",
+                            "tugas",
+                            DateHelper.getCurrentDate(),
                             true,
+                            "Biologi",
                             70,
                             listOf("Minyak adalah mata uang", 2)
                         ),
@@ -272,10 +280,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
             val includeUTS = rnd(0,1) > 0
             if (includeUTS) {
                 val taskId = "UTS_${id}"
+                val title = "Ujian Tengah Semester"
                 val date = getClassTime()
                 newTaskForms[taskId] = TaskForm(
                     taskId,
-                    "Ujian Tengah Semester",
+                    title,
                     "ujian_tengah_semester",
                     date.first,
                     date.second,
@@ -294,7 +303,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
                     .assignedExams!!
                     .add(AssignedTaskForm(taskId,
+                        title,
+                        "ujian_tengah_semester",
+                        date.first,
                         isChecked,
+                        subjects[idx],
                         if (isChecked) rnd(0,100) else 0,
                         listOf()
                     ))
@@ -303,10 +316,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
             val includeUAS = rnd(0,1) > 0
             if (includeUAS) {
                 val taskId = "UAS_${id}"
+                val title = "Ujian Akhir Semester"
                 val date = getClassTime()
                 newTaskForms[taskId] = TaskForm(
                     taskId,
-                    "Ujian Akhir Semester",
+                    title,
                     "ujian_akhir_semester",
                     date.first,
                     date.second,
@@ -325,7 +339,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
                     .assignedExams!!
                     .add(AssignedTaskForm(taskId,
+                        title,
+                        "ujian_akhir_semester",
+                        date.first,
                         isChecked,
+                        subjects[idx],
                         if (isChecked) rnd(0,100) else 0,
                         listOf()
                     ))
@@ -335,10 +353,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
             val numAsg = rnd(0, 5)
             for (i in 1..numAsg) {
                 val taskId = "TGS_${id}_0${i}"
+                val title = "Tugas ${subjects[idx]} 0${i}"
                 val date = getClassTime()
                 newTaskForms[taskId] = TaskForm(
                     taskId,
-                    "Tugas ${subjects[idx]} 0${i}", // sesuaikan
+                    title,
                     "tugas",
                     date.first,
                     date.second,
@@ -357,7 +376,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
                     .assignedAssignments!!
                     .add(AssignedTaskForm(taskId,
+                        title,
+                        "tugas",
+                        date.first,
                         isChecked,
+                        subjects[idx],
                         if (isChecked) rnd(0,100) else 0,
                         listOf()
                     ))

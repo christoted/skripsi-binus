@@ -1,6 +1,7 @@
 package com.example.project_skripsi.core.model.firestore
 
 import com.example.project_skripsi.core.model.local.HomeSectionData
+import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
@@ -74,13 +75,23 @@ data class AssignedTaskForm(
 
     val id: String? = null,
 
+    val title: String? = null,
+    
+    val type: String? = null,
+
+    val startTime: Date? = null,
+
     @get: PropertyName("task_checked")
     @set: PropertyName("task_checked")
     var taskChecked: Boolean? = null,
+
+    @get: PropertyName("subject_name")
+    @set: PropertyName("subject_name")
+    var subjectName: String? = null,
 
     val score: Int? = null,
 
     val answer: List<Any>? = null,
 
-)
+) : ScoreSectionData()
 
