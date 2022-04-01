@@ -1,23 +1,14 @@
 package com.example.project_skripsi.module.student.main.score.viewmodel
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.Subject
-import com.example.project_skripsi.core.model.firestore.TaskForm
-import com.example.project_skripsi.core.model.local.DayEvent
-import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class StScoreViewModel : ViewModel() {
 
@@ -40,45 +31,47 @@ class StScoreViewModel : ViewModel() {
     companion object {
         const val tabCount = 3
         val tabHeader = arrayOf("Nilai", "Absensi", "Pencapaian")
+
+        const val MID_EXAM_WEIGHT = 40
+        const val FINAL_EXAM_WEIGHT = 40
+        const val ASSIGNMENT_WEIGHT = 20
+
+        const val TYPE_MID_EXAM = "ujian_tengah_semester"
+        const val TYPE_FINAL_EXAM = "ujian_akhir_semester"
+        const val TYPE_ASSIGNMENT = "tugas"
     }
 
     init {
         val listData = arrayListOf<ScoreMainSection>()
-        _subjects.observeOnce {
-            Log.d("Subject", ": " + it.map {
-                it.subjectName
-            })
-
-            it.forEach { subject ->
+        _subjects.observeOnce { subjects ->
+            subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
-                    val midExam: Int? = mutableListOfTask.filter { it.type == "ujian_tengah_semester" && it.taskChecked == true && it.subjectName == subjectName}.let {
+                    val midExam: Int? = mutableListOfTask.filter {
+                        getTaskFilter(it, TYPE_MID_EXAM, subjectName)
+                    }.let {
                         if (it.isEmpty()) null else it[0].score ?: 0
                     }
-                    val finalExam: Int? = mutableListOfTask.filter { it.type == "ujian_akhir_semester" && it.taskChecked == true && it.subjectName == subjectName}.let {
+
+                    val finalExam: Int? = mutableListOfTask.filter {
+                        getTaskFilter(it, TYPE_FINAL_EXAM, subjectName)
+                    }.let {
                         if (it.isEmpty()) null else it[0].score ?: 0
                     }
-                    val totalAssignment : Int? = mutableListOfTask.filter { it.type == "tugas" && it.taskChecked == true && it.subjectName == subjectName}.let {
-                        if (it.isEmpty()) null else it.sumOf { it.score ?: 0  } / it.size
+
+                    val totalAssignment : Int? = mutableListOfTask.filter {
+                        getTaskFilter(it, TYPE_ASSIGNMENT, subjectName)
+                    }.let {
+                        if (it.isEmpty()) null else it.averageOf { task -> task.score ?: 0 }
                     }
 
-                    var totalScore = 0
-                    var scoreWeight = 0
+                    val totalScore = MID_EXAM_WEIGHT * (midExam ?: 0) +
+                            FINAL_EXAM_WEIGHT * (finalExam ?: 0) +
+                            ASSIGNMENT_WEIGHT * (totalAssignment ?: 0)
 
-                    if (midExam != null) {
-                        scoreWeight += 40
-                        totalScore += 40 * midExam
-                    }
-
-                    if (finalExam != null) {
-                        scoreWeight += 40
-                        totalScore += 40 * finalExam
-                    }
-
-                    if (totalAssignment != null) {
-                        scoreWeight += 20
-                        totalScore += 20 * totalAssignment
-                    }
-
+                    val scoreWeight = MID_EXAM_WEIGHT * (midExam?.let { 1 } ?: 0) +
+                            FINAL_EXAM_WEIGHT * (finalExam?.let { 1 } ?: 0) +
+                            ASSIGNMENT_WEIGHT * (totalAssignment?.let { 1 } ?: 0)
+                    
                     listData.add(ScoreMainSection(
                         subjectName = subjectName,
                         mid_exam = midExam,
@@ -126,4 +119,17 @@ class StScoreViewModel : ViewModel() {
         }
     }
 
+    private fun getTaskFilter(atf: AssignedTaskForm, taskType : String, subjectName : String) =
+        atf.type == taskType && atf.taskChecked == true && atf.subjectName == subjectName
+
+}
+
+private fun <T> Iterable<T>.averageOf(selector: (T) -> Int): Int {
+    var sum = 0
+    var count = 0
+    for (element in this) {
+        sum += selector(element)
+        count++
+    }
+    return sum / count
 }

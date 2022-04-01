@@ -17,7 +17,7 @@ import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreVi
 
 
 class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val tab: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val isExpanded = BooleanArray(viewModel.sectionDatas.value!!.size)
+    private val isExpanded = BooleanArray(viewModel.sectionDatas.value?.size ?: 0)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when(tab) {
@@ -83,13 +83,8 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
     }
 
 
-    override fun getItemCount(): Int {
-        viewModel.sectionDatas.value?.let {
-            return it.size
-        } ?: run {
-            return 0
-        }
-    }
+    override fun getItemCount(): Int = viewModel.sectionDatas.value?.size?: 0
+
 
     inner class StScoreContentViewHolder(private val binding: ItemStScoreContentBinding): RecyclerView.ViewHolder(binding.root) {
 
