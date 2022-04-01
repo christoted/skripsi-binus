@@ -95,10 +95,8 @@ class StSubjectViewModel : ViewModel() {
             FireRepository.instance.getResource(uid).let { response ->
                 response.first.observeOnce {
                     resourceList.add(it)
-                    if (resourceList.size == uids.size) {
+                    if (resourceList.size == uids.size)
                         _resourceList.postValue(resourceList.toList())
-                        response.first.removeObserver {  }
-                    }
                 }
             }
         }

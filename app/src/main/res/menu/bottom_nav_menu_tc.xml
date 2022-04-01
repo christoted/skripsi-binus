@@ -18,12 +18,12 @@
 
     <item
         android:id="@+id/tcResourceFragment"
-        android:icon="@drawable/ic_bottom_navigation_score"
+        android:icon="@drawable/ic_bottom_navigation_resource"
         android:title="Resource" />
 
     <item
         android:id="@+id/tcTaskFragment"
-        android:icon="@drawable/ic_bottom_navigation_payment"
+        android:icon="@drawable/ic_bottom_navigation_task"
         android:title="Task" />
 
 </menu>
