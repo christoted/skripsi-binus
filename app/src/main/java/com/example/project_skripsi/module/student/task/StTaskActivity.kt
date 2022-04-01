@@ -30,6 +30,7 @@ class StTaskActivity : AppCompatActivity() {
         val navOptions = NavOptions.Builder()
                             .setPopUpTo(R.id.navigation_dummy_fragment,true)
                             .build()
+        navController.setGraph(R.navigation.st_task_navigation)
 
         viewModel.navType.observe(this, {
             when(it) {
