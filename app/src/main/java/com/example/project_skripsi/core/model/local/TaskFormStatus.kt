@@ -47,7 +47,7 @@ data class TaskFormStatus(
 
     companion object {
 
-        private fun getDuration(taskForm: TaskForm) : Long =
+        fun getDuration(taskForm: TaskForm) : Long =
             (taskForm.endTime!!.time - taskForm.startTime!!.time) / (1000 * 60)
 
 

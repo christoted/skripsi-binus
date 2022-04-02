@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
-import com.example.project_skripsi.core.model.firestore.AttendMeeting
+import com.example.project_skripsi.core.model.firestore.AttendedMeeting
 import com.example.project_skripsi.core.model.firestore.Subject
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
@@ -30,8 +30,8 @@ class StScoreViewModel : ViewModel() {
     private val _sectionAttendances = MutableLiveData<List<AttendanceMainSection>>()
     val sectionAttendances: LiveData<List<AttendanceMainSection>> = _sectionAttendances
     private val listDataAttendance = arrayListOf<AttendanceMainSection>()
-    private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendMeeting>>>()
-    private val attendances: MutableList<AttendMeeting> = mutableListOf()
+    private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
+    private val attendances: MutableList<AttendedMeeting> = mutableListOf()
     // Achievement
 
 

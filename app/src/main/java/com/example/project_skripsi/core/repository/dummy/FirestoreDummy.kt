@@ -14,7 +14,6 @@ import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.lang.Exception
 import java.util.*
 import kotlin.random.Random
@@ -40,7 +39,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             null
                         ),
                     ),
-                    listOf(AttendMeeting(id = "MEET001", subjectName = "Biologi", status = "Hadir")),
+                    listOf(AttendedMeeting(id = "MEET001", subjectName = "Biologi", status = "hadir")),
                     emptyList(),
                     mutableListOf(
                         AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",

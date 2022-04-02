@@ -35,5 +35,11 @@
     <color name="recyclerview_background">#eeeeee</color>
 
     <color name="payment_late">#ff5350</color>
+    <color name="payment_incoming">#fbc02d</color>
+    <color name="payment_complete">#4caf50</color>
+
+    <color name="last_assignment_not_submit">#ff5350</color>
+    <color name="last_assignment_submit">#4caf50</color>
+    <color name="last_assignment_null">#8e8e8e</color>
 
 </resources>

@@ -12,15 +12,15 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStSubjectBinding
-import com.example.project_skripsi.module.student.subject_detail._sharing.TaskFormListener
 import com.example.project_skripsi.module.student.subject_detail.assignment.StSubjectAssignmentFragment
 import com.example.project_skripsi.module.student.subject_detail.attendance.StSubjectAttendanceFragment
 import com.example.project_skripsi.module.student.subject_detail.exam.StSubjectExamFragment
 import com.example.project_skripsi.module.student.subject_detail.resource.StSubjectResourceFragment
 import com.example.project_skripsi.module.student.task.StTaskViewModel
+import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.google.android.material.tabs.TabLayoutMediator
 
-class StSubjectFragment : Fragment(), TaskFormListener {
+class StSubjectFragment : Fragment(), ItemClickListener {
 
     private var _binding: FragmentStSubjectBinding? = null
     private val binding get() = _binding!!
@@ -64,7 +64,7 @@ class StSubjectFragment : Fragment(), TaskFormListener {
         _binding = null
     }
 
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, private val taskFormListener: TaskFormListener) : FragmentStateAdapter(fa) {
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, private val taskFormListener: ItemClickListener) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = StSubjectViewModel.tabCount
 
         override fun createFragment(position: Int): Fragment =
@@ -76,8 +76,8 @@ class StSubjectFragment : Fragment(), TaskFormListener {
             }
     }
 
-    override fun onTaskFormClicked(taskFormId: String) {
-        val action = StSubjectFragmentDirections.actionStSubjectFragmentToStTaskActivity(taskFormId)
+    override fun onItemClick(itemId: String) {
+        val action = StSubjectFragmentDirections.actionStSubjectFragmentToStTaskActivity(itemId)
         action.navigationType = StTaskViewModel.NAVIGATION_FORM
         view?.findNavController()?.navigate(action)
     }
