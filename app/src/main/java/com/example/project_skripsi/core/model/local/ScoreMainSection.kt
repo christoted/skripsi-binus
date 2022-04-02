@@ -15,5 +15,4 @@ data class ScoreMainSection(
     val total_score: Int?,
 
     val sectionItem: List<ScoreSectionData>
-
 )

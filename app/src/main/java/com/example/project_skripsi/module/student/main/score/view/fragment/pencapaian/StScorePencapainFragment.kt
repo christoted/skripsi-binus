@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStScoreContentBinding
 import com.example.project_skripsi.databinding.FragmentStScorePencapainBinding
+import com.example.project_skripsi.module.student.main.score.view.adapter.ScoreContentListener
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
 
 
-class StScorePencapainFragment(private val viewModel: StScoreViewModel) : Fragment() {
+class StScorePencapainFragment(private val viewModel: StScoreViewModel) : Fragment(), ScoreContentListener {
 
     private lateinit var contentAdapter: StScoreContentAdapter
     private var _binding: FragmentStScorePencapainBinding? = null
@@ -23,7 +24,7 @@ class StScorePencapainFragment(private val viewModel: StScoreViewModel) : Fragme
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentStScorePencapainBinding.inflate(inflater, container, false)
-        contentAdapter = StScoreContentAdapter(viewModel,2)
+        contentAdapter = StScoreContentAdapter(viewModel,2, this)
 
         viewModel.sectionDatas.observe(viewLifecycleOwner, {
             with(binding.recyclerView) {
@@ -42,5 +43,7 @@ class StScorePencapainFragment(private val viewModel: StScoreViewModel) : Fragme
         _binding = null
     }
 
+    override fun onAttendanceTapped() {
 
+    }
 }

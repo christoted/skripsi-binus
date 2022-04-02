@@ -48,7 +48,7 @@ class StSubjectViewModel : ViewModel() {
         FireRepository.instance.getStudent(uid).let { response ->
             response.first.observeOnce { student ->
                 with(student) {
-                    attendedMeetings?.map { meeting -> mAttendedMeetings.add(meeting)}
+                    attendedMeetings?.map { meeting -> meeting.id?.let { mAttendedMeetings.add(it) } }
                     assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) }}
                     assignedAssignments?.map { asg -> asg.id?.let { mAssignedTaskForms.put(it, asg) }}
                     studyClass?.let { loadStudyClass(it) }

@@ -1,6 +1,7 @@
 package com.example.project_skripsi.module.student.main.score.view.fragment.absensi
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStScoreAbsensiBinding
 import com.example.project_skripsi.databinding.FragmentStScoreContentBinding
+import com.example.project_skripsi.module.student.main.score.view.adapter.ScoreContentListener
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
 
 
-class StScoreAbsensiFragment(private val viewModel: StScoreViewModel) : Fragment() {
+class StScoreAbsensiFragment(private val viewModel: StScoreViewModel) : Fragment(), ScoreContentListener {
 
     private lateinit var contentAdapter: StScoreContentAdapter
     private var _binding: FragmentStScoreAbsensiBinding? = null
@@ -24,7 +26,7 @@ class StScoreAbsensiFragment(private val viewModel: StScoreViewModel) : Fragment
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentStScoreAbsensiBinding.inflate(inflater, container, false)
-        contentAdapter = StScoreContentAdapter(viewModel,1)
+        contentAdapter = StScoreContentAdapter(viewModel,1, this)
 
         viewModel.sectionDatas.observe(viewLifecycleOwner, {
             with(binding.recyclerView) {
@@ -42,4 +44,7 @@ class StScoreAbsensiFragment(private val viewModel: StScoreViewModel) : Fragment
         _binding = null
     }
 
+    override fun onAttendanceTapped() {
+        Log.d("TEST", "onAttendanceTapped: ")
+    }
 }
