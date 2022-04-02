@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.firestore.AttendMeeting
 import com.example.project_skripsi.core.model.firestore.Subject
+import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -12,21 +14,26 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 
 class StScoreViewModel : ViewModel() {
 
-    // TODO:
-    //  - Display the subject
-    //  - Display the score average
-    //  - Display the list of score
-
     private val _text = MutableLiveData<String>().apply {
         value = "This is score Fragment"
     }
     val text: LiveData<String> = _text
 
+    // Score
     private val _sectionDatas = MutableLiveData<List<ScoreMainSection>>()
     val sectionDatas: LiveData<List<ScoreMainSection>> = _sectionDatas
     private val _subjects = MutableLiveData<List<Subject>>()
-    private var _mapAssignmentExamBySubject = MutableLiveData<Map<String, List<AssignedTaskForm>>>()
     private val mutableListOfTask: MutableList<AssignedTaskForm> = mutableListOf()
+    private val listData = arrayListOf<ScoreMainSection>()
+
+    // Attendance
+    private val _sectionAttendances = MutableLiveData<List<AttendanceMainSection>>()
+    val sectionAttendances: LiveData<List<AttendanceMainSection>> = _sectionAttendances
+    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
+    private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendMeeting>>>()
+    private val attendances: MutableList<AttendMeeting> = mutableListOf()
+    // Achievement
+
 
     companion object {
         const val tabCount = 3
@@ -42,7 +49,6 @@ class StScoreViewModel : ViewModel() {
     }
 
     init {
-        val listData = arrayListOf<ScoreMainSection>()
         _subjects.observeOnce { subjects ->
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
@@ -79,11 +85,18 @@ class StScoreViewModel : ViewModel() {
                         total_assignment = totalAssignment,
                         total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
                         sectionItem = mutableListOfTask.filter { it.subjectName == subjectName }))
+
+                    addAttendanceData(subjectName, attendances.filter { it.subjectName == subjectName && it.status == "Hadir"}.count())
                 }
             }
             _sectionDatas.postValue(listData)
+            _sectionAttendances.postValue(listDataAttendance)
         }
         loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
+    }
+
+    private fun addAttendanceData(subjectName: String, totalPresence: Int) {
+        listDataAttendance.add(AttendanceMainSection(subjectName, totalPresence,0, 0,0 ))
     }
 
     private fun loadCurrentStudent(uid: String) {
@@ -94,7 +107,7 @@ class StScoreViewModel : ViewModel() {
                 student.studyClass?.let {
                     loadStudyClass(it)
                 }
-                val assignedTask: MutableMap<String, MutableList<AssignedTaskForm>> = mutableMapOf()
+              //  val assignedTask: MutableMap<String, MutableList<AssignedTaskForm>> = mutableMapOf()
 
                 student.assignedAssignments?.filter { it.taskChecked == true }?.let {
                     mutableListOfTask.addAll(it)
@@ -103,7 +116,14 @@ class StScoreViewModel : ViewModel() {
                 student.assignedExams?.filter { it.taskChecked == true }?.let {
                     mutableListOfTask.addAll(it)
                 }
-                _mapAssignmentExamBySubject.postValue(assignedTask)
+                student.attendedMeetings.let {
+                    _mapAttendanceBySubject.postValue(it?.groupBy {
+                        it.subjectName!!
+                    })
+                    if (it != null) {
+                        attendances.addAll(it)
+                    }
+                }
             }
         }
     }
