@@ -33,7 +33,7 @@ data class Student(
 
     @get: PropertyName("attended_meetings")
     @set: PropertyName("attended_meetings")
-    var attendedMeetings: List<String>? = null,
+    var attendedMeetings: List<AttendMeeting>? = null,
 
     @get: PropertyName("completed_resources")
     @set: PropertyName("completed_resources")
@@ -95,3 +95,12 @@ data class AssignedTaskForm(
 
 ) : ScoreSectionData()
 
+@IgnoreExtraProperties
+data class AttendMeeting (
+    val id: String? = null,
+    val status: String? = null,
+
+    @get: PropertyName("subject_name")
+    @set: PropertyName("subject_name")
+    var subjectName: String? = null
+)

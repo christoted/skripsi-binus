@@ -40,7 +40,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             null
                         ),
                     ),
-                    listOf("MEET001"),
+                    listOf(AttendMeeting(id = "MEET001", subjectName = "Biologi", status = "Hadir")),
                     emptyList(),
                     mutableListOf(
                         AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
