@@ -1,13 +1,16 @@
 package com.example.project_skripsi.module.student.main.score.view.adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStScoreAbsensiBinding
@@ -35,7 +38,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                     parent,
                     false
                 )
-                return StScoreAbsensiViewHolder(item)
+                return StScoreAttendanceViewHolder(item)
             }
             2 -> {
                 val item = ItemStScorePencapaianBinding.inflate(
@@ -43,7 +46,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                     parent,
                     false
                 )
-                return StScorePencapaianViewHolder(item)
+                return StScoreAchievementViewHolder(item)
             }
         }
         val item = ItemStScoreContentBinding.inflate(
@@ -66,15 +69,15 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 }
             }
             1 -> {
-                viewModel.sectionDatas.value?.let {
+                viewModel.sectionAttendances.value?.let {
                     val singleData = it[position]
-                    (holder as StScoreAbsensiViewHolder).bind(singleData)
+                    (holder as StScoreAttendanceViewHolder).bind(singleData)
                 }
             }
             2 -> {
                 viewModel.sectionDatas.value?.let {
                     val singleData =  it[position]
-                    (holder as StScorePencapaianViewHolder).bind(singleData)
+                    (holder as StScoreAchievementViewHolder).bind(singleData)
                 }
             }
         }
@@ -105,19 +108,26 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                     isExpanded[position] = !isExpanded[position]
                     sectionItemsRecyclerView.isVisible = isExpanded[position]
                 }
+                viewIndicator.setBackgroundColor(Color.parseColor("#0000FF"))
             }
         }
     }
 
-    inner class StScoreAbsensiViewHolder(private val binding: ItemStScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ScoreMainSection) {
+    inner class StScoreAttendanceViewHolder(private val binding: ItemStScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: AttendanceMainSection) {
             with(binding) {
                 //title.text = item
+                tvSubjectName.text = item.subjectName
+                tvPresence.text = item.totalPresence.toString()
+                tvPresenceSick.text = item.totalSick.toString()
+                tvPresenceLeave.text = item.totalLeave.toString()
+                tvPresenceNoReason.text = item.totalAlpha.toString()
+                viewIndicator.setBackgroundColor(Color.parseColor("#006400"))
             }
         }
     }
 
-    inner class StScorePencapaianViewHolder(private val binding: ItemStScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreAchievementViewHolder(private val binding: ItemStScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ScoreMainSection) {
             with(binding) {
 

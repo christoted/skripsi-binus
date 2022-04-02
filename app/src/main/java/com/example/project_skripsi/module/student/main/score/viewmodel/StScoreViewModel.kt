@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.Subject
+import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -12,21 +13,26 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 
 class StScoreViewModel : ViewModel() {
 
-    // TODO:
-    //  - Display the subject
-    //  - Display the score average
-    //  - Display the list of score
-
     private val _text = MutableLiveData<String>().apply {
         value = "This is score Fragment"
     }
     val text: LiveData<String> = _text
 
+    // Score
     private val _sectionDatas = MutableLiveData<List<ScoreMainSection>>()
     val sectionDatas: LiveData<List<ScoreMainSection>> = _sectionDatas
     private val _subjects = MutableLiveData<List<Subject>>()
     private var _mapAssignmentExamBySubject = MutableLiveData<Map<String, List<AssignedTaskForm>>>()
     private val mutableListOfTask: MutableList<AssignedTaskForm> = mutableListOf()
+    private val listData = arrayListOf<ScoreMainSection>()
+
+    // Attendance
+    private val _sectionAttendances = MutableLiveData<List<AttendanceMainSection>>()
+    val sectionAttendances: LiveData<List<AttendanceMainSection>> = _sectionAttendances
+    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
+
+    // Achievement
+
 
     companion object {
         const val tabCount = 3
@@ -42,7 +48,7 @@ class StScoreViewModel : ViewModel() {
     }
 
     init {
-        val listData = arrayListOf<ScoreMainSection>()
+
         _subjects.observeOnce { subjects ->
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
@@ -79,11 +85,18 @@ class StScoreViewModel : ViewModel() {
                         total_assignment = totalAssignment,
                         total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
                         sectionItem = mutableListOfTask.filter { it.subjectName == subjectName }))
+
+                    addAttendanceData(subjectName)
                 }
             }
             _sectionDatas.postValue(listData)
+            _sectionAttendances.postValue(listDataAttendance)
         }
         loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
+    }
+
+    private fun addAttendanceData(subjectName: String) {
+        listDataAttendance.add(AttendanceMainSection(subjectName, 10,2,3,0 ))
     }
 
     private fun loadCurrentStudent(uid: String) {
