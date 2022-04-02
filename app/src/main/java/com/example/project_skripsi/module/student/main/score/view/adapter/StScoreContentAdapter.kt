@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +17,16 @@ import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStScoreAbsensiBinding
 import com.example.project_skripsi.databinding.ItemStScoreContentBinding
 import com.example.project_skripsi.databinding.ItemStScorePencapaianBinding
+import com.example.project_skripsi.module.student.main.score.view.StScoreFragmentDirections
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
+
+interface ScoreContentListener {
+    fun onAttendanceTapped()
+}
 
 
-class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val tab: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val tab: Int, private val listener: ScoreContentListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val isExpanded = BooleanArray(viewModel.sectionDatas.value?.size ?: 0)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -123,6 +130,12 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 tvPresenceLeave.text = item.totalLeave.toString()
                 tvPresenceNoReason.text = item.totalAlpha.toString()
                 viewIndicator.setBackgroundColor(Color.parseColor("#006400"))
+                root.setOnClickListener {
+                    listener.onAttendanceTapped()
+                    val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()
+                    toStSubjectActivity.subjectName = item.subjectName
+                    it.findNavController().navigate(toStSubjectActivity)
+                }
             }
         }
     }
