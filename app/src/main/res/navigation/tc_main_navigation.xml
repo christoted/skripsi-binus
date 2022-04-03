@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_tcStudyClassHomeroomFragment_to_tcStudentFragment"
             app:destination="@id/tcStudentFragment" />
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassTeachingFragment"
@@ -65,6 +68,17 @@
         <action
             android:id="@+id/action_tcStudyClassTeachingFragment_to_tcStudyClassTaskFragment"
             app:destination="@id/tcStudyClassTaskFragment" />
+
+        <action
+            android:id="@+id/action_tcStudyClassTeachingFragment_to_tcStudentFragment"
+            app:destination="@id/tcStudentFragment" />
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassResourceFragment"

@@ -18,9 +18,9 @@ data class Teacher(
 
     val gender: String? = null,
 
-    @get: PropertyName("homeroom_teacher")
-    @set: PropertyName("homeroom_teacher")
-    var homeroomTeacher: String? = null,
+    @get: PropertyName("homeroom_class")
+    @set: PropertyName("homeroom_class")
+    var homeroomClass: String? = null,
 
     @get: PropertyName("teaching_subjects")
     @set: PropertyName("teaching_subjects")
