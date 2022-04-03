@@ -7,17 +7,23 @@ import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.AttendedMeeting
 import com.example.project_skripsi.core.model.firestore.Subject
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
+import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
-class StScoreViewModel : ViewModel() {
+
+class StScoreViewModel() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is score Fragment"
     }
     val text: LiveData<String> = _text
+
+    // Fragment Data
+    private val _scoreFragmentData = MutableLiveData<Score>()
+    val scoreFragmentData: LiveData<Score> = _scoreFragmentData
 
     // Score
     private val _sectionDatas = MutableLiveData<List<ScoreMainSection>>()
@@ -49,6 +55,7 @@ class StScoreViewModel : ViewModel() {
     }
 
     init {
+        var totalScores: MutableList<Int?> = mutableListOf()
         _subjects.observeOnce { subjects ->
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
@@ -86,7 +93,12 @@ class StScoreViewModel : ViewModel() {
                         total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
                         sectionItem = mutableListOfTask.filter { it.subjectName == subjectName }))
 
-                    addAttendanceData(subjectName, attendances.filter { it.subjectName == subjectName && it.status == "Hadir"}.count())
+                    addAttendanceData(subjectName, attendances.filter { it.subjectName == subjectName && it.status == "hadir"}.count())
+
+                    val totalScoreBySubject = if (scoreWeight == 0) null else totalScore / scoreWeight
+                    totalScores.add(totalScoreBySubject)
+
+                    _scoreFragmentData.postValue(Score(totalScores.filterNotNull().sum() / totalScores.filterNotNull().count(), attendances.filter { it.subjectName == subjectName && it.status != "hadir"}.count(), 0))
                 }
             }
             _sectionDatas.postValue(listData)

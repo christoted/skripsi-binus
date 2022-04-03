@@ -2,6 +2,7 @@ package com.example.project_skripsi.module.student.main.score.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.project_skripsi.databinding.FragmentStScoreBinding
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreViewPagerAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.utils.helper.MyViewModelFactory
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
@@ -32,7 +34,7 @@ class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(StScoreViewModel::class.java)
+        viewModel = ViewModelProvider(this)[StScoreViewModel::class.java]
         _binding = FragmentStScoreBinding.inflate(inflater, container, false)
 
         viewModel.text.observe(viewLifecycleOwner, Observer {
@@ -53,6 +55,17 @@ class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         with(binding) {
             setupBarChart(chart = chart1)
         }
+        setScoreTopData()
+    }
+
+    private fun setScoreTopData() {
+        viewModel.scoreFragmentData.observe(viewLifecycleOwner, {
+            with(binding) {
+                tvScore.text = it.totalScore.toString()
+                tvAbsent.text = it.totalAbsent.toString()
+                tvAchievement.text = it.totalAchievement.toString()
+            }
+        })
     }
 
     private fun setupBarChart(chart: BarChart) {
@@ -117,4 +130,9 @@ class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     override fun onStopTrackingTouch(p0: SeekBar?) {
 
     }
+
+    // TODO:
+    //  Use Live Data in StScoreViewModel
+    //  Count all the value then divided by total subject that has a score
+    //  Home filter by current date
 }
