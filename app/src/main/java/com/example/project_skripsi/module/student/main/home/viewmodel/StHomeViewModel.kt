@@ -14,6 +14,7 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 
 class StHomeViewModel : ViewModel() {
 
@@ -54,12 +55,12 @@ class StHomeViewModel : ViewModel() {
         }
 
         _listHomeSectionDataExam.observeOnce {
-            listData[1] = (HomeMainSection(SECTION_EXAM, sectionItem = it))
+            listData[1] = (HomeMainSection(SECTION_EXAM, sectionItem = it.filter { it.startTime == DateHelper.getCurrentDate() }))
             _sectionData.postValue(listData)
         }
 
         _listHomeSectionDataAssignment.observeOnce {
-            listData[2] = (HomeMainSection(SECTION_ASSIGNMENT, sectionItem = it))
+            listData[2] = (HomeMainSection(SECTION_ASSIGNMENT, sectionItem = it.filter { it.startTime == DateHelper.getCurrentDate() }))
             _sectionData.postValue(listData)
         }
 

@@ -34,6 +34,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
         fun bind(singleHomeMainSectionItem: HomeMainSection, adapter: StHomeRecyclerViewChildAdapter) {
             with(binding) {
                 sectionTitle.text = singleHomeMainSectionItem.sectionName
+                sectionTitleCount.text = singleHomeMainSectionItem.sectionItem.count().toString()
                 with(binding.sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
                     sectionItemsRecyclerView.adapter = adapter
