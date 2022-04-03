@@ -1,13 +1,11 @@
-package com.example.project_skripsi.module.teacher.study_class
+package com.example.project_skripsi.module.teacher.study_class.task_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.project_skripsi.databinding.FragmentTcStudyClassHomeroomBinding
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTaskDetailBinding
-import com.example.project_skripsi.databinding.FragmentTcStudyClassTeachingBinding
 
 
 class TcStudyClassTaskDetailFragment : Fragment() {

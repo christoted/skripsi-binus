@@ -32,7 +32,7 @@
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:text="Ujian Tersusah"
+                tools:text="Ujian Tersusah"
                 android:textSize="16sp" />
 
             <TextView
@@ -54,6 +54,7 @@
             android:layout_marginEnd="8dp"/>
 
         <LinearLayout
+            android:id="@+id/ll_data_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -67,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="B. Indonesia"
+                tools:text="B. Indonesia"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/black"/>
@@ -76,7 +77,7 @@
                 android:id="@+id/tv_class_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XII - IPA - 2"
+                tools:text="XII - IPA - 2"
                 android:textAlignment="center"
                 android:textColor="@color/black"/>
 
@@ -85,12 +86,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="belum terkumpul"
+                tools:text="belum terkumpul"
                 android:textAlignment="center"/>
 
         </LinearLayout>
 
         <View
+            android:id="@+id/vw_data_separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"
@@ -124,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="12 Maret 2020"/>
+                    tools:text="12 Maret 2020"/>
 
                 <TextView
                     android:id="@+id/tv_startTime"
@@ -132,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="09:00"/>
+                    tools:text="09:00"/>
 
             </LinearLayout>
 
@@ -154,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="24 jam"/>
+                    tools:text="24 jam"/>
 
             </LinearLayout>
 
@@ -176,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="12 Maret 2020"/>
+                    tools:text="12 Maret 2020"/>
 
                 <TextView
                     android:id="@+id/tv_endTime"
@@ -184,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="09:00"/>
+                    tools:text="09:00"/>
 
             </LinearLayout>
 

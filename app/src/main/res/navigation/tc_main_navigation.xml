@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassHomeroomFragment"
-        android:name="com.example.project_skripsi.module.teacher.study_class.TcStudyClassHomeroomFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.homeroom.TcStudyClassHomeroomFragment"
         android:label="TcStudyClassHomeroomFragment"
         tools:layout="@layout/fragment_tc_study_class_homeroom">
         <action
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassTeachingFragment"
-        android:name="com.example.project_skripsi.module.teacher.study_class.TcStudyClassTeachingFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.teaching.TcStudyClassTeachingFragment"
         android:label="TcStudyClassTeachingFragment"
         tools:layout="@layout/fragment_tc_study_class_teaching">
         <action
@@ -68,6 +68,7 @@
         <action
             android:id="@+id/action_tcStudyClassTeachingFragment_to_tcStudyClassTaskFragment"
             app:destination="@id/tcStudyClassTaskFragment" />
+
         <action
             android:id="@+id/action_tcStudyClassTeachingFragment_to_tcStudentFragment"
             app:destination="@id/tcStudentFragment" />
@@ -77,31 +78,59 @@
         <argument
             android:name="subjectName"
             app:argType="string" />
+
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassResourceFragment"
-        android:name="com.example.project_skripsi.module.teacher.study_class.TcStudyClassResourceFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.resource.TcStudyClassResourceFragment"
         android:label="TcStudyClassResourceFragment"
-        tools:layout="@layout/fragment_tc_study_class_resourcce"/>
+        tools:layout="@layout/fragment_tc_study_class_resource">
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/tcStudyClassTaskFragment"
-        android:name="com.example.project_skripsi.module.teacher.study_class.TcStudyClassTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.task.TcStudyClassTaskFragment"
         android:label="TcStudyClassTaskFragment"
         tools:layout="@layout/fragment_tc_study_class_task">
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
         <action
             android:id="@+id/action_tcStudyClassTaskFragment_to_tcStudyClassTaskDetailFragment"
             app:destination="@id/tcStudyClassTaskDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassTaskDetailFragment"
-        android:name="com.example.project_skripsi.module.teacher.study_class.TcStudyClassTaskDetailFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.task_detail.TcStudyClassTaskDetailFragment"
         android:label="TcStudyClassTaskDetailFragment"
-        tools:layout="@layout/fragment_tc_study_class_task_detail"/>
+        tools:layout="@layout/fragment_tc_study_class_task_detail">
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/tcStudentFragment"
         android:name="com.example.project_skripsi.module.teacher.student_detail.TcStudentFragment"
         android:label="TcStudentFragment"
-        tools:layout="@layout/fragment_tc_student"/>
+        tools:layout="@layout/fragment_tc_student">
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/tcAlterResourceFragment"
         android:name="com.example.project_skripsi.module.teacher.resource.TcAlterResourceFragment"
