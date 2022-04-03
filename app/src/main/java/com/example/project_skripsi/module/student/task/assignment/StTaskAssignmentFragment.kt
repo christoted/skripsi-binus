@@ -60,12 +60,12 @@ class StTaskAssignmentFragment : Fragment() {
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
             when(position) {
-                StTaskExamViewModel.EXAM_ONGOING -> {
+                StTaskAssignmentViewModel.ASSIGNMENT_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, {
                         bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
                     })
                 }
-                StTaskExamViewModel.EXAM_PAST -> {
+                StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
                     viewModel.pastList.observe(viewLifecycleOwner, {
                         bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
                     })
