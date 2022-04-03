@@ -96,19 +96,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="mulai pada"/>
 
                     <TextView
                         android:id="@+id/tv_startDate"
@@ -135,18 +130,15 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="durasi"/>
-
-                    <TextView
                         android:id="@+id/tv_duration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        tools:text="24 jam"/>
+                        tools:text="24 jam"
+                        app:drawableEndCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:drawableStartCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+
 
                 </LinearLayout>
 
@@ -155,12 +147,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="selesai pada"/>
 
                     <TextView
                         android:id="@+id/tv_endDate"
