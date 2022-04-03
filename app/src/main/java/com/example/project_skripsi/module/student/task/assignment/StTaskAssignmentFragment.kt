@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
-import com.example.project_skripsi.databinding.FragmentDummyRvBinding
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
+import com.example.project_skripsi.databinding.StandardRecyclerViewBinding
 import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
 
@@ -56,7 +56,7 @@ class StTaskAssignmentFragment : Fragment() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             layoutInflater = LayoutInflater.from(context)
-            val bindingRV = FragmentDummyRvBinding.inflate(layoutInflater, container, false)
+            val bindingRV = StandardRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
             when(position) {
