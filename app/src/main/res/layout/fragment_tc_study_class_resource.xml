@@ -35,14 +35,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Kelas:"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tv_class_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     tools:text="XII - IPA - 2"
@@ -60,14 +60,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mata Pelajaran:"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tv_subject_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     tools:text="Biologi"
@@ -82,11 +82,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Daftar materi"
+        android:text="Materi"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:textAlignment="center"
+        android:background="@color/purple_500"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item"
