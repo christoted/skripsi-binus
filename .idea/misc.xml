@@ -97,12 +97,15 @@
         <entry key="app/src/main/res/layout/fragment_st_payment.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/fragment_st_payment_variant.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_st_score.xml" value="0.14855072463768115" />
+        <entry key="app/src/main/res/layout/fragment_st_score_absensi.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_st_score_content.xml" value="0.17325227963525835" />
         <entry key="app/src/main/res/layout/item_st_class_subject.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/item_st_home_main_section.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/item_st_payment_variant.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/item_st_score_absensi.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_st_score_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_st_score_content_collapse.xml" value="0.11911231884057971" />
+        <entry key="app/src/main/res/layout/item_st_score_pencapaian.xml" value="0.14673913043478262" />
         <entry key="app/src/main/res/layout/st_item_home_main_section.xml" value="0.17325227963525835" />
         <entry key="app/src/main/res/layout/st_item_home_section_item.xml" value="0.18795289855072464" />
         <entry key="app/src/main/res/layout/st_item_home_section_pembayaran.xml" value="0.18795289855072464" />

@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.main.score.view.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ class StScoreAchievementAdapter(private val viewModel: StScoreViewModel): Recycl
             with(binding) {
                 title.text = item.title
                 deskripsi.text = item.description
+                viewIndicator.setBackgroundColor(Color.parseColor("#006400"))
             }
         }
     }
