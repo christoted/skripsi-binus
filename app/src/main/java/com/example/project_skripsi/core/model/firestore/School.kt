@@ -5,7 +5,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
 
 @IgnoreExtraProperties
-data class Administrator(
+data class School(
 
     @DocumentId
     val id : String? = null,
@@ -16,8 +16,5 @@ data class Administrator(
     @set: PropertyName("phone_number")
     var phoneNumber: String? = null,
 
-    @get: PropertyName("grade_level")
-    @set: PropertyName("grade_level")
-    var gradeLevel: String? = null,
-
+    val address: String? = null,
 )

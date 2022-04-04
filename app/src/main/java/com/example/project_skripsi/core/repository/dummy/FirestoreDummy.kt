@@ -27,10 +27,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 Student("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
                     "123456789",
                     "Luis B",
+                    21,
+                    "Jalan Timur",
                     "082363007520",
                     18,
                     "laki-laki",
                     "eMsulnik6kEpW0ESKI9V",
+                    "ksalsoodapp110Kkqllp",
                     listOf(
                         Payment("Uang SPP",
                             200000,
@@ -62,6 +65,12 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             70,
                             listOf("Minyak adalah mata uang", 2)
                         ),
+                    ),
+                    mutableListOf(
+                        Achievement(
+                            "Juara 1 Lomba Renang",
+                            "Diadakan oleh SMA Maju Mundur pada tanggal 15 September 2022"
+                        )
                     )
                 )
     )
@@ -83,6 +92,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 "0821123123",
                 "perempuan",
                 "eMsulnik6kEpW0ESKI9V",
+                "ksalsoodapp110Kkqllp",
                 listOf(
                     TeachingSubject("Biologi",
                         listOf("eMsulnik6kEpW0ESKI9V"))
@@ -124,6 +134,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
         "dxXTXZcrj0yVh8PpzYk2" to
             Resource("dxXTXZcrj0yVh8PpzYk2",
                 "Pertemuan 1",
+                12,
                 "recording",
                 "<<url>>",
                 "Biologi",
@@ -132,6 +143,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
         "feiaZB0ds1rbaWT1g8hJ" to
             Resource("feiaZB0ds1rbaWT1g8hJ",
                 "Bab 1 Reproduksi",
+                12,
                 "slide",
                 "<<url>>",
                 "Biologi",
@@ -144,6 +156,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
             "HaWuFgmvLAuZYeG5JuVw" to
                     TaskForm("HaWuFgmvLAuZYeG5JuVw",
                         "Ujian Tengah Semester",
+                        12,
                         "ujian_tengah_semester",
                         DateHelper.getCurrentDate(),
                         DateHelper.getCurrentDate(),
@@ -152,6 +165,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         listOf(
                             Question("Essai ini",
                                 "essai",
+                                100,
                                 emptyList(),
                                 -1
                             )
@@ -160,6 +174,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
             "ripyBsBZObBfarZpd085" to
                     TaskForm("ripyBsBZObBfarZpd085",
                         "Tugas tentang minyak hewani",
+                        12,
                         "tugas",
                         DateHelper.getCurrentDate(),
                         DateHelper.getCurrentDate(),
@@ -168,11 +183,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         listOf(
                             Question("Jelaskan maksud minyak hewan ",
                                 "essai",
+                                50,
                                 emptyList(),
                                 -1
                             ),
                             Question("Pililah jawaban yang benar. Apakah ikan hiu menghasilkan minyak?",
                                 "pilihan berganda",
+                                50,
                                 listOf("ya",
                                     "tidak",
                                     "kadang-kadang",
@@ -190,6 +207,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
         "eMsulnik6kEpW0ESKI9V" to
             StudyClass("eMsulnik6kEpW0ESKI9V",
                 "XII-IPA-3",
+                12,
                 "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
                 "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
                 mutableListOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2"),
@@ -215,6 +233,15 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     ),
                 ),
             )
+    )
+
+    private val schools = mapOf(
+        "ksalsoodapp110Kkqllp" to
+                School("ksalsoodapp110Kkqllp",
+                    "SMA Methodist - 3",
+                    "0811123123",
+                    "Jalan Jati",
+                )
     )
 
     init {
@@ -284,6 +311,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 newTaskForms[taskId] = TaskForm(
                     taskId,
                     title,
+                    12,
                     "ujian_tengah_semester",
                     date.first,
                     date.second,
@@ -320,6 +348,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 newTaskForms[taskId] = TaskForm(
                     taskId,
                     title,
+                    12,
                     "ujian_akhir_semester",
                     date.first,
                     date.second,
@@ -357,6 +386,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 newTaskForms[taskId] = TaskForm(
                     taskId,
                     title,
+                    12,
                     "tugas",
                     date.first,
                     date.second,

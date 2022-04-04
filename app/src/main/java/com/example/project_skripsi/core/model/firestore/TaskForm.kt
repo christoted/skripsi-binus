@@ -14,6 +14,10 @@ data class TaskForm(
 
     val title: String? = null,
 
+    @get: PropertyName("grade_level")
+    @set: PropertyName("grade_level")
+    var gradeLevel: Int? = null,
+
     val type: String? = null,
 
     val startTime: Date? = null,
@@ -40,10 +44,14 @@ data class Question(
 
     val type: String? = null,
 
+    @get: PropertyName("score_weight")
+    @set: PropertyName("score_weight")
+    var scoreWeight: Int? = null,
+
     val choices: List<String>? = null,
 
     @get: PropertyName("answer_key")
     @set: PropertyName("answer_key")
-    var answerKey: Int? = null
+    var answerKey: Int? = null,
 )
 

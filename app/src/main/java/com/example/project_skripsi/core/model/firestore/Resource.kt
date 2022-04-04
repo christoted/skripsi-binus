@@ -12,6 +12,10 @@ data class Resource(
 
     val title: String? = null,
 
+    @get: PropertyName("grade_level")
+    @set: PropertyName("grade_level")
+    var gradeLevel: Int? = null,
+
     val type: String? = null,
 
     val link: String? = null,

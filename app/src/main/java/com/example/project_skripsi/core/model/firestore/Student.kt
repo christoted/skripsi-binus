@@ -17,6 +17,12 @@ data class Student(
 
     val name: String? = null,
 
+    @get: PropertyName("attendance_number")
+    @set: PropertyName("attendance_number")
+    var attendanceNumber: Int? = null,
+
+    val address: String? = null,
+
     @get: PropertyName("phone_number")
     @set: PropertyName("phone_number")
     var phoneNumber: String? = null,
@@ -28,6 +34,8 @@ data class Student(
     @get: PropertyName("study_class")
     @set: PropertyName("study_class")
     var studyClass: String? = null,
+
+    val school: String? = null,
 
     val payments: List<Payment>? = null,
 
@@ -47,7 +55,9 @@ data class Student(
     @set: PropertyName("assigned_assignments")
     var assignedAssignments: MutableList<AssignedTaskForm>? = null,
 
-    )
+    var achievements: MutableList<Achievement>? = null,
+
+)
 
 @IgnoreExtraProperties
 data class Payment(
@@ -105,4 +115,13 @@ data class AttendedMeeting (
     @get: PropertyName("subject_name")
     @set: PropertyName("subject_name")
     var subjectName: String? = null
+)
+
+@IgnoreExtraProperties
+data class Achievement (
+
+    val title: String? = null,
+
+    val description: String? = null,
+
 )
