@@ -3,6 +3,7 @@ package com.example.project_skripsi.module.student.main.score.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.project_skripsi.core.model.firestore.Achievement
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.AttendedMeeting
 import com.example.project_skripsi.core.model.firestore.Subject
@@ -39,7 +40,8 @@ class StScoreViewModel() : ViewModel() {
     private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
     private val attendances: MutableList<AttendedMeeting> = mutableListOf()
     // Achievement
-
+    private val _achievements = MutableLiveData<List<Achievement>>()
+    val achievements: LiveData<List<Achievement>> = _achievements
 
     companion object {
         const val tabCount = 3
@@ -123,6 +125,10 @@ class StScoreViewModel() : ViewModel() {
 
                 student.assignedAssignments?.filter { it.taskChecked == true }?.let {
                     mutableListOfTask.addAll(it)
+                }
+
+                student.achievements?.let {
+                    _achievements.postValue(it)
                 }
 
                 student.assignedExams?.filter { it.taskChecked == true }?.let {
