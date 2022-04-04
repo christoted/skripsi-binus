@@ -22,6 +22,8 @@ data class Teacher(
     @set: PropertyName("homeroom_class")
     var homeroomClass: String? = null,
 
+    val school: String? = null,
+
     @get: PropertyName("teaching_subjects")
     @set: PropertyName("teaching_subjects")
     var teachingSubjects: List<TeachingSubject>? = null,

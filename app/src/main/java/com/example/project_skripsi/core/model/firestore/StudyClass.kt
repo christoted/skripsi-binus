@@ -14,6 +14,10 @@ data class StudyClass(
 
     val name: String? = null,
 
+    @get: PropertyName("grade_level")
+    @set: PropertyName("grade_level")
+    var gradeLevel: Int? = null,
+
     @get: PropertyName("homeroom_teacher")
     @set: PropertyName("homeroom_teacher")
     var homeroomTeacher: String? = null,
