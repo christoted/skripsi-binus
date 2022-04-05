@@ -6,6 +6,7 @@ import com.example.project_skripsi.core.repository.FireRepository.Companion.COLL
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_ANNOUNCEMENT
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_PARENT
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_RESOURCE
+import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_SCHOOL
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_STUDENT
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_STUDY_CLASS
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_TASK_FORM
@@ -100,9 +101,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 listOf("dxXTXZcrj0yVh8PpzYk2",
                     "feiaZB0ds1rbaWT1g8hJ"
                 ),
-                listOf("HaWuFgmvLAuZYeG5JuVw",
-                    "ripyBsBZObBfarZpd085"
-                )
+                mutableListOf("HaWuFgmvLAuZYeG5JuVw"),
+                mutableListOf("ripyBsBZObBfarZpd085"),
             )
     )
 
@@ -254,6 +254,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
         upload(COLLECTION_ANNOUNCEMENT, announcements) // replace
         upload(COLLECTION_RESOURCE, resources) // replace
         upload(COLLECTION_TASK_FORM, taskFroms) // replace
+        upload(COLLECTION_SCHOOL, schools) // replace
     }
 
     private fun upload(collection: String, items: Map<String, Any>) {
@@ -283,7 +284,6 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     }
 
     private fun addGeneratedTaskForms() {
-//        if (ids == null) return
         val newTaskForms : MutableMap<String, TaskForm> = mutableMapOf()
         ids.mapIndexed{ idx, id ->
 
@@ -326,6 +326,9 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .filter { it.subjectName == subjects[idx] }[0]
                     .classExams!!.add(taskId)
 
+                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                    .createdExams!!.add(taskId)
+
                 val isChecked = rnd50to50()
                 students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
                     .assignedExams!!
@@ -362,6 +365,9 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .subjects!!
                     .filter { it.subjectName == subjects[idx] }[0]
                     .classExams!!.add(taskId)
+
+                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                    .createdExams!!.add(taskId)
 
                 val isChecked = rnd50to50()
                 students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
@@ -400,6 +406,9 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .subjects!!
                     .filter { it.subjectName == subjects[idx] }[0]
                     .classAssignments!!.add(taskId)
+
+                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                    .createdAssignments!!.add(taskId)
 
                 val isChecked = rnd50to50()
                 students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!

@@ -22,7 +22,7 @@ class ResourceViewHolder(
         adapter.expressionOnCreateViewHolder = {
             ItemStSubjectResourceBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item, viewBinding ->
+        adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemStSubjectResourceBinding
             with(view) {
                 tvNumber.text = ("${dataSet.indexOf(item) + 1}.")

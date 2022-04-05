@@ -21,7 +21,7 @@ class TcStudyClassViewModel : ViewModel() {
     private val _teachingClasses = MutableLiveData<Pair<String, List<StudyClass>>>()
     val teachingClasses : LiveData<Pair<String, List<StudyClass>>> = _teachingClasses
 
-    private val subjectsDetail : MutableMap<String, List<String>> = mutableMapOf()
+    private val subjectsDetail = mutableMapOf<String, List<String>>()
 
     init {
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)

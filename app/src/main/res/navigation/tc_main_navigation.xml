@@ -42,8 +42,8 @@
         android:label="TcTaskFragment"
         tools:layout="@layout/fragment_tc_task">
         <action
-            android:id="@+id/action_tcTaskFragment_to_tcAlterTaskFormFragment"
-            app:destination="@id/tcAlterTaskFormFragment" />
+            android:id="@+id/action_tcTaskFragment_to_tcAlterTaskFragment"
+            app:destination="@id/tcAlterTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassHomeroomFragment"
@@ -141,5 +141,14 @@
         android:name="com.example.project_skripsi.module.teacher.form.TcAlterTaskFormFragment"
         android:label="fragment_tc_alter_task_form"
         tools:layout="@layout/fragment_tc_alter_task_form" />
+    <fragment
+        android:id="@+id/tcAlterTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.alter_task.TcAlterTaskFragment"
+        android:label="fragment_tc_alter_task"
+        tools:layout="@layout/fragment_tc_alter_task" >
+        <action
+            android:id="@+id/action_tcAlterTaskFragment_to_tcAlterTaskFormFragment"
+            app:destination="@id/tcAlterTaskFormFragment" />
+    </fragment>
 
 </navigation>

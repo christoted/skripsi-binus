@@ -32,9 +32,13 @@ data class Teacher(
     @set: PropertyName("created_resources")
     var createdResources: List<String>? = null,
 
-    @get: PropertyName("created_forms")
-    @set: PropertyName("created_forms")
-    var createdForms: List<String>? = null,
+    @get: PropertyName("created_exams")
+    @set: PropertyName("created_exams")
+    var createdExams: MutableList<String>? = null,
+
+    @get: PropertyName("created_assignments")
+    @set: PropertyName("created_assignments")
+    var createdAssignments: MutableList<String>? = null,
 )
 
 @IgnoreExtraProperties

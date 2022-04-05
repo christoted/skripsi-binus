@@ -22,6 +22,7 @@ class FireRepository {
         const val COLLECTION_TASK_FORM = "task_forms"
         const val COLLECTION_RESOURCE = "resources"
         const val COLLECTION_ANNOUNCEMENT = "announcements"
+        const val COLLECTION_SCHOOL = "schools"
     }
 
     fun getStudent(uid: String) : Pair<LiveData<Student>, LiveData<Exception>> {
