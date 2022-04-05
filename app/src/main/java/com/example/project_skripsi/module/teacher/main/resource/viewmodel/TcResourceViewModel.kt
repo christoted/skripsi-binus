@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.resource.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,15 +16,16 @@ class TcResourceViewModel: ViewModel() {
     val resources: LiveData<List<Resource>> = _resources
 
     // Subject by class
-    private val _subjectByClass: MutableLiveData<List<String>> = MutableLiveData()
-    val subjectByClass: LiveData<List<String>> = _subjectByClass
+    private val mapResourceBySubject: MutableLiveData<Map<String, List<Resource>>> = MutableLiveData()
+    private val _subjectByClass: MutableLiveData<List<Resource>> = MutableLiveData()
+    val subjectByClass: LiveData<List<Resource>> = _subjectByClass
 
     init {
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.instance.getTeacher(uid).first.observeOnce {
+        FireRepository.instance.getTeacher(uid).first.observeForever {
             it.createdResources?.let { ids ->
                 ids.map { id ->
                     loadResource(id)
@@ -35,7 +37,22 @@ class TcResourceViewModel: ViewModel() {
     private fun loadResource(uid: String) {
         FireRepository.instance.getResource(uid).first.observeOnce {
             resourceList.add(it)
+            _resources.postValue(resourceList)
         }
-        _resources.postValue(resourceList)
+        _resources.observeOnce {
+            it?.let {
+                mapResourceBySubject.postValue(it.groupBy { it.gradeLevel.toString() })
+            }
+        }
+        mapResourceBySubject.observeOnce {
+            val resources: MutableList<Resource> = mutableListOf()
+            it.keys.forEach { key ->
+                val data = mapResourceBySubject.value?.get(key)
+                data?.distinctBy { it.subjectName }.let {
+                    resources.addAll(it!!)
+                }
+            }
+            _subjectByClass.postValue(resources)
+        }
     }
 }

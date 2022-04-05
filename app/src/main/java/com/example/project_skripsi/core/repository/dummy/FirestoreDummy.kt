@@ -98,7 +98,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         listOf("eMsulnik6kEpW0ESKI9V"))
                 ),
                 listOf("dxXTXZcrj0yVh8PpzYk2",
-                    "feiaZB0ds1rbaWT1g8hJ"
+                    "feiaZB0ds1rbaWT1g8hJ", "RF1201", "RS1101", "RS1201"
                 ),
                 listOf("HaWuFgmvLAuZYeG5JuVw",
                     "ripyBsBZObBfarZpd085"
@@ -149,6 +149,33 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 "Biologi",
                 listOf(),
                 listOf("eMsulnik6kEpW0ESKI9V")),
+        "RF1201" to
+                Resource("RF1201",
+                    "Bab 1 Momentum",
+                    12,
+                    "slide",
+                    "<<url>>",
+                    "Fisika",
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "RS1201" to
+                Resource("RF1201",
+                    "Bab 1 Negara Indonesia",
+                    12,
+                    "slide",
+                    "<<url>>",
+                    "Sejarah",
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "RS1101" to
+                Resource("RS1101",
+                    "Bab 1 Negara Indonesia Maju",
+                    11,
+                    "slide",
+                    "<<url>>",
+                    "Sejarah",
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V"))
     )
 
 

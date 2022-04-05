@@ -116,6 +116,7 @@
         <entry key="app/src/main/res/layout/st_item_score_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/st_item_score_content_collapse.xml" value="0.335" />
         <entry key="app/src/main/res/layout/st_item_score_pencapaian.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/tc_item_chip.xml" value="0.15104166666666666" />
         <entry key="app/src/main/res/menu/bottom_nav_menu_tc.xml" value="0.15104166666666666" />
       </map>
     </option>
