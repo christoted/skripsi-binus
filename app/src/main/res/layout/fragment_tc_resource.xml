@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".module.teacher.main.resource.TcResourceFragment">
 
@@ -17,11 +18,69 @@
         android:textSize="20sp"
         android:text="resource"/>
 
-    <Button
-        android:id="@+id/btn_add"
-        android:layout_width="wrap_content"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:padding="8dp"
         android:layout_height="wrap_content"
-        android:text="add resource"/>
+        app:singleSelection="true">
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip1"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XII IPA 1 - Biologi" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip2"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XII IPA 2 - Matematika" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip3"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XII IPS 1 - Sejarah" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip4"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XI IPA 2 - Fisika" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Materi"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="Add" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_tc_resource"
+        />
+
 
 </LinearLayout>
 
