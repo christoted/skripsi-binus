@@ -94,15 +94,17 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 "eMsulnik6kEpW0ESKI9V",
                 "ksalsoodapp110Kkqllp",
                 listOf(
-                    TeachingSubject("Biologi",
-                        listOf("eMsulnik6kEpW0ESKI9V"))
+                    TeachingGroup(
+                        "Biologi",
+                        12,
+                        listOf("eMsulnik6kEpW0ESKI9V"),
+                        listOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ"),
+                        listOf("HaWuFgmvLAuZYeG5JuVw"),
+                        listOf("ripyBsBZObBfarZpd085")
+                    )
                 ),
-                listOf("dxXTXZcrj0yVh8PpzYk2",
-                    "feiaZB0ds1rbaWT1g8hJ"
-                ),
-                listOf("HaWuFgmvLAuZYeG5JuVw",
-                    "ripyBsBZObBfarZpd085"
-                )
+
+
             )
     )
 
