@@ -95,14 +95,15 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 "eMsulnik6kEpW0ESKI9V",
                 "ksalsoodapp110Kkqllp",
                 listOf(
-                    TeachingSubject("Biologi",
-                        listOf("eMsulnik6kEpW0ESKI9V"))
+                    TeachingGroup(
+                        "Biologi",
+                        12,
+                        listOf("eMsulnik6kEpW0ESKI9V"),
+                        listOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ"),
+                        mutableListOf("HaWuFgmvLAuZYeG5JuVw"),
+                        mutableListOf("ripyBsBZObBfarZpd085")
+                    )
                 ),
-                listOf("dxXTXZcrj0yVh8PpzYk2",
-                    "feiaZB0ds1rbaWT1g8hJ"
-                ),
-                mutableListOf("HaWuFgmvLAuZYeG5JuVw"),
-                mutableListOf("ripyBsBZObBfarZpd085"),
             )
     )
 
@@ -302,6 +303,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 )
             }
 
+            val gradeLevel = 12
 
             val includeUTS = rnd(0,1) > 0
             if (includeUTS) {
@@ -311,7 +313,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 newTaskForms[taskId] = TaskForm(
                     taskId,
                     title,
-                    12,
+                    gradeLevel,
                     "ujian_tengah_semester",
                     date.first,
                     date.second,
@@ -327,6 +329,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .classExams!!.add(taskId)
 
                 teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                    .teachingGroups!!
+                    .filter { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }[0]
                     .createdExams!!.add(taskId)
 
                 val isChecked = rnd50to50()
@@ -351,7 +355,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 newTaskForms[taskId] = TaskForm(
                     taskId,
                     title,
-                    12,
+                    gradeLevel,
                     "ujian_akhir_semester",
                     date.first,
                     date.second,
@@ -367,6 +371,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .classExams!!.add(taskId)
 
                 teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                    .teachingGroups!!
+                    .filter { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }[0]
                     .createdExams!!.add(taskId)
 
                 val isChecked = rnd50to50()
@@ -392,7 +398,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 newTaskForms[taskId] = TaskForm(
                     taskId,
                     title,
-                    12,
+                    gradeLevel,
                     "tugas",
                     date.first,
                     date.second,
@@ -408,6 +414,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .classAssignments!!.add(taskId)
 
                 teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                    .teachingGroups!!
+                    .filter { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }[0]
                     .createdAssignments!!.add(taskId)
 
                 val isChecked = rnd50to50()

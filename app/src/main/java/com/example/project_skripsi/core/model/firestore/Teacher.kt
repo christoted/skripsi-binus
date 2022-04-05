@@ -24,9 +24,25 @@ data class Teacher(
 
     val school: String? = null,
 
-    @get: PropertyName("teaching_subjects")
-    @set: PropertyName("teaching_subjects")
-    var teachingSubjects: List<TeachingSubject>? = null,
+    @get: PropertyName("teaching_groups")
+    @set: PropertyName("teaching_groups")
+    var teachingGroups: List<TeachingGroup>? = null,
+)
+
+@IgnoreExtraProperties
+data class TeachingGroup(
+
+    @get: PropertyName("subject_name")
+    @set: PropertyName("subject_name")
+    var subjectName: String? = null,
+
+    @get: PropertyName("grade_level")
+    @set: PropertyName("grade_level")
+    var gradeLevel: Int? = null,
+
+    @get: PropertyName("teaching_classes")
+    @set: PropertyName("teaching_classes")
+    var teaching_classes: List<String>? = null,
 
     @get: PropertyName("created_resources")
     @set: PropertyName("created_resources")
@@ -39,16 +55,4 @@ data class Teacher(
     @get: PropertyName("created_assignments")
     @set: PropertyName("created_assignments")
     var createdAssignments: MutableList<String>? = null,
-)
-
-@IgnoreExtraProperties
-data class TeachingSubject(
-
-    @get: PropertyName("subject_name")
-    @set: PropertyName("subject_name")
-    var subjectName: String? = null,
-
-    @get: PropertyName("teaching_class")
-    @set: PropertyName("teaching_class")
-    var teaching_class: List<String>? = null,
 )
