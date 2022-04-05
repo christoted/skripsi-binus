@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.core.model.firestore.Achievement
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
@@ -24,7 +25,6 @@ import com.example.project_skripsi.module.student.main.studyclass.StClassFragmen
 interface ScoreContentListener {
     fun onAttendanceTapped()
 }
-
 
 class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val tab: Int, private val listener: ScoreContentListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val isExpanded = BooleanArray(viewModel.sectionDatas.value?.size ?: 0)
@@ -82,19 +82,15 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 }
             }
             2 -> {
-                viewModel.sectionDatas.value?.let {
-                    val singleData =  it[position]
-                    (holder as StScoreAchievementViewHolder).bind(singleData)
+                viewModel.achievements.value?.let {
+//                  val singleData = it[position]
+//                    (holder as StScoreAchievementViewHolder).bind(singleData)
                 }
             }
         }
-
-
     }
 
-
-    override fun getItemCount(): Int = viewModel.sectionDatas.value?.size?: 0
-
+    override fun getItemCount(): Int = viewModel.sectionDatas.value?.size?: viewModel.achievements.value!!.size
 
     inner class StScoreContentViewHolder(private val binding: ItemStScoreContentBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -141,9 +137,10 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
     }
 
     inner class StScoreAchievementViewHolder(private val binding: ItemStScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ScoreMainSection) {
+        fun bind(item: Achievement) {
             with(binding) {
-
+                title.text = item.title
+                deskripsi.text = item.description
             }
         }
     }

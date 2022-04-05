@@ -63,7 +63,11 @@ class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             with(binding) {
                 tvScore.text = it.totalScore.toString()
                 tvAbsent.text = it.totalAbsent.toString()
-                tvAchievement.text = it.totalAchievement.toString()
+            }
+        })
+        viewModel.achievements.observe(viewLifecycleOwner, {
+            with(binding) {
+                tvAchievement.text = it.count().toString()
             }
         })
     }
