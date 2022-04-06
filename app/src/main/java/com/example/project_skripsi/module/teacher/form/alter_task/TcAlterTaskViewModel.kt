@@ -41,7 +41,7 @@ class TcAlterTaskViewModel : ViewModel() {
         FireRepository.instance.getTeacher(uid).let { response ->
             response.first.observeOnce { teacher ->
                 with(teacher) {
-                    teachingSubjects.
+//                    teachingSubjects.
                 }
             }
         }
