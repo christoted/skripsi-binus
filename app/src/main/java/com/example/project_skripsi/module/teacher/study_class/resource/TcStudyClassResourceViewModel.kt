@@ -26,7 +26,7 @@ class TcStudyClassResourceViewModel : ViewModel() {
         FireRepository.instance.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _studyClass.postValue(studyClass)
-                studyClass.subjects?.filter { it.subjectName == subjectName }?.get(0)?.classResources?.let {
+                studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classResources?.let {
                     loadResources(it)
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,6 +36,7 @@ class TcStudyClassViewModel : ViewModel() {
                 val subjects: MutableList<String> = mutableListOf()
                 teachingGroups?.map { group ->
                     group.teaching_classes?.map {
+                        if (!subjects.contains(group.subjectName!!)) subjects.add(group.subjectName!!)
                         subjectClasses.getOrPut(group.subjectName!!) { mutableListOf() }.add(it)
                     }
                 }
@@ -58,9 +60,8 @@ class TcStudyClassViewModel : ViewModel() {
             FireRepository.instance.getStudyClass(uid).let { response ->
                 response.first.observeOnce {
                     classList.add(it)
-                    if (classList.size == uids.size) {
+                    if (classList.size == uids.size)
                         _teachingClasses.postValue(Pair(subjectName, classList.toList()))
-                    }
                 }
             }
         }

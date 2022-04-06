@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcTaskBinding
+import com.example.project_skripsi.module.teacher.form.alter_task.TcAlterTaskViewModel
 import com.example.project_skripsi.module.teacher.study_class.task.TaskViewHolder
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.google.android.material.chip.Chip
@@ -37,16 +38,12 @@ class TcTaskFragment : Fragment(), ItemClickListener {
                 chip.id = View.generateViewId()
                 chip.text = ("${subjectGroup.subjectName} - ${subjectGroup.gradeLevel}")
                 chip.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        viewModel.loadAssignment(subjectGroup)
-                        viewModel.loadExam(subjectGroup)
-                    }
+                    if (isChecked) viewModel.selectSubjectGroup(subjectGroup)
                 }
                 binding.cgSubjectGroup.addView(chip)
                 if (!hasItem) {
                     chip.isChecked = true
-                    viewModel.loadAssignment(subjectGroup)
-                    viewModel.loadExam(subjectGroup)
+                    viewModel.selectSubjectGroup(subjectGroup)
                     hasItem = true
                 }
             }
@@ -63,13 +60,17 @@ class TcTaskFragment : Fragment(), ItemClickListener {
         })
 
         binding.btnAddExam.setOnClickListener{
-            view?.findNavController()?.navigate(TcTaskFragmentDirections
-                .actionTcTaskFragmentToTcAlterTaskFragment())
+            viewModel.currentSubjectGroup?.let {
+                view?.findNavController()?.navigate(TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
+                    it.subjectName, it.gradeLevel, TcAlterTaskViewModel.TYPE_EXAM))
+            }
         }
 
         binding.btnAddAssignment.setOnClickListener{
-            view?.findNavController()?.navigate(TcTaskFragmentDirections
-                .actionTcTaskFragmentToTcAlterTaskFragment())
+            viewModel.currentSubjectGroup?.let {
+                view?.findNavController()?.navigate(TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
+                    it.subjectName, it.gradeLevel, TcAlterTaskViewModel.TYPE_ASSIGNMENT))
+            }
         }
 
         return binding.root

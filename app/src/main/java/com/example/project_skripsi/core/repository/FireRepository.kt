@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.project_skripsi.core.model.firestore.*
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class FireRepository {
+class FireRepository : OnSuccessListener<Void>, OnFailureListener {
 
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -140,6 +142,28 @@ class FireRepository {
                  exception.postValue(exc)
             }
         return Pair(data, exception)
+    }
+
+    fun addTaskForm(taskForm: TaskForm, teacher: Teacher) {
+
+        db.collection(COLLECTION_TASK_FORM)
+            .document(taskForm.id!!)
+            .set(taskForm)
+            .addOnSuccessListener(this)
+            .addOnFailureListener(this)
+        db.collection(COLLECTION_TEACHER)
+            .document(teacher.id!!)
+            .set(teacher)
+            .addOnSuccessListener(this)
+            .addOnFailureListener(this)
+    }
+
+    override fun onSuccess(p0: Void?) {
+//        TODO("Not yet implemented")
+    }
+
+    override fun onFailure(p0: java.lang.Exception) {
+//        TODO("Not yet implemented")
     }
 
 }

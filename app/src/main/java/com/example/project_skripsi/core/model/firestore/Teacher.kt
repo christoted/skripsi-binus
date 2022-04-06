@@ -26,7 +26,7 @@ data class Teacher(
 
     @get: PropertyName("teaching_groups")
     @set: PropertyName("teaching_groups")
-    var teachingGroups: List<TeachingGroup>? = null,
+    var teachingGroups: MutableList<TeachingGroup>? = null,
 )
 
 @IgnoreExtraProperties

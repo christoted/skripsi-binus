@@ -35,10 +35,10 @@ class TcStudyClassTaskViewModel : ViewModel() {
         FireRepository.instance.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _studyClass.postValue(studyClass)
-                studyClass.subjects?.filter { it.subjectName == subjectName }?.get(0)?.classExams?.let {
+                studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classExams?.let {
                     loadTaskForms(it, _examList)
                 }
-                studyClass.subjects?.filter { it.subjectName == subjectName }?.get(0)?.classAssignments?.let {
+                studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classAssignments?.let {
                     loadTaskForms(it, _assignmentList)
                 }
             }

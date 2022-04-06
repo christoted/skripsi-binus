@@ -94,12 +94,12 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 "perempuan",
                 "eMsulnik6kEpW0ESKI9V",
                 "ksalsoodapp110Kkqllp",
-                listOf(
+                mutableListOf(
                     TeachingGroup(
                         "Biologi",
                         12,
                         listOf("eMsulnik6kEpW0ESKI9V"),
-                        listOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ"),
+                        listOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ", "RS1201", "RS1101", "RF1201"),
                         mutableListOf("HaWuFgmvLAuZYeG5JuVw"),
                         mutableListOf("ripyBsBZObBfarZpd085")
                     )
@@ -288,6 +288,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
         val newTaskForms : MutableMap<String, TaskForm> = mutableMapOf()
         ids.mapIndexed{ idx, id ->
 
+            val gradeLevel = 12
+
             if (studyClasses["eMsulnik6kEpW0ESKI9V"]!!
                     .subjects!!.none { subject -> subject.subjectName == subjects[idx] }
             ) {
@@ -303,9 +305,22 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 )
             }
 
-            val gradeLevel = 12
+            if (teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                    .teachingGroups!!.none { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }
+            ) {
+                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!.teachingGroups!!.add(
+                    TeachingGroup(
+                        subjects[idx],
+                        gradeLevel,
+                        mutableListOf("eMsulnik6kEpW0ESKI9V"),
+                        mutableListOf(),
+                        mutableListOf(),
+                        mutableListOf(),
+                    )
+                )
+            }
 
-            val includeUTS = rnd(0,1) > 0
+            val includeUTS = rnd50to50()
             if (includeUTS) {
                 val taskId = "UTS_${id}"
                 val title = "Ujian Tengah Semester"
@@ -347,7 +362,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     ))
             }
 
-            val includeUAS = rnd(0,1) > 0
+            val includeUAS = rnd50to50()
             if (includeUAS) {
                 val taskId = "UAS_${id}"
                 val title = "Ujian Akhir Semester"

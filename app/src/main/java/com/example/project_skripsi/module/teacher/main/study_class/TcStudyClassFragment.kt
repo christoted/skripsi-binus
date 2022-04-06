@@ -32,10 +32,9 @@ class TcStudyClassFragment : Fragment() {
         viewModel.homeroomClass.observe(viewLifecycleOwner, { studyClass ->
             with(binding.cpHomeroomClass) {
                 text = studyClass.name
-                visibility = android.view.View.VISIBLE
+                visibility = View.VISIBLE
                 setOnClickListener {
-                    view?.findNavController()?.navigate(
-                        com.example.project_skripsi.module.teacher.main.study_class.TcStudyClassFragmentDirections
+                    view?.findNavController()?.navigate(TcStudyClassFragmentDirections
                         .actionTcStudyClassFragmentToTcStudyClassHomeroomFragment(studyClass.id!!))
                 }
             }

@@ -41,15 +41,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="end">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Grup Kelas"/>
+                    android:text="Grup Mata Pelajaran"/>
 
                 <TextView
-                    android:id="@+id/tv_class_name"
+                    android:id="@+id/tv_subject_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -169,21 +169,19 @@
                 app:singleSelection="true">
 
                 <Button
-                    android:id="@+id/button1"
+                    android:id="@+id/btn_mid_exam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="UTS"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:visibility="gone"/>
+                    style="?attr/materialButtonOutlinedStyle"/>
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btn_final_exam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="UAS"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:visibility="gone"/>
+                    style="?attr/materialButtonOutlinedStyle"/>
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/btn_assignment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tugas"
@@ -255,7 +253,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_preq_task_form"
+            android:id="@+id/btn_preq_assignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"/>
@@ -263,5 +261,10 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"/>
 
 </LinearLayout>

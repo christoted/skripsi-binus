@@ -61,10 +61,10 @@ class StTaskFormViewModel : ViewModel() {
                 student.studyClass?.let { loadStudyClass(it) }
 
                 var assignedTaskForm : AssignedTaskForm? = null
-                student.assignedExams?.filter { it.id == taskFormId }?.getOrNull(0).let {
+                student.assignedExams?.firstOrNull { it.id == taskFormId }.let {
                     it?.let { item -> assignedTaskForm = item }
                 }
-                student.assignedAssignments?.filter { it.id == taskFormId }?.getOrNull(0).let {
+                student.assignedAssignments?.firstOrNull { it.id == taskFormId }.let {
                     it?.let { item -> assignedTaskForm = item }
                 }
 

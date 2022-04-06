@@ -34,10 +34,10 @@ class AuthActivity : AppCompatActivity() {
         viewModel.errorLogin.observe(this, {
             Toast.makeText(applicationContext, "Error Login", Toast.LENGTH_SHORT).show()
         })
-        viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT)
-//        viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
+//        viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT)
+        viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
 
-        FirestoreDummy()
+//        FirestoreDummy()
     }
 
     private fun redirectToStudent() {

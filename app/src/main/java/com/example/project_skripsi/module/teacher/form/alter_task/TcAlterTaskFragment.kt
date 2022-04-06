@@ -8,23 +8,20 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.project_skripsi.core.model.firestore.StudyClass
+import androidx.navigation.fragment.navArgs
 import com.example.project_skripsi.databinding.FragmentTcAlterTaskBinding
-
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
-import com.example.project_skripsi.databinding.ItemStTaskBinding
-import com.example.project_skripsi.databinding.StandardRecyclerViewBinding
 
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.project_skripsi.module.teacher._sharing.AssignmentViewHolder
+import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
+import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-
-
-
+import android.view.MotionEvent
 
 
 
@@ -44,21 +41,17 @@ class TcAlterTaskFragment : Fragment() {
         viewModel = ViewModelProvider(this)[TcAlterTaskViewModel::class.java]
         _binding = FragmentTcAlterTaskBinding.inflate(inflater, container, false)
 
+        with(binding) {
 
-//        binding.rvClass.layoutManager = GridLayoutManager(context, 3)
-//        binding.rvClass.adapter = ClassViewHolder(
-//            listOf(
-//                StudyClass(name = "XII-IPA-1"),
-//                StudyClass(name = "XII-IPA-2"),
-//                StudyClass(name = "XII-IPA-3"),
-//                StudyClass(name = "XII-IPA-4"),
-//                StudyClass(name = "XII-IPA-5"),
-//            )
-//        ).getAdapter()
+            btnClass.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_CLASS) }
+            btnPreqResource.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_RESOURCE) }
+            btnPreqAssignment.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_ASSIGNMENT) }
 
-        binding.btnClass.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_RESOURCE) }
-        binding.btnPreqResource.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_RESOURCE) }
-        binding.btnPreqTaskForm.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_TASK_FORM) }
+            btnCreate.setOnClickListener{viewModel.submitForm()}
+        }
+
+        retrieveArgs()
+
 
         return binding.root
     }
@@ -67,6 +60,22 @@ class TcAlterTaskFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun retrieveArgs() {
+        val args: TcAlterTaskFragmentArgs by navArgs()
+        with(binding) {
+            tvSubjectGroup.text = ("${args.subjectName} - ${args.gradeLevel}")
+            if (args.formType == TcAlterTaskViewModel.TYPE_ASSIGNMENT) {
+                btnMidExam.visibility = View.GONE
+                btnFinalExam.visibility = View.GONE
+            } else {
+                btnAssignment.visibility = View.GONE
+            }
+        }
+
+        viewModel.initData(args.subjectName, args.gradeLevel, args.formType)
+    }
+
 
     @SuppressLint("InflateParams")
     private fun showBottomSheet(queryType : Int) {
@@ -80,13 +89,11 @@ class TcAlterTaskFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         rvItem.addItemDecoration(dividerItemDecoration)
 
-        dialog.setCancelable(false)
         dialog.setContentView(view)
         dialog.show()
 
         when(queryType) {
             TcAlterTaskViewModel.QUERY_CLASS -> {
-                viewModel.loadClass()
                 viewModel.classList.observe(viewLifecycleOwner, {
                     val adapter = ClassViewHolder(it, viewModel.selectedClass)
                     rvItem.adapter = adapter.getAdapter()
@@ -94,13 +101,33 @@ class TcAlterTaskFragment : Fragment() {
                         viewModel.selectedClass = adapter.getResult()
                         dialog.dismiss()
                     }
+                    viewModel.classList.removeObservers(viewLifecycleOwner)
                 })
+                viewModel.loadClass()
             }
             TcAlterTaskViewModel.QUERY_RESOURCE -> {
-
+                viewModel.resourceList.observe(viewLifecycleOwner, {
+                    val adapter = ResourceViewHolder(it, viewModel.selectedResource)
+                    rvItem.adapter = adapter.getAdapter()
+                    btnClose.setOnClickListener {
+                        viewModel.selectedResource = adapter.getResult()
+                        dialog.dismiss()
+                    }
+                    viewModel.resourceList.removeObservers(viewLifecycleOwner)
+                })
+                viewModel.loadResource()
             }
-            TcAlterTaskViewModel.QUERY_TASK_FORM -> {
-
+            TcAlterTaskViewModel.QUERY_ASSIGNMENT -> {
+                viewModel.assignmentList.observe(viewLifecycleOwner, {
+                    val adapter = AssignmentViewHolder(it, viewModel.selectedAssignment)
+                    rvItem.adapter = adapter.getAdapter()
+                    btnClose.setOnClickListener {
+                        viewModel.selectedAssignment = adapter.getResult()
+                        dialog.dismiss()
+                    }
+                    viewModel.assignmentList.removeObservers(viewLifecycleOwner)
+                })
+                viewModel.loadAssignment()
             }
         }
     }

@@ -61,11 +61,11 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
         uids.map { uid ->
             FireRepository.instance.getStudent(uid).let { response ->
                 response.first.observeOnce { student ->
-                    student.assignedAssignments?.filter { it.id == taskFormId }?.getOrNull(0)?.let {
+                    student.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
                         if (it.taskChecked!!) checkedList.add(student)
                         else uncheckedList.add(student)
                     }
-                    student.assignedExams?.filter { it.id == taskFormId }?.getOrNull(0)?.let {
+                    student.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
                         if (it.taskChecked!!) checkedList.add(student)
                         else uncheckedList.add(student)
                     }
@@ -79,10 +79,10 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
     }
 
     fun getTaskScore(item: Student): Int {
-        item.assignedAssignments?.filter { it.id == taskFormId }?.getOrNull(0)?.score.let {
+        item.assignedAssignments?.firstOrNull { it.id == taskFormId }?.score.let {
             if (it != null) return it
         }
-        item.assignedExams?.filter { it.id == taskFormId }?.getOrNull(0)?.score.let {
+        item.assignedExams?.firstOrNull { it.id == taskFormId }?.score.let {
             if (it != null) return it
         }
         return 0

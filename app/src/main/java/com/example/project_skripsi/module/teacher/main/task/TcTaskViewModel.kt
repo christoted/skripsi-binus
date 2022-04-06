@@ -24,69 +24,47 @@ class TcTaskViewModel : ViewModel() {
     private val examIds = mutableMapOf<SubjectGroup, MutableList<String>>()
     private val assignmentIds = mutableMapOf<SubjectGroup, MutableList<String>>()
 
+    var currentSubjectGroup : SubjectGroup? = null
+
     init {
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
     private fun loadTeacher(uid : String) {
-        FireRepository.instance.getTeacher(uid).let { response ->
-            response.first.observeOnce { teacher ->
-                with(teacher) {
-                    val subjectClasses = mutableListOf<SubjectGroup>()
-
-                    teachingGroups?.map { group ->
-                        val sg = SubjectGroup(group.subjectName, group.gradeLevel)
-                        subjectClasses.add(sg)
-                        group.createdExams?.map { examIds.getOrPut(sg) { mutableListOf()}.add(it) }
-                        group.createdAssignments?.map { assignmentIds.getOrPut(sg) { mutableListOf()}.add(it) }
-                    }
-//                    teachingSubjects?.map { subject ->
-//                        with(subject) {
-//                            teaching_class?.map { studyClassId ->
-//                                subjectName?.let { subjectClasses.add(Pair(it, studyClassId)) }
-//                            }
-//                        }
-//                    }
-//                    teacher.createdExams?.let { examIds.addAll(it) }
-//                    teacher.createdAssignments?.let { assignmentIds.addAll(it) }
-//                    loadSubjectGroup(subjectClasses)
+        FireRepository.instance.getTeacher(uid).first.observeOnce { teacher ->
+            val subjectGroups = mutableListOf<SubjectGroup>()
+            with(teacher) {
+                teachingGroups?.map { group ->
+                    val sg = SubjectGroup(group.subjectName!!, group.gradeLevel!!)
+                    subjectGroups.add(sg)
+                    group.createdExams?.map { examIds.getOrPut(sg) { mutableListOf()}.add(it) }
+                    group.createdAssignments?.map { assignmentIds.getOrPut(sg) { mutableListOf()}.add(it) }
                 }
             }
+            _subjectGroupList.postValue(subjectGroups)
         }
     }
 
-    private fun loadSubjectGroup(uids: MutableList<Pair<String, String>>) {
-//        val subjectGroupList = mutableListOf<SubjectGroup>()
-//        uids.map { uid ->
-//            FireRepository.instance.getStudyClass(uid.second).let { response ->
-//                response.first.observeOnce { studyClass ->
-//                    studyClass.gradeLevel?.let { subjectGroupList.add(SubjectGroup(uid.first, it)) }
-//                    if (subjectGroupList.size == uids.size) {
-//                        _subjectGroupList.postValue(subjectGroupList.toSet())
-//                    }
-//                }
-//            }
-//        }
+    fun selectSubjectGroup(subjectGroup: SubjectGroup) {
+        currentSubjectGroup = subjectGroup
+        loadExam(subjectGroup)
+        loadAssignment(subjectGroup)
     }
 
-    fun loadExam(subjectGroup : SubjectGroup) {
-//        loadTaskForm(subjectGroup, examIds, _examList)
+    private fun loadExam(subjectGroup : SubjectGroup) {
+        examIds[subjectGroup]?.toList()?.let { loadTaskForm(it, _examList) }
     }
 
-    fun loadAssignment(subjectGroup : SubjectGroup) {
-//        loadTaskForm(subjectGroup, assignmentIds, _assignmentList)
+    private fun loadAssignment(subjectGroup : SubjectGroup) {
+        assignmentIds[subjectGroup]?.toList()?.let { loadTaskForm(it, _assignmentList) }
     }
 
-    private fun loadTaskForm(subjectGroup : SubjectGroup, uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
+    private fun loadTaskForm(uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
         val taskFormList = mutableListOf<TaskForm>()
-        var counter = 0
         uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).let { response ->
-                response.first.observeOnce {
-                    counter++
-                    if (it.gradeLevel == subjectGroup.gradeLevel && it.subjectName == subjectGroup.subjectName) taskFormList.add(it)
-                    if (counter == uids.size) mutableLiveData.postValue(taskFormList)
-                }
+            FireRepository.instance.getTaskForm(uid).first.observeOnce {
+                taskFormList.add(it)
+                if (taskFormList.size == uids.size) mutableLiveData.postValue(taskFormList)
             }
         }
     }
