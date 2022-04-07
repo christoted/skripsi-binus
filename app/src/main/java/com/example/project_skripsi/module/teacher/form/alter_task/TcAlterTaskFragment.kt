@@ -19,11 +19,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.project_skripsi.module.teacher._sharing.AssignmentViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-import android.view.MotionEvent
-
-
+import android.widget.TextView
+import android.widget.Toast
+import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.helper.DateHelper
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 
 
 class TcAlterTaskFragment : Fragment() {
@@ -43,18 +46,100 @@ class TcAlterTaskFragment : Fragment() {
 
         with(binding) {
 
+            btnMidExam.setOnClickListener { viewModel.taskType = Constant.TASK_TYPE_MID_EXAM }
+            btnFinalExam.setOnClickListener { viewModel.taskType = Constant.TASK_TYPE_FINAL_EXAM }
+            btnAssignment.setOnClickListener { viewModel.taskType = Constant.TASK_TYPE_ASSIGNMENT }
+
+            btnStartDate.setOnClickListener{
+                activity?.supportFragmentManager?.let { sfm ->
+                    val datePicker = MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Pilih tanggal mulai")
+                        .build()
+                    datePicker.addOnPositiveButtonClickListener {
+                        viewModel.updateStartDate(DateHelper.updateDate(
+                            viewModel.startDate.value ?: DateHelper.getCurrentDate(), it
+                        ))
+                    }
+                    datePicker.show(sfm, "Tag")
+                }
+            }
+
+            btnStartTime.setOnClickListener{
+                activity?.supportFragmentManager?.let { sfm ->
+                    val timePicker = MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setTitleText("Pilih jam mulai")
+                        .build()
+                    timePicker.addOnPositiveButtonClickListener {
+                        val newHour: Int = timePicker.hour
+                        val newMinute: Int = timePicker.minute
+                        viewModel.updateStartDate(DateHelper.updateTime(
+                            viewModel.startDate.value ?: DateHelper.getCurrentDate(), newHour, newMinute
+                        ))
+                    }
+                    timePicker.show(sfm, "Tag")
+                }
+            }
+
+            btnEndDate.setOnClickListener{
+                activity?.supportFragmentManager?.let { sfm ->
+                    val datePicker = MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Pilih tanggal selesai")
+                        .build()
+                    datePicker.addOnPositiveButtonClickListener {
+                        viewModel.updateEndDate(DateHelper.updateDate(
+                            viewModel.endDate.value ?: DateHelper.getCurrentDate(), it
+                        ))
+                    }
+                    datePicker.show(sfm, "Tag")
+                }
+            }
+
+            btnEndTime.setOnClickListener{
+                activity?.supportFragmentManager?.let { sfm ->
+                    val timePicker = MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setTitleText("Pilih jam selesai")
+                        .build()
+                    timePicker.addOnPositiveButtonClickListener {
+                        val newHour: Int = timePicker.hour
+                        val newMinute: Int = timePicker.minute
+                        viewModel.updateEndDate(DateHelper.updateTime(
+                            viewModel.endDate.value ?: DateHelper.getCurrentDate(), newHour, newMinute
+                        ))
+                    }
+                    timePicker.show(sfm, "Tag")
+                }
+            }
+
             btnClass.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_CLASS) }
             btnPreqResource.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_RESOURCE) }
             btnPreqAssignment.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_ASSIGNMENT) }
 
-            btnCreate.setOnClickListener{viewModel.submitForm()}
+            btnCreate.setOnClickListener{
+                if (validateInput()) {
+                    viewModel.submitForm(edtTitle.text.toString())
+                    Toast.makeText(context, "Form sudah terancang", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            viewModel.startDate.observe(viewLifecycleOwner, {
+                btnStartDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
+                btnStartTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
+            })
+
+            viewModel.endDate.observe(viewLifecycleOwner, {
+                btnEndDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
+                btnEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
+            })
         }
 
         retrieveArgs()
 
-
         return binding.root
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -82,6 +167,7 @@ class TcAlterTaskFragment : Fragment() {
         val dialog = BottomSheetDialog(context!!)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task, null)
 
+        val tvTitle = view.findViewById<TextView>(R.id.tv_title)
         val btnClose = view.findViewById<Button>(R.id.btn_confirm)
 
         val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
@@ -96,9 +182,11 @@ class TcAlterTaskFragment : Fragment() {
             TcAlterTaskViewModel.QUERY_CLASS -> {
                 viewModel.classList.observe(viewLifecycleOwner, {
                     val adapter = ClassViewHolder(it, viewModel.selectedClass)
+                    tvTitle.text = ("Daftar Kelas")
                     rvItem.adapter = adapter.getAdapter()
                     btnClose.setOnClickListener {
                         viewModel.selectedClass = adapter.getResult()
+                        binding.tvClassCount.text = ("terpilih ${adapter.getResult().size}")
                         dialog.dismiss()
                     }
                     viewModel.classList.removeObservers(viewLifecycleOwner)
@@ -108,9 +196,11 @@ class TcAlterTaskFragment : Fragment() {
             TcAlterTaskViewModel.QUERY_RESOURCE -> {
                 viewModel.resourceList.observe(viewLifecycleOwner, {
                     val adapter = ResourceViewHolder(it, viewModel.selectedResource)
+                    tvTitle.text = ("Daftar Materi")
                     rvItem.adapter = adapter.getAdapter()
                     btnClose.setOnClickListener {
                         viewModel.selectedResource = adapter.getResult()
+                        binding.tvResourceCount.text = ("terpilih ${adapter.getResult().size}")
                         dialog.dismiss()
                     }
                     viewModel.resourceList.removeObservers(viewLifecycleOwner)
@@ -120,9 +210,11 @@ class TcAlterTaskFragment : Fragment() {
             TcAlterTaskViewModel.QUERY_ASSIGNMENT -> {
                 viewModel.assignmentList.observe(viewLifecycleOwner, {
                     val adapter = AssignmentViewHolder(it, viewModel.selectedAssignment)
+                    tvTitle.text = ("Daftar Tugas")
                     rvItem.adapter = adapter.getAdapter()
                     btnClose.setOnClickListener {
                         viewModel.selectedAssignment = adapter.getResult()
+                        binding.tvAssignmentCount.text = ("terpilih ${adapter.getResult().size}")
                         dialog.dismiss()
                     }
                     viewModel.assignmentList.removeObservers(viewLifecycleOwner)
@@ -130,5 +222,25 @@ class TcAlterTaskFragment : Fragment() {
                 viewModel.loadAssignment()
             }
         }
+    }
+
+    private fun validateInput() : Boolean {
+        with(binding) {
+            if (edtTitle.text.toString().isEmpty()) {
+                Toast.makeText(context, "Judul harus diisi",Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if (viewModel.taskType.isEmpty()) {
+                Toast.makeText(context, "Tipe ujian harus dipilih",Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if (viewModel.startDate.value!! > viewModel.endDate.value!!) {
+                Toast.makeText(context, "Tanggal mulai harus mendahului tanggal selesai",Toast.LENGTH_SHORT).show()
+                return false
+            }
+        }
+        return true
     }
 }

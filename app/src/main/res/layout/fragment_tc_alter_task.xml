@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".module.teacher.form.alter_task.TcAlterTaskFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_margin="4dp"
         app:cardCornerRadius="6dp"
         app:cardElevation="4dp">
 
@@ -68,10 +66,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Judul"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:padding="8dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -91,25 +91,25 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 android:text="Mulai pada"
                 android:textStyle="bold"/>
 
             <Button
-                android:id="@+id/tv_start_date"
+                android:id="@+id/btn_start_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 tools:text="12 - 03 - 2022"
                 android:textAlignment="center"
-                android:textColor="@color/white"
                 style="?attr/materialButtonOutlinedStyle"/>
 
             <androidx.legacy.widget.Space
                 android:layout_height="wrap_content"
-                android:layout_width="20dp"/>
+                android:layout_width="10dp"/>
 
             <Button
-                android:id="@+id/tv_start_time"
+                android:id="@+id/btn_start_time"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="09:00"
@@ -125,11 +125,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 android:text="Selesai pada"
                 android:textStyle="bold"/>
 
             <Button
-                android:id="@+id/tv_end_date"
+                android:id="@+id/btn_end_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -139,15 +140,14 @@
 
             <androidx.legacy.widget.Space
                 android:layout_height="wrap_content"
-                android:layout_width="20dp"/>
+                android:layout_width="10dp"/>
 
             <Button
-                android:id="@+id/tv_end_time"
+                android:id="@+id/btn_end_time"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 tools:text="09:00"
                 android:textAlignment="center"
-                android:textColor="@color/white"
                 style="?attr/materialButtonOutlinedStyle"/>
         </TableRow>
 
@@ -159,6 +159,7 @@
                 android:layout_weight="1"
                 android:textColor="@color/black"
                 android:text="Tipe form"
+                android:textSize="16sp"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
 
@@ -192,19 +193,44 @@
 
     </TableLayout>
 
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dividerInsetStart="8dp"
+        app:dividerInsetEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Kelas"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kelas"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_class_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tidak terpilih"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_class"
@@ -212,22 +238,46 @@
             android:layout_height="wrap_content"
             android:text="Edit"/>
 
-
     </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dividerInsetStart="8dp"
+        app:dividerInsetEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Prasyarat Materi"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prasyarat materi"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_resource_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tidak terpilih"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_preq_resource"
@@ -235,25 +285,97 @@
             android:layout_height="wrap_content"
             android:text="Edit"/>
 
-
     </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dividerInsetStart="8dp"
+        app:dividerInsetEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Prasyarat Tugas"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prasyarat tugas"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_assignment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="tidak terpilih"/>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_preq_assignment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"/>
+
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dividerInsetStart="8dp"
+        app:dividerInsetEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Soal Ujian"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_question_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="tidak terpilih"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"/>
@@ -265,6 +387,6 @@
         android:id="@+id/btn_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"/>
+        android:text="Create"/>
 
 </LinearLayout>

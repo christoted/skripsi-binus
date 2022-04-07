@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.form.alter_task
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,6 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.UUIDHelper
-import com.google.firebase.firestore.PropertyName
 import java.util.*
 
 class TcAlterTaskViewModel : ViewModel() {
@@ -28,6 +26,13 @@ class TcAlterTaskViewModel : ViewModel() {
     var selectedClass = listOf<StudyClass>()
     var selectedResource = listOf<Resource>()
     var selectedAssignment = listOf<TaskForm>()
+    var taskType = ""
+
+    private val _startDate = MutableLiveData<Date>()
+    val startDate : LiveData<Date> = _startDate
+
+    private val _endDate = MutableLiveData<Date>()
+    val endDate : LiveData<Date> = _endDate
 
     private val _classList = MutableLiveData<List<StudyClass>>()
     val classList : LiveData<List<StudyClass>> = _classList
@@ -48,6 +53,8 @@ class TcAlterTaskViewModel : ViewModel() {
 
 
     fun initData(subjectName: String, gradeLevel: Int, formType : Int) {
+        _startDate.postValue(DateHelper.getCurrentDate())
+        _endDate.postValue(DateHelper.getCurrentDate())
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
@@ -97,31 +104,41 @@ class TcAlterTaskViewModel : ViewModel() {
         }
     }
 
-    fun submitForm() {
+    fun updateStartDate(date : Date) {
+        _startDate.postValue(date)
+    }
+
+    fun updateEndDate(date : Date) {
+        _endDate.postValue(date)
+    }
+
+
+    fun submitForm(title: String) {
         val taskFormId = UUIDHelper.getUUID()
         currentTeacher.teachingGroups
             ?.firstOrNull{it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel}
-            ?.let {
-                when(formType) {
-                    TYPE_EXAM -> it.createdExams
-                    else -> it.createdAssignments
-                }
-            }?.add(taskFormId)
+            ?.let { if(formType == TYPE_EXAM) it.createdExams else it.createdAssignments }
+            ?.add(taskFormId)
+
+        val newTask = TaskForm(
+            id = taskFormId,
+            title = title,
+            gradeLevel = subjectGroup.gradeLevel,
+            type = taskType,
+            startTime = startDate.value,
+            endTime = endDate.value,
+            location = "Online",
+            subjectName = subjectGroup.subjectName,
+            questions = emptyList(),
+            assignedClasses = selectedClass.map { it.id!! },
+        )
+
         FireRepository.instance.addTaskForm(
-            TaskForm(
-                id = taskFormId,
-                title = "Soal epic",
-                gradeLevel = subjectGroup.gradeLevel,
-                type = "tugas",
-                startTime = DateHelper.getCurrentDate(),
-                endTime = DateHelper.getCurrentDate(),
-                location = "Online",
-                subjectName = subjectGroup.subjectName,
-                questions = emptyList(),
-                assignedClasses = selectedClass.map { it.id!! },
-            ),
+            newTask,
             currentTeacher
         )
     }
+
+
 
 }
