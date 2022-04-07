@@ -7,8 +7,11 @@ import com.example.project_skripsi.core.model.firestore.Resource
 import com.example.project_skripsi.databinding.ItemTcResourceBinding
 import com.example.project_skripsi.module.teacher.main.resource.viewmodel.TcResourceViewModel
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class ResourceAdapter(private val viewModel: TcResourceViewModel): RecyclerView.Adapter<ResourceAdapter.ResourceViewHolder>() {
+class ResourceAdapter(private val listResource: List<Resource>): RecyclerView.Adapter<ResourceAdapter.ResourceViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResourceViewHolder {
        val itemBinding = ItemTcResourceBinding.inflate(LayoutInflater.from(parent.context), parent, false )
@@ -16,14 +19,14 @@ class ResourceAdapter(private val viewModel: TcResourceViewModel): RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ResourceViewHolder, position: Int) {
-        viewModel.resources.value?.let {
-            val item = it[position]
+        if (listResource.isNotEmpty()) {
+            val item = listResource[position]
             holder.bind(item)
         }
     }
 
     override fun getItemCount(): Int {
-       return viewModel.resources.value?.size ?: 0
+       return listResource.size
     }
 
     inner class ResourceViewHolder(private val binding: ItemTcResourceBinding): RecyclerView.ViewHolder(binding.root) {

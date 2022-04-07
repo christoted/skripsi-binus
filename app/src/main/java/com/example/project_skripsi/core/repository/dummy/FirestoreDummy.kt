@@ -98,7 +98,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         "Biologi",
                         12,
                         listOf("eMsulnik6kEpW0ESKI9V"),
-                        listOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ"),
+                        listOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ", "RS1201", "RS1101", "RF1201"),
                         listOf("HaWuFgmvLAuZYeG5JuVw"),
                         listOf("ripyBsBZObBfarZpd085")
                     )
