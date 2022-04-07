@@ -29,7 +29,6 @@ class TcTaskFragment : Fragment(), ItemClickListener {
 
         viewModel = ViewModelProvider(this)[TcTaskViewModel::class.java]
         _binding = FragmentTcTaskBinding.inflate(inflater, container, false)
-
         viewModel.subjectGroupList.observe(viewLifecycleOwner, {
             binding.cgSubjectGroup.removeAllViews()
             var hasItem = false

@@ -20,7 +20,7 @@ class TcAlterResourceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTcAlterResourceBinding.inflate(inflater, container, false)
-        binding.tvTest.text = this.toString().split("{")[0]
+        //binding.tvTest.text = this.toString().split("{")[0]
         return binding.root
     }
 
