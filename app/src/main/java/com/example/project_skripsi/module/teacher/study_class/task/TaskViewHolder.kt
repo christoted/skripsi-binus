@@ -20,7 +20,7 @@ class TaskViewHolder(
         adapter.expressionOnCreateViewHolder = {
             ItemStTaskBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item, viewBinding ->
+        adapter.expressionViewHolderBinding = { item, viewBinding, _ ->
             val view = viewBinding as ItemStTaskBinding
             with(view) {
                 llDataContainer.visibility = View.GONE

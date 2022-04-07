@@ -20,10 +20,10 @@ class TeachingStudentViewHolder(
         adapter.expressionOnCreateViewHolder = {
             ItemTcStudyClassStudentBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item, viewBinding->
+        adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemTcStudyClassStudentBinding
             with(view) {
-                tvAbsentNumber.text = "1."
+                tvAbsentNumber.text = ("${item.attendanceNumber}.")
                 tvName.text = item.name
                 tvAbsent.text = viewModel.getAttendanceAbsent(item).toString()
 
