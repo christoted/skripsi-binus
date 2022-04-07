@@ -37,7 +37,7 @@ class AuthActivity : AppCompatActivity() {
 //        viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT)
         viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
 
-   //     FirestoreDummy()
+//        FirestoreDummy()
     }
 
     private fun redirectToStudent() {

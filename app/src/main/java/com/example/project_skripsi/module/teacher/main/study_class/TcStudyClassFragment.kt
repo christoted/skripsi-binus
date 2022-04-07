@@ -32,10 +32,9 @@ class TcStudyClassFragment : Fragment() {
         viewModel.homeroomClass.observe(viewLifecycleOwner, { studyClass ->
             with(binding.cpHomeroomClass) {
                 text = studyClass.name
-                visibility = android.view.View.VISIBLE
+                visibility = View.VISIBLE
                 setOnClickListener {
-                    view?.findNavController()?.navigate(
-                        com.example.project_skripsi.module.teacher.main.study_class.TcStudyClassFragmentDirections
+                    view?.findNavController()?.navigate(TcStudyClassFragmentDirections
                         .actionTcStudyClassFragmentToTcStudyClassHomeroomFragment(studyClass.id!!))
                 }
             }
@@ -48,9 +47,9 @@ class TcStudyClassFragment : Fragment() {
                 val chip = inflater.inflate(R.layout.standard_chip_choice, binding.cgSubject, false) as Chip
                 chip.id = View.generateViewId()
                 chip.text = subjectName
-                chip.setOnCheckedChangeListener { this_chip, isChecked ->
+                chip.setOnCheckedChangeListener { _, isChecked ->
                     binding.cgClass.removeAllViews()
-                    if (isChecked) viewModel.loadClasses(this_chip.text.toString())
+                    if (isChecked) viewModel.loadClasses(subjectName)
                 }
                 binding.cgSubject.addView(chip)
                 if (!hasItem) {

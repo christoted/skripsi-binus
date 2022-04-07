@@ -26,10 +26,8 @@ data class Teacher(
 
     @get: PropertyName("teaching_groups")
     @set: PropertyName("teaching_groups")
-    var teachingGroups: List<TeachingGroup>? = null,
+    var teachingGroups: MutableList<TeachingGroup>? = null,
 )
-
-
 
 @IgnoreExtraProperties
 data class TeachingGroup(
@@ -52,9 +50,9 @@ data class TeachingGroup(
 
     @get: PropertyName("created_exams")
     @set: PropertyName("created_exams")
-    var createdExams: List<String>? = null,
+    var createdExams: MutableList<String>? = null,
 
     @get: PropertyName("created_assignments")
     @set: PropertyName("created_assignments")
-    var createdAssignments: List<String>? = null,
+    var createdAssignments: MutableList<String>? = null,
 )

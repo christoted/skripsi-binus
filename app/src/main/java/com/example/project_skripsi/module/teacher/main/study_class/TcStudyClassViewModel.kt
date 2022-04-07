@@ -1,9 +1,11 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.StudyClass
+import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -20,31 +22,27 @@ class TcStudyClassViewModel : ViewModel() {
     private val _teachingClasses = MutableLiveData<Pair<String, List<StudyClass>>>()
     val teachingClasses : LiveData<Pair<String, List<StudyClass>>> = _teachingClasses
 
-    private val subjectsDetail : MutableMap<String, List<String>> = mutableMapOf()
+    private val subjectClasses = mutableMapOf<String, MutableList<String>>()
 
     init {
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
     private fun loadTeacher(uid : String) {
-//        FireRepository.instance.getTeacher(uid).let { response ->
-//            response.first.observeOnce { teacher ->
-//                with(teacher) {
-//                    homeroomClass?.let { loadHomeroomClass(it) }
-//
-//                    val subjects : MutableList<String> = mutableListOf()
-//                    teachingGroups?.map { subject ->
-//                        with(subject) {
-//                            subjectName?.let { subjectName ->
-//                                subjects.add(subjectName)
-//                                teaching_class?.let { it -> subjectsDetail.put(subjectName, it) }
-//                            }
-//                        }
-//                    }
-//                    _teachingSubjects.postValue(subjects)
-//                }
-//            }
-//        }
+        FireRepository.instance.getTeacher(uid).first.observeOnce { teacher ->
+            with(teacher) {
+                homeroomClass?.let { loadHomeroomClass(it) }
+
+                val subjects: MutableList<String> = mutableListOf()
+                teachingGroups?.map { group ->
+                    group.teaching_classes?.map {
+                        if (!subjects.contains(group.subjectName!!)) subjects.add(group.subjectName!!)
+                        subjectClasses.getOrPut(group.subjectName!!) { mutableListOf() }.add(it)
+                    }
+                }
+                _teachingSubjects.postValue(subjects)
+            }
+        }
     }
 
     private fun loadHomeroomClass(uid: String) {
@@ -56,15 +54,14 @@ class TcStudyClassViewModel : ViewModel() {
     }
 
     fun loadClasses(subjectName: String) {
-        val uids = subjectsDetail[subjectName]
+        val uids = subjectClasses[subjectName]
         val classList = mutableListOf<StudyClass>()
         uids?.map { uid ->
             FireRepository.instance.getStudyClass(uid).let { response ->
                 response.first.observeOnce {
                     classList.add(it)
-                    if (classList.size == uids.size) {
+                    if (classList.size == uids.size)
                         _teachingClasses.postValue(Pair(subjectName, classList.toList()))
-                    }
                 }
             }
         }

@@ -23,7 +23,7 @@ class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet
         adapter.expressionOnCreateViewHolder = {
             ItemStPaymentVariantBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item,viewBinding->
+        adapter.expressionViewHolderBinding = { item,viewBinding,_ ->
             val view = viewBinding as ItemStPaymentVariantBinding
             with(view) {
                 tvTitle.text = item.title
