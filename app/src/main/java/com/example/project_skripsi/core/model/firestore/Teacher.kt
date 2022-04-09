@@ -46,7 +46,7 @@ data class TeachingGroup(
 
     @get: PropertyName("created_resources")
     @set: PropertyName("created_resources")
-    var createdResources: MutableList<String>? = null,
+    var createdResources: List<String>? = null,
 
     @get: PropertyName("created_exams")
     @set: PropertyName("created_exams")

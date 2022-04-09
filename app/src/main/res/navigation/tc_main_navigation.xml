@@ -133,16 +133,9 @@
     </fragment>
     <fragment
         android:id="@+id/tcAlterResourceFragment"
-        android:name="com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceFragment"
+        android:name="com.example.project_skripsi.module.teacher.resource.TcAlterResourceFragment"
         android:label="fragment_tc_alter_resource"
-        tools:layout="@layout/fragment_tc_alter_resource" >
-        <argument
-            android:name="subjectName"
-            app:argType="string" />
-        <argument
-            android:name="gradeLevel"
-            app:argType="integer" />
-    </fragment>
+        tools:layout="@layout/fragment_tc_alter_resource" />
     <fragment
         android:id="@+id/tcAlterTaskFormFragment"
         android:name="com.example.project_skripsi.module.teacher.form.alter_task_form.TcAlterTaskFormFragment"
