@@ -33,10 +33,16 @@ class TcResourceFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this)[TcResourceViewModel::class.java]
         _binding = FragmentTcResourceBinding.inflate(inflater, container, false)
-        binding.btnAdd.setOnClickListener{
-            val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment()
-            view?.findNavController()?.navigate(action)
-        }
+        viewModel.selectedChip.observe(viewLifecycleOwner, { resource ->
+            binding.btnAdd.setOnClickListener{
+                resource.subjectName?.let { subjectName ->
+                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel ?: 0)
+                    view?.findNavController()?.navigate(action)
+                }
+
+            }
+        })
+
         return binding.root
     }
 
@@ -69,7 +75,6 @@ class TcResourceFragment : Fragment() {
                         hasItem = true
                     }
                 }
-
         })
     }
 

@@ -11,7 +11,6 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 
 class TcTaskViewModel : ViewModel() {
 
-
     private val _subjectGroupList = MutableLiveData<List<SubjectGroup>>()
     val subjectGroupList : LiveData<List<SubjectGroup>> = _subjectGroupList
 

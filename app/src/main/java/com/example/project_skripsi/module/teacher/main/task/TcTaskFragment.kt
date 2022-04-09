@@ -35,7 +35,7 @@ class TcTaskFragment : Fragment(), ItemClickListener {
             it.map { subjectGroup ->
                 val chip = inflater.inflate(R.layout.standard_chip_choice, binding.cgSubjectGroup, false) as Chip
                 chip.id = View.generateViewId()
-                chip.text = ("${subjectGroup.subjectName} - ${subjectGroup.gradeLevel}")
+                chip.text = ("${subjectGroup.gradeLevel} - ${subjectGroup.subjectName}")
                 chip.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) viewModel.selectSubjectGroup(subjectGroup)
                 }

@@ -158,6 +158,19 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
             .addOnFailureListener(this)
     }
 
+    fun addResource(resource: Resource, teacher: Teacher) {
+        db.collection(COLLECTION_RESOURCE)
+            .document(resource.id!!)
+            .set(resource)
+            .addOnSuccessListener(this)
+            .addOnFailureListener(this)
+        db.collection(COLLECTION_TEACHER)
+            .document(teacher.id!!)
+            .set(teacher)
+            .addOnSuccessListener(this)
+            .addOnFailureListener(this)
+    }
+
     override fun onSuccess(p0: Void?) {
 //        TODO("Not yet implemented")
     }

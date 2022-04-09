@@ -25,6 +25,8 @@ class TcResourceViewModel: ViewModel() {
     private val mapResourceBySubject: MutableLiveData<Map<String, List<Resource>>> = MutableLiveData()
     private val _subjectByClass: MutableLiveData<List<Resource>> = MutableLiveData()
     val subjectByClass: LiveData<List<Resource>> = _subjectByClass
+    private val _selectedChip: MutableLiveData<Resource> = MutableLiveData()
+    val selectedChip: LiveData<Resource> = _selectedChip
 
     init {
         viewModelScope.launch(Dispatchers.Main) {
@@ -70,6 +72,9 @@ class TcResourceViewModel: ViewModel() {
             Log.d("Check", "onViewCreated: " + _resources.value)
             _selectedResources.postValue(_resources.value?.filter { it.gradeLevel == resource?.gradeLevel && it.subjectName == resource?.subjectName })
             Log.d("Check", "selected resource : " + _selectedResources.value)
+            resource?.let {
+                _selectedChip.postValue(it)
+            }
         }
     }
 }
