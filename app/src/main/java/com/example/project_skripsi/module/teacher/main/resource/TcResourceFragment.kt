@@ -56,7 +56,6 @@ class TcResourceFragment : Fragment() {
                     }
                 }
         })
-
         viewModel.resources.observe(viewLifecycleOwner, {
             resourceAdapter = ResourceAdapter(it)
             with(binding) {
@@ -65,14 +64,13 @@ class TcResourceFragment : Fragment() {
                 recyclerView.adapter = resourceAdapter
             }
         })
-
         binding.btnAdd.setOnClickListener{
-            viewModel.selectedChip.observe(viewLifecycleOwner, { resource ->
-                resource.subjectName?.let { subjectName ->
-                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel ?: 0)
-                    view?.findNavController()?.navigate(action)
+            viewModel.currentSubjectGroup?.let { resource ->
+                resource.subjectName.let { subjectName ->
+                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel)
+                    view.findNavController().navigate(action)
                 }
-            })
+            }
         }
     }
 

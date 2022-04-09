@@ -35,6 +35,7 @@ class TcResourceViewModel: ViewModel() {
     // New Approach
     private val mapResourceIdsBySubjectGroup = mutableMapOf<SubjectGroup, MutableList<String>>()
 
+    var currentSubjectGroup : SubjectGroup? = null
     init {
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
@@ -53,9 +54,15 @@ class TcResourceViewModel: ViewModel() {
 
     fun loadResource(subjectGroup: SubjectGroup, isChecked: Boolean) {
         if (isChecked) {
-            mapResourceIdsBySubjectGroup[subjectGroup]?.toList()?.let {
-                loadResourceForm(it, _resources)
+            val listResourceIds = mapResourceIdsBySubjectGroup[subjectGroup]
+            if (listResourceIds == null) {
+                _resources.postValue(mutableListOf())
+            } else {
+                mapResourceIdsBySubjectGroup[subjectGroup]?.toList()?.let {
+                    loadResourceForm(it, _resources)
+                }
             }
+            currentSubjectGroup = subjectGroup
         }
     }
 
@@ -72,7 +79,6 @@ class TcResourceViewModel: ViewModel() {
                 }
             }
         } else {
-//            _selectedChip.postValue(it)
             mutableLiveData.postValue(mutableListOf())
         }
 
