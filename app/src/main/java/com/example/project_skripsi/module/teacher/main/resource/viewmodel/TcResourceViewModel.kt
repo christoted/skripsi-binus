@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.project_skripsi.core.model.firestore.Resource
+import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -14,6 +15,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class TcResourceViewModel: ViewModel() {
+    private val _subjectGroupList = MutableLiveData<List<SubjectGroup>>()
+    val subjectGroupList : LiveData<List<SubjectGroup>> = _subjectGroupList
+
     // Resources
     private val resourceList: MutableList<Resource> = mutableListOf()
     private val _resources: MutableLiveData<List<Resource>> = MutableLiveData()
@@ -28,53 +32,49 @@ class TcResourceViewModel: ViewModel() {
     private val _selectedChip: MutableLiveData<Resource> = MutableLiveData()
     val selectedChip: LiveData<Resource> = _selectedChip
 
+    // New Approach
+    private val mapResourceIdsBySubjectGroup = mutableMapOf<SubjectGroup, MutableList<String>>()
+
     init {
-        viewModelScope.launch(Dispatchers.Main) {
-            loadTeacher(AuthRepository.instance.getCurrentUser().uid)
-        }
+        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
     private fun loadTeacher(uid: String) {
         FireRepository.instance.getTeacher(uid).first.observeOnce {
+            val subjectGroups = mutableListOf<SubjectGroup>()
             it.teachingGroups?.map { teachingGroup ->
-                teachingGroup.createdResources?.map { id ->
-                    loadResource(id)
-                }
+                val sg = SubjectGroup(teachingGroup.subjectName!!, teachingGroup.gradeLevel!!)
+                subjectGroups.add(sg)
+                teachingGroup.createdResources?.map { mapResourceIdsBySubjectGroup.getOrPut(sg) { mutableListOf()}.add(it) }
             }
+            _subjectGroupList.postValue(subjectGroups)
         }
     }
 
-    private fun loadResource(uid: String) {
-        FireRepository.instance.getResource(uid).first.observeOnce {
-            resourceList.add(it)
-            _resources.postValue(resourceList)
-        }
-        _resources.observeOnce {
-            it?.let {
-                mapResourceBySubject.postValue(it.groupBy { it.gradeLevel.toString() })
-            }
-        }
-        val resources: MutableList<Resource> = mutableListOf()
-        mapResourceBySubject.observeOnce {
-                it.keys.forEach { key ->
-                    val data = mapResourceBySubject.value?.get(key)
-                    data?.distinctBy { it.subjectName }.let {
-                        resources.addAll(it!!)
-                    }
-                }
-            _subjectByClass.postValue(resources)
-        }
-
-    }
-
-    fun loadResourceBySubjectNameAndGradeLevel(resource: Resource?, isChecked: Boolean) {
+    fun loadResource(subjectGroup: SubjectGroup, isChecked: Boolean) {
         if (isChecked) {
-            Log.d("Check", "onViewCreated: " + _resources.value)
-            _selectedResources.postValue(_resources.value?.filter { it.gradeLevel == resource?.gradeLevel && it.subjectName == resource?.subjectName })
-            Log.d("Check", "selected resource : " + _selectedResources.value)
-            resource?.let {
-                _selectedChip.postValue(it)
+            mapResourceIdsBySubjectGroup[subjectGroup]?.toList()?.let {
+                loadResourceForm(it, _resources)
             }
         }
+    }
+
+    private fun loadResourceForm(uids: List<String>, mutableLiveData: MutableLiveData<List<Resource>>) {
+        val resourceFormList = mutableListOf<Resource>()
+        if (uids.isNotEmpty()) {
+            uids.map {
+                Log.d("Test Muncul", "loadResourceForm: atas " + it)
+                FireRepository.instance.getResource(it).first.observeOnce {
+                    resourceFormList.add(it)
+                    _selectedChip.postValue(it)
+                    Log.d("Test Muncul", "loadResourceForm: " + it)
+                    if (resourceFormList.size == uids.size) mutableLiveData.postValue(resourceFormList)
+                }
+            }
+        } else {
+//            _selectedChip.postValue(it)
+            mutableLiveData.postValue(mutableListOf())
+        }
+
     }
 }

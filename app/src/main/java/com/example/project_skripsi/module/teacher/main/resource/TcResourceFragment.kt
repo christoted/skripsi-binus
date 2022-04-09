@@ -33,41 +33,21 @@ class TcResourceFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this)[TcResourceViewModel::class.java]
         _binding = FragmentTcResourceBinding.inflate(inflater, container, false)
-        viewModel.selectedChip.observe(viewLifecycleOwner, { resource ->
-            binding.btnAdd.setOnClickListener{
-                resource.subjectName?.let { subjectName ->
-                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel ?: 0)
-                    view?.findNavController()?.navigate(action)
-                }
-
-            }
-        })
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.selectedResources.observe(viewLifecycleOwner, {
-            resourceAdapter = ResourceAdapter(it)
-            with(binding) {
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                recyclerView.setHasFixedSize(true)
-                recyclerView.adapter = resourceAdapter
-            }
-        })
-
-        viewModel.subjectByClass.observe(viewLifecycleOwner, {
+        viewModel.subjectGroupList.observe(viewLifecycleOwner, {
             var hasItem = false
-            it.map { resource ->
-                    // Get a handler that can be used to post to the main thread
-                    Log.d("Bahan", "onViewCreated: " + resource)
+            it.map { subjectGroup ->
                     val chip =
                         layoutInflater.inflate(com.example.project_skripsi.R.layout.tc_item_chip, binding.chipGroup, false) as Chip
                     chip.id = View.generateViewId()
-                    chip.text = "${resource.gradeLevel}-${resource.subjectName}"
+                    chip.text = "${subjectGroup.gradeLevel}-${subjectGroup.subjectName}"
                     chip.setOnCheckedChangeListener { chip, isChecked ->
-                        viewModel.loadResourceBySubjectNameAndGradeLevel(resource = resource, isChecked = isChecked)
+                        viewModel.loadResource(subjectGroup = subjectGroup, isChecked)
                     }
                     binding.chipGroup.addView(chip)
                     if (!hasItem) {
@@ -76,12 +56,28 @@ class TcResourceFragment : Fragment() {
                     }
                 }
         })
+
+        viewModel.resources.observe(viewLifecycleOwner, {
+            resourceAdapter = ResourceAdapter(it)
+            with(binding) {
+                recyclerView.layoutManager = LinearLayoutManager(context)
+                recyclerView.setHasFixedSize(true)
+                recyclerView.adapter = resourceAdapter
+            }
+        })
+
+        binding.btnAdd.setOnClickListener{
+            viewModel.selectedChip.observe(viewLifecycleOwner, { resource ->
+                resource.subjectName?.let { subjectName ->
+                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel ?: 0)
+                    view?.findNavController()?.navigate(action)
+                }
+            })
+        }
     }
 
     override fun onResume() {
         super.onResume()
-
-
     }
 
     override fun onDestroyView() {
