@@ -15,7 +15,7 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
 
-class StScoreViewModel() : ViewModel() {
+class StScoreViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is score Fragment"
