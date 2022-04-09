@@ -16,22 +16,11 @@ import kotlinx.coroutines.launch
 
 class TcResourceViewModel: ViewModel() {
     private val _subjectGroupList = MutableLiveData<List<SubjectGroup>>()
-    val subjectGroupList : LiveData<List<SubjectGroup>> = _subjectGroupList
+    var subjectGroupList : LiveData<List<SubjectGroup>> = _subjectGroupList
 
     // Resources
-    private val resourceList: MutableList<Resource> = mutableListOf()
     private val _resources: MutableLiveData<List<Resource>> = MutableLiveData()
-    private val _selectedResources: MutableLiveData<List<Resource>> = MutableLiveData()
-    val resources: LiveData<List<Resource>> = _resources
-    val selectedResources: LiveData<List<Resource>> = _selectedResources
-
-    // Subject by class for Chip
-    private val mapResourceBySubject: MutableLiveData<Map<String, List<Resource>>> = MutableLiveData()
-    private val _subjectByClass: MutableLiveData<List<Resource>> = MutableLiveData()
-    val subjectByClass: LiveData<List<Resource>> = _subjectByClass
-    private val _selectedChip: MutableLiveData<Resource> = MutableLiveData()
-    val selectedChip: LiveData<Resource> = _selectedChip
-
+    var resources: LiveData<List<Resource>> = _resources
     // New Approach
     private val mapResourceIdsBySubjectGroup = mutableMapOf<SubjectGroup, MutableList<String>>()
 
@@ -40,7 +29,17 @@ class TcResourceViewModel: ViewModel() {
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
-    private fun loadTeacher(uid: String) {
+    fun resetState() {
+        _subjectGroupList.postValue(emptyList())
+        mapResourceIdsBySubjectGroup.clear()
+        _resources.postValue(emptyList())
+        currentSubjectGroup = null
+        resources = _resources
+        subjectGroupList = _subjectGroupList
+    }
+
+    fun loadTeacher(uid: String) {
+        mapResourceIdsBySubjectGroup.clear()
         FireRepository.instance.getTeacher(uid).first.observeOnce {
             val subjectGroups = mutableListOf<SubjectGroup>()
             it.teachingGroups?.map { teachingGroup ->
@@ -73,7 +72,6 @@ class TcResourceViewModel: ViewModel() {
                 Log.d("Test Muncul", "loadResourceForm: atas " + it)
                 FireRepository.instance.getResource(it).first.observeOnce {
                     resourceFormList.add(it)
-                    _selectedChip.postValue(it)
                     Log.d("Test Muncul", "loadResourceForm: " + it)
                     if (resourceFormList.size == uids.size) mutableLiveData.postValue(resourceFormList)
                 }

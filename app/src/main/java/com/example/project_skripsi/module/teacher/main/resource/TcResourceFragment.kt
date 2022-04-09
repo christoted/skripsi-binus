@@ -16,6 +16,7 @@ import com.example.project_skripsi.module.teacher.main.task.TcTaskFragmentDirect
 import com.google.android.material.chip.Chip
 import android.R
 import androidx.lifecycle.lifecycleScope
+import com.example.project_skripsi.core.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,31 +40,7 @@ class TcResourceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.subjectGroupList.observe(viewLifecycleOwner, {
-            var hasItem = false
-            it.map { subjectGroup ->
-                    val chip =
-                        layoutInflater.inflate(com.example.project_skripsi.R.layout.tc_item_chip, binding.chipGroup, false) as Chip
-                    chip.id = View.generateViewId()
-                    chip.text = "${subjectGroup.gradeLevel}-${subjectGroup.subjectName}"
-                    chip.setOnCheckedChangeListener { chip, isChecked ->
-                        viewModel.loadResource(subjectGroup = subjectGroup, isChecked)
-                    }
-                    binding.chipGroup.addView(chip)
-                    if (!hasItem) {
-                        chip.isChecked = true
-                        hasItem = true
-                    }
-                }
-        })
-        viewModel.resources.observe(viewLifecycleOwner, {
-            resourceAdapter = ResourceAdapter(it)
-            with(binding) {
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                recyclerView.setHasFixedSize(true)
-                recyclerView.adapter = resourceAdapter
-            }
-        })
+        getData()
         binding.btnAdd.setOnClickListener{
             viewModel.currentSubjectGroup?.let { resource ->
                 resource.subjectName.let { subjectName ->
@@ -76,10 +53,39 @@ class TcResourceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+//        viewModel.loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getData() {
+        viewModel.subjectGroupList.observe(viewLifecycleOwner, {
+            var hasItem = false
+            it.map { subjectGroup ->
+                val chip =
+                    layoutInflater.inflate(com.example.project_skripsi.R.layout.tc_item_chip, binding.chipGroup, false) as Chip
+                chip.id = View.generateViewId()
+                chip.text = "${subjectGroup.gradeLevel}-${subjectGroup.subjectName}"
+                chip.setOnCheckedChangeListener { chip, isChecked ->
+                    viewModel.loadResource(subjectGroup = subjectGroup, isChecked)
+                }
+                binding.chipGroup.addView(chip)
+                if (!hasItem) {
+                    chip.isChecked = true
+                    hasItem = true
+                }
+            }
+        })
+        viewModel.resources.observe(viewLifecycleOwner, {
+            resourceAdapter = ResourceAdapter(it)
+            with(binding) {
+                recyclerView.layoutManager = LinearLayoutManager(context)
+                recyclerView.setHasFixedSize(true)
+                recyclerView.adapter = resourceAdapter
+            }
+        })
     }
 }

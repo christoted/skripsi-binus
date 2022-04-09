@@ -33,8 +33,11 @@ class TcAlterResourceViewModel: ViewModel() {
     var selectedResource = listOf<Resource>()
     var selectedAssignment = listOf<TaskForm>()
 
-    var title: String = ""
+    private val _status = MutableLiveData<Boolean>()
+    val status: LiveData<Boolean> = _status
 
+    var isValid = true
+    var materialType = ""
 
     init {
        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
@@ -94,26 +97,31 @@ class TcAlterResourceViewModel: ViewModel() {
         }
     }
     fun submitResource(title: String, type: String, link: String) {
-        val id = UUIDHelper.getUUID()
-        currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }?.let {
-            it.createdResources?.add(id)
-        }
-        val resource = Resource(
-            id = id,
-            title = title,
-            gradeLevel = subjectGroup.gradeLevel,
-            type = type,
-            link = link,
-            subjectName = subjectGroup.subjectName,
-            // MARK -
-            prerequisites = mutableListOf(),
+            val id = UUIDHelper.getUUID()
+            currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }?.let {
+                it.createdResources?.add(id)
+            }
+            val resource = Resource(
+                id = id,
+                title = title,
+                gradeLevel = subjectGroup.gradeLevel,
+                type = type,
+                link = link,
+                subjectName = subjectGroup.subjectName,
+                // MARK -
+                prerequisites = mutableListOf(),
 //            assignedClasses = selectedClass.map {
 //                it.id!!
 //            }
-            assignedClasses = mutableListOf()
+                assignedClasses = mutableListOf()
+            )
 
-        )
+            FireRepository.instance.addResource(resource, currentTeacher).let { response ->
+                response.first.observeOnce {
+                    _status.postValue(it)
+                }
+            }
 
-        FireRepository.instance.addResource(resource, currentTeacher)
+
     }
 }

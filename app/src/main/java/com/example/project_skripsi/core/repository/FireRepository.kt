@@ -145,7 +145,6 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
     }
 
     fun addTaskForm(taskForm: TaskForm, teacher: Teacher) {
-
         db.collection(COLLECTION_TASK_FORM)
             .document(taskForm.id!!)
             .set(taskForm)
@@ -158,7 +157,9 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
             .addOnFailureListener(this)
     }
 
-    fun addResource(resource: Resource, teacher: Teacher) {
+    fun addResource(resource: Resource, teacher: Teacher): Pair<LiveData<Boolean> , LiveData<Exception>> {
+        val isSuccess = MutableLiveData<Boolean>()
+        val exception = MutableLiveData<Exception>()
         db.collection(COLLECTION_RESOURCE)
             .document(resource.id!!)
             .set(resource)
@@ -167,8 +168,13 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         db.collection(COLLECTION_TEACHER)
             .document(teacher.id!!)
             .set(teacher)
-            .addOnSuccessListener(this)
-            .addOnFailureListener(this)
+            .addOnSuccessListener {
+                isSuccess.value = true
+            }
+            .addOnFailureListener {
+                exception.value = it
+            }
+        return Pair(isSuccess, exception)
     }
 
     override fun onSuccess(p0: Void?) {

@@ -99,7 +99,7 @@
         <entry key="app/src/main/res/layout/fragment_st_payment_variant.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_st_score.xml" value="0.14855072463768115" />
         <entry key="app/src/main/res/layout/fragment_st_score_content.xml" value="0.17325227963525835" />
-        <entry key="app/src/main/res/layout/fragment_tc_alter_resource.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_tc_alter_resource.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_tc_alter_task.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/fragment_tc_alter_task_form.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_tc_calendar.xml" value="0.16145833333333334" />
