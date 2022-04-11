@@ -104,6 +104,15 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         mutableListOf("ripyBsBZObBfarZpd085")
                     )
                 ),
+                mutableListOf(
+                    Payment(
+                        title = "Pembayaran SPP Genap",
+                        nominal = 2000000,
+                        accountNumber = "521812312",
+                        paymentDate = DateHelper.getCurrentDate(),
+                        paymentDeadline = DateHelper.getCurrentDate()
+                    )
+                )
             )
     )
 
