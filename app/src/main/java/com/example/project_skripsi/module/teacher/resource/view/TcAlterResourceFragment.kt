@@ -1,16 +1,26 @@
 package com.example.project_skripsi.module.teacher.resource.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcAlterResourceBinding
+import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
+import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
 import com.example.project_skripsi.module.teacher.main.resource.adapter.ResourceAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class TcAlterResourceFragment : Fragment() {
 
@@ -75,7 +85,6 @@ class TcAlterResourceFragment : Fragment() {
             if (viewModel.isValid) {
                 viewModel.submitResource(binding.edtTitle.text.toString(), viewModel.materialType, binding.edtLink.text.toString())
             }
-
         }
         viewModel.status.observe(viewLifecycleOwner, {
             if (it) {
@@ -85,6 +94,16 @@ class TcAlterResourceFragment : Fragment() {
                 Toast.makeText(context, "Failed to Create a Task", Toast.LENGTH_SHORT).show()
             }
         })
+
+        // Button
+        with(binding) {
+            btnClass.setOnClickListener {
+                showBottomSheet(TcAlterResourceViewModel.QUERY_CLASS)
+            }
+            btnRequirementResource.setOnClickListener {
+                showBottomSheet(TcAlterResourceViewModel.QUERY_RESOURCE)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -98,5 +117,55 @@ class TcAlterResourceFragment : Fragment() {
             tvClass.text = ("${args.subjectName} - ${args.gradeLevel}")
         }
         viewModel.initData(args.subjectName, args.gradeLevel)
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showBottomSheet(queryType : Int) {
+        val dialog = BottomSheetDialog(context!!)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task, null)
+
+        val tvTitle = view.findViewById<TextView>(R.id.tv_title)
+        val btnClose = view.findViewById<Button>(R.id.btn_confirm)
+
+        val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
+        rvItem.layoutManager = LinearLayoutManager(context)
+        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        rvItem.addItemDecoration(dividerItemDecoration)
+
+        dialog.setContentView(view)
+        dialog.show()
+
+        when(queryType) {
+            TcAlterResourceViewModel.QUERY_CLASS -> {
+                viewModel.classList.observe(viewLifecycleOwner, {
+                    val viewHolder = ClassViewHolder(it, viewModel.selectedClass)
+                    tvTitle.text = ("Daftar Kelas")
+                    rvItem.adapter = viewHolder.getAdapter()
+                    btnClose.setOnClickListener {
+                        viewModel.selectedClass = viewHolder.getResult()
+                        binding.tvClassChoosen.text = "Terpilih " + viewHolder.getResult().size + " Kelas"
+                       dialog.dismiss()
+                    }
+                })
+                viewModel.loadClass()
+            }
+            TcAlterResourceViewModel.QUERY_RESOURCE -> {
+                viewModel.resourceList.observe(viewLifecycleOwner, {
+                    val viewHolder = ResourceViewHolder(it, viewModel.selectedResource)
+                    tvTitle.text = ("Daftar Materi")
+                    rvItem.adapter = viewHolder.getAdapter()
+                    btnClose.setOnClickListener {
+                        viewModel.selectedResource = viewHolder.getResult()
+                        binding.tvRequirementResource.text = "Terpilih " + viewHolder.getResult().size + " Materi"
+
+                       dialog.dismiss()
+                    }
+                })
+
+                viewModel.loadResource()
+            }
+        }
+
+
     }
 }
