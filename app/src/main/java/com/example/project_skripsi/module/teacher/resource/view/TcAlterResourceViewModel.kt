@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.resource.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,6 +40,11 @@ class TcAlterResourceViewModel: ViewModel() {
     var isValid = true
     var materialType = ""
 
+    companion object {
+        const val QUERY_CLASS = 0
+        const val QUERY_RESOURCE = 1
+    }
+
     init {
        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
@@ -53,14 +59,16 @@ class TcAlterResourceViewModel: ViewModel() {
                 currentTeacher = it
                 it.teachingGroups.let { teachingGroups ->
                     teachingGroups?.map {  teachingGroup ->
-                        teachingGroup.createdAssignments?.let { ids ->
-                            assignmentIds.addAll(ids)
-                        }
-                        teachingGroup.createdResources?.let { ids ->
-                            resourceIds.addAll(ids)
-                        }
-                        teachingGroup.teaching_classes?.let { ids ->
-                            classIds.addAll(ids)
+                        if (teachingGroup.subjectName == subjectGroup.subjectName && teachingGroup.gradeLevel == subjectGroup.gradeLevel) {
+                            teachingGroup.createdAssignments?.let { ids ->
+                                assignmentIds.addAll(ids)
+                            }
+                            teachingGroup.createdResources?.let { ids ->
+                                resourceIds.addAll(ids)
+                            }
+                            teachingGroup.teaching_classes?.let { ids ->
+                                classIds.addAll(ids)
+                            }
                         }
                     }
                 }
@@ -83,6 +91,7 @@ class TcAlterResourceViewModel: ViewModel() {
         resourceIds.map { uid ->
             FireRepository.instance.getResource(uid).first.observeOnce {
                 itemList.add(it)
+                Log.d("View Model", "loadResource: " + it)
                 if (itemList.size == resourceIds.size) _resourceList.postValue(itemList)
             }
         }
@@ -109,11 +118,12 @@ class TcAlterResourceViewModel: ViewModel() {
                 link = link,
                 subjectName = subjectGroup.subjectName,
                 // MARK -
-                prerequisites = mutableListOf(),
-//            assignedClasses = selectedClass.map {
-//                it.id!!
-//            }
-                assignedClasses = mutableListOf()
+                prerequisites = selectedResource.map {
+                    it.id!!
+                },
+                assignedClasses = selectedClass.map {
+                    it.id!!
+                 }
             )
 
             FireRepository.instance.addResource(resource, currentTeacher).let { response ->

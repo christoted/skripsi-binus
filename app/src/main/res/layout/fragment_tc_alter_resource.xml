@@ -181,6 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit"/>
@@ -233,38 +234,38 @@
         app:dividerInsetEnd="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="6dp">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prasyarat Tugas"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_margin="6dp">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Prasyarat Tugas"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"/>-->
 
-            <TextView
-                android:id="@+id/tv_requirement_task"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Terpilih" />
-        </LinearLayout>
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_requirement_task"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit"/>
-    </LinearLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_requirement_task"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Terpilih" />-->
+<!--        </LinearLayout>-->
+<!--        <Space-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"/>-->
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_requirement_task"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Edit"/>-->
+<!--    </LinearLayout>-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_upload"
