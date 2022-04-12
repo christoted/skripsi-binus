@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.ItemStHomeMainSectionBinding
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+import com.example.project_skripsi.module.teacher.main.home.TcHomeFragment
 
-class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener: ItemListener):
+class StHomeRecyclerViewMainAdapter(val listHomeSectionData: List<HomeMainSection>, val listener: ItemListener):
     RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder =
@@ -19,7 +20,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
 
 
     override fun onBindViewHolder(holder: StHomeMainSectionViewHolder, position: Int) {
-        viewModel.sectionData.value?.let {
+        listHomeSectionData.let {
             val singleItemMainSection = it[position]
             // Declare the child adapter
             val childAdapter = StHomeRecyclerViewChildAdapter(singleItemMainSection, listener)
@@ -27,7 +28,7 @@ class StHomeRecyclerViewMainAdapter(val viewModel: StHomeViewModel, val listener
         }
     }
 
-    override fun getItemCount(): Int = viewModel.sectionData.value?.size ?: 0
+    override fun getItemCount(): Int = listHomeSectionData.size ?: 0
 
 
     inner class StHomeMainSectionViewHolder(private val binding: ItemStHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {

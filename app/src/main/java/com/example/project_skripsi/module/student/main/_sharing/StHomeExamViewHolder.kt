@@ -27,7 +27,7 @@ class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, pr
             btnResource.visibility = View.GONE
             btnClass.text = ("Ujian")
             btnClass.setOnClickListener {
-                data.id?.let { id -> listener.onTaskFormItemClicked(id) }
+                data.id?.let { id -> listener.onTaskFormItemClicked(id, subjectName = data.subjectName ?: "") }
             }
         }
     }

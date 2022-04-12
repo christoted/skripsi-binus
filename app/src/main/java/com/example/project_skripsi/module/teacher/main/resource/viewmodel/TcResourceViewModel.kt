@@ -69,10 +69,8 @@ class TcResourceViewModel: ViewModel() {
         val resourceFormList = mutableListOf<Resource>()
         if (uids.isNotEmpty()) {
             uids.map {
-                Log.d("Test Muncul", "loadResourceForm: atas " + it)
                 FireRepository.instance.getResource(it).first.observeOnce {
                     resourceFormList.add(it)
-                    Log.d("Test Muncul", "loadResourceForm: " + it)
                     if (resourceFormList.size == uids.size) mutableLiveData.postValue(resourceFormList)
                 }
             }

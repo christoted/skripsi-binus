@@ -38,20 +38,19 @@ class StHomeFragment : Fragment(), ItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeMainSectionAdapter = StHomeRecyclerViewMainAdapter(viewModel, this)
 
-        with(binding.recyclerviewClass) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = homeMainSectionAdapter
-            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        }
 
         viewModel.profileName.observe(viewLifecycleOwner, { binding.tvProfileName.text = it })
         viewModel.profileClass.observe(viewLifecycleOwner, { binding.tvProfileClass.text = it })
 
         viewModel.sectionData.observe(viewLifecycleOwner, {
-            binding.recyclerviewClass.adapter = homeMainSectionAdapter
+            homeMainSectionAdapter = StHomeRecyclerViewMainAdapter(it, this)
+            with(binding.recyclerviewClass) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = homeMainSectionAdapter
+                addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            }
         })
 
     }
@@ -61,7 +60,7 @@ class StHomeFragment : Fragment(), ItemListener {
         _binding = null
     }
 
-    override fun onTaskFormItemClicked(taskFormId: String) {
+    override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
         Log.d("TaskForm", "onTaskFormItemClicked: ")
         val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity(taskFormId)
         toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM

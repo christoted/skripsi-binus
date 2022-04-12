@@ -61,7 +61,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         _binding = null
     }
 
-    override fun onTaskFormItemClicked(taskFormId: String) {
+    override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
         val toTaskActivity = StCalendarFragmentDirections.actionNavigationCalendarFragmentToStTaskActivity(taskFormId)
         toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
         view?.findNavController()?.navigate(toTaskActivity)
