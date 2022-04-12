@@ -27,7 +27,7 @@ class StHomeAssignmentViewHolder(private val binding: ItemStHomeSectionItemBindi
             btnResource.visibility = View.GONE
             btnClass.text = ("Tugas")
             btnClass.setOnClickListener {
-                data.id?.let { id -> listener.onTaskFormItemClicked(id) }
+                data.id?.let { id -> listener.onTaskFormItemClicked(id, data.subjectName ?: "") }
             }
         }
     }

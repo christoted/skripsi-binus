@@ -60,7 +60,7 @@ class StHomeFragment : Fragment(), ItemListener {
         _binding = null
     }
 
-    override fun onTaskFormItemClicked(taskFormId: String) {
+    override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
         Log.d("TaskForm", "onTaskFormItemClicked: ")
         val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity(taskFormId)
         toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM

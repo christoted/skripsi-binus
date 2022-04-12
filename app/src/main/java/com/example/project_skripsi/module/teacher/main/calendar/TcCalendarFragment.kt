@@ -52,7 +52,7 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
 //        TODO("Not yet implemented")
     }
 
-    override fun onTaskFormItemClicked(taskFormId: String) {
+    override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
 //        TODO("Not yet implemented")
     }
 

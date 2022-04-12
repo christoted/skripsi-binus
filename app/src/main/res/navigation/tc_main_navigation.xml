@@ -9,7 +9,11 @@
         android:id="@+id/tcHomeFragment"
         android:name="com.example.project_skripsi.module.teacher.main.home.TcHomeFragment"
         android:label="TcHomeFragment"
-        tools:layout="@layout/fragment_tc_home"/>
+        tools:layout="@layout/fragment_tc_home">
+        <action
+            android:id="@+id/action_tcHomeFragment_to_tcStudyClassTaskDetailFragment"
+            app:destination="@id/tcStudyClassTaskDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tcStudyClassFragment"
         android:name="com.example.project_skripsi.module.teacher.main.study_class.TcStudyClassFragment"
