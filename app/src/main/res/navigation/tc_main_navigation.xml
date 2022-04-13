@@ -134,7 +134,7 @@
     </fragment>
     <fragment
         android:id="@+id/tcStudentFragment"
-        android:name="com.example.project_skripsi.module.teacher.student_detail.TcStudentFragment"
+        android:name="com.example.project_skripsi.module.teacher.student_detail.view.TcStudentFragment"
         android:label="TcStudentFragment"
         tools:layout="@layout/fragment_tc_student">
         <argument
