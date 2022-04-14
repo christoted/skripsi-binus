@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.teacher.form.alter_task
+package com.example.project_skripsi.module.teacher.form
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,18 +21,26 @@ class TcAlterTaskViewModel : ViewModel() {
 
         const val TYPE_EXAM = 0
         const val TYPE_ASSIGNMENT = 1
+
+        val TASK_FORM_TYPE = mapOf(
+            "pilihan berganda" to 0,
+            "essai" to 1,
+        )
     }
 
-    var selectedClass = listOf<StudyClass>()
-    var selectedResource = listOf<Resource>()
-    var selectedAssignment = listOf<TaskForm>()
     var taskType = ""
+    var selectedClass = listOf<String>()
+    var selectedResource = listOf<String>()
+    var selectedAssignment = listOf<String>()
 
     private val _startDate = MutableLiveData<Date>()
     val startDate : LiveData<Date> = _startDate
 
     private val _endDate = MutableLiveData<Date>()
     val endDate : LiveData<Date> = _endDate
+
+    private val _oldTaskForm = MutableLiveData<TaskForm>()
+    val oldTaskForm : LiveData<TaskForm> = _oldTaskForm
 
     private val _classList = MutableLiveData<List<StudyClass>>()
     val classList : LiveData<List<StudyClass>> = _classList
@@ -43,21 +51,47 @@ class TcAlterTaskViewModel : ViewModel() {
     private val _assignmentList = MutableLiveData<List<TaskForm>>()
     val assignmentList : LiveData<List<TaskForm>> = _assignmentList
 
+    private val _questionList = MutableLiveData<List<Question>>()
+    val questionList : LiveData<List<Question>> = _questionList
+
+    private val _taskFormCreated = MutableLiveData<Boolean>()
+    val taskFormCreated : LiveData<Boolean> = _taskFormCreated
+
     private lateinit var subjectGroup : SubjectGroup
     private lateinit var currentTeacher: Teacher
     private val classIds = mutableListOf<String>()
 
+    var isNewForm = true
     private var formType: Int = -1
     private val resourceIds = mutableListOf<String>()
     private val assignmentIds = mutableListOf<String>()
 
 
-    fun initData(subjectName: String, gradeLevel: Int, formType : Int) {
+    fun initData(subjectName: String, gradeLevel: Int, formType : Int, taskFormId : String?) {
         _startDate.postValue(DateHelper.getCurrentDate())
         _endDate.postValue(DateHelper.getCurrentDate())
+        _questionList.postValue(emptyList())
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        if (taskFormId != null) { loadTaskForm(taskFormId) }
+    }
+
+    private fun loadTaskForm(uid: String) {
+        isNewForm = false
+        FireRepository.instance.getTaskForm(uid).first.observeOnce{
+            _oldTaskForm.postValue(it)
+            with(it) {
+                startTime?.let { time -> _startDate.postValue(time) }
+                endTime?.let { time -> _endDate.postValue(time) }
+                type?.let { item -> taskType = item }
+                assignedClasses?.let { list -> selectedClass = list }
+                prerequisiteResources?.let { list -> selectedResource = list }
+                prerequisiteTaskForms?.let { list -> selectedAssignment = list }
+                questions?.let { list -> _questionList.postValue(list) }
+            }
+//
+        }
     }
 
     private fun loadTeacher(uid : String) {
@@ -66,7 +100,7 @@ class TcAlterTaskViewModel : ViewModel() {
             teacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
                 ?.let { group ->
                     with(group) {
-                        teaching_classes?.let { classIds.addAll(it) }
+                        teachingClasses?.let { classIds.addAll(it) }
                         createdResources?.let { resourceIds.addAll(it) }
                         createdAssignments?.let { assignmentIds.addAll(it) }
                     }
@@ -112,16 +146,23 @@ class TcAlterTaskViewModel : ViewModel() {
         _endDate.postValue(date)
     }
 
+    fun updateQuestions(questions : List<Question>) {
+        _questionList.postValue(questions)
+    }
 
     fun submitForm(title: String) {
+        val items = mutableListOf<Any>()
         val taskFormId = UUIDHelper.getUUID()
-        currentTeacher.teachingGroups
-            ?.firstOrNull{it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel}
-            ?.let { if(formType == TYPE_EXAM) it.createdExams else it.createdAssignments }
-            ?.add(taskFormId)
+        if (isNewForm) {
+            currentTeacher.teachingGroups
+                ?.firstOrNull{it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel}
+                ?.let { if(formType == TYPE_EXAM) it.createdExams else it.createdAssignments }
+                ?.add(taskFormId)
+            items.add(currentTeacher)
+        }
 
-        val newTask = TaskForm(
-            id = taskFormId,
+        val taskForm = TaskForm(
+            id = if (isNewForm) taskFormId else oldTaskForm.value?.id,
             title = title,
             gradeLevel = subjectGroup.gradeLevel,
             type = taskType,
@@ -129,16 +170,16 @@ class TcAlterTaskViewModel : ViewModel() {
             endTime = endDate.value,
             location = "Online",
             subjectName = subjectGroup.subjectName,
-            questions = emptyList(),
-            assignedClasses = selectedClass.map { it.id!! },
+            questions = questionList.value ?: emptyList(),
+            assignedClasses = selectedClass,
+            prerequisiteResources = selectedResource,
+            prerequisiteTaskForms = selectedAssignment,
         )
+        items.add(taskForm)
 
-        FireRepository.instance.addTaskForm(
-            newTask,
-            currentTeacher
-        )
+        FireRepository.instance.alterFirestoreItems(items).first.observeOnce{
+            _taskFormCreated.postValue(true)
+        }
     }
-
-
 
 }

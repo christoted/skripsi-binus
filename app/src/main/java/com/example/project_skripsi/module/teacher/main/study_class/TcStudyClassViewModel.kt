@@ -1,11 +1,9 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.StudyClass
-import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -35,7 +33,7 @@ class TcStudyClassViewModel : ViewModel() {
 
                 val subjects: MutableList<String> = mutableListOf()
                 teachingGroups?.map { group ->
-                    group.teaching_classes?.map {
+                    group.teachingClasses?.map {
                         if (!subjects.contains(group.subjectName!!)) subjects.add(group.subjectName!!)
                         subjectClasses.getOrPut(group.subjectName!!) { mutableListOf() }.add(it)
                     }

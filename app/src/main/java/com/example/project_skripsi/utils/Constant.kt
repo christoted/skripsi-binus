@@ -10,10 +10,12 @@ class Constant {
         const val SECTION_ANNOUNCEMENT = "Pengumuman"
 
 
-
         const val TASK_TYPE_MID_EXAM = "ujian_tengah_semester"
         const val TASK_TYPE_FINAL_EXAM = "ujian_akhir_semester"
         const val TASK_TYPE_ASSIGNMENT = "tugas"
+
+        const val TASK_FORM_ESSAY = "essai"
+        const val TASK_FORM_MC = "pilihan berganda"
     }
 
 

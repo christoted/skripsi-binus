@@ -30,9 +30,9 @@ class TcAlterResourceViewModel: ViewModel() {
     private val classIds = mutableListOf<String>()
     private val _classList = MutableLiveData<List<StudyClass>>()
     var classList: LiveData<List<StudyClass>> = _classList
-    var selectedClass = listOf<StudyClass>()
-    var selectedResource = listOf<Resource>()
-    var selectedAssignment = listOf<TaskForm>()
+    var selectedClass = listOf<String>()
+    var selectedResource = listOf<String>()
+    var selectedAssignment = listOf<String>()
 
     private val _status = MutableLiveData<Boolean>()
     val status: LiveData<Boolean> = _status
@@ -66,7 +66,7 @@ class TcAlterResourceViewModel: ViewModel() {
                             teachingGroup.createdResources?.let { ids ->
                                 resourceIds.addAll(ids)
                             }
-                            teachingGroup.teaching_classes?.let { ids ->
+                            teachingGroup.teachingClasses?.let { ids ->
                                 classIds.addAll(ids)
                             }
                         }
@@ -118,12 +118,8 @@ class TcAlterResourceViewModel: ViewModel() {
                 link = link,
                 subjectName = subjectGroup.subjectName,
                 // MARK -
-                prerequisites = selectedResource.map {
-                    it.id!!
-                },
-                assignedClasses = selectedClass.map {
-                    it.id!!
-                 }
+                prerequisites = selectedResource,
+                assignedClasses = selectedClass
             )
 
             FireRepository.instance.addResource(resource, currentTeacher).let { response ->

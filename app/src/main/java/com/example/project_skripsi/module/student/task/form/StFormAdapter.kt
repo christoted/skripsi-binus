@@ -7,6 +7,7 @@ import com.example.project_skripsi.core.model.firestore.Question
 import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
+import com.example.project_skripsi.utils.Constant
 
 class StFormAdapter(private val questionList: List<AssignedQuestion>) :
     Adapter<ViewHolder>() {
@@ -21,9 +22,9 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (questionList[position].type) {
-            StTaskFormViewModel.TASK_FORM_MC ->
+            Constant.TASK_FORM_MC ->
                 (holder as MultipleChoiceViewHolder).bind(questionList[position], position)
-            StTaskFormViewModel.TASK_FORM_ESSAY ->
+            Constant.TASK_FORM_ESSAY ->
                 (holder as EssayViewHolder).bind(questionList[position], position)
         }
     }

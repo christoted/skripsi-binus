@@ -7,6 +7,7 @@ import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.module.teacher.form.TcAlterTaskViewModel
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
 class TcTaskViewModel : ViewModel() {
@@ -25,7 +26,9 @@ class TcTaskViewModel : ViewModel() {
 
     var currentSubjectGroup : SubjectGroup? = null
 
-    init {
+    fun refreshData() {
+        examIds.clear()
+        assignmentIds.clear()
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
@@ -50,6 +53,7 @@ class TcTaskViewModel : ViewModel() {
         loadAssignment(subjectGroup)
     }
 
+
     private fun loadExam(subjectGroup : SubjectGroup) {
         examIds[subjectGroup]?.toList()?.let { loadTaskForm(it, _examList) }
     }
@@ -66,6 +70,12 @@ class TcTaskViewModel : ViewModel() {
                 if (taskFormList.size == uids.size) mutableLiveData.postValue(taskFormList)
             }
         }
+    }
+
+    fun getTaskFormType(taskFormId: String) : Int? {
+        examIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_EXAM }
+        assignmentIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_ASSIGNMENT }
+        return null
     }
 
 }
