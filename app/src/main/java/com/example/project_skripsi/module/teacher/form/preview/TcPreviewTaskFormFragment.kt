@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.task.form
+package com.example.project_skripsi.module.teacher.form.preview
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,24 +9,27 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.databinding.FragmentStTaskFormBinding
+import com.example.project_skripsi.databinding.FragmentTcPreviewTaskFormBinding
+import com.example.project_skripsi.databinding.FragmentTemplateBinding
+import com.example.project_skripsi.module.student.task.form.StFormAdapter
+import com.example.project_skripsi.module.student.task.form.StTaskFormFragmentArgs
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class StTaskFormFragment : Fragment() {
+class TcPreviewTaskFormFragment : Fragment() {
 
-    private lateinit var viewModel: StTaskFormViewModel
-    private var _binding: FragmentStTaskFormBinding? = null
+    private lateinit var viewModel: TcPreviewTaskFormViewModel
+    private var _binding: FragmentTcPreviewTaskFormBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
-        viewModel = ViewModelProvider(this)[StTaskFormViewModel::class.java]
-        _binding = FragmentStTaskFormBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[TcPreviewTaskFormViewModel::class.java]
+        _binding = FragmentTcPreviewTaskFormBinding.inflate(inflater, container, false)
 
         retrieveArgs()
 
@@ -44,18 +47,13 @@ class StTaskFormFragment : Fragment() {
                     tvEndDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
                     tvEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
                 }
+                taskForm.questions?.let {
+                    rvQuestion.adapter = TcPreviewFormAdapter(it)
+                }
             }
         })
 
         viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
-        viewModel.formStatus.observe(viewLifecycleOwner, {
-            with(binding) {
-                tvStatus.text = it.first
-                tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it.second, null))
-            }
-        })
-
-        viewModel.questionList.observe(viewLifecycleOwner, { binding.rvQuestion.adapter = StFormAdapter(it) })
 
         return binding.root
     }
@@ -66,7 +64,7 @@ class StTaskFormFragment : Fragment() {
     }
 
     private fun retrieveArgs(){
-        val args: StTaskFormFragmentArgs by navArgs()
-        viewModel.setTaskForm(args.taskFormId)
+        val args: TcPreviewTaskFormFragmentArgs by navArgs()
+        viewModel.setTaskForm(args.studyClassId, args.taskFormId)
     }
 }

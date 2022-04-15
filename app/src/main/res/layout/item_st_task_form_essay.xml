@@ -34,13 +34,30 @@
                 android:textStyle="bold"
                 android:layout_marginEnd="4dp"/>
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                tools:text="Jika manusia adalah makhluk. Apakah kamu suka pertanyaan ini?"
-                android:textSize="15sp"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="Jika manusia adalah makhluk. Apakah kamu suka pertanyaan ini?"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_score_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="Bobot : 40"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="italic"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -49,10 +66,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            tools:hint="Isi jawaban disini"
+            android:hint="Isi jawaban disini"
             android:textSize="16sp"
             android:maxLines="10"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:inputType="text"/>
 
     </LinearLayout>
 
