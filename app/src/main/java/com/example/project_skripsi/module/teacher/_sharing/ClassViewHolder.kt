@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.databinding.StandardCheckboxBinding
 
-class ClassViewHolder(private val dataSet : List<StudyClass>, private val checked: List<StudyClass>) {
+class ClassViewHolder(private val dataSet : List<StudyClass>, private val checked: List<String>) {
 
-    var itemChecked = BooleanArray(dataSet.size)
+    private var itemsChecked = BooleanArray(dataSet.size)
 
     fun getAdapter(): GenericAdapter<StudyClass> {
         val adapter = GenericAdapter(dataSet)
@@ -16,21 +16,23 @@ class ClassViewHolder(private val dataSet : List<StudyClass>, private val checke
         }
         adapter.expressionViewHolderBinding = { item,viewBinding,holder->
             val view = viewBinding as StandardCheckboxBinding
+            val itemChecked = checked.contains(item.id)
             with(view.itemCheckbox) {
                 text = item.name
-                isChecked = checked.contains(item)
+                isChecked = itemChecked
                 setOnCheckedChangeListener { _, b ->
                     val pos = holder.absoluteAdapterPosition
-                    itemChecked[pos] = b
+                    itemsChecked[pos] = b
                 }
             }
+            itemsChecked[holder.absoluteAdapterPosition] = itemChecked
         }
         return adapter
     }
 
-    fun getResult() : List<StudyClass> {
-        val result = mutableListOf<StudyClass>()
-        itemChecked.mapIndexed{ i,b -> if (b) result.add(dataSet[i]) }
+    fun getResult() : List<String> {
+        val result = mutableListOf<String>()
+        itemsChecked.mapIndexed{ i, b -> if (b) dataSet[i].id?.let { result.add(it) } }
         return result
     }
 

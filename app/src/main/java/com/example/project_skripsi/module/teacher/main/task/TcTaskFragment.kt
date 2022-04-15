@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcTaskBinding
-import com.example.project_skripsi.module.teacher.form.alter_task.TcAlterTaskViewModel
+import com.example.project_skripsi.module.teacher.form.TcAlterTaskViewModel
 import com.example.project_skripsi.module.teacher.study_class.task.TaskViewHolder
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.google.android.material.chip.Chip
@@ -60,19 +60,30 @@ class TcTaskFragment : Fragment(), ItemClickListener {
 
         binding.btnAddExam.setOnClickListener{
             viewModel.currentSubjectGroup?.let {
-                view?.findNavController()?.navigate(TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
-                    it.subjectName, it.gradeLevel, TcAlterTaskViewModel.TYPE_EXAM))
+                view?.findNavController()?.navigate(
+                    TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
+                        it.subjectName, it.gradeLevel, TcAlterTaskViewModel.TYPE_EXAM, null
+                    )
+                )
             }
         }
 
         binding.btnAddAssignment.setOnClickListener{
             viewModel.currentSubjectGroup?.let {
-                view?.findNavController()?.navigate(TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
-                    it.subjectName, it.gradeLevel, TcAlterTaskViewModel.TYPE_ASSIGNMENT))
+                view?.findNavController()?.navigate(
+                    TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
+                        it.subjectName, it.gradeLevel, TcAlterTaskViewModel.TYPE_ASSIGNMENT, null
+                    )
+                )
             }
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshData()
     }
 
     override fun onDestroyView() {
@@ -81,6 +92,14 @@ class TcTaskFragment : Fragment(), ItemClickListener {
     }
 
     override fun onItemClick(itemId: String) {
-//        TODO("Not yet implemented")
+        viewModel.currentSubjectGroup?.let { subjectGroup ->
+            viewModel.getTaskFormType(itemId)?.let { type ->
+                view?.findNavController()?.navigate(
+                    TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
+                        subjectGroup.subjectName, subjectGroup.gradeLevel, type, itemId
+                    )
+                )
+            }
+        }
     }
 }

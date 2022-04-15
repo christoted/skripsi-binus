@@ -46,7 +46,7 @@ data class TeachingGroup(
 
     @get: PropertyName("teaching_classes")
     @set: PropertyName("teaching_classes")
-    var teaching_classes: List<String>? = null,
+    var teachingClasses: List<String>? = null,
 
     @get: PropertyName("created_resources")
     @set: PropertyName("created_resources")

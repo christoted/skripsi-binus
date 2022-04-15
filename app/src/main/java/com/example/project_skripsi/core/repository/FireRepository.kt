@@ -144,20 +144,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
-    fun addTaskForm(taskForm: TaskForm, teacher: Teacher) {
-        db.collection(COLLECTION_TASK_FORM)
-            .document(taskForm.id!!)
-            .set(taskForm)
-            .addOnSuccessListener(this)
-            .addOnFailureListener(this)
-        db.collection(COLLECTION_TEACHER)
-            .document(teacher.id!!)
-            .set(teacher)
-            .addOnSuccessListener(this)
-            .addOnFailureListener(this)
-    }
-
-    fun addResource(resource: Resource, teacher: Teacher): Pair<LiveData<Boolean> , LiveData<Exception>> {
+    fun addResource(resource: Resource, teacher: Teacher): Pair<LiveData<Boolean>, LiveData<Exception>> {
         val isSuccess = MutableLiveData<Boolean>()
         val exception = MutableLiveData<Exception>()
         db.collection(COLLECTION_RESOURCE)
@@ -174,6 +161,49 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
             .addOnFailureListener {
                 exception.value = it
             }
+        return Pair(isSuccess, exception)
+    }
+
+    fun alterFirestoreItems(items : List<Any>) : Pair<LiveData<Boolean>, LiveData<Exception>> {
+        val isSuccess = MutableLiveData<Boolean>()
+        val exception = MutableLiveData<Exception>()
+
+        var successCounter = 0
+        items.map {
+            db.collection(
+                when (it) {
+                    is Student -> COLLECTION_STUDENT
+                    is Teacher -> COLLECTION_TEACHER
+                    is Parent -> COLLECTION_PARENT
+                    is Administrator -> COLLECTION_ADMINISTRATOR
+                    is StudyClass -> COLLECTION_STUDY_CLASS
+                    is TaskForm -> COLLECTION_TASK_FORM
+                    is Resource -> COLLECTION_RESOURCE
+                    is Announcement -> COLLECTION_ANNOUNCEMENT
+                    else -> COLLECTION_SCHOOL
+                }
+            ).document(
+                when (it) {
+                    is Student -> it.id!!
+                    is Teacher -> it.id!!
+                    is Parent -> it.id!!
+                    is Administrator -> it.id!!
+                    is StudyClass -> it.id!!
+                    is TaskForm -> it.id!!
+                    is Resource -> it.id!!
+                    is Announcement -> it.id!!
+                    is School -> it.id!!
+                    else -> "null"
+                }
+            ).set(
+                it
+            ).addOnSuccessListener {
+                successCounter++
+                if (successCounter == items.size) isSuccess.postValue(true)
+            }.addOnFailureListener{ _exception ->
+                exception.postValue(_exception)
+            }
+        }
         return Pair(isSuccess, exception)
     }
 

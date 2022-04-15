@@ -35,6 +35,15 @@ data class TaskForm(
     @get: PropertyName("assigned_classes")
     @set: PropertyName("assigned_classes")
     var assignedClasses: List<String>? = null,
+
+    @get: PropertyName("prerequisite_resources")
+    @set: PropertyName("prerequisite_resources")
+    var prerequisiteResources: List<String>? = null,
+
+    @get: PropertyName("prerequisite_task_forms")
+    @set: PropertyName("prerequisite_task_forms")
+    var prerequisiteTaskForms: List<String>? = null,
+
 ): HomeSectionData()
 
 @IgnoreExtraProperties

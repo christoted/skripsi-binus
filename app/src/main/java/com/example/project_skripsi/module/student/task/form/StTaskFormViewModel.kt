@@ -17,10 +17,6 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 class StTaskFormViewModel : ViewModel() {
 
     companion object {
-
-        const val TASK_FORM_ESSAY = "essai"
-        const val TASK_FORM_MC = "pilihan berganda"
-
         val TASK_FORM_TYPE = mapOf(
             "pilihan berganda" to 0,
             "essai" to 1,

@@ -148,18 +148,10 @@
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/tcAlterTaskFormFragment"
-        android:name="com.example.project_skripsi.module.teacher.form.alter_task_form.TcAlterTaskFormFragment"
-        android:label="fragment_tc_alter_task_form"
-        tools:layout="@layout/fragment_tc_alter_task_form" />
-    <fragment
         android:id="@+id/tcAlterTaskFragment"
-        android:name="com.example.project_skripsi.module.teacher.form.alter_task.TcAlterTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.TcAlterTaskFragment"
         android:label="fragment_tc_alter_task"
         tools:layout="@layout/fragment_tc_alter_task" >
-        <action
-            android:id="@+id/action_tcAlterTaskFragment_to_tcAlterTaskFormFragment"
-            app:destination="@id/tcAlterTaskFormFragment" />
         <argument
             android:name="subjectName"
             app:argType="string" />
@@ -169,6 +161,10 @@
         <argument
             android:name="formType"
             app:argType="integer" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

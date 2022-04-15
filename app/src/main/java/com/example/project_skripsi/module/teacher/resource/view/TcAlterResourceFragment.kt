@@ -19,7 +19,6 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcAlterResourceBinding
 import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
-import com.example.project_skripsi.module.teacher.main.resource.adapter.ResourceAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class TcAlterResourceFragment : Fragment() {
@@ -122,7 +121,7 @@ class TcAlterResourceFragment : Fragment() {
     @SuppressLint("InflateParams")
     private fun showBottomSheet(queryType : Int) {
         val dialog = BottomSheetDialog(context!!)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task, null)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task_general, null)
 
         val tvTitle = view.findViewById<TextView>(R.id.tv_title)
         val btnClose = view.findViewById<Button>(R.id.btn_confirm)
