@@ -200,8 +200,8 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
             ).addOnSuccessListener {
                 successCounter++
                 if (successCounter == items.size) isSuccess.postValue(true)
-            }.addOnFailureListener{
-                exception.postValue(it)
+            }.addOnFailureListener{ _exception ->
+                exception.postValue(_exception)
             }
         }
         return Pair(isSuccess, exception)
