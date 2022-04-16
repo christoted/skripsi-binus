@@ -35,8 +35,8 @@ class TcStudentDetailPayment(private val viewModel: TcStudentDetailViewModel) : 
         viewModel.listPaymentSection.observe(viewLifecycleOwner) {
             paymentAdapter = TcStudentDetailPaymentAdapter(it)
             with(binding) {
-                rvListPayment.adapter = paymentAdapter.getAdapter()
                 rvListPayment.layoutManager = LinearLayoutManager(context)
+                rvListPayment.adapter = paymentAdapter.getAdapter()
                 rvListPayment.setHasFixedSize(true)
             }
         }
