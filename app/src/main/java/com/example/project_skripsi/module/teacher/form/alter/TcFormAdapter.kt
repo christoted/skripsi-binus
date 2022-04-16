@@ -9,8 +9,7 @@ import com.example.project_skripsi.databinding.ItemTcAlterTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemTcAlterTaskFormMcBinding
 import com.example.project_skripsi.utils.Constant
 
-class TcFormAdapter(questionList: List<Question>) :
-    Adapter<ViewHolder>() {
+class TcFormAdapter(questionList: List<Question>) : Adapter<ViewHolder>() {
 
     val questions = mutableListOf<Question>()
     init { questions.addAll(questionList) }

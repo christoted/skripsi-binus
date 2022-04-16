@@ -188,6 +188,13 @@
         android:id="@+id/tcAssessmentTaskFormFragment"
         android:name="com.example.project_skripsi.module.teacher.form.assessment.TcAssessmentTaskFormFragment"
         android:label="fragment_tc_assessment_task_form"
-        tools:layout="@layout/fragment_tc_assessment_task_form" />
+        tools:layout="@layout/fragment_tc_assessment_task_form" >
+        <argument
+            android:name="studentId"
+            app:argType="string"/>
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

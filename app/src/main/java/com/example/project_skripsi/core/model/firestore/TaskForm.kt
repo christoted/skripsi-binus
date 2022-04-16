@@ -61,6 +61,6 @@ data class Question(
 
     @get: PropertyName("answer_key")
     @set: PropertyName("answer_key")
-    var answerKey: Int? = null,
+    var answerKey: String? = null,
 )
 

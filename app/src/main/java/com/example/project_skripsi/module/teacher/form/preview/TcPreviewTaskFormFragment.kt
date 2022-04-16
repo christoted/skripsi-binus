@@ -26,7 +26,7 @@ class TcPreviewTaskFormFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel = ViewModelProvider(this)[TcPreviewTaskFormViewModel::class.java]
         _binding = FragmentTcPreviewTaskFormBinding.inflate(inflater, container, false)

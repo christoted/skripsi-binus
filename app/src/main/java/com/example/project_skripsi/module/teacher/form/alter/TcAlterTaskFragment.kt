@@ -24,6 +24,9 @@ import com.example.project_skripsi.databinding.FragmentTcAlterTaskBinding
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.NumberHelper
+import com.example.project_skripsi.utils.helper.ValidationHelper
+import com.example.project_skripsi.utils.helper.ValidationHelper.Companion.isStringEmpty
+import com.example.project_skripsi.utils.helper.ValidationHelper.Companion.isStringInteger
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -155,11 +158,10 @@ class TcAlterTaskFragment : Fragment() {
 
             viewModel.taskFormCreated.observe(viewLifecycleOwner, {
                 if (it) {
-                    if (viewModel.isNewForm) {
-                        Toast.makeText(context, "Form ujian baru berhasil dibuat", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Form ujian berhasil diubah", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(context,
+                        if (viewModel.isNewForm) "Form ujian baru berhasil dibuat"
+                        else "Form ujian berhasil diubah",
+                        Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }
             })
@@ -343,7 +345,7 @@ class TcAlterTaskFragment : Fragment() {
 
     private fun validateInput() : Boolean {
         with(binding) {
-            if (isStringEmpty(edtTitle.text.toString(), "Judul")) return false
+            if (isStringEmpty(context!!, edtTitle.text.toString(), "Judul")) return false
 
             if (viewModel.taskType.isEmpty()) {
                 Toast.makeText(context, "Tipe ujian harus dipilih",Toast.LENGTH_SHORT).show()
@@ -360,11 +362,11 @@ class TcAlterTaskFragment : Fragment() {
 
     private fun validateQuestionEssay(view : View) : Question?{
         val title = view.findViewById<EditText>(R.id.edt_title).text.toString()
-        if (isStringEmpty(title, "Judul soal")) return null
+        if (isStringEmpty(context!!, title, "Judul soal")) return null
 
         val scoreWeight = view.findViewById<EditText>(R.id.edt_score_weight).text.toString()
-        if (isStringEmpty(scoreWeight, "Bobot soal")) return null
-        if (isStringInteger(scoreWeight, "Bobot soal")) return null
+        if (isStringEmpty(context!!, scoreWeight, "Bobot soal")) return null
+        if (isStringInteger(context!!, scoreWeight, "Bobot soal")) return null
         val scoreWeightInt = scoreWeight.toInt()
 
         return Question(
@@ -372,22 +374,22 @@ class TcAlterTaskFragment : Fragment() {
             Constant.TASK_FORM_ESSAY,
             scoreWeightInt,
             emptyList(),
-            -1
+            ""
         )
     }
 
     private fun validateQuestionMC(view : View) : Question?{
         val title = view.findViewById<EditText>(R.id.edt_title).text.toString()
-        if (isStringEmpty(title, "Judul soal")) return null
+        if (isStringEmpty(context!!, title, "Judul soal")) return null
 
         val scoreWeight = view.findViewById<EditText>(R.id.edt_score_weight).text.toString()
-        if (isStringEmpty(scoreWeight, "Bobot soal")) return null
-        if (isStringInteger(scoreWeight, "Bobot soal")) return null
+        if (isStringEmpty(context!!, scoreWeight, "Bobot soal")) return null
+        if (isStringInteger(context!!, scoreWeight, "Bobot soal")) return null
         val scoreWeightInt = scoreWeight.toInt()
 
         val answerKey = view.findViewById<EditText>(R.id.edt_answer_key).text.toString()
-        if (isStringEmpty(answerKey, "Jawaban")) return null
-        if (isStringInteger(answerKey, "Jawaban")) return null
+        if (isStringEmpty(context!!, answerKey, "Jawaban")) return null
+        if (isStringInteger(context!!, answerKey, "Jawaban")) return null
         val answerKeyInt = answerKey.toInt()
         if (answerKeyInt < 1 || answerKeyInt > 5) {
             Toast.makeText(context, "Jawaban harus di antara 1 - 5", Toast.LENGTH_SHORT).show()
@@ -395,42 +397,26 @@ class TcAlterTaskFragment : Fragment() {
         }
 
         val choice1 = view.findViewById<EditText>(R.id.edt_choice_1).text.toString()
-        if (isStringEmpty(choice1, "Pilihan 1")) return null
+        if (isStringEmpty(context!!, choice1, "Pilihan 1")) return null
 
         val choice2 = view.findViewById<EditText>(R.id.edt_choice_2).text.toString()
-        if (isStringEmpty(choice2, "Pilihan 2")) return null
+        if (isStringEmpty(context!!, choice2, "Pilihan 2")) return null
 
         val choice3 = view.findViewById<EditText>(R.id.edt_choice_3).text.toString()
-        if (isStringEmpty(choice3, "Pilihan 3")) return null
+        if (isStringEmpty(context!!, choice3, "Pilihan 3")) return null
 
         val choice4 = view.findViewById<EditText>(R.id.edt_choice_4).text.toString()
-        if (isStringEmpty(choice4, "Pilihan 4")) return null
+        if (isStringEmpty(context!!, choice4, "Pilihan 4")) return null
 
         val choice5 = view.findViewById<EditText>(R.id.edt_choice_5).text.toString()
-        if (isStringEmpty(choice5, "Pilihan 5")) return null
+        if (isStringEmpty(context!!, choice5, "Pilihan 5")) return null
 
         return Question(
             title,
             Constant.TASK_FORM_MC,
             scoreWeightInt,
             listOf(choice1, choice2, choice3, choice4, choice5),
-            answerKeyInt
+            answerKey
         )
-    }
-
-    private fun isStringEmpty(str : String, messageItem : String) : Boolean {
-        if (str.isEmpty()) {
-            Toast.makeText(context, "$messageItem harus diisi", Toast.LENGTH_SHORT).show()
-            return true
-        }
-        return false
-    }
-
-    private fun isStringInteger(str : String, messageItem : String) : Boolean {
-        if (!NumberHelper.isNumberOnly(str)) {
-            Toast.makeText(context, "$messageItem harus terdiri dari angka 0-9", Toast.LENGTH_SHORT).show()
-            return true
-        }
-        return false
     }
 }

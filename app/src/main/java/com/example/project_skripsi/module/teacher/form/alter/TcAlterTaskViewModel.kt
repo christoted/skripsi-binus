@@ -90,7 +90,6 @@ class TcAlterTaskViewModel : ViewModel() {
                 prerequisiteTaskForms?.let { list -> selectedAssignment = list }
                 questions?.let { list -> _questionList.postValue(list) }
             }
-//
         }
     }
 
@@ -178,7 +177,7 @@ class TcAlterTaskViewModel : ViewModel() {
         items.add(taskForm)
 
         FireRepository.instance.alterFirestoreItems(items).first.observeOnce{
-            _taskFormCreated.postValue(true)
+            _taskFormCreated.postValue(it)
         }
     }
 

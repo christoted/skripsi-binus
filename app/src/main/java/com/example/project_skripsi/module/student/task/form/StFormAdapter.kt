@@ -39,13 +39,13 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
                 tvNumber.text = ("${position+1}.")
-                choice1.text = item.choices?.get(0) ?: "null"
-                choice2.text = item.choices?.get(1) ?: "null"
-                choice3.text = item.choices?.get(2) ?: "null"
-                choice4.text = item.choices?.get(3) ?: "null"
-                choice5.text = item.choices?.get(4) ?: "null"
+                choice1.text = item.choices?.getOrNull(0)
+                choice2.text = item.choices?.getOrNull(1)
+                choice3.text = item.choices?.getOrNull(2)
+                choice4.text = item.choices?.getOrNull(3)
+                choice5.text = item.choices?.getOrNull(4)
                 tvTitle.text = item.title
-                item.answer?.let {
+                item.answer?.text?.let {
                     when (it.toString().toInt()) {
                         1 -> choice1.isChecked = true
                         2 -> choice2.isChecked = true
@@ -64,7 +64,7 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
             with(binding) {
                 tvNumber.text = ("${position+1}.")
                 tvTitle.text = item.title
-                item.answer?.let { edtAnswer.setText(it.toString()) }
+                item.answer?.text?.let { edtAnswer.setText(it.toString()) }
             }
         }
     }

@@ -75,7 +75,7 @@ class StTaskFormViewModel : ViewModel() {
 
                 val questionList = ArrayList<AssignedQuestion>()
                 taskForm.value?.questions?.mapIndexed { index, question ->
-                    questionList.add(AssignedQuestion(question, assignedTaskForm?.answer?.getOrNull(index)))
+                    questionList.add(AssignedQuestion(question, assignedTaskForm?.answers?.getOrNull(index)))
                 }
                 _questionList.postValue(questionList.toList())
             }

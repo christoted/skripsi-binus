@@ -136,7 +136,7 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
     override fun onItemClick(itemId: String) {
         view?.findNavController()?.navigate(
             TcStudyClassTaskDetailFragmentDirections
-                .actionTcStudyClassTaskDetailFragmentToTcAssessmentTaskFormFragment()
+                .actionTcStudyClassTaskDetailFragmentToTcAssessmentTaskFormFragment(itemId, viewModel.taskFormId)
         )
     }
 }

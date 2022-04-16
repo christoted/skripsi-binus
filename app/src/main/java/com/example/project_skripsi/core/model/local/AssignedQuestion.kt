@@ -1,25 +1,27 @@
 package com.example.project_skripsi.core.model.local
 
-import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.firestore.Answer
 import com.example.project_skripsi.core.model.firestore.Question
 import com.google.firebase.firestore.IgnoreExtraProperties
-import com.google.firebase.firestore.PropertyName
 
 @IgnoreExtraProperties
 data class AssignedQuestion(
 
     val title: String? = null,
 
+    val scoreWeight: Int? = null,
+
     val type: String? = null,
 
     val choices: List<String>? = null,
 
-    val answerKey: Int? = null,
+    val answerKey: String? = null,
 
-    var answer: Any? = null,
+    var answer: Answer? = null,
 ) {
-    constructor(question: Question, answer: Any?) : this (
+    constructor(question: Question, answer: Answer?) : this (
         title = question.title,
+        scoreWeight = question.scoreWeight,
         type = question.type,
         choices = question.choices,
         answerKey = question.answerKey,
