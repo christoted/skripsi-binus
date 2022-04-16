@@ -35,8 +35,12 @@ class TcStudentDetailViewModel: ViewModel() {
         paymentSection.add(TcStudentDetailPaymentSection(title = "Mendatang", payments = emptyList()))
         _payments.observeOnce {
             Log.d("987 ", "getPayments: palign bawah" + it)
-            paymentSection[0].payments = it
-            paymentSection[1].payments = it
+            paymentSection[0].payments = it.filter {
+                it.paymentDeadline!! < DateHelper.getCurrentDate()
+            }
+            paymentSection[1].payments = it.filter {
+                it.paymentDeadline!! > DateHelper.getCurrentDate()
+            }
             _listPaymentSection.postValue(paymentSection)
         }
     }
