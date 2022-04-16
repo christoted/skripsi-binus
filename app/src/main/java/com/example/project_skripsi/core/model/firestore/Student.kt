@@ -86,7 +86,7 @@ data class AssignedTaskForm(
     val id: String? = null,
 
     val title: String? = null,
-    
+
     val type: String? = null,
 
     val startTime: Date? = null,
@@ -101,7 +101,7 @@ data class AssignedTaskForm(
 
     val score: Int? = null,
 
-    val answer: List<Any>? = null,
+    val answers: List<Answer>? = null,
 
 ) : ScoreSectionData()
 
@@ -123,5 +123,14 @@ data class Achievement (
     val title: String? = null,
 
     val description: String? = null,
+
+)
+
+@IgnoreExtraProperties
+data class Answer (
+
+    val text: String? = null,
+
+    val score: Int? = null,
 
 )

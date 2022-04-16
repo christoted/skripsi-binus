@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcTaskBinding
-import com.example.project_skripsi.module.teacher.form.TcAlterTaskViewModel
+import com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskViewModel
 import com.example.project_skripsi.module.teacher.study_class.task.TaskViewHolder
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.google.android.material.chip.Chip

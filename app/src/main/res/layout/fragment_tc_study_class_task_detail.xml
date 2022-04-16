@@ -34,11 +34,14 @@
                 android:textColor="@color/black"
                 tools:text="Ujian Tengah Semester"/>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginTop="8dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -50,9 +53,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Kelas:"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"/>
+                        android:text="Kelas"
+                        android:textAlignment="center"/>
 
                     <TextView
                         android:id="@+id/tv_class_name"
@@ -62,7 +64,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         tools:text="XII - IPA - 2"
-                        android:layout_marginTop="4dp"/>
+                        android:textAlignment="center"/>
 
                 </LinearLayout>
 
@@ -75,9 +77,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Mata Pelajaran:"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"/>
+                        android:text="Mata Pelajaran"
+                        android:textAlignment="center"/>
 
                     <TextView
                         android:id="@+id/tv_subject_name"
@@ -87,11 +88,19 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         tools:text="Biologi"
-                        android:layout_marginTop="4dp"/>
+                        android:textAlignment="center"/>
 
                 </LinearLayout>
 
             </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="8dp"
+                app:dividerInsetEnd="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,15 +139,25 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="durasi"
+                        android:layout_marginBottom="-5dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_duration"/>
+
+                    <TextView
                         android:id="@+id/tv_duration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         tools:text="24 jam"
-                        app:drawableEndCompat="@drawable/ic_baseline_arrow_forward_ios_24"
-                        app:drawableStartCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
-
+                        android:layout_marginTop="-5dp"/>
 
                 </LinearLayout>
 
@@ -173,6 +192,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
+        android:id="@+id/btn_preview_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

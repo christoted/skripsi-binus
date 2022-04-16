@@ -1,15 +1,10 @@
 package com.example.project_skripsi.module.teacher.study_class.task_detail
 
-import android.graphics.drawable.Drawable
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import com.example.project_skripsi.core.model.firestore.Student
-import com.example.project_skripsi.databinding.ItemTcStudyClassStudentBinding
 import com.example.project_skripsi.databinding.ItemTcStudyClassTaskDetailBinding
-import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
 

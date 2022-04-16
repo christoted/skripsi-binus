@@ -7,7 +7,7 @@ import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.teacher.form.TcAlterTaskViewModel
+import com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskViewModel
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
 class TcTaskViewModel : ViewModel() {

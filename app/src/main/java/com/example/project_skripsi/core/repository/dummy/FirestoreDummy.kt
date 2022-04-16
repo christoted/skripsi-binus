@@ -53,7 +53,9 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             false,
                             "Biologi",
                             95,
-                            listOf("Ok Siap Essai")
+                            listOf(
+                                Answer("Ok Siap Essai", 0)
+                            )
                         ),
                     ),
                     mutableListOf(
@@ -64,7 +66,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             true,
                             "Biologi",
                             70,
-                            listOf("Minyak adalah mata uang", 2)
+                            listOf(
+                                Answer("Minyak adalah mata uang", 0),
+                                Answer("2", 0)
+                            )
                         ),
                     ),
                     mutableListOf(
@@ -177,7 +182,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                                 "essai",
                                 100,
                                 emptyList(),
-                                -1
+                                ""
                             )
                         ),
                         listOf("eMsulnik6kEpW0ESKI9V")),
@@ -195,7 +200,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                                 "essai",
                                 50,
                                 emptyList(),
-                                -1
+                                ""
                             ),
                             Question("Pililah jawaban yang benar. Apakah ikan hiu menghasilkan minyak?",
                                 "pilihan berganda",
@@ -205,7 +210,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                                     "kadang-kadang",
                                     "sesekali",
                                     "tidak ada jawaban yang benar"),
-                                1
+                                "1"
                             )
                         ),
                         listOf("eMsulnik6kEpW0ESKI9V")),

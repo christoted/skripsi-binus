@@ -125,6 +125,12 @@
         <argument
             android:name="taskFormId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_tcStudyClassTaskDetailFragment_to_tcPreviewTaskFormFragment"
+            app:destination="@id/tcPreviewTaskFormFragment" />
+        <action
+            android:id="@+id/action_tcStudyClassTaskDetailFragment_to_tcAssessmentTaskFormFragment"
+            app:destination="@id/tcAssessmentTaskFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/tcStudentFragment"
@@ -149,7 +155,7 @@
     </fragment>
     <fragment
         android:id="@+id/tcAlterTaskFragment"
-        android:name="com.example.project_skripsi.module.teacher.form.TcAlterTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskFragment"
         android:label="fragment_tc_alter_task"
         tools:layout="@layout/fragment_tc_alter_task" >
         <argument
@@ -165,6 +171,30 @@
             android:name="taskFormId"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcPreviewTaskFormFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.preview.TcPreviewTaskFormFragment"
+        android:label="fragment_tc_preview_task_form"
+        tools:layout="@layout/fragment_tc_preview_task_form">
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcAssessmentTaskFormFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.assessment.TcAssessmentTaskFormFragment"
+        android:label="fragment_tc_assessment_task_form"
+        tools:layout="@layout/fragment_tc_assessment_task_form" >
+        <argument
+            android:name="studentId"
+            app:argType="string"/>
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

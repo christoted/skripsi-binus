@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.teacher.form
+package com.example.project_skripsi.module.teacher.form.alter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -90,7 +90,6 @@ class TcAlterTaskViewModel : ViewModel() {
                 prerequisiteTaskForms?.let { list -> selectedAssignment = list }
                 questions?.let { list -> _questionList.postValue(list) }
             }
-//
         }
     }
 
@@ -178,7 +177,7 @@ class TcAlterTaskViewModel : ViewModel() {
         items.add(taskForm)
 
         FireRepository.instance.alterFirestoreItems(items).first.observeOnce{
-            _taskFormCreated.postValue(true)
+            _taskFormCreated.postValue(it)
         }
     }
 

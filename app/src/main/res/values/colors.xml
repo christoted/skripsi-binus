@@ -42,6 +42,7 @@
     <color name="last_assignment_submit">#4caf50</color>
     <color name="last_assignment_null">#8e8e8e</color>
 
-
+    <color name="answer_correct">#98ee99</color>
+    <color name="answer_incorrect">#ff867c</color>
 
 </resources>

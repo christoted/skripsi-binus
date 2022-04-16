@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/form_essay"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                tools:text="1."
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="4dp"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                tools:text="Jika manusia adalah makhluk. Apakah kamu suka pertanyaan ini?"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            tools:text="Isi jawaban disindfsdfsafdsfsdfsdafsdfasffsdfasfdsfsafsi"
+            android:maxLines="10"
+            android:textColor="@color/black"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dividerInsetStart="16dp"
+            app:dividerInsetEnd="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/tv_score_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nilai (0 - 40): "
+                android:textSize="15sp"
+                android:layout_marginEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/edt_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="40dp"
+                android:paddingTop="6dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                android:inputType="number"
+                android:textStyle="bold"
+                android:text="0"/>
+
+            <androidx.legacy.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_set_zero"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                tools:text="Set 0"
+                android:layout_marginEnd="8dp"
+                style="?attr/materialButtonOutlinedStyle"/>
+
+            <Button
+                android:id="@+id/btn_set_max"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                tools:text="Set 100"
+                style="?attr/materialButtonOutlinedStyle"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+

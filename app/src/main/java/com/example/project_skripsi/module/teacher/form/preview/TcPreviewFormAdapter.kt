@@ -1,15 +1,14 @@
-package com.example.project_skripsi.module.student.task.form
+package com.example.project_skripsi.module.teacher.form.preview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.core.model.firestore.Question
-import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
 import com.example.project_skripsi.utils.Constant
 
-class StFormAdapter(private val questionList: List<AssignedQuestion>) :
+class TcPreviewFormAdapter(private val questionList: List<Question>) :
     Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
@@ -30,41 +29,32 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return StTaskFormViewModel.TASK_FORM_TYPE[questionList[position].type]!!
+        return TcPreviewTaskFormViewModel.TASK_FORM_TYPE[questionList[position].type]!!
     }
 
     override fun getItemCount() = questionList.size
 
     class MultipleChoiceViewHolder ( private val binding : ItemStTaskFormMcBinding) : ViewHolder(binding.root) {
-        fun bind(item: AssignedQuestion, position: Int) {
+        fun bind(item: Question, position: Int) {
             with(binding) {
                 tvNumber.text = ("${position+1}.")
-                choice1.text = item.choices?.getOrNull(0)
-                choice2.text = item.choices?.getOrNull(1)
-                choice3.text = item.choices?.getOrNull(2)
-                choice4.text = item.choices?.getOrNull(3)
-                choice5.text = item.choices?.getOrNull(4)
+                choice1.text = item.choices?.get(0) ?: "null"
+                choice2.text = item.choices?.get(1) ?: "null"
+                choice3.text = item.choices?.get(2) ?: "null"
+                choice4.text = item.choices?.get(3) ?: "null"
+                choice5.text = item.choices?.get(4) ?: "null"
                 tvTitle.text = item.title
-                item.answer?.text?.let {
-                    when (it.toString().toInt()) {
-                        1 -> choice1.isChecked = true
-                        2 -> choice2.isChecked = true
-                        3 -> choice3.isChecked = true
-                        4 -> choice4.isChecked = true
-                        5 -> choice5.isChecked = true
-                    }
-                }
-
+                tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
             }
         }
     }
 
     class EssayViewHolder ( private val binding : ItemStTaskFormEssayBinding) : ViewHolder(binding.root) {
-        fun bind(item: AssignedQuestion, position: Int) {
+        fun bind(item: Question, position: Int) {
             with(binding) {
                 tvNumber.text = ("${position+1}.")
                 tvTitle.text = item.title
-                item.answer?.text?.let { edtAnswer.setText(it.toString()) }
+                tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
             }
         }
     }

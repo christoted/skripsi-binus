@@ -65,7 +65,7 @@ class TcStudyClassTeachingViewModel : ViewModel() {
         val asg = student.assignedAssignments?.last { it.subjectName == subjectName && it.type == StScoreViewModel.TYPE_ASSIGNMENT}
             ?: return Pair("tidak ada tugas", R.color.last_assignment_null)
 
-        if ((asg.answer?.size ?: 0) == 0 ) return Pair("tidak kumpul", R.color.last_assignment_not_submit)
+        if ((asg.answers?.size ?: 0) == 0 ) return Pair("tidak kumpul", R.color.last_assignment_not_submit)
         return Pair("terkumpul", R.color.last_assignment_submit)
     }
 }

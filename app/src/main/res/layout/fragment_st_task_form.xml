@@ -8,7 +8,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:attr/windowBackground"
     android:orientation="vertical"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    tools:context=".module.student.task.form.StTaskFormFragment">
 
     <RelativeLayout
     android:id="@+id/mainview"
@@ -18,8 +19,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            tools:context=".module.student.task.form.StTaskFormFragment">
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"

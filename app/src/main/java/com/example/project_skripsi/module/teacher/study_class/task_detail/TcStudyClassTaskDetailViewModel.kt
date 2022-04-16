@@ -32,10 +32,12 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
 
     var subjectName = ""
     var taskFormId = ""
+    var studyClassId = ""
 
     fun setData(studyClassId: String, subjectName: String, taskFormId: String) {
         loadStudyClass(studyClassId)
         loadTaskForm(taskFormId)
+        this.studyClassId = studyClassId
         this.subjectName = subjectName
         this.taskFormId = taskFormId
     }
