@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sectionTitle"
         android:layout_marginTop="8dp"
-        tools:listitem="@layout/item_st_home_section_item"/>
+        tools:listitem="@layout/item_st_home_section_item" />
 
 </RelativeLayout>
