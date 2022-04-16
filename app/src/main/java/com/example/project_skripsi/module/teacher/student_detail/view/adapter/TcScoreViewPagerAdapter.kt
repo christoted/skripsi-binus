@@ -20,13 +20,13 @@ class TcScoreViewPagerAdapter(fa: FragmentActivity,
                 TcStudentDetailScore()
             }
             1 -> {
-                TcStudentDetailAttendance
+                TcStudentDetailAttendance()
             }
             2 -> {
-                TcStudentDetailPayment()
+                TcStudentDetailPayment(viewModel)
             }
         }
-        return TcStudentDetailPayment()
+        return TcStudentDetailPayment(viewModel)
     }
 
 }
