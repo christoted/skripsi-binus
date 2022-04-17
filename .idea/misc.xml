@@ -98,7 +98,8 @@
         <entry key="app/src/main/res/layout/fragment_st_payment.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/fragment_st_payment_variant.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_st_score.xml" value="0.14855072463768115" />
-        <entry key="app/src/main/res/layout/fragment_st_score_content.xml" value="0.17325227963525835" />
+        <entry key="app/src/main/res/layout/fragment_st_score_content.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_st_task_assignment.xml" value="0.14175724637681159" />
         <entry key="app/src/main/res/layout/fragment_tc_alter_resource.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_tc_alter_task.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/fragment_tc_alter_task_form.xml" value="0.2" />
@@ -112,7 +113,7 @@
         <entry key="app/src/main/res/layout/fragment_tc_study_class.xml" value="0.33489583333333334" />
         <entry key="app/src/main/res/layout/fragment_tc_study_class_homeroom.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/fragment_tc_study_class_resource.xml" value="0.11503623188405797" />
-        <entry key="app/src/main/res/layout/fragment_tc_study_class_task_detail.xml" value="0.20052083333333334" />
+        <entry key="app/src/main/res/layout/fragment_tc_study_class_task_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_tc_task.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/item_st_class_subject.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/item_st_home_main_section.xml" value="0.15260416666666668" />
