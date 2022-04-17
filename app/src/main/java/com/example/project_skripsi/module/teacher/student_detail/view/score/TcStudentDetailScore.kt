@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcStudentDetailScoreBinding
 import com.example.project_skripsi.module.student.main.score.view.adapter.ScoreContentListener
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
+import com.example.project_skripsi.module.teacher.student_detail.view.score.adapter.TcStudentDetailScoreAdapter
 import com.example.project_skripsi.module.teacher.student_detail.viewmodel.TcStudentDetailViewModel
 
 class TcStudentDetailScore(private val viewModel: TcStudentDetailViewModel) : Fragment(), ScoreContentListener {
@@ -29,7 +30,7 @@ class TcStudentDetailScore(private val viewModel: TcStudentDetailViewModel) : Fr
             with(binding.recyclerView) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = StScoreContentAdapter(viewModel, 0, this@TcStudentDetailScore)
+                adapter = TcStudentDetailScoreAdapter(viewModel, 0, this@TcStudentDetailScore)
             }
         }
         return binding.root
