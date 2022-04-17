@@ -44,6 +44,7 @@ class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         binding.vpContainer.adapter = StScoreViewPagerAdapter(activity!!, viewModel)
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) {
             tab, position ->
+            Log.d("987", "onCreateView: pos $position")
             tab.text = StScoreViewModel.tabHeader[position]
         }.attach()
 

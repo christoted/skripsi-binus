@@ -17,16 +17,15 @@ class TcScoreViewPagerAdapter(fa: FragmentActivity,
     override fun createFragment(position: Int): Fragment {
         when(position) {
             0 -> {
-                TcStudentDetailScore()
+                return TcStudentDetailScore(viewModel)
             }
             1 -> {
-                TcStudentDetailAttendance()
+                return TcStudentDetailAttendance()
             }
             2 -> {
-                TcStudentDetailPayment(viewModel)
+               return TcStudentDetailPayment(viewModel)
             }
         }
         return TcStudentDetailPayment(viewModel)
     }
-
 }

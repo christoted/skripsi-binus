@@ -162,7 +162,7 @@ class StScoreViewModel : ViewModel() {
 
 }
 
-private fun <T> Iterable<T>.averageOf(selector: (T) -> Int): Int {
+fun <T> Iterable<T>.averageOf(selector: (T) -> Int): Int {
     var sum = 0
     var count = 0
     for (element in this) {
