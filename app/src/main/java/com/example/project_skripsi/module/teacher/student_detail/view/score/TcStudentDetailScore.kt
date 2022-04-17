@@ -1,6 +1,7 @@
 package com.example.project_skripsi.module.teacher.student_detail.view.score
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,12 +28,14 @@ class TcStudentDetailScore(private val viewModel: TcStudentDetailViewModel) : Fr
         // Inflate the layout for this fragment
         _binding = FragmentTcStudentDetailScoreBinding.inflate(inflater, container, false)
         viewModel.sectionDatas.observe(viewLifecycleOwner) {
+            Log.d("444", "onCreateView: data $it")
             with(binding.recyclerView) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = TcStudentDetailScoreAdapter(viewModel, 0, this@TcStudentDetailScore)
             }
         }
+        viewModel.loadCurrentStudent(viewModel.studentUID)
         return binding.root
     }
     override fun onDestroy() {

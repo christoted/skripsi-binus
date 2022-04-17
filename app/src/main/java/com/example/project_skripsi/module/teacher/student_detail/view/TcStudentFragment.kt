@@ -32,7 +32,7 @@ class TcStudentFragment : Fragment() {
 
         binding.vpContainer.adapter = TcScoreViewPagerAdapter(activity!!, viewModel)
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
-            tab.text = StScoreViewModel.tabHeader[position]
+            tab.text = TcStudentDetailViewModel.tabHeader[position]
         }.attach()
 
         return binding.root
