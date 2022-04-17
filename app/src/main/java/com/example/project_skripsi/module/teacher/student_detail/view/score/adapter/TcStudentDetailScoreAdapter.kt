@@ -120,12 +120,12 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
                 tvPresenceLeave.text = item.totalLeave.toString()
                 tvPresenceNoReason.text = item.totalAlpha.toString()
                 viewIndicator.setBackgroundColor(Color.parseColor("#006400"))
-                root.setOnClickListener {
-                    listener.onAttendanceTapped()
-                    val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()
-                    toStSubjectActivity.subjectName = item.subjectName
-                    it.findNavController().navigate(toStSubjectActivity)
-                }
+//                root.setOnClickListener {
+//                    listener.onAttendanceTapped()
+//                    val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()
+//                    toStSubjectActivity.subjectName = item.subjectName
+//                    it.findNavController().navigate(toStSubjectActivity)
+//                }
             }
         }
     }
