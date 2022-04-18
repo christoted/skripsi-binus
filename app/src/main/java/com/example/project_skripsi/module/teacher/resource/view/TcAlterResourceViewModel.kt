@@ -123,23 +123,39 @@ class TcAlterResourceViewModel: ViewModel() {
     }
     fun submitResource(title: String, type: String, link: String) {
             // TODO: Handle Update Resource
-            val id = UUIDHelper.getUUID()
-            currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }?.let {
-                it.createdResources?.add(id)
-            }
-            val resource = Resource(
-                id = id,
-                title = title,
-                gradeLevel = subjectGroup.gradeLevel,
-                type = type,
-                link = link,
-                subjectName = subjectGroup.subjectName,
-                // MARK -
-                prerequisites = selectedResource,
-                assignedClasses = selectedClass
-            )
             if (isFirstTimeCreated) {
+                val id = UUIDHelper.getUUID()
+                currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }?.let {
+                    it.createdResources?.add(id)
+                }
+                val resource = Resource(
+                    id = id,
+                    title = title,
+                    gradeLevel = subjectGroup.gradeLevel,
+                    type = type,
+                    link = link,
+                    subjectName = subjectGroup.subjectName,
+                    // MARK -
+                    prerequisites = selectedResource,
+                    assignedClasses = selectedClass
+                )
                 FireRepository.instance.addResource(resource, currentTeacher).let { response ->
+                    response.first.observeOnce {
+                        _status.postValue(it)
+                    }
+                }
+            } else {
+                val resource = Resource(
+                    id = resourceDocumentId,
+                    title = title,
+                    gradeLevel = subjectGroup.gradeLevel,
+                    type = type,
+                    link = link,
+                    subjectName = subjectGroup.subjectName,
+                    prerequisites = selectedResource,
+                    assignedClasses = selectedClass
+                )
+                FireRepository.instance.addResource(resource, null).let { response ->
                     response.first.observeOnce {
                         _status.postValue(it)
                     }

@@ -62,11 +62,15 @@ class TcResourceFragment : Fragment() {
     }
 
     private fun getData() {
-        viewModel.subjectGroupList.observe(viewLifecycleOwner, {
+        viewModel.subjectGroupList.observe(viewLifecycleOwner) {
             var hasItem = false
             it.map { subjectGroup ->
                 val chip =
-                    layoutInflater.inflate(com.example.project_skripsi.R.layout.tc_item_chip, binding.chipGroup, false) as Chip
+                    layoutInflater.inflate(
+                        com.example.project_skripsi.R.layout.tc_item_chip,
+                        binding.chipGroup,
+                        false
+                    ) as Chip
                 chip.id = View.generateViewId()
                 chip.text = "${subjectGroup.gradeLevel}-${subjectGroup.subjectName}"
                 chip.setOnCheckedChangeListener { chip, isChecked ->
@@ -78,14 +82,14 @@ class TcResourceFragment : Fragment() {
                     hasItem = true
                 }
             }
-        })
-        viewModel.resources.observe(viewLifecycleOwner, {
+        }
+        viewModel.resources.observe(viewLifecycleOwner) {
             resourceAdapter = ResourceAdapter(it)
             with(binding) {
                 recyclerView.layoutManager = LinearLayoutManager(context)
                 recyclerView.setHasFixedSize(true)
                 recyclerView.adapter = resourceAdapter
             }
-        })
+        }
     }
 }

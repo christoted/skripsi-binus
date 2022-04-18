@@ -144,23 +144,31 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
-    fun addResource(resource: Resource, teacher: Teacher): Pair<LiveData<Boolean>, LiveData<Exception>> {
+    fun addResource(resource: Resource, teacher: Teacher?): Pair<LiveData<Boolean>, LiveData<Exception>> {
         val isSuccess = MutableLiveData<Boolean>()
         val exception = MutableLiveData<Exception>()
         db.collection(COLLECTION_RESOURCE)
             .document(resource.id!!)
             .set(resource)
-            .addOnSuccessListener(this)
-            .addOnFailureListener(this)
-        db.collection(COLLECTION_TEACHER)
-            .document(teacher.id!!)
-            .set(teacher)
             .addOnSuccessListener {
                 isSuccess.value = true
             }
             .addOnFailureListener {
                 exception.value = it
             }
+
+        teacher?.let {
+            db.collection(COLLECTION_TEACHER)
+                .document(teacher.id!!)
+                .set(teacher)
+                .addOnSuccessListener {
+                    isSuccess.value = true
+                }
+                .addOnFailureListener {
+                    exception.value = it
+                }
+        }
+
         return Pair(isSuccess, exception)
     }
 

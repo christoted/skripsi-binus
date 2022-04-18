@@ -120,6 +120,7 @@ class TcAlterResourceFragment : Fragment() {
         args.documentId?.let {
             viewModel.resourceDocumentId = it
             viewModel.getAlterResourceData()
+            binding.btnUpload.text = "Update Resource"
         }
         viewModel.initData(args.subjectName, args.gradeLevel)
         setData()
@@ -135,8 +136,14 @@ class TcAlterResourceFragment : Fragment() {
                         Log.d("333", "setData: masuk")
                         toggleButton.check(R.id.btn_slide)
                     }
+                    "Slide" -> {
+                        toggleButton.check(R.id.btn_slide)
+                    }
                     "recording" -> {
                         Log.d("333", "setData: masuk")
+                        toggleButton.check(R.id.btn_recording)
+                    }
+                    "Recording" -> {
                         toggleButton.check(R.id.btn_recording)
                     }
                     else -> {
