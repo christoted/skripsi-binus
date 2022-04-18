@@ -53,6 +53,7 @@ class TcResourceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.refreshData()
 //        viewModel.loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
@@ -72,7 +73,7 @@ class TcResourceFragment : Fragment() {
                         false
                     ) as Chip
                 chip.id = View.generateViewId()
-                chip.text = "${subjectGroup.gradeLevel}-${subjectGroup.subjectName}"
+                chip.text = ("${subjectGroup.gradeLevel}-${subjectGroup.subjectName}")
                 chip.setOnCheckedChangeListener { chip, isChecked ->
                     viewModel.loadResource(subjectGroup = subjectGroup, isChecked)
                 }

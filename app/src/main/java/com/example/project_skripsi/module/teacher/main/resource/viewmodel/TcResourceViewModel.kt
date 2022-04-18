@@ -25,20 +25,8 @@ class TcResourceViewModel: ViewModel() {
     private val mapResourceIdsBySubjectGroup = mutableMapOf<SubjectGroup, MutableList<String>>()
 
     var currentSubjectGroup : SubjectGroup? = null
-    init {
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
-    }
 
-    fun resetState() {
-        _subjectGroupList.postValue(emptyList())
-        mapResourceIdsBySubjectGroup.clear()
-        _resources.postValue(emptyList())
-        currentSubjectGroup = null
-        resources = _resources
-        subjectGroupList = _subjectGroupList
-    }
-
-    fun loadTeacher(uid: String) {
+    private fun loadTeacher(uid: String) {
         mapResourceIdsBySubjectGroup.clear()
         FireRepository.instance.getTeacher(uid).first.observeOnce {
             val subjectGroups = mutableListOf<SubjectGroup>()
@@ -78,5 +66,10 @@ class TcResourceViewModel: ViewModel() {
             mutableLiveData.postValue(mutableListOf())
         }
 
+    }
+
+    fun refreshData() {
+        mapResourceIdsBySubjectGroup.clear()
+        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 }
