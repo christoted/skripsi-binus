@@ -44,7 +44,7 @@ class TcResourceFragment : Fragment() {
         binding.btnAdd.setOnClickListener{
             viewModel.currentSubjectGroup?.let { resource ->
                 resource.subjectName.let { subjectName ->
-                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel)
+                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel, null)
                     view.findNavController().navigate(action)
                 }
             }
@@ -53,6 +53,7 @@ class TcResourceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.refreshData()
 //        viewModel.loadTeacher(AuthRepository.instance.getCurrentUser().uid)
     }
 
@@ -62,13 +63,17 @@ class TcResourceFragment : Fragment() {
     }
 
     private fun getData() {
-        viewModel.subjectGroupList.observe(viewLifecycleOwner, {
+        viewModel.subjectGroupList.observe(viewLifecycleOwner) {
             var hasItem = false
             it.map { subjectGroup ->
                 val chip =
-                    layoutInflater.inflate(com.example.project_skripsi.R.layout.tc_item_chip, binding.chipGroup, false) as Chip
+                    layoutInflater.inflate(
+                        com.example.project_skripsi.R.layout.tc_item_chip,
+                        binding.chipGroup,
+                        false
+                    ) as Chip
                 chip.id = View.generateViewId()
-                chip.text = "${subjectGroup.gradeLevel}-${subjectGroup.subjectName}"
+                chip.text = ("${subjectGroup.gradeLevel}-${subjectGroup.subjectName}")
                 chip.setOnCheckedChangeListener { chip, isChecked ->
                     viewModel.loadResource(subjectGroup = subjectGroup, isChecked)
                 }
@@ -78,14 +83,14 @@ class TcResourceFragment : Fragment() {
                     hasItem = true
                 }
             }
-        })
-        viewModel.resources.observe(viewLifecycleOwner, {
+        }
+        viewModel.resources.observe(viewLifecycleOwner) {
             resourceAdapter = ResourceAdapter(it)
             with(binding) {
                 recyclerView.layoutManager = LinearLayoutManager(context)
                 recyclerView.setHasFixedSize(true)
                 recyclerView.adapter = resourceAdapter
             }
-        })
+        }
     }
 }
