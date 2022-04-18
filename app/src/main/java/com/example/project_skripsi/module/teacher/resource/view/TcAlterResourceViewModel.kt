@@ -34,11 +34,17 @@ class TcAlterResourceViewModel: ViewModel() {
     var selectedResource = listOf<String>()
     var selectedAssignment = listOf<String>()
 
+    // Update Resource
+    private val _singleResource = MutableLiveData<Resource>()
+    val singleResource: LiveData<Resource> = _singleResource
+
     private val _status = MutableLiveData<Boolean>()
     val status: LiveData<Boolean> = _status
 
     var isValid = true
     var materialType = ""
+    var resourceDocumentId = ""
+    var isFirstTimeCreated = true
 
     companion object {
         const val QUERY_CLASS = 0
@@ -51,6 +57,15 @@ class TcAlterResourceViewModel: ViewModel() {
 
     fun initData(subjectName: String, gradeLevel: Int) {
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
+    }
+
+    fun getAlterResourceData() {
+        isFirstTimeCreated = false
+        FireRepository.instance.getResource(resourceDocumentId).first.observeOnce {
+            _singleResource.postValue(it)
+            selectedClass = it.assignedClasses ?: emptyList()
+            selectedResource = it.prerequisites ?: emptyList()
+        }
     }
 
     private fun loadTeacher(uid: String) {
@@ -103,9 +118,11 @@ class TcAlterResourceViewModel: ViewModel() {
                 itemList.add(it)
                 if (itemList.size == assignmentIds.size) _assignmentList.postValue(itemList)
             }
+
         }
     }
     fun submitResource(title: String, type: String, link: String) {
+            // TODO: Handle Update Resource
             val id = UUIDHelper.getUUID()
             currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }?.let {
                 it.createdResources?.add(id)
@@ -121,13 +138,12 @@ class TcAlterResourceViewModel: ViewModel() {
                 prerequisites = selectedResource,
                 assignedClasses = selectedClass
             )
-
-            FireRepository.instance.addResource(resource, currentTeacher).let { response ->
-                response.first.observeOnce {
-                    _status.postValue(it)
+            if (isFirstTimeCreated) {
+                FireRepository.instance.addResource(resource, currentTeacher).let { response ->
+                    response.first.observeOnce {
+                        _status.postValue(it)
+                    }
                 }
             }
-
-
     }
 }

@@ -44,7 +44,7 @@ class TcResourceFragment : Fragment() {
         binding.btnAdd.setOnClickListener{
             viewModel.currentSubjectGroup?.let { resource ->
                 resource.subjectName.let { subjectName ->
-                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel)
+                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel, null)
                     view.findNavController().navigate(action)
                 }
             }

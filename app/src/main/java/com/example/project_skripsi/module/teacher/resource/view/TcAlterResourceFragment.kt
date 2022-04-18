@@ -2,6 +2,8 @@ package com.example.project_skripsi.module.teacher.resource.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,14 +87,14 @@ class TcAlterResourceFragment : Fragment() {
                 viewModel.submitResource(binding.edtTitle.text.toString(), viewModel.materialType, binding.edtLink.text.toString())
             }
         }
-        viewModel.status.observe(viewLifecycleOwner, {
+        viewModel.status.observe(viewLifecycleOwner) {
             if (it) {
                 Toast.makeText(context, "Success to Create a Task", Toast.LENGTH_SHORT).show()
                 view?.findNavController()?.popBackStack()
             } else {
                 Toast.makeText(context, "Failed to Create a Task", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
         // Button
         with(binding) {
@@ -115,12 +117,42 @@ class TcAlterResourceFragment : Fragment() {
         with(binding) {
             tvClass.text = ("${args.subjectName} - ${args.gradeLevel}")
         }
+        args.documentId?.let {
+            viewModel.resourceDocumentId = it
+            viewModel.getAlterResourceData()
+        }
         viewModel.initData(args.subjectName, args.gradeLevel)
+        setData()
+    }
+
+    private fun setData() {
+        viewModel.singleResource.observe(viewLifecycleOwner) {
+            Log.d("333", "setData: $it")
+            with(binding) {
+                edtTitle.setText(it.title)
+                when(it.type) {
+                    "slide" -> {
+                        Log.d("333", "setData: masuk")
+                        toggleButton.check(R.id.btn_slide)
+                    }
+                    "recording" -> {
+                        Log.d("333", "setData: masuk")
+                        toggleButton.check(R.id.btn_recording)
+                    }
+                    else -> {
+                        Log.d("333", "setData: masuk bawah")
+                    }
+                }
+                edtLink.setText(it.link)
+                tvClassChoosen.text = "${it.assignedClasses?.size} Terpilih"
+                tvRequirementResource.text = "${it.prerequisites?.size} Terpilih"
+            }
+        }
     }
 
     @SuppressLint("InflateParams")
     private fun showBottomSheet(queryType : Int) {
-        val dialog = BottomSheetDialog(context!!)
+        val dialog = BottomSheetDialog(requireContext())
         val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task_general, null)
 
         val tvTitle = view.findViewById<TextView>(R.id.tv_title)
@@ -136,30 +168,32 @@ class TcAlterResourceFragment : Fragment() {
 
         when(queryType) {
             TcAlterResourceViewModel.QUERY_CLASS -> {
-                viewModel.classList.observe(viewLifecycleOwner, {
+                viewModel.classList.observe(viewLifecycleOwner) {
                     val viewHolder = ClassViewHolder(it, viewModel.selectedClass)
                     tvTitle.text = ("Daftar Kelas")
                     rvItem.adapter = viewHolder.getAdapter()
                     btnClose.setOnClickListener {
                         viewModel.selectedClass = viewHolder.getResult()
-                        binding.tvClassChoosen.text = "Terpilih " + viewHolder.getResult().size + " Kelas"
-                       dialog.dismiss()
+                        binding.tvClassChoosen.text =
+                            "Terpilih " + viewHolder.getResult().size + " Kelas"
+                        dialog.dismiss()
                     }
-                })
+                }
                 viewModel.loadClass()
             }
             TcAlterResourceViewModel.QUERY_RESOURCE -> {
-                viewModel.resourceList.observe(viewLifecycleOwner, {
+                viewModel.resourceList.observe(viewLifecycleOwner) {
                     val viewHolder = ResourceViewHolder(it, viewModel.selectedResource)
                     tvTitle.text = ("Daftar Materi")
                     rvItem.adapter = viewHolder.getAdapter()
                     btnClose.setOnClickListener {
                         viewModel.selectedResource = viewHolder.getResult()
-                        binding.tvRequirementResource.text = "Terpilih " + viewHolder.getResult().size + " Materi"
+                        binding.tvRequirementResource.text =
+                            "Terpilih " + viewHolder.getResult().size + " Materi"
 
-                       dialog.dismiss()
+                        dialog.dismiss()
                     }
-                })
+                }
 
                 viewModel.loadResource()
             }
