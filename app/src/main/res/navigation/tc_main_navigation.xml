@@ -30,7 +30,11 @@
         android:id="@+id/tcCalendarFragment"
         android:name="com.example.project_skripsi.module.teacher.main.calendar.TcCalendarFragment"
         android:label="TcCalendarFragment"
-        tools:layout="@layout/fragment_tc_calendar"/>
+        tools:layout="@layout/fragment_tc_calendar">
+        <action
+            android:id="@+id/action_tcCalendarFragment_to_tcStudyClassTaskDetailFragment"
+            app:destination="@id/tcStudyClassTaskDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tcResourceFragment"
         android:name="com.example.project_skripsi.module.teacher.main.resource.TcResourceFragment"

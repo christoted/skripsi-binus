@@ -92,7 +92,7 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
                 val pos = it.indexOfFirst { item -> item.id == taskForm.id }
                 it.set(pos, newAssignedTaskForm)
             }
-            FireRepository.instance.alterFirestoreItems(listOf(currentStudent)).first.observeOnce{
+            FireRepository.instance.alterItems(listOf(currentStudent)).first.observeOnce{
                 _assessmentComplete.postValue(it)
             }
         }
