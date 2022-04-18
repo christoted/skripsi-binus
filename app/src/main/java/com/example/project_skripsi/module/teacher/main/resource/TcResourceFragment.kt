@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.resource
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcResourceBinding
 import com.example.project_skripsi.module.teacher.main.resource.adapter.ResourceAdapter
 import com.example.project_skripsi.module.teacher.main.resource.viewmodel.TcResourceViewModel
-import com.example.project_skripsi.module.teacher.main.task.TcTaskFragmentDirections
 import com.google.android.material.chip.Chip
-import android.R
-import androidx.lifecycle.lifecycleScope
-import com.example.project_skripsi.core.repository.AuthRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class TcResourceFragment : Fragment() {
 
@@ -64,11 +56,12 @@ class TcResourceFragment : Fragment() {
 
     private fun getData() {
         viewModel.subjectGroupList.observe(viewLifecycleOwner) {
+            binding.chipGroup.removeAllViews()
             var hasItem = false
             it.map { subjectGroup ->
                 val chip =
                     layoutInflater.inflate(
-                        com.example.project_skripsi.R.layout.tc_item_chip,
+                        com.example.project_skripsi.R.layout.item_tc_chip,
                         binding.chipGroup,
                         false
                     ) as Chip
