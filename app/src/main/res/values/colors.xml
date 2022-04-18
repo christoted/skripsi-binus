@@ -45,4 +45,6 @@
     <color name="answer_correct">#98ee99</color>
     <color name="answer_incorrect">#ff867c</color>
 
+    <color name="divider_color">#1FFFFFFF</color>
+
 </resources>
