@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,6 +28,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         const val COLLECTION_SCHOOL = "schools"
     }
 
+    @Deprecated("Replaced by getItem")
     fun getStudent(uid: String) : Pair<LiveData<Student>, LiveData<Exception>> {
         val data = MutableLiveData<Student>()
         val exception = MutableLiveData<Exception>()
@@ -41,6 +43,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
+    @Deprecated("Replaced by getItem")
     fun getTeacher(uid: String) : Pair<LiveData<Teacher>, LiveData<Exception>> {
         val data = MutableLiveData<Teacher>()
         val exception = MutableLiveData<Exception>()
@@ -55,6 +58,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
+    @Deprecated("Replaced by getItem")
     fun getParent(uid: String) : Pair<LiveData<Parent>, LiveData<Exception>> {
         val data = MutableLiveData<Parent>()
         val exception = MutableLiveData<Exception>()
@@ -69,6 +73,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
+    @Deprecated("Replaced by getItem")
     fun getAdministrator(uid: String) : Pair<LiveData<Administrator>, LiveData<Exception>> {
         val data = MutableLiveData<Administrator>()
         val exception = MutableLiveData<Exception>()
@@ -83,6 +88,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
+    @Deprecated("Replaced by getItem")
     fun getStudyClass(uid: String) : Pair<LiveData<StudyClass>, LiveData<Exception>> {
         val data = MutableLiveData<StudyClass>()
         val exception = MutableLiveData<Exception>()
@@ -97,6 +103,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
+    @Deprecated("Replaced by getItem")
     fun getTaskForm(uid: String) : Pair<LiveData<TaskForm>, LiveData<Exception>> {
         val data = MutableLiveData<TaskForm>()
         val exception = MutableLiveData<Exception>()
@@ -111,6 +118,8 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
+
+    @Deprecated("Replaced by getItem")
     fun getResource(uid: String) : Pair<LiveData<Resource>, LiveData<Exception>> {
         val data = MutableLiveData<Resource>()
         val exception = MutableLiveData<Exception>()
@@ -172,7 +181,55 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(isSuccess, exception)
     }
 
-    fun alterFirestoreItems(items : List<Any>) : Pair<LiveData<Boolean>, LiveData<Exception>> {
+    inline fun <reified T> getItem(uid : String) : Pair<LiveData<T>, LiveData<Exception>> {
+        val data = MutableLiveData<T>()
+        val exception = MutableLiveData<Exception>()
+        val db = FirebaseFirestore.getInstance()
+
+        when(T::class) {
+            Student::class -> COLLECTION_STUDENT
+            Teacher::class -> COLLECTION_TEACHER
+            Parent::class -> COLLECTION_PARENT
+            Administrator::class -> COLLECTION_ADMINISTRATOR
+            StudyClass::class -> COLLECTION_STUDY_CLASS
+            TaskForm::class -> COLLECTION_TASK_FORM
+            Resource::class -> COLLECTION_RESOURCE
+            Announcement::class -> COLLECTION_ANNOUNCEMENT
+            School::class -> COLLECTION_SCHOOL
+            else -> null
+        }?.let { collection ->
+            db.collection(collection)
+                .document(uid)
+                .get()
+                .addOnSuccessListener { result ->
+                    if (result.data != null) data.postValue(result.toObject(T::class.java))
+                    else exception.postValue(java.lang.Exception("$collection uid not found"))
+                }
+                .addOnFailureListener { ex -> exception.postValue(ex)}
+        }
+
+        return Pair(data, exception)
+    }
+
+    inline fun <reified T> getItems(uids : List<String>) : Pair<LiveData<List<T>>, LiveData<Exception>> {
+        val data = MutableLiveData<List<T>>()
+        val exception = MutableLiveData<Exception>()
+        val results = mutableListOf<T>()
+        uids.map { uid ->
+            getItem<T>(uid).let {
+                it.first.observeOnce{ item ->
+                    results.add(item)
+                    if (results.size == uids.size) data.postValue(results)
+                }
+                it.second.observeOnce{ _exception -> exception.postValue(_exception) }
+            }
+        }
+
+        return Pair(data, exception)
+    }
+
+
+    fun alterItems(items : List<Any>) : Pair<LiveData<Boolean>, LiveData<Exception>> {
         val isSuccess = MutableLiveData<Boolean>()
         val exception = MutableLiveData<Exception>()
 
@@ -214,6 +271,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         }
         return Pair(isSuccess, exception)
     }
+
 
     override fun onSuccess(p0: Void?) {
 //        TODO("Not yet implemented")

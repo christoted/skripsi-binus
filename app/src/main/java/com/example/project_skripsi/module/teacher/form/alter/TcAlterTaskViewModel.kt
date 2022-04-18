@@ -176,7 +176,7 @@ class TcAlterTaskViewModel : ViewModel() {
         )
         items.add(taskForm)
 
-        FireRepository.instance.alterFirestoreItems(items).first.observeOnce{
+        FireRepository.instance.alterItems(items).first.observeOnce{
             _taskFormCreated.postValue(it)
         }
     }

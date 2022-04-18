@@ -22,7 +22,6 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
 
     private lateinit var viewModel: StCalendarViewModel
     private var _binding: FragmentStCalendarBinding? = null
-
     private val binding get() = _binding!!
 
 
