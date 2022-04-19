@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.parent.student_detail.PrStudentDetailFragment">
+
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:text="123"/>
+
+    <Button
+        android:id="@+id/btn_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="payment"/>
+
+    <Button
+        android:id="@+id/btn_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="calendar"/>
+
+    <Button
+        android:id="@+id/btn_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="progress"/>
+
+    <Button
+        android:id="@+id/btn_exam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="exam"/>
+
+    <Button
+        android:id="@+id/btn_assignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="assignment"/>
+
+    <Button
+        android:id="@+id/btn_announcement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="announcement"/>
+
+
+</LinearLayout>
+
