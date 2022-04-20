@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.databinding.FragmentPrPaymentBinding
-import com.example.project_skripsi.module.parent.student_detail.PrStudentDetailFragmentArgs
 import com.example.project_skripsi.module.parent.student_detail.payment.variant.PrPaymentVariantFragment
 import com.example.project_skripsi.module.student.main.payment.StPaymentViewModel
 import com.example.project_skripsi.utils.helper.CurrencyHelper

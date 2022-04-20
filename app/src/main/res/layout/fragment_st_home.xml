@@ -75,8 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="?attr/actionBarSize"
-        tools:listitem="@layout/item_st_home_main_section"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_st_home_main_section" />
 
 
 </LinearLayout>

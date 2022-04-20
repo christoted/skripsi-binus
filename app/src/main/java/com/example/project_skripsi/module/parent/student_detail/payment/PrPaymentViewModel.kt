@@ -1,13 +1,10 @@
 package com.example.project_skripsi.module.parent.student_detail.payment
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.core.model.firestore.Student
-import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
@@ -66,6 +63,5 @@ class PrPaymentViewModel : ViewModel() {
             _paidPayment.postValue(paidPayment)
         }
     }
-
 
 }

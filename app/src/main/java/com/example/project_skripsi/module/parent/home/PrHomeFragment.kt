@@ -35,7 +35,6 @@ class PrHomeFragment : Fragment(), ItemClickListener {
             }
         })
 
-
         return binding.root
     }
 
@@ -75,6 +74,4 @@ class PrHomeFragment : Fragment(), ItemClickListener {
             container.removeView(`object` as View)
         }
     }
-
-
 }

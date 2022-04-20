@@ -6,12 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentPrAnnouncementBinding
-import com.example.project_skripsi.databinding.FragmentPrHomeBinding
-import com.example.project_skripsi.module.parent.student_detail.PrStudentDetailFragmentArgs
-
 class PrAnnouncementFragment : Fragment() {
 
     private lateinit var viewModel: PrAnnouncementViewModel

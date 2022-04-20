@@ -26,8 +26,6 @@ class TcCalendarViewModel : ViewModel() {
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
     val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
-
-
     private val currentList : MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
     val currentDataList : MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
 
@@ -63,10 +61,8 @@ class TcCalendarViewModel : ViewModel() {
             propagateEvent(it, TYPE_ANNOUNCEMENT)
             _eventList.postValue(currentList)
         }
-
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
         loadAnnouncements()
-
     }
 
     private fun loadTeacher(uid: String) {
@@ -81,7 +77,6 @@ class TcCalendarViewModel : ViewModel() {
             }
             loadStudyClasses(classes)
         }
-
     }
 
     private fun loadStudyClasses(uids: List<ClassIdSubject>) {
@@ -104,13 +99,11 @@ class TcCalendarViewModel : ViewModel() {
                         }
                     }
             }
-
             _meetingList.postValue(meetings)
             loadTaskForms(exams, _examList)
             loadTaskForms(assignments, _assignmentList)
         }
     }
-
 
     private fun loadTaskForms(uids: List<ClassTaskFormId>, _liveData: MutableLiveData<List<TeacherAgendaTaskForm>>) {
         FireRepository.instance.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
@@ -145,6 +138,4 @@ class TcCalendarViewModel : ViewModel() {
     private fun propagateCalendarEvent(date : Date, type: Int) {
          currentList.getOrPut(CalendarDay.from(date)) { ArrayList() }.add(DayEvent(date, type))
     }
-
-
 }

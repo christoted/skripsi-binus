@@ -10,12 +10,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentPrExamBinding
-import com.example.project_skripsi.databinding.FragmentPrHomeBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
-
 class PrExamFragment : Fragment() {
 
     private lateinit var viewModel: PrExamViewModel
@@ -35,6 +32,7 @@ class PrExamFragment : Fragment() {
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
         retrieveArgs()
+
 
         return binding.root
     }

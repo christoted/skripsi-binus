@@ -22,5 +22,4 @@ class PrStudentDetailViewModel : ViewModel() {
         FireRepository.instance.getItem<Student>(uid).first.observeOnce{ _student.postValue(it) }
     }
 
-
 }

@@ -24,7 +24,6 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
     private var _binding: FragmentStCalendarBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,12 +36,11 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         binding.calendar.setOnDateChangedListener(this)
         binding.rvEvent.layoutManager = LinearLayoutManager(context)
 
-        viewModel.eventList.observe(viewLifecycleOwner, { eventList ->
+        viewModel.eventList.observe(viewLifecycleOwner) { eventList ->
             eventList.map { dayEvent ->
                 binding.calendar.addDecorator(EventDecorator(dayEvent.key, dayEvent.value))
             }
-        })
-
+        }
         return binding.root
     }
 

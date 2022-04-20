@@ -15,8 +15,6 @@ import com.example.project_skripsi.utils.helper.DateHelper
 class PrAssignmentViewModel : ViewModel() {
 
     companion object {
-        const val ASSIGNMENT_ONGOING = 0
-        const val ASSIGNMENT_PAST = 1
         const val tabCount = 2
         val tabHeader = arrayOf("Berlangsung", "Selesai")
     }

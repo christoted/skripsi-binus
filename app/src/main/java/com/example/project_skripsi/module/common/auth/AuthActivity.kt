@@ -38,6 +38,7 @@ class AuthActivity : AppCompatActivity() {
 
 
  //       viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT)
+
 //        viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
         viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT)
 

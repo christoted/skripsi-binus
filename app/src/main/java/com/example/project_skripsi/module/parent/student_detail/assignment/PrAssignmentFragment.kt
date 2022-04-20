@@ -10,13 +10,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentPrAssignmentBinding
-import com.example.project_skripsi.databinding.FragmentPrHomeBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
 import com.example.project_skripsi.module.parent.student_detail.exam.PrExamFragmentArgs
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 import com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentViewModel
-
 class PrAssignmentFragment : Fragment() {
 
     private lateinit var viewModel: PrAssignmentViewModel
