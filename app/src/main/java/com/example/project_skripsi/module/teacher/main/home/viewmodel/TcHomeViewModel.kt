@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
-import com.example.project_skripsi.core.model.local.HomeMainSection
-import com.example.project_skripsi.core.model.local.SubjectGroup
+import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
@@ -25,17 +24,20 @@ class TcHomeViewModel: ViewModel() {
     private val _studyClass: MutableLiveData<StudyClass> = MutableLiveData()
     val studyClass: LiveData<StudyClass> = _studyClass
 
-    private val _listMeeting: MutableLiveData<List<ClassMeeting>> = MutableLiveData()
-    val listMeeting: LiveData<List<ClassMeeting>> = _listMeeting
+    private val _listMeeting: MutableLiveData<List<TeacherAgendaMeeting>> = MutableLiveData()
+    val listMeeting: LiveData<List<TeacherAgendaMeeting>> = _listMeeting
 
     private val _announcements: MutableLiveData<List<Announcement>> = MutableLiveData()
     val announcements: LiveData<List<Announcement>> = _announcements
 
-    private val _examList: MutableLiveData<List<TaskForm>> = MutableLiveData()
-    val examList: LiveData<List<TaskForm>> = _examList
+    private val _examList: MutableLiveData<List<TeacherAgendaTaskForm>> = MutableLiveData()
+    val examList: LiveData<List<TeacherAgendaTaskForm>> = _examList
 
-    private val _assignmentList: MutableLiveData<List<TaskForm>> = MutableLiveData()
-    val assignmentList: LiveData<List<TaskForm>> = _assignmentList
+    private val _assignmentList: MutableLiveData<List<TeacherAgendaTaskForm>> = MutableLiveData()
+    val assignmentList: LiveData<List<TeacherAgendaTaskForm>> = _assignmentList
+
+    private val _paymentList = MutableLiveData<List<Payment>>()
+    val paymentList: LiveData<List<Payment>> = _paymentList
 
     private val examIds: MutableList<String> = mutableListOf()
     private val assignmentIds: MutableList<String> = mutableListOf()
@@ -44,8 +46,9 @@ class TcHomeViewModel: ViewModel() {
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
 
     init {
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
         initData()
+        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadAnnouncement()
     }
 
     private fun initData() {
@@ -68,6 +71,10 @@ class TcHomeViewModel: ViewModel() {
             listData[2] = HomeMainSection(SECTION_ASSIGNMENT, it)
             _sectionData.postValue(listData)
         }
+        _paymentList.observeOnce {
+            listData[3] = HomeMainSection(SECTION_PAYMENT, it)
+            _sectionData.postValue(listData)
+        }
         _announcements.observeOnce {
             listData[4] = HomeMainSection(SECTION_ANNOUNCEMENT, it)
             _sectionData.postValue(listData)
@@ -76,55 +83,72 @@ class TcHomeViewModel: ViewModel() {
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.instance.getTeacher(uid).first.observeOnce {
-            val subjectGroups = mutableListOf<SubjectGroup>()
+        FireRepository.instance.getItem<Teacher>(uid).first.observeOnce {
+            it.payments?.let { payments ->
+                _paymentList.postValue(payments)
+            }
+            val classes = mutableListOf<ClassIdSubject>()
+        //    val subjectGroups = mutableListOf<SubjectGroup>()
             it.teachingGroups?.map { teachingGroup ->
-                val sg = SubjectGroup(teachingGroup.subjectName!!, teachingGroup.gradeLevel!!)
-                subjectGroups.add(sg)
-                teachingGroup.createdExams?.let { exams -> examIds.addAll(exams) }
-                teachingGroup.createdAssignments?.let { assignments -> assignmentIds.addAll(assignments)}
+                teachingGroup.teachingClasses?.map { classId ->
+                    classes.add(ClassIdSubject(classId, teachingGroup.subjectName!!))
+                }
+//                val sg = SubjectGroup(teachingGroup.subjectName!!, teachingGroup.gradeLevel!!)
+//                subjectGroups.add(sg)
+//                teachingGroup.createdExams?.let { exams -> examIds.addAll(exams) }
+//                teachingGroup.createdAssignments?.let { assignments -> assignmentIds.addAll(assignments)}
             }
             _teacherData.postValue(it)
-            loadHomeRoomClass(it.homeroomClass ?: "")
-            loadExam()
-            loadAssignment()
-            loadAnnouncement()
+            loadStudyClasses(classes)
+//            loadHomeRoomClass(it.homeroomClass ?: "")
+//            loadExam()
+//            loadAssignment()
         }
     }
-    // Load Schedule
-    private fun loadHomeRoomClass(uid: String) {
-        val meetings: MutableList<ClassMeeting> = mutableListOf()
-        FireRepository.instance.getStudyClass(uid).first.observeOnce {
-            _studyClass.postValue(it)
-            it.subjects?.map { subject ->
-                subject.classMeetings?.let { meets -> meetings.addAll(meets) }
+    // Load Study Classes
+    private fun loadStudyClasses(uids: List<ClassIdSubject>) {
+        FireRepository.instance.getItems<StudyClass>(uids.map {
+            it.studyClassId
+        }).first.observeOnce {
+            val meetings = mutableListOf<TeacherAgendaMeeting>()
+            val exams = mutableListOf<ClassTaskFormId>()
+            val assignments = mutableListOf<ClassTaskFormId>()
+
+            it.mapIndexed { index, studyClass ->
+                studyClass.subjects?.firstOrNull { item ->
+                    item.subjectName == uids[index].subjectName
+                }.let {
+                    subject ->
+                    // TODO: Add Here
+                    subject?.classMeetings?.map { meeting ->
+                        meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
+                    }
+
+                    subject?.classAssignments?.map { asgId ->
+                        assignments.add(ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", asgId))
+                    }
+
+                    subject?.classExams?.map { examId ->
+                        exams.add(ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", examId ))
+                    }
+                }
             }
-            // TODO:: Filter Here
             _listMeeting.postValue(meetings)
+            loadTaskForm(exams, _examList)
+            loadTaskForm(assignments, _assignmentList)
         }
     }
 
-    // Load Exam & Load Assignment
-     private fun loadExam() {
-        loadTaskForm(examIds.toList(), _examList)
-    }
-
-    private fun loadAssignment() {
-        loadTaskForm(assignmentIds.toList(), _assignmentList)
-    }
-
-    private fun loadTaskForm(uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
-        val taskFormList = mutableListOf<TaskForm>()
-        uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).first.observeOnce {
-                taskFormList.add(it)
-                // TODO:: Filter Here
-                if (taskFormList.size == uids.size) mutableLiveData.postValue(taskFormList)
+    private fun loadTaskForm(uids: List<ClassTaskFormId>, mutableLiveData: MutableLiveData<List<TeacherAgendaTaskForm>>) {
+        FireRepository.instance.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
+            val taskFormList = ArrayList<TeacherAgendaTaskForm>()
+            // TODO: Add Here
+            it.mapIndexed { index, taskForm ->
+                taskFormList.add(TeacherAgendaTaskForm(uids[index].studyClassId, uids[index].studyClassName, taskForm))
             }
+            mutableLiveData.postValue(taskFormList)
         }
     }
-
-    // Load Payment Deadline
 
     // Load Announcement
     private fun loadAnnouncement(){
@@ -134,4 +158,28 @@ class TcHomeViewModel: ViewModel() {
         }
         _announcements.postValue(announcements)
     }
+
+    // Load Schedule
+//    private fun loadHomeRoomClass(uid: String) {
+//        val meetings: MutableList<ClassMeeting> = mutableListOf()
+//        FireRepository.instance.getItem<StudyClass>(uid).first.observeOnce {
+//            _studyClass.postValue(it)
+//            it.subjects?.map { subject ->
+//                subject.classMeetings?.let { meets -> meetings.addAll(meets) }
+//            }
+//            // TODO:: Filter Here
+//            _listMeeting.postValue(meetings)
+//        }
+//    }
+
+    // Load Exam & Load Assignment
+//     private fun loadExam() {
+//        loadTaskForm(examIds.toList(), _examList)
+//    }
+//
+//    private fun loadAssignment() {
+//        loadTaskForm(assignmentIds.toList(), _assignmentList)
+//    }
+
+
 }

@@ -15,10 +15,12 @@ import com.example.project_skripsi.module.student.main.home.view.StHomeFragmentD
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.task.StTaskViewModel
+import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
+import com.example.project_skripsi.module.teacher.main.home.adapter.TcHomeMainAdapter
 import com.example.project_skripsi.module.teacher.main.home.viewmodel.TcHomeViewModel
 import com.example.project_skripsi.module.teacher.study_class.homeroom.TcStudyClassHomeroomFragmentDirections
 
-class TcHomeFragment : Fragment(), ItemListener {
+class TcHomeFragment : Fragment(), TcAgendaItemListener {
 
     private var _binding: FragmentTcHomeBinding? = null
     private val binding get() = _binding!!
@@ -37,30 +39,29 @@ class TcHomeFragment : Fragment(), ItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.teacherData.observe(viewLifecycleOwner, {
+        viewModel.teacherData.observe(viewLifecycleOwner) {
             with(binding) {
                 tvProfileName.text = it.name
                 studyClassId = it.homeroomClass.toString()
             }
-        })
+        }
 
-        viewModel.studyClass.observe(viewLifecycleOwner, {
+        viewModel.studyClass.observe(viewLifecycleOwner) {
             with(binding) {
                 tvProfileClass.text = it.name
             }
-        })
+        }
 
         // Main Section
-        viewModel.sectionData.observe(viewLifecycleOwner, {
-            val mainSectionAdapter = StHomeRecyclerViewMainAdapter(it, this)
+        viewModel.sectionData.observe(viewLifecycleOwner) {
+            val mainSectionAdapter = TcHomeMainAdapter(it, this)
             with(binding.mainRecyclerView) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = mainSectionAdapter
                 addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             }
-
-        })
+        }
     }
 
     override fun onDestroyView() {
@@ -68,22 +69,21 @@ class TcHomeFragment : Fragment(), ItemListener {
         _binding = null
     }
 
-    override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
-        // TODO: Navigation
-        Log.d("12345", "onTaskFormItemClicked: " + taskFormId)
-        val toTaskActivity = TcHomeFragmentDirections.actionTcHomeFragmentToTcStudyClassTaskDetailFragment(
-            studyClassId,
-            subjectName,
-            taskFormId
-        )
+    override fun onTaskFormItemClicked(
+        taskFormId: String,
+        studyClassId: String,
+        subjectName: String
+    ) {
+        val toTaskActivity = TcHomeFragmentDirections.actionTcHomeFragmentToTcStudyClassTaskDetailFragment(studyClassId, subjectName, taskFormId)
         view?.findNavController()?.navigate(toTaskActivity)
     }
 
     override fun onClassItemClicked(Position: Int) {
-        // TODO: Link Class
+        // TODO: Link
     }
 
     override fun onMaterialItemClicked(Position: Int) {
-        // TODO: Material link
+        // TODO: Link
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +50,9 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int = item.sectionItem.size
+    override fun getItemCount(): Int {
+        Log.d("88", "getItemCount: ${item.sectionItem}")
+        return item.sectionItem.size
+    }
 
 }
