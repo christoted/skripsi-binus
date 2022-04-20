@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.project_skripsi.databinding.FragmentPrStudentDetailBinding
 
 class PrStudentDetailFragment : Fragment() {
@@ -24,36 +25,37 @@ class PrStudentDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this)[PrStudentDetailViewModel::class.java]
         _binding = FragmentPrStudentDetailBinding.inflate(inflater, container, false)
 
-        binding.tvTest.text = this.toString().split("{")[0]
-        viewModel.text.observe(viewLifecycleOwner, {
-            binding.tvTest.text = it
+        viewModel.student.observe(viewLifecycleOwner, { student ->
+            student.id?.let { id ->
+                with(binding) {
+                    btnPayment.setOnClickListener {
+                        view?.findNavController()?.navigate(
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrPaymentFragment(id)) }
+
+                    btnCalendar.setOnClickListener {
+                        view?.findNavController()?.navigate(
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrCalendarFragment()) }
+
+                    btnProgress.setOnClickListener {
+                        view?.findNavController()?.navigate(
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrProgressFragment()) }
+
+                    btnExam.setOnClickListener {
+                        view?.findNavController()?.navigate(
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrExamFragment()) }
+
+                    btnAssignment.setOnClickListener {
+                        view?.findNavController()?.navigate(
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAssignmentFragment()) }
+
+                    btnAnnouncement.setOnClickListener {
+                        view?.findNavController()?.navigate(
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAnnouncementFragment()) }
+                }
+            }
         })
 
-        with(binding) {
-            btnPayment.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrPaymentFragment()) }
-
-            btnCalendar.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrCalendarFragment()) }
-
-            btnProgress.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrProgressFragment()) }
-
-            btnExam.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrExamFragment()) }
-
-            btnAssignment.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAssignmentFragment()) }
-
-            btnAnnouncement.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAnnouncementFragment()) }
-        }
+        retrieveArgs()
 
         return binding.root
     }
@@ -61,5 +63,10 @@ class PrStudentDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun retrieveArgs() {
+        val args: PrStudentDetailFragmentArgs by navArgs()
+        viewModel.setStudent(args.studentId)
     }
 }

@@ -3,7 +3,6 @@ package com.example.project_skripsi.utils.custom_views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.View.MeasureSpec
 
 import androidx.viewpager.widget.ViewPager
 
@@ -12,13 +11,13 @@ class WrapContentViewPager : ViewPager {
     constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var heightMeasureSpec = heightMeasureSpec
-        val mode = MeasureSpec.getMode(heightMeasureSpec)
+        var heightMeasureSpecNew = heightMeasureSpec
+        val mode = MeasureSpec.getMode(heightMeasureSpecNew)
         // Unspecified means that the ViewPager is in a ScrollView WRAP_CONTENT.
         // At Most means that the ViewPager is not in a ScrollView WRAP_CONTENT.
         if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
             // super has to be called in the beginning so the child views can be initialized.
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            super.onMeasure(widthMeasureSpec, heightMeasureSpecNew)
             var height = 0
             for (i in 0 until childCount) {
                 val child: View = getChildAt(i)
@@ -31,9 +30,9 @@ class WrapContentViewPager : ViewPager {
                     height = childMeasuredHeight
                 }
             }
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+            heightMeasureSpecNew = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
         }
         // super has to be called again so the new specs are treated as exact measurements
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        super.onMeasure(widthMeasureSpec, heightMeasureSpecNew)
     }
 }
