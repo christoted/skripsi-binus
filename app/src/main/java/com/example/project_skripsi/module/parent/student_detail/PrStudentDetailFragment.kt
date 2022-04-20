@@ -34,19 +34,19 @@ class PrStudentDetailFragment : Fragment() {
 
                     btnCalendar.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrCalendarFragment()) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrCalendarFragment(id)) }
 
                     btnProgress.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrProgressFragment()) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrProgressFragment(id)) }
 
                     btnExam.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrExamFragment()) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrExamFragment(id)) }
 
                     btnAssignment.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAssignmentFragment()) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAssignmentFragment(id)) }
 
                     btnAnnouncement.setOnClickListener {
                         view?.findNavController()?.navigate(

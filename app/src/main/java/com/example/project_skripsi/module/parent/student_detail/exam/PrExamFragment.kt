@@ -6,8 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentPrExamBinding
 import com.example.project_skripsi.databinding.FragmentPrHomeBinding
+import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
+import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
+import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
+import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
 
 class PrExamFragment : Fragment() {
 
@@ -24,10 +31,10 @@ class PrExamFragment : Fragment() {
         viewModel = ViewModelProvider(this)[PrExamViewModel::class.java]
         _binding = FragmentPrExamBinding.inflate(inflater, container, false)
 
-        binding.tvTest.text = this.toString().split("{")[0]
-        viewModel.text.observe(viewLifecycleOwner, {
-            binding.tvTest.text = it
-        })
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
+        binding.tabLayout.setupWithViewPager(binding.vpContainer)
+
+        retrieveArgs()
 
         return binding.root
     }
@@ -35,5 +42,51 @@ class PrExamFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun retrieveArgs() {
+        val args : PrExamFragmentArgs by navArgs()
+        viewModel.setStudent(args.studentId)
+    }
+
+    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+
+        lateinit var layoutInflater: LayoutInflater
+
+        override fun getCount(): Int =
+            StTaskExamViewModel.tabCount
+
+        override fun isViewFromObject(view: View, `object`: Any): Boolean =
+            view == `object`
+
+        override fun getPageTitle(position: Int): CharSequence =
+            StTaskExamViewModel.tabHeader[position]
+
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            layoutInflater = LayoutInflater.from(context)
+            val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
+
+            bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
+            when(position) {
+                PrExamViewModel.EXAM_ONGOING -> {
+                    viewModel.ongoingList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                    })
+                }
+                PrExamViewModel.EXAM_PAST -> {
+                    viewModel.pastList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                    })
+                }
+            }
+
+            container.addView(bindingRV.root, 0)
+            return bindingRV.root
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
+        }
     }
 }
