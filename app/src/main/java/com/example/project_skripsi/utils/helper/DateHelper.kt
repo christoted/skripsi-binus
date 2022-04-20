@@ -1,6 +1,7 @@
 package com.example.project_skripsi.utils.helper
 
 import android.annotation.SuppressLint
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,6 +13,13 @@ class DateHelper {
         const val hm = "HH:mm"
 
         fun getCurrentDate() : Date = Calendar.getInstance().time
+
+        fun getCurrentDateNow(): CalendarDay = CalendarDay.today()
+
+        // TODO: Create a function that take Date as parameter and return Calendar Day
+        fun convertDateToCalendarDay(date: Date): CalendarDay {
+            return CalendarDay.from(date)
+        }
 
         @SuppressLint("SimpleDateFormat")
         fun getFormattedDateTime(format: String?, date: Date): String? {

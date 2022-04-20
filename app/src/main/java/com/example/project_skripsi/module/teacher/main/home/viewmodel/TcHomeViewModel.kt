@@ -120,7 +120,11 @@ class TcHomeViewModel: ViewModel() {
                 }.let {
                     subject ->
                     // TODO: Add Here
-                    subject?.classMeetings?.map { meeting ->
+                    subject?.classMeetings?.filter { it.startTime?.let { date ->
+                        DateHelper.convertDateToCalendarDay(
+                            date
+                        )
+                    } == DateHelper.getCurrentDateNow() }?.map { meeting ->
                         meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
                     }
 
@@ -143,7 +147,11 @@ class TcHomeViewModel: ViewModel() {
         FireRepository.instance.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
             val taskFormList = ArrayList<TeacherAgendaTaskForm>()
             // TODO: Add Here
-            it.mapIndexed { index, taskForm ->
+            it.filter { it.startTime?.let { date ->
+                DateHelper.convertDateToCalendarDay(
+                    date
+                )
+            } == DateHelper.getCurrentDateNow() }.mapIndexed { index, taskForm ->
                 taskFormList.add(TeacherAgendaTaskForm(uids[index].studyClassId, uids[index].studyClassName, taskForm))
             }
             mutableLiveData.postValue(taskFormList)
