@@ -21,7 +21,7 @@ class TcStudentFragment : Fragment() {
     ): View {
 
         _binding = FragmentTcStudentBinding.inflate(inflater, container, false)
-        binding.tvTest.text = this.toString().split("{")[0]
+//        binding.tvTest.text = this.toString().split("{")[0]
         return binding.root
     }
 
