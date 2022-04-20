@@ -10,6 +10,7 @@ import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGI
 import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGIN_STUDENT
 import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGIN_TEACHER
 import com.example.project_skripsi.core.repository.dummy.FirestoreDummy
+import com.example.project_skripsi.module.parent.PrMainActivity
 import com.example.project_skripsi.module.student.main.StMainActivity
 import com.example.project_skripsi.module.teacher.TcMainActivity
 
@@ -37,7 +38,8 @@ class AuthActivity : AppCompatActivity() {
 
 
  //       viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT)
-        viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
+//        viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
+        viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT)
 
 //        FirestoreDummy()
     }
@@ -56,5 +58,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun redirectToParent() {
         Toast.makeText(applicationContext, "Login Success as Parent", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this,PrMainActivity::class.java)
+        startActivity(intent)
     }
 }
