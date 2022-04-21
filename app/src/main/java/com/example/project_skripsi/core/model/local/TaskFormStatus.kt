@@ -69,7 +69,7 @@ data class TaskFormStatus(
             }
 
         private fun getScore(assignedTaskForm: AssignedTaskForm) : Int? =
-            if (assignedTaskForm.taskChecked!!) assignedTaskForm.score
+            if (assignedTaskForm.isChecked!!) assignedTaskForm.score
             else null
     }
 }

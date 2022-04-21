@@ -184,13 +184,16 @@ class TcAlterTaskFragment : Fragment() {
             if (args.formType == TcAlterTaskViewModel.TYPE_ASSIGNMENT) {
                 btnMidExam.visibility = View.GONE
                 btnFinalExam.visibility = View.GONE
-                btnAssignment.isSelected = true
                 toggleButton.check(R.id.btn_assignment)
                 viewModel.taskType = Constant.TASK_TYPE_ASSIGNMENT
             } else {
                 btnAssignment.visibility = View.GONE
                 toggleButton.check(R.id.btn_mid_exam)
                 viewModel.taskType = Constant.TASK_TYPE_MID_EXAM
+                binding.llPreqResource.visibility = View.GONE
+                binding.dvPreqResource.visibility = View.GONE
+                binding.llPreqAssignment.visibility = View.GONE
+                binding.dvPreqAssignment.visibility = View.GONE
             }
         }
         viewModel.initData(args.subjectName, args.gradeLevel, args.formType, args.taskFormId)

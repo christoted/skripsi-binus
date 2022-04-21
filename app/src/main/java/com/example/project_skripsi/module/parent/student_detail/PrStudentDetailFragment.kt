@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentPrStudentDetailBinding
+import com.example.project_skripsi.module.parent.student_detail.viewholder.PrSubjectViewHolder
 
 class PrStudentDetailFragment : Fragment() {
 
@@ -28,31 +31,45 @@ class PrStudentDetailFragment : Fragment() {
         viewModel.student.observe(viewLifecycleOwner, { student ->
             student.id?.let { id ->
                 with(binding) {
-                    btnPayment.setOnClickListener {
+                    ivPayment.setOnClickListener {
                         view?.findNavController()?.navigate(
                             PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrPaymentFragment(id)) }
 
-                    btnCalendar.setOnClickListener {
+                    ivCalendar.setOnClickListener {
                         view?.findNavController()?.navigate(
                             PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrCalendarFragment(id)) }
 
-                    btnProgress.setOnClickListener {
+                    ivProgress.setOnClickListener {
                         view?.findNavController()?.navigate(
                             PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrProgressFragment(id)) }
 
-                    btnExam.setOnClickListener {
+                    ivExam.setOnClickListener {
                         view?.findNavController()?.navigate(
                             PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrExamFragment(id)) }
 
-                    btnAssignment.setOnClickListener {
+                    ivAssignment.setOnClickListener {
                         view?.findNavController()?.navigate(
                             PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAssignmentFragment(id)) }
 
-                    btnAnnouncement.setOnClickListener {
+                    ivAnnouncement.setOnClickListener {
                         view?.findNavController()?.navigate(
                             PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAnnouncementFragment()) }
                 }
             }
+        })
+
+        viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
+        viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
+        viewModel.homeroomTeacher.observe(viewLifecycleOwner, {
+            with(binding) {
+                tvTeacherName.text = it.name
+                it.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+            }
+        })
+
+        binding.rvContainer.layoutManager = LinearLayoutManager(context)
+        viewModel.subjectList.observe(viewLifecycleOwner, {
+            binding.rvContainer.adapter = PrSubjectViewHolder(it).getAdapter()
         })
 
         retrieveArgs()

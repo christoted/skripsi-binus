@@ -83,7 +83,7 @@ class TcAssessmentTaskFormFragment : Fragment() {
         })
 
         viewModel.assignedTaskForm.observe(viewLifecycleOwner, {
-            if (it.taskChecked == true) {
+            if (it.isChecked == true) {
                 with(binding) {
                     tvScore.visibility = View.VISIBLE
                     tvScore.text = it.score.toString()

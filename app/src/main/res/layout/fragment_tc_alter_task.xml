@@ -272,6 +272,7 @@
         android:layout_marginBottom="4dp"/>
 
     <LinearLayout
+        android:id="@+id/ll_preq_resource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -311,6 +312,7 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dv_preq_resource"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:dividerInsetStart="8dp"
@@ -319,6 +321,7 @@
         android:layout_marginBottom="4dp"/>
 
     <LinearLayout
+        android:id="@+id/ll_preq_assignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -359,6 +362,7 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dv_preq_assignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:dividerInsetStart="8dp"

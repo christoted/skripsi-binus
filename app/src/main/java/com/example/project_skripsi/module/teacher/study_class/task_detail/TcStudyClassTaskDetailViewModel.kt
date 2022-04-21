@@ -64,11 +64,11 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
             FireRepository.instance.getStudent(uid).let { response ->
                 response.first.observeOnce { student ->
                     student.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
-                        if (it.taskChecked!!) checkedList.add(student)
+                        if (it.isChecked!!) checkedList.add(student)
                         else uncheckedList.add(student)
                     }
                     student.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
-                        if (it.taskChecked!!) checkedList.add(student)
+                        if (it.isChecked!!) checkedList.add(student)
                         else uncheckedList.add(student)
                     }
                     if (uncheckedList.size + checkedList.size == uids.size) {
