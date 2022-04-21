@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.core.model.local.CalendarItem
 import com.example.project_skripsi.databinding.*
-import com.example.project_skripsi.module.student.main._sharing.*
+import com.example.project_skripsi.module.student.main._sharing.agenda.*
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_ASSIGNMENT
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_MEETING
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_EXAM

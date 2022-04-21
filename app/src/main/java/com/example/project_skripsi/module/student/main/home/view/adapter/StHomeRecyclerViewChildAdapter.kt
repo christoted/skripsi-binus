@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.*
-import com.example.project_skripsi.module.student.main._sharing.*
+import com.example.project_skripsi.module.student.main._sharing.agenda.*
 import com.example.project_skripsi.utils.Constant
 
 class StHomeRecyclerViewChildAdapter(val item: HomeMainSection, private val listener: ItemListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {

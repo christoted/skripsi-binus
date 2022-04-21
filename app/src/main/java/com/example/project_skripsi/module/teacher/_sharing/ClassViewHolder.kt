@@ -3,7 +3,7 @@ package com.example.project_skripsi.module.teacher._sharing
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import com.example.project_skripsi.core.model.firestore.StudyClass
-import com.example.project_skripsi.databinding.StandardCheckboxBinding
+import com.example.project_skripsi.databinding.ViewCheckboxBinding
 
 class ClassViewHolder(private val dataSet : List<StudyClass>, private val checked: List<String>) {
 
@@ -12,10 +12,10 @@ class ClassViewHolder(private val dataSet : List<StudyClass>, private val checke
     fun getAdapter(): GenericAdapter<StudyClass> {
         val adapter = GenericAdapter(dataSet)
         adapter.expressionOnCreateViewHolder = {
-            StandardCheckboxBinding.inflate(LayoutInflater.from(it.context), it, false)
+            ViewCheckboxBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
         adapter.expressionViewHolderBinding = { item,viewBinding,holder->
-            val view = viewBinding as StandardCheckboxBinding
+            val view = viewBinding as ViewCheckboxBinding
             val itemChecked = checked.contains(item.id)
             with(view.itemCheckbox) {
                 text = item.name

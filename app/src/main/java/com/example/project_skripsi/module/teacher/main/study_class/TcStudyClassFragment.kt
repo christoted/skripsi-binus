@@ -1,11 +1,9 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -44,7 +42,7 @@ class TcStudyClassFragment : Fragment() {
             binding.cgSubject.removeAllViews()
             var hasItem = false
             it.map { subjectName ->
-                val chip = inflater.inflate(R.layout.standard_chip_choice, binding.cgSubject, false) as Chip
+                val chip = inflater.inflate(R.layout.view_chip_choice, binding.cgSubject, false) as Chip
                 chip.id = View.generateViewId()
                 chip.text = subjectName
                 chip.setOnCheckedChangeListener { _, isChecked ->
@@ -63,7 +61,7 @@ class TcStudyClassFragment : Fragment() {
         viewModel.teachingClasses.observe(viewLifecycleOwner, { pairData ->
             binding.cgClass.removeAllViews()
             pairData.second.map { studyClass ->
-                val chip = inflater.inflate(R.layout.standard_chip_action, binding.cgSubject, false) as Chip
+                val chip = inflater.inflate(R.layout.view_chip_action, binding.cgSubject, false) as Chip
                 chip.id = View.generateViewId()
                 chip.text = studyClass.name
                 chip.setOnClickListener {

@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_prStudentDetailFragment_to_prAnnouncementFragment"
             app:destination="@id/prAnnouncementFragment" />
+        <argument
+            android:name="studentId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/prAnnouncementFragment"
@@ -47,26 +50,46 @@
         android:id="@+id/prAssignmentFragment"
         android:name="com.example.project_skripsi.module.parent.student_detail.assignment.PrAssignmentFragment"
         android:label="fragment_pr_assignment"
-        tools:layout="@layout/fragment_pr_assignment" />
+        tools:layout="@layout/fragment_pr_assignment" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/prCalendarFragment"
         android:name="com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarFragment"
         android:label="fragment_pr_calendar"
-        tools:layout="@layout/fragment_pr_calendar" />
+        tools:layout="@layout/fragment_pr_calendar" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/prExamFragment"
         android:name="com.example.project_skripsi.module.parent.student_detail.exam.PrExamFragment"
         android:label="fragment_pr_exam"
-        tools:layout="@layout/fragment_pr_exam" />
+        tools:layout="@layout/fragment_pr_exam" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/prPaymentFragment"
         android:name="com.example.project_skripsi.module.parent.student_detail.payment.PrPaymentFragment"
         android:label="fragment_pr_payment"
-        tools:layout="@layout/fragment_pr_payment" />
+        tools:layout="@layout/fragment_pr_payment" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/prProgressFragment"
         android:name="com.example.project_skripsi.module.parent.student_detail.progress.PrProgressFragment"
         android:label="fragment_pr_progress"
-        tools:layout="@layout/fragment_pr_progress" />
+        tools:layout="@layout/fragment_pr_progress" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

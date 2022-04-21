@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main._sharing
+package com.example.project_skripsi.module.student.main._sharing.agenda
 
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView

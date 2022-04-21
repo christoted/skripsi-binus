@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentPrAnnouncementBinding
-import com.example.project_skripsi.databinding.FragmentPrHomeBinding
-
 class PrAnnouncementFragment : Fragment() {
 
     private lateinit var viewModel: PrAnnouncementViewModel
@@ -24,9 +23,9 @@ class PrAnnouncementFragment : Fragment() {
         viewModel = ViewModelProvider(this)[PrAnnouncementViewModel::class.java]
         _binding = FragmentPrAnnouncementBinding.inflate(inflater, container, false)
 
-        binding.tvTest.text = this.toString().split("{")[0]
-        viewModel.text.observe(viewLifecycleOwner, {
-            binding.tvTest.text = it
+        binding.rvContainer.layoutManager = LinearLayoutManager(context)
+        viewModel.announcementList.observe(viewLifecycleOwner, {
+            binding.rvContainer.adapter = AnnouncementViewHolder(it).getAdapter()
         })
 
         return binding.root

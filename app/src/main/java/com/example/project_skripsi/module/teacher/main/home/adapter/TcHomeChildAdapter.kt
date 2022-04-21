@@ -8,8 +8,8 @@ import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.ItemStHomeSectionAnnouncementBinding
 import com.example.project_skripsi.databinding.ItemStHomeSectionPaymentBinding
 import com.example.project_skripsi.databinding.ItemTcAgendaGeneralBinding
-import com.example.project_skripsi.module.student.main._sharing.StHomeAnnouncementViewHolder
-import com.example.project_skripsi.module.student.main._sharing.StHomePaymentViewHolder
+import com.example.project_skripsi.module.student.main._sharing.agenda.StHomeAnnouncementViewHolder
+import com.example.project_skripsi.module.student.main._sharing.agenda.StHomePaymentViewHolder
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaAssignmentViewHolder
