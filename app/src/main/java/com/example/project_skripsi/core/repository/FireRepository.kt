@@ -146,6 +146,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         return Pair(data, exception)
     }
 
+    @Deprecated("Replaced by getItems")
     fun getAnnouncements() : Pair<LiveData<List<Announcement>> , LiveData<Exception>> {
         val announcements = arrayListOf<Announcement>()
         val data = MutableLiveData<List<Announcement>>()

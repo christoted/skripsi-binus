@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
-import com.example.project_skripsi.core.model.local.CalendarItem
-import com.example.project_skripsi.core.model.local.DayEvent
+import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.module.teacher.main.calendar.TcCalendarViewModel
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
@@ -29,8 +29,8 @@ class StCalendarViewModel : ViewModel() {
 
 
 
-    private val currentList : MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
-    val currentDataList : MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
+    private val currentList : MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
+    val currentDataList : MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
 
     private val _meetingList = MutableLiveData<List<ClassMeeting>>()
     private val _examList = MutableLiveData<List<TaskForm>>()
@@ -41,57 +41,27 @@ class StCalendarViewModel : ViewModel() {
     init {
 
         _meetingList.observeOnce {
-            it.map { meeting ->
-                meeting.startTime?.let { date ->
-                    propagateCalendarEvent(date, TYPE_MEETING)
-                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
-                        .add(CalendarItem(meeting, TYPE_MEETING))
-                }
-            }
+            propagateEvent(it, TYPE_MEETING)
             _eventList.postValue(currentList)
         }
 
         _examList.observeOnce {
-            it.map { taskForm ->
-                taskForm.startTime?.let { date ->
-                    propagateCalendarEvent(date, TYPE_EXAM)
-                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
-                        .add(CalendarItem(taskForm, TYPE_EXAM))
-                }
-            }
+            propagateEvent(it, TYPE_EXAM)
             _eventList.postValue(currentList)
         }
 
         _assignmentList.observeOnce {
-            it.map { taskForm ->
-                taskForm.startTime?.let { date ->
-                    propagateCalendarEvent(date, TYPE_ASSIGNMENT)
-                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
-                        .add(CalendarItem(taskForm, TYPE_ASSIGNMENT))
-                }
-            }
+            propagateEvent(it, TYPE_ASSIGNMENT)
             _eventList.postValue(currentList)
         }
 
         _paymentList.observeOnce {
-            it.map { payment ->
-                payment.paymentDeadline?.let { date ->
-                    propagateCalendarEvent(date, TYPE_PAYMENT)
-                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
-                        .add(CalendarItem(payment, TYPE_PAYMENT))
-                }
-            }
+            propagateEvent(it, TYPE_PAYMENT)
             _eventList.postValue(currentList)
         }
 
         _announcementList.observeOnce {
-            it.map { announcement ->
-                announcement.date?.let { date ->
-                    propagateCalendarEvent(date, TYPE_ANNOUNCEMENT)
-                    currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
-                        .add(CalendarItem(announcement, TYPE_ANNOUNCEMENT))
-                }
-            }
+            propagateEvent(it, TYPE_ANNOUNCEMENT)
             _eventList.postValue(currentList)
         }
 
@@ -101,7 +71,7 @@ class StCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.instance.getItem<Student>(uid).let { response ->
             response.first.observeOnce { student ->
                 student.studyClass?.let { loadStudyClass(it) }
                 student.payments?.let { _paymentList.postValue(it) }
@@ -110,7 +80,7 @@ class StCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.instance.getItem<StudyClass>(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 val meetings = ArrayList<ClassMeeting>()
                 val examIds = ArrayList<String>()
@@ -132,7 +102,7 @@ class StCalendarViewModel : ViewModel() {
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
         val taskFormList = ArrayList<TaskForm>()
         uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).let { response ->
+            FireRepository.instance.getItem<TaskForm>(uid).let { response ->
                 response.first.observeOnce { taskForm ->
                     taskFormList.add(taskForm)
                     if (taskFormList.size == uids.size)
@@ -145,6 +115,23 @@ class StCalendarViewModel : ViewModel() {
     private fun loadAnnouncements() {
         FireRepository.instance.getAnnouncements().let { response ->
             response.first.observeOnce { _announcementList.postValue(it) }
+        }
+    }
+
+    private fun propagateEvent(item : List<HomeSectionData>, type: Int) {
+        item.map {
+            when (it) {
+                is TeacherAgendaMeeting -> it.classMeeting.startTime
+                is TeacherAgendaTaskForm -> it.taskForm.startTime
+                is Payment -> it.paymentDeadline
+                is Announcement -> it.date
+                else -> null
+            }?.let { date ->
+                propagateCalendarEvent(date, type)
+                currentDataList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(
+                    CalendarItem(it, type)
+                )
+            }
         }
     }
 
