@@ -17,6 +17,10 @@
     <color name="indicator_announcement">#b69573</color>
     <color name="indicator_black">#000000</color>
 
+    <color name="indicator_score">#0000FF</color>
+    <color name="indicator_attendance">#006400</color>
+    <color name="indicator_achievement">#ffd700</color>
+
     <color name="form_multiple_choice">#90caf9</color>
     <color name="form_essay">#c5e1a5</color>
     <color name="form_header">#ff8a65</color>

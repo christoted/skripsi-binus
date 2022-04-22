@@ -12,15 +12,11 @@ import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
 
 class StScoreViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is score Fragment"
-    }
-    val text: LiveData<String> = _text
 
     // Fragment Data
     private val _scoreFragmentData = MutableLiveData<Score>()
@@ -162,12 +158,3 @@ class StScoreViewModel : ViewModel() {
 
 }
 
-fun <T> Iterable<T>.averageOf(selector: (T) -> Int): Int {
-    var sum = 0
-    var count = 0
-    for (element in this) {
-        sum += selector(element)
-        count++
-    }
-    return sum / count
-}

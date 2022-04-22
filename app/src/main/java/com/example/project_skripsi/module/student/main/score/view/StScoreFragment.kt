@@ -2,19 +2,14 @@ package com.example.project_skripsi.module.student.main.score.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import androidx.lifecycle.Observer
-import com.example.project_skripsi.databinding.FragmentStScoreBinding
+import com.example.project_skripsi.databinding.FragmentStProgressBinding
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreViewPagerAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.example.project_skripsi.utils.helper.MyViewModelFactory
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.google.android.material.tabs.TabLayoutMediator
 import com.github.mikephil.charting.data.BarDataSet
@@ -22,29 +17,23 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.BarData
 
-class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
+class StScoreFragment : Fragment()  {
 
     private lateinit var viewModel: StScoreViewModel
-    private var _binding: FragmentStScoreBinding? = null
+    private var _binding: FragmentStProgressBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel = ViewModelProvider(this)[StScoreViewModel::class.java]
-        _binding = FragmentStScoreBinding.inflate(inflater, container, false)
-
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-
-        })
+        _binding = FragmentStProgressBinding.inflate(inflater, container, false)
 
         binding.vpContainer.adapter = StScoreViewPagerAdapter(activity!!, viewModel)
-        TabLayoutMediator(binding.tabLayout, binding.vpContainer) {
-            tab, position ->
-            Log.d("987", "onCreateView: pos $position")
+        TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
             tab.text = StScoreViewModel.tabHeader[position]
         }.attach()
 
@@ -112,8 +101,8 @@ class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         // add a nice and smooth animation
         chart.animateY(1500)
         chart.legend.isEnabled = false
-        data.setBarWidth(0.9f) // set custom bar width
-        chart.setData(data)
+        data.barWidth = 0.9f // set custom bar width
+        chart.data = data
         chart.setFitBars(true) // make the x-axis fit exactly all bars
         chart.invalidate() // refresh
 
@@ -123,21 +112,4 @@ class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         super.onDestroyView()
         _binding = null
     }
-
-    override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-
-    }
-
-    override fun onStartTrackingTouch(p0: SeekBar?) {
-
-    }
-
-    override fun onStopTrackingTouch(p0: SeekBar?) {
-
-    }
-
-    // TODO:
-    //  Use Live Data in StScoreViewModel
-    //  Count all the value then divided by total subject that has a score
-    //  Home filter by current date
 }

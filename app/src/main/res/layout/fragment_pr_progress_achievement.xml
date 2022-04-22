@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.teacher.student_detail.view.attendance.TcStudentDetailAttendance">
+    tools:context=".module.parent.student_detail.progress.achievement.PrProgressAchievementFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_attendance"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_st_progress_attendance"
-        />
+        tools:listitem="@layout/item_st_progress_achievement"
+        android:paddingBottom="?attr/actionBarSize"/>
 
 </LinearLayout>

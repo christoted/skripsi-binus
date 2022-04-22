@@ -116,6 +116,10 @@ data class AttendedMeeting (
 
     val status: String? = null,
 
+    val startTime: Date? = null,
+
+    val endTime: Date? = null,
+
     @get: PropertyName("subject_name")
     @set: PropertyName("subject_name")
     var subjectName: String? = null

@@ -41,7 +41,7 @@
         android:id="@+id/navigation_score_fragment"
         android:name="com.example.project_skripsi.module.student.main.score.view.StScoreFragment"
         android:label="Score"
-        tools:layout="@layout/fragment_st_score" >
+        tools:layout="@layout/fragment_st_progress" >
         <action
             android:id="@+id/action_navigation_score_fragment_to_stSubjectActivity"
             app:destination="@id/stSubjectActivity" />

@@ -5,9 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.project_skripsi.databinding.FragmentPrHomeBinding
+import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.databinding.FragmentPrProgressBinding
+import com.example.project_skripsi.module.parent.student_detail.payment.PrPaymentFragmentArgs
+import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel.Companion.VIEW_TYPE_ATTENDANCE
+import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel.Companion.VIEW_TYPE_SCORE
+import com.example.project_skripsi.module.parent.student_detail.progress.achievement.PrProgressAchievementFragment
+import com.example.project_skripsi.module.parent.student_detail.progress.attendance.PrProgressAttendanceFragment
+import com.example.project_skripsi.module.parent.student_detail.progress.score.PrProgressScoreFragment
+import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 
 class PrProgressFragment : Fragment() {
 
@@ -24,10 +34,21 @@ class PrProgressFragment : Fragment() {
         viewModel = ViewModelProvider(this)[PrProgressViewModel::class.java]
         _binding = FragmentPrProgressBinding.inflate(inflater, container, false)
 
-        binding.tvTest.text = this.toString().split("{")[0]
-        viewModel.text.observe(viewLifecycleOwner, {
-            binding.tvTest.text = it
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter(activity!!)
+        TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
+            tab.text = StScoreViewModel.tabHeader[position]
+        }.attach()
+
+        viewModel.scoreFragmentData.observe(viewLifecycleOwner, {
+            with(binding) {
+                cpvScore.setValueAnimated(it.totalScore.toFloat())
+                cpvAttendance.setValueAnimated(it.totalAbsent.toFloat())
+                cpvAchievement.maxValue = it.totalAchievement.toFloat()
+                cpvAchievement.setValueAnimated(it.totalAchievement.toFloat())
+            }
         })
+
+        retrieveArgs()
 
         return binding.root
     }
@@ -35,5 +56,22 @@ class PrProgressFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun retrieveArgs() {
+        val args: PrPaymentFragmentArgs by navArgs()
+        viewModel.setStudent(args.studentId)
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int =
+            PrProgressViewModel.tabCount
+
+        override fun createFragment(position: Int): Fragment =
+            when(position) {
+                VIEW_TYPE_SCORE -> PrProgressScoreFragment(viewModel)
+                VIEW_TYPE_ATTENDANCE -> PrProgressAttendanceFragment(viewModel)
+                else -> PrProgressAchievementFragment(viewModel)
+            }
     }
 }

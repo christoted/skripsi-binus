@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.R
-import com.example.project_skripsi.databinding.FragmentStScoreAbsensiBinding
-import com.example.project_skripsi.databinding.FragmentStScoreContentBinding
+import com.example.project_skripsi.databinding.FragmentStProgressAttendanceBinding
 import com.example.project_skripsi.module.student.main.score.view.adapter.ScoreContentListener
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
@@ -18,14 +16,14 @@ import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreVi
 class StScoreAbsensiFragment(private val viewModel: StScoreViewModel) : Fragment(), ScoreContentListener {
 
     private lateinit var contentAdapter: StScoreContentAdapter
-    private var _binding: FragmentStScoreAbsensiBinding? = null
+    private var _binding: FragmentStProgressAttendanceBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentStScoreAbsensiBinding.inflate(inflater, container, false)
+        _binding = FragmentStProgressAttendanceBinding.inflate(inflater, container, false)
         contentAdapter = StScoreContentAdapter(viewModel,1, this)
 
         viewModel.sectionDatas.observe(viewLifecycleOwner, {
