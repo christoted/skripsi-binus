@@ -16,6 +16,11 @@ class Constant {
 
         const val TASK_FORM_ESSAY = "essai"
         const val TASK_FORM_MC = "pilihan berganda"
+
+        const val ATTENDANCE_ATTEND = "hadir"
+        const val ATTENDANCE_SICK = "sakit"
+        const val ATTENDANCE_LEAVE = "izin"
+        const val ATTENDANCE_ALPHA = "alfa"
     }
 
 

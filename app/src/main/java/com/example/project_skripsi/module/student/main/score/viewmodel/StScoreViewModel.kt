@@ -123,7 +123,7 @@ class StScoreViewModel : ViewModel() {
                 }
               //  val assignedTask: MutableMap<String, MutableList<AssignedTaskForm>> = mutableMapOf()
 
-                student.assignedAssignments?.filter { it.taskChecked == true }?.let {
+                student.assignedAssignments?.filter { it.isChecked == true }?.let {
                     mutableListOfTask.addAll(it)
                 }
 
@@ -131,7 +131,7 @@ class StScoreViewModel : ViewModel() {
                     _achievements.postValue(it)
                 }
 
-                student.assignedExams?.filter { it.taskChecked == true }?.let {
+                student.assignedExams?.filter { it.isChecked == true }?.let {
                     mutableListOfTask.addAll(it)
                 }
                 student.attendedMeetings.let {
@@ -158,7 +158,7 @@ class StScoreViewModel : ViewModel() {
     }
 
     private fun getTaskFilter(atf: AssignedTaskForm, taskType : String, subjectName : String) =
-        atf.type == taskType && atf.taskChecked == true && atf.subjectName == subjectName
+        atf.type == taskType && atf.isChecked == true && atf.subjectName == subjectName
 
 }
 

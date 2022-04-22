@@ -91,9 +91,13 @@ data class AssignedTaskForm(
 
     val startTime: Date? = null,
 
-    @get: PropertyName("task_checked")
-    @set: PropertyName("task_checked")
-    var taskChecked: Boolean? = null,
+    @get: PropertyName("is_submitted")
+    @set: PropertyName("is_submitted")
+    var isSubmitted: Boolean? = null,
+
+    @get: PropertyName("is_checked")
+    @set: PropertyName("is_checked")
+    var isChecked: Boolean? = null,
 
     @get: PropertyName("subject_name")
     @set: PropertyName("subject_name")

@@ -79,7 +79,8 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
                 title = it.title,
                 type = it.type,
                 startTime = it.startTime,
-                taskChecked = true,
+                isSubmitted = it.isSubmitted,
+                isChecked = true,
                 subjectName = it.subjectName,
                 score = assignedAnswers.sumOf { answer -> answer.score ?: 0 },
                 answers = assignedAnswers
