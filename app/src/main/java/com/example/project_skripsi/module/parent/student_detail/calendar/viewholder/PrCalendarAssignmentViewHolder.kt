@@ -9,7 +9,7 @@ import com.example.project_skripsi.databinding.ItemPrCalendarGeneralBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class PrHomeAssignmentViewHolder(private val binding: ItemPrCalendarGeneralBinding):
+class PrCalendarAssignmentViewHolder(private val binding: ItemPrCalendarGeneralBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: HomeSectionData) {

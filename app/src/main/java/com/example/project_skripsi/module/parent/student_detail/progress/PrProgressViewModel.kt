@@ -30,7 +30,7 @@ class PrProgressViewModel : ViewModel() {
 
         const val VIEW_TYPE_SCORE = 0
         const val VIEW_TYPE_ATTENDANCE = 1
-        const val TYPE_ACHIEVEMENT = 2
+        const val VIEW_TYPE_ACHIEVEMENT = 2
     }
 
 

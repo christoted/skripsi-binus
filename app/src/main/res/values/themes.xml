@@ -17,4 +17,8 @@
     <style name="Theme.ScrollingActivityTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ScrollingActivityTest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

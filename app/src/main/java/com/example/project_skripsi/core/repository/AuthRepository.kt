@@ -5,6 +5,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.example.project_skripsi.core.model.firestore.Administrator
+import com.example.project_skripsi.core.model.firestore.Parent
+import com.example.project_skripsi.core.model.firestore.Student
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -52,16 +56,16 @@ class AuthRepository {
                             FireRepository.instance
                                 .let {
                                     when (loginAs) {
-                                        LOGIN_STUDENT -> it.getStudent(user.uid)
-                                        LOGIN_TEACHER -> it.getTeacher(user.uid)
-                                        LOGIN_PARENT -> it.getParent(user.uid)
-                                        else -> it.getAdministrator(user.uid)
+                                        LOGIN_STUDENT -> it.getItem<Student>(user.uid)
+                                        LOGIN_TEACHER -> it.getItem<Teacher>(user.uid)
+                                        LOGIN_PARENT -> it.getItem<Parent>(user.uid)
+                                        LOGIN_ADMINISTRATOR -> it.getItem<Administrator>(user.uid)
+                                        else -> null
                                     }
-                                }.let { response ->
+                                }?.let { response ->
                                     response.first.observeOnce{ data.postValue(user) }
-                                    response.second.observeOnce{ failure.postValue(true)
+                                    response.second.observeOnce{ failure.postValue(true) }
                                 }
-                            }
                         } ?: failure.postValue(true)
 
                     } else {

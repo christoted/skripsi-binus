@@ -4,12 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.*
+import com.example.project_skripsi.module.parent.home.viewholder.agenda.PrHomeRecyclerViewMainAdapter
+import com.example.project_skripsi.module.parent.home.viewholder.student.StudentViewHolder
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
 class PrHomeFragment : Fragment(), ItemClickListener {
@@ -33,6 +40,12 @@ class PrHomeFragment : Fragment(), ItemClickListener {
                 tablStudent.setupWithViewPager(binding.vpStudent)
                 if (viewModel.getStudentPageCount() <= 1) binding.tablStudent.visibility = View.GONE
             }
+        })
+
+        binding.recyclerviewClass.layoutManager = LinearLayoutManager(context)
+        binding.recyclerviewClass.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        viewModel.sectionData.observe(viewLifecycleOwner, {
+            binding.recyclerviewClass.adapter = PrHomeRecyclerViewMainAdapter(it)
         })
 
         return binding.root
@@ -61,7 +74,7 @@ class PrHomeFragment : Fragment(), ItemClickListener {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             layoutInflater = LayoutInflater.from(context)
-            val binding2 = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
+            val binding2 = ViewRecyclerViewBgwhiteBinding.inflate(layoutInflater, container, false)
 
             binding2.rvContainer.layoutManager = GridLayoutManager(context, 3)
             binding2.rvContainer.adapter = StudentViewHolder(viewModel.getStudents(position), this@PrHomeFragment).getAdapter()
