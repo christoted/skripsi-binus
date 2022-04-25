@@ -97,7 +97,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
             Parent("Zslqzb1vN1cehlD7TYaQBWHERo72",
                 "Arum",
                 "0821123123",
-                listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2")
+                listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                "P4T9d2CagYdNmhc7xFiGYh3l2oH2")
             )
     )
 

@@ -3,6 +3,7 @@ package com.example.project_skripsi.module.common.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.project_skripsi.R
@@ -10,17 +11,21 @@ import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGI
 import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGIN_STUDENT
 import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGIN_TEACHER
 import com.example.project_skripsi.core.repository.dummy.FirestoreDummy
+import com.example.project_skripsi.databinding.ActivityAuthBinding
 import com.example.project_skripsi.module.parent.PrMainActivity
 import com.example.project_skripsi.module.student.main.StMainActivity
 import com.example.project_skripsi.module.teacher.TcMainActivity
 
 class AuthActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAuthBinding
     private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
+
+        binding = ActivityAuthBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
@@ -36,12 +41,17 @@ class AuthActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Error Login", Toast.LENGTH_SHORT).show()
         })
 
-
-//        viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT)
-//        viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER)
-        viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT)
-
+        with(binding) {
+            btnAutoStudent.setOnClickListener{ viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT) }
+            btnAutoTeacher.setOnClickListener{ viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER) }
+            btnAutoParent.setOnClickListener{
+//                Log.d("12345", "test");
+//                Toast.makeText(baseContext, "oi", Toast.LENGTH_SHORT).show()
+                viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT)
+            }
+        }
 //        FirestoreDummy()
+
     }
 
     private fun redirectToStudent() {

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentPrCalendarBinding
@@ -31,6 +32,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
         viewModel = ViewModelProvider(this)[PrCalendarViewModel::class.java]
         _binding = FragmentPrCalendarBinding.inflate(inflater, container, false)
 
+
         binding.calendar.setOnDateChangedListener(this)
         binding.rvEvent.layoutManager = LinearLayoutManager(context)
 
@@ -39,6 +41,8 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
                 binding.calendar.addDecorator(EventDecorator(dayEvent.key, dayEvent.value))
             }
         }
+
+        binding.ivBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 

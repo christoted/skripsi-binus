@@ -1,11 +1,10 @@
 package com.example.project_skripsi.module.parent.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
-import com.example.project_skripsi.R
+import androidx.viewpager.widget.ViewPager
 import com.example.project_skripsi.databinding.*
 import com.example.project_skripsi.module.parent.home.viewholder.agenda.PrHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.parent.home.viewholder.student.StudentViewHolder
@@ -37,10 +36,25 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         viewModel.studentList.observe(viewLifecycleOwner, {
             with(binding) {
                 vpStudent.adapter = ScreenSlidePagerAdapter()
-                tablStudent.setupWithViewPager(binding.vpStudent)
-                if (viewModel.getStudentPageCount() <= 1) binding.tablStudent.visibility = View.GONE
+                val pageCount = viewModel.getStudentPageCount()
+                vpStudent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                    override fun onPageScrollStateChanged(state: Int) {}
+                    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+                    override fun onPageSelected(position: Int) {
+                        imvLeft.visibility = if (position == 0) View.INVISIBLE else View.VISIBLE
+                        imvRight.visibility = if (position+1 == pageCount) View.INVISIBLE else View.VISIBLE
+                    }
+                })
+                if (vpStudent.hasNext()) imvRight.visibility = View.VISIBLE
+                if (vpStudent.hasPrev()) imvLeft.visibility = View.VISIBLE
+
+                imvLeft.setOnClickListener { vpStudent.prevPage() }
+                imvRight.setOnClickListener { vpStudent.nextPage() }
             }
         })
+
+
 
         binding.recyclerviewClass.layoutManager = LinearLayoutManager(context)
         binding.recyclerviewClass.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))

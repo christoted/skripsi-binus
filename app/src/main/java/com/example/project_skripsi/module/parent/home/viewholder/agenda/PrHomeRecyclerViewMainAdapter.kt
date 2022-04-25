@@ -1,14 +1,12 @@
 package com.example.project_skripsi.module.parent.home.viewholder.agenda
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.ItemStHomeMainSectionBinding
-import android.view.animation.Animation
 
 
 class PrHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMainSection>):

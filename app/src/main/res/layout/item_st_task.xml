@@ -35,14 +35,14 @@
                 tools:text="Ujian Tersusah"
                 android:textSize="16sp" />
 
+
+
             <TextView
-                android:id="@+id/tv_score"
+                android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:text="80"/>
+                tools:text="belum terkumpul"
+                android:textAlignment="center"/>
 
         </LinearLayout>
 
@@ -80,12 +80,14 @@
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/tv_status"
+                android:id="@+id/tv_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="belum terkumpul"
-                android:textAlignment="center"/>
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                tools:text="80"/>
 
         </LinearLayout>
 
@@ -134,17 +136,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="durasi"
-                    android:layout_marginBottom="-3dp"/>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:src="@drawable/arrow_duration"/>
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textAlignment="center"-->
+<!--                    android:text="durasi"-->
+<!--                    android:layout_marginBottom="-3dp"/>-->
 
                 <TextView
                     android:id="@+id/tv_duration"
@@ -152,8 +149,14 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    tools:text="24 jam"
-                    android:layout_marginTop="-3dp"/>
+                    tools:text="24 jam"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="11dp"
+                    android:src="@drawable/arrow_duration"/>
+
+
 
             </LinearLayout>
 

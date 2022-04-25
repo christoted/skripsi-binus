@@ -21,38 +21,54 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"/>
 
-    <com.example.project_skripsi.utils.custom_views.WrapContentViewPager
-        android:id="@+id/vp_student"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabl_student"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
+        android:layout_marginBottom="4dp">
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"/>
+        <ImageView
+            android:id="@+id/imv_left"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:visibility="invisible"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:translationY="-8dp"/>
+
+        <com.example.project_skripsi.utils.custom_views.WrapContentViewPager
+            android:id="@+id/vp_student"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/imv_right"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:visibility="invisible"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:translationY="-8dp"/>
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="AGENDA"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:text="Agenda Hari Ini"
         android:textAlignment="center"
-        android:textColor="@color/black"/>
-
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"/>
-
-
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@color/blue_700"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_class"

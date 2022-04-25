@@ -7,8 +7,8 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 
 class WrapContentViewPager : ViewPager {
-    constructor(context: Context?) : super(context!!) {}
-    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
+    constructor(context: Context?) : super(context!!)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var heightMeasureSpecNew = heightMeasureSpec
@@ -35,4 +35,20 @@ class WrapContentViewPager : ViewPager {
         // super has to be called again so the new specs are treated as exact measurements
         super.onMeasure(widthMeasureSpec, heightMeasureSpecNew)
     }
+
+    fun hasNext() = (currentItem + 1) < (adapter?.count ?: 0)
+
+    fun hasPrev() = currentItem > 0
+
+    fun nextPage() {
+        if (!hasNext()) return
+        setCurrentItem(currentItem+1, true)
+    }
+
+    fun prevPage() {
+        if (!hasPrev()) return
+        setCurrentItem(currentItem-1, true)
+    }
+
+
 }

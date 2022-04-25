@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
@@ -31,6 +32,8 @@ class PrAssignmentFragment : Fragment() {
 
         binding.vpContainer.adapter = ScreenSlidePagerAdapter()
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
+
+        binding.ivBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 

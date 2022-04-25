@@ -2,6 +2,8 @@ package com.example.project_skripsi.module.parent.student_detail.progress
 
 import android.animation.LayoutTransition
 import android.os.Bundle
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,9 +54,15 @@ class PrProgressFragment : Fragment() {
                         flScore.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
                         flAttendance.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
                         flAchievement.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-                        flScore.updateLayoutParams { height = if (position == VIEW_TYPE_SCORE) 180 else 160 }
-                        flAttendance.updateLayoutParams { height = if (position == VIEW_TYPE_ATTENDANCE) 180 else 160 }
-                        flAchievement.updateLayoutParams { height = if (position == VIEW_TYPE_ACHIEVEMENT) 180 else 160 }
+                        Log.d("12345-", flScore.height.toString())
+                        Log.d("12345-", flAttendance.height.toString())
+
+                        val circleExpand = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90f, resources.displayMetrics).toInt()
+                        val circleShrink = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt()
+
+                        flScore.updateLayoutParams { height = if (position == VIEW_TYPE_SCORE) circleExpand else circleShrink }
+                        flAttendance.updateLayoutParams { height = if (position == VIEW_TYPE_ATTENDANCE) circleExpand else circleShrink }
+                        flAchievement.updateLayoutParams { height = if (position == VIEW_TYPE_ACHIEVEMENT) circleExpand else circleShrink }
                     }
                 }
             }

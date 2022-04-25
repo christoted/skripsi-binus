@@ -6,17 +6,38 @@
     android:orientation="vertical"
     tools:context=".module.parent.student_detail.announcement.PrAnnouncementFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:text="Pengumuman"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"/>
+        android:layout_height="?actionBarSize"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Pengumuman"
+            android:textColor="@color/black"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="16dp"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_container"

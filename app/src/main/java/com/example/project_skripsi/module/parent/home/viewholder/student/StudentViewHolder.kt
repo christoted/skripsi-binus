@@ -17,7 +17,7 @@ class StudentViewHolder(private val dataSet : List<Student>, private val listene
             val view = viewBinding as ItemPrHomeStudentBinding
             with(view) {
                 tvStudentName.text = item.name
-                root.setOnClickListener { item.id?.let { id -> listener.onItemClick(id) } }
+                ivStudentProfile.setOnClickListener { item.id?.let { id -> listener.onItemClick(id) } }
             }
         }
         return adapter
