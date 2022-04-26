@@ -34,8 +34,7 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Task
 
             with(view) {
                 tvTitle.text = item.title
-                if (item.score == null) tvScore.visibility = View.GONE
-                else tvScore.text = item.score.toString()
+                tvScore.text = if (item.score == null) "-" else item.score.toString()
                 tvSubjectName.text = item.subjectName
                 tvClassName.visibility = View.GONE
                 tvStatus.text = item.status

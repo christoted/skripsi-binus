@@ -25,9 +25,8 @@ class TaskViewHolder(
             val view = viewBinding as ItemStTaskBinding
             with(view) {
                 tvTitle.text = item.title
-                if (item.score == null) tvScore.visibility = View.GONE
-                else tvScore.text = item.score.toString()
-                tvSubjectName.visibility = View.GONE
+                tvScore.text = if (item.score == null) "-" else item.score.toString()
+                tvSubjectName.text = ("nilai")
                 tvClassName.visibility = View.GONE
                 tvStatus.text = item.status
 

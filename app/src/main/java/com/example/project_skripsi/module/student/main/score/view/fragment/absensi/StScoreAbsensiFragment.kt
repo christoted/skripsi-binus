@@ -26,7 +26,7 @@ class StScoreAbsensiFragment(private val viewModel: StScoreViewModel) : Fragment
         _binding = FragmentStProgressAttendanceBinding.inflate(inflater, container, false)
         contentAdapter = StScoreContentAdapter(viewModel,1, this)
 
-        viewModel.sectionDatas.observe(viewLifecycleOwner, {
+        viewModel.sectionScore.observe(viewLifecycleOwner, {
             with(binding.recyclerView) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)

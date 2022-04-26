@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -117,14 +118,11 @@ class TcHomeViewModel: ViewModel() {
             it.mapIndexed { index, studyClass ->
                 studyClass.subjects?.firstOrNull { item ->
                     item.subjectName == uids[index].subjectName
-                }.let {
-                    subject ->
-                    // TODO: Add Here
-                    subject?.classMeetings?.filter { it.startTime?.let { date ->
-                        DateHelper.convertDateToCalendarDay(
-                            date
-                        )
-                    } == DateHelper.getCurrentDateNow() }?.map { meeting ->
+                }.let { subject ->
+
+                    subject?.classMeetings?.filter {
+                        it.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
+                    }?.map { meeting ->
                         meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
                     }
 

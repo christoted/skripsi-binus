@@ -29,7 +29,7 @@ class PrAnnouncementFragment : Fragment() {
             binding.rvContainer.adapter = AnnouncementViewHolder(it).getAdapter()
         })
 
-        binding.ivBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
     }

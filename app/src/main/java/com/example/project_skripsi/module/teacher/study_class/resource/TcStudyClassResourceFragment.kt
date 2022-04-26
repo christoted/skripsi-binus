@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcStudyClassResourceBinding
-import com.example.project_skripsi.module.teacher.study_class.teaching.TeachingStudentViewHolder
 
 
 class TcStudyClassResourceFragment : Fragment() {

@@ -209,10 +209,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:tabIndicatorColor="@color/purple_500"
+        app:tabIndicatorColor="@color/blue_700"
         app:tabMode="fixed"
-        app:tabRippleColor="@color/purple_200"
-        app:tabSelectedTextColor="@color/purple_500"
+        app:tabRippleColor="@color/blue_200"
+        app:tabSelectedTextColor="@color/blue_700"
         app:tabTextColor="@color/black"
         android:layout_marginHorizontal="8dp"
         android:padding="0dp"/>

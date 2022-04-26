@@ -62,13 +62,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:padding="6dp"
-        android:text="Agenda hari ini"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:text="Agenda Hari Ini"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="18sp" />
+        android:background="@color/blue_700"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_class"

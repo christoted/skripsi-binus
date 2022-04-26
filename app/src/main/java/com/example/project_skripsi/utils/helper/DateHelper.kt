@@ -9,8 +9,19 @@ class DateHelper {
 
     companion object {
 
+//        const val EDMY = "EEEE, dd - MM - yyyy"
+        const val E = "EEEE"
         const val DMY = "dd - MM - yyyy"
         const val hm = "HH:mm"
+        val mapWeekDay = mapOf(
+            "Monday" to "Senin",
+            "Tuesday" to "Selasa",
+            "Wednesday" to "Rabu",
+            "Thursday" to "Kamis",
+            "Friday" to "Jumat",
+            "Saturday" to "Sabtu",
+            "Sunday" to "Minggu",
+        )
 
         fun getCurrentDate() : Date = Calendar.getInstance().time
 
@@ -24,6 +35,12 @@ class DateHelper {
         @SuppressLint("SimpleDateFormat")
         fun getFormattedDateTime(format: String?, date: Date): String? {
             return SimpleDateFormat(format).format(date.time)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getFormattedDateTimeWithWeekDay(date: Date): String? {
+            val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
+            return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }
 
         fun updateDate(date : Date, time : Long) : Date{
@@ -50,7 +67,12 @@ class DateHelper {
             return currentDate.time
         }
 
-
+        fun getTomorrow() : Date{
+            val c = Calendar.getInstance()
+            c.time = Date()
+            c.add(Calendar.DATE, 1)
+            return c.time
+        }
 
 
     }

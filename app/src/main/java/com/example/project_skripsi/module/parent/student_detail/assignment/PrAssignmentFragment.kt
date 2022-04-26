@@ -33,7 +33,7 @@ class PrAssignmentFragment : Fragment() {
         binding.vpContainer.adapter = ScreenSlidePagerAdapter()
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
-        binding.ivBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 

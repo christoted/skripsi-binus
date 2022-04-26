@@ -87,8 +87,6 @@ class PrProgressViewModel : ViewModel() {
 
     }
 
-
-
     private fun loadCurrentStudent(uid: String) {
         FireRepository.instance.getItem<Student>(uid).first.observeOnce { student ->
 

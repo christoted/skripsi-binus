@@ -4,30 +4,26 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.Achievement
-import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
-import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStProgressAchievementBinding
 import com.example.project_skripsi.databinding.ItemStProgressAttendanceBinding
 import com.example.project_skripsi.databinding.ItemStProgressScoreBinding
 import com.example.project_skripsi.module.student.main.score.view.StScoreFragmentDirections
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
 
 interface ScoreContentListener {
     fun onAttendanceTapped()
 }
 
 class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val tab: Int, private val listener: ScoreContentListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val isExpanded = BooleanArray(viewModel.sectionDatas.value?.size ?: 0)
+    private val isExpanded = BooleanArray(viewModel.sectionScore.value?.size ?: 0)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when(tab) {
@@ -62,7 +58,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
 
         when(tab) {
             0 -> {
-                viewModel.sectionDatas.value?.let {
+                viewModel.sectionScore.value?.let {
                     Log.d("Data Subject", ": " + position)
                     val singleData = it[position]
                     val adapter = StScoreContentChildAdapter(viewModel, singleData)
@@ -70,7 +66,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 }
             }
             1 -> {
-                viewModel.sectionAttendances.value?.let {
+                viewModel.sectionAttendance.value?.let {
                     val singleData = it[position]
                     (holder as StScoreAttendanceViewHolder).bind(singleData)
                 }
@@ -84,7 +80,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         }
     }
 
-    override fun getItemCount(): Int = viewModel.sectionDatas.value?.size?: viewModel.achievements.value!!.size
+    override fun getItemCount(): Int = viewModel.sectionScore.value?.size?: viewModel.achievements.value!!.size
 
     inner class StScoreContentViewHolder(private val binding: ItemStProgressScoreBinding): RecyclerView.ViewHolder(binding.root) {
 

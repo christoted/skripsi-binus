@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentStTaskExamBinding
@@ -22,13 +23,15 @@ class StTaskExamFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel = ViewModelProvider(this)[StTaskExamViewModel::class.java]
         _binding = FragmentStTaskExamBinding.inflate(inflater, container, false)
 
         binding.vpContainer.adapter = ScreenSlidePagerAdapter()
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
+
+        binding.imvBack.setOnClickListener { activity?.finish() }
 
         return binding.root
     }

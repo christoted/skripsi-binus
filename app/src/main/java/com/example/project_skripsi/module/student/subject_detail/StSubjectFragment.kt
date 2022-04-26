@@ -48,6 +48,8 @@ class StSubjectFragment : Fragment(), ItemClickListener {
             }
         })
 
+        binding.imvBack.setOnClickListener { activity?.finish() }
+
         retrieveArgs()
 
         return binding.root
@@ -55,7 +57,7 @@ class StSubjectFragment : Fragment(), ItemClickListener {
 
     private fun retrieveArgs() {
         val args: StSubjectFragmentArgs by navArgs()
-        binding.subjectName.text = args.subjectName
+        binding.tvSubjectName.text = args.subjectName
         viewModel.setSubject(args.subjectName)
     }
 

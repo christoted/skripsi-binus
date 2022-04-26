@@ -45,24 +45,26 @@
                 android:text="Materi"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
-            <Space
+
+            <androidx.legacy.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
+
             <Button
                 android:id="@+id/btn_add"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:text="Add" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_tc_resource"
-            />
+            tools:listitem="@layout/item_tc_resource" />
 
     </LinearLayout>
 

@@ -55,12 +55,11 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         })
 
 
-
-        binding.recyclerviewClass.layoutManager = LinearLayoutManager(context)
-        binding.recyclerviewClass.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        viewModel.sectionData.observe(viewLifecycleOwner, {
-            binding.recyclerviewClass.adapter = PrHomeRecyclerViewMainAdapter(it)
-        })
+        with(binding.recyclerviewClass) {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            viewModel.sectionData.observe(viewLifecycleOwner, { adapter = PrHomeRecyclerViewMainAdapter(it) })
+        }
 
         return binding.root
     }

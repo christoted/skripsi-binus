@@ -50,7 +50,7 @@ class AuthActivity : AppCompatActivity() {
                 viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT)
             }
         }
-//        FirestoreDummy()
+        FirestoreDummy()
 
     }
 

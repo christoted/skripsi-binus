@@ -24,7 +24,7 @@ class StScorePencapainFragment(private val viewModel: StScoreViewModel) : Fragme
         _binding = FragmentStProgressAchievementBinding.inflate(inflater, container, false)
         contentAdapter = StScoreAchievementAdapter(viewModel)
 
-        viewModel.sectionDatas.observe(viewLifecycleOwner, {
+        viewModel.sectionScore.observe(viewLifecycleOwner, {
             with(binding.recyclerView) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)

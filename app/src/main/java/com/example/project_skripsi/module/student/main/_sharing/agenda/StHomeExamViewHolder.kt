@@ -23,7 +23,7 @@ class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, pr
             tvLocation.text = data.location
             tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
-            btnResource.visibility = View.GONE
+            btnResource.visibility = View.INVISIBLE
             btnClass.text = ("Ujian")
             btnClass.setOnClickListener {
                 data.id?.let { id -> listener.onTaskFormItemClicked(id, subjectName = data.subjectName ?: "") }

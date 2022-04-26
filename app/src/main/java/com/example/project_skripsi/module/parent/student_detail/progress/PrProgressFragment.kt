@@ -54,8 +54,6 @@ class PrProgressFragment : Fragment() {
                         flScore.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
                         flAttendance.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
                         flAchievement.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-                        Log.d("12345-", flScore.height.toString())
-                        Log.d("12345-", flAttendance.height.toString())
 
                         val circleExpand = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90f, resources.displayMetrics).toInt()
                         val circleShrink = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt()

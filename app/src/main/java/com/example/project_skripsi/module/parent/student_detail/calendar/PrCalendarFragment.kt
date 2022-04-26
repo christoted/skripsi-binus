@@ -13,9 +13,12 @@ import com.example.project_skripsi.databinding.FragmentPrCalendarBinding
 import com.example.project_skripsi.databinding.FragmentPrHomeBinding
 import com.example.project_skripsi.module.student.main.calendar.StCalendarAdapter
 import com.example.project_skripsi.utils.decorator.EventDecorator
+import com.example.project_skripsi.utils.helper.DateHelper
+import com.google.android.material.appbar.AppBarLayout
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
+import kotlin.math.abs
 
 class PrCalendarFragment : Fragment(), OnDateSelectedListener {
 
@@ -32,6 +35,14 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
         viewModel = ViewModelProvider(this)[PrCalendarViewModel::class.java]
         _binding = FragmentPrCalendarBinding.inflate(inflater, container, false)
 
+        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                binding.collapseLayout.title =
+                    DateHelper.getFormattedDateTimeWithWeekDay(viewModel.currentSelectedDate.date)
+            } else {
+                binding.collapseLayout.title = ""
+            }
+        })
 
         binding.calendar.setOnDateChangedListener(this)
         binding.rvEvent.layoutManager = LinearLayoutManager(context)
@@ -42,7 +53,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
             }
         }
 
-        binding.ivBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 
@@ -54,6 +65,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
         date: CalendarDay,
         selected: Boolean
     ) {
+        viewModel.currentSelectedDate = date
         binding.rvEvent.adapter = PrCalendarAdapter(viewModel.currentDataList[date] ?: emptyList())
     }
 

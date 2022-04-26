@@ -13,7 +13,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/iv_back"
+            android:id="@+id/imv_back"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:padding="8dp"

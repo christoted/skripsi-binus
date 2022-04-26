@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcHomeBinding
-import com.example.project_skripsi.module.student.main.home.view.StHomeFragmentDirections
-import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
-import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
-import com.example.project_skripsi.module.student.task.StTaskViewModel
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.module.teacher.main.home.adapter.TcHomeMainAdapter
 import com.example.project_skripsi.module.teacher.main.home.viewmodel.TcHomeViewModel
-import com.example.project_skripsi.module.teacher.study_class.homeroom.TcStudyClassHomeroomFragmentDirections
 
 class TcHomeFragment : Fragment(), TcAgendaItemListener {
 
@@ -31,7 +25,7 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewModel = ViewModelProvider(this)[TcHomeViewModel::class.java]
         _binding = FragmentTcHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -53,15 +47,15 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
         }
 
         // Main Section
-        viewModel.sectionData.observe(viewLifecycleOwner) {
-            val mainSectionAdapter = TcHomeMainAdapter(it, this)
-            with(binding.mainRecyclerView) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
+        with(binding.mainRecyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            viewModel.sectionData.observe(viewLifecycleOwner) {
+                val mainSectionAdapter = TcHomeMainAdapter(it, this@TcHomeFragment)
                 adapter = mainSectionAdapter
-                addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             }
         }
+
     }
 
     override fun onDestroyView() {

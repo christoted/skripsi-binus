@@ -24,7 +24,7 @@ class StScoreContentFragment(private val viewModel: StScoreViewModel) : Fragment
     ): View {
         // Inflate the layout for this fragment
        _binding = FragmentStProgressScoreBinding.inflate(inflater, container, false)
-        viewModel.sectionDatas.observe(viewLifecycleOwner, {
+        viewModel.sectionScore.observe(viewLifecycleOwner, {
             with(binding.recyclerView) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)

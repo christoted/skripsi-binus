@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.ItemStHomeMainSectionBinding
 
@@ -36,15 +37,19 @@ class PrHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMa
                 sectionTitle.text = item.sectionName
                 sectionTitleCount.text = item.sectionItem.count().toString()
 
-                sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
-                btnShowHide.setOnClickListener {
-                    isExpanded[absoluteAdapterPosition] = !isExpanded[absoluteAdapterPosition]
-                    sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
-                    btnShowHide.text = if (isExpanded[absoluteAdapterPosition]) "[sembunyikan]" else "[tampilkan]"
-                }
                 with(binding.sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
                     sectionItemsRecyclerView.adapter = PrHomeRecyclerViewChildAdapter(item)
+                }
+
+                sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
+                imvShowHide.setOnClickListener {
+                    isExpanded[absoluteAdapterPosition] = !isExpanded[absoluteAdapterPosition]
+                    sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
+                    imvShowHide.setImageResource(
+                        if (isExpanded[absoluteAdapterPosition]) R.drawable.ic_baseline_arrow_drop_up_24
+                        else R.drawable.ic_baseline_arrow_drop_down_24
+                    )
                 }
             }
         }

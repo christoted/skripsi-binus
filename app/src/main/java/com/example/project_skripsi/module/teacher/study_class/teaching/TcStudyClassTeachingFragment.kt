@@ -62,6 +62,8 @@ class TcStudyClassTeachingFragment : Fragment() {
             )
         }
 
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+
         return binding.root
     }
 

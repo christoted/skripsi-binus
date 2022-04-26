@@ -8,6 +8,7 @@ import com.example.project_skripsi.core.model.local.Attendance
 import com.example.project_skripsi.databinding.ItemStSubjectAttendanceBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.TextHelper
 
 class StSubjectAttendanceAdapter(private val assignmentList: List<Attendance>) :
     RecyclerView.Adapter<StSubjectAttendanceAdapter.AttendanceViewHolder>() {
@@ -36,7 +37,7 @@ class StSubjectAttendanceAdapter(private val assignmentList: List<Attendance>) :
 
                 tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, item.startTime!!)}"
                         + " - ${DateHelper.getFormattedDateTime(DateHelper.hm, item.endTime!!)}")
-                tvStatus.text = item.status
+                tvStatus.text = item.status?.let { TextHelper.capitalize(it) }
 
             }
         }

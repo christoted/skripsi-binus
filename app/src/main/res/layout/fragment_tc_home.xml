@@ -56,19 +56,24 @@
                 android:src="@drawable/ic_baseline_settings_24"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Today's Agenda"
+        android:padding="12dp"
         android:textSize="16sp"
+        android:text="Agenda Hari Ini"
+        android:textAlignment="center"
+        android:textColor="@color/white"
         android:textStyle="bold"
-        android:textAlignment="center"/>
+        android:background="@color/blue_700"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_tc_home_main_section"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        android:paddingBottom="?attr/actionBarSize"/>
 </LinearLayout>
 

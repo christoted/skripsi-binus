@@ -17,7 +17,8 @@
             android:layout_weight="3"
             android:layout_marginStart="24dp"
             android:textColor="@color/black"
-            android:text="Mata Pelajaran"/>
+            android:text="Mata Pelajaran"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="0dp"
@@ -25,7 +26,8 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:text="UTS"/>
+            android:text="UTS"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="0dp"
@@ -33,7 +35,8 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:text="UAS"/>
+            android:text="UAS"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="0dp"
@@ -41,7 +44,8 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:text="Tugas"/>
+            android:text="Tugas"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="0dp"
@@ -50,7 +54,8 @@
             android:layout_marginEnd="16dp"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:text="Total"/>
+            android:text="Total"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

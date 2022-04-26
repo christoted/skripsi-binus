@@ -42,6 +42,18 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             DateHelper.getCurrentDate(),
                             null
                         ),
+                        Payment("Uang SPP2",
+                            200000,
+                            "5271123456",
+                            DateHelper.getCurrentDate(),
+                            DateHelper.getCurrentDate()
+                        ),
+                        Payment("Uang SPP3",
+                            200000,
+                            "5271123456",
+                            DateHelper.getTomorrow(),
+                            null
+                        ),
                     ),
                     listOf(
                         AttendedMeeting(
@@ -151,11 +163,76 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 "Lomba Sekolah 2",
                 "Kategori lomba dibagi menjadi 4 cabang",
                 DateHelper.getCurrentDate()),
-        "5vlpa3hwTPQcfHZ2L66z" to
+        "5vlpa3hwTPQcfHZ2L661" to
             Announcement("5vlpa3hwTPQcfHZ2L66z",
                 "Pengumuman Sekolah 2",
                 "Pembelajaran jarak jauh dikarenakan covid 19",
                 DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L662" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L663" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L664" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L665" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L666" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L667" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L668" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L669" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L660" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L66a" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L66b" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L66v" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
+        "5vlpa3hwTPQcfHZ2L66c" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentDate()),
     )
 
 

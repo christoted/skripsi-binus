@@ -54,7 +54,7 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
                         5 -> choice5.isChecked = true
                     }
                 }
-
+                tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
             }
         }
     }
@@ -64,7 +64,8 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
             with(binding) {
                 tvNumber.text = ("${position+1}.")
                 tvTitle.text = item.title
-                item.answer?.text?.let { edtAnswer.setText(it.toString()) }
+                item.answer?.text?.let { edtAnswer.setText(it) }
+                tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
             }
         }
     }

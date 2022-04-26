@@ -5,6 +5,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.databinding.ItemStPaymentVariantBinding
+import com.example.project_skripsi.module.parent.student_detail.payment.variant.PrPaymentVariantViewHolder
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.CurrencyHelper
@@ -31,11 +32,15 @@ class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet
                 tvDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, item.paymentDeadline!!)
             }
             when(taskType){
-                TYPE_PAID -> {
+                PrPaymentVariantViewHolder.TYPE_PAID -> {
                     view.tvDateTitle.text = "Terbayar pada"
+                    view.viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.payment_complete, null))
                 }
-                TYPE_UNPAID -> {
-                    view.llContainer.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.payment_late, null))
+                PrPaymentVariantViewHolder.TYPE_UNPAID -> {
+                    view.viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.payment_late, null))
+                }
+                PrPaymentVariantViewHolder.TYPE_UPCOMING -> {
+                    view.viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.payment_incoming, null))
                 }
             }
         }

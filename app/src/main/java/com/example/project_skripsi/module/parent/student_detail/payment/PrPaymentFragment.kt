@@ -48,7 +48,7 @@ class PrPaymentFragment : Fragment() {
             tab.text = StPaymentViewModel.tabHeader[position]
         }.attach()
 
-        binding.ivBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 
