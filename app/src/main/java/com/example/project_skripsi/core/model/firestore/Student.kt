@@ -116,6 +116,10 @@ data class AttendedMeeting (
 
     val status: String? = null,
 
+    val startTime: Date? = null,
+
+    val endTime: Date? = null,
+
     @get: PropertyName("subject_name")
     @set: PropertyName("subject_name")
     var subjectName: String? = null
@@ -133,7 +137,9 @@ data class Achievement (
 @IgnoreExtraProperties
 data class Answer (
 
-    val text: String? = null,
+    @get: PropertyName("answer_text")
+    @set: PropertyName("answer_text")
+    var answerText: String? = null,
 
     val score: Int? = null,
 

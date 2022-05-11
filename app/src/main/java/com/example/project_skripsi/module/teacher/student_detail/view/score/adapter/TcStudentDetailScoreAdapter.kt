@@ -13,9 +13,9 @@ import com.example.project_skripsi.core.model.firestore.Achievement
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
-import com.example.project_skripsi.databinding.ItemStScoreAbsensiBinding
-import com.example.project_skripsi.databinding.ItemStScoreContentBinding
-import com.example.project_skripsi.databinding.ItemStScorePencapaianBinding
+import com.example.project_skripsi.databinding.ItemStProgressAchievementBinding
+import com.example.project_skripsi.databinding.ItemStProgressAttendanceBinding
+import com.example.project_skripsi.databinding.ItemStProgressScoreBinding
 import com.example.project_skripsi.module.student.main.score.view.StScoreFragmentDirections
 import com.example.project_skripsi.module.student.main.score.view.adapter.ScoreContentListener
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentChildAdapter
@@ -29,7 +29,7 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when(tab) {
             0 -> {
-                val item = ItemStScoreContentBinding.inflate(
+                val item = ItemStProgressScoreBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -37,15 +37,15 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
                 return StScoreContentViewHolder(item)
             }
             1 -> {
-                val item = ItemStScoreAbsensiBinding.inflate(
+                val item = ItemStProgressAttendanceBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
                 return StScoreAttendanceViewHolder(item)
             }
-            2 -> {
-                val item = ItemStScorePencapaianBinding.inflate(
+            else -> {
+                val item = ItemStProgressAchievementBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -53,12 +53,6 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
                 return StScoreAchievementViewHolder(item)
             }
         }
-        val item = ItemStScoreContentBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return StScoreContentViewHolder(item)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -86,7 +80,7 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
 
     override fun getItemCount(): Int = viewModel.sectionDatas.value?.size ?: 0
 
-    inner class StScoreContentViewHolder(private val binding: ItemStScoreContentBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreContentViewHolder(private val binding: ItemStProgressScoreBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ScoreMainSection, adapter: TcStudentDetailScoreChildAdapter, position: Int) {
             with(binding) {
@@ -110,7 +104,7 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
         }
     }
 
-    inner class StScoreAttendanceViewHolder(private val binding: ItemStScoreAbsensiBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreAttendanceViewHolder(private val binding: ItemStProgressAttendanceBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: AttendanceMainSection) {
             with(binding) {
                 //title.text = item
@@ -119,7 +113,6 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
                 tvPresenceSick.text = item.totalSick.toString()
                 tvPresenceLeave.text = item.totalLeave.toString()
                 tvPresenceNoReason.text = item.totalAlpha.toString()
-                viewIndicator.setBackgroundColor(Color.parseColor("#006400"))
 //                root.setOnClickListener {
 //                    listener.onAttendanceTapped()
 //                    val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()
@@ -130,11 +123,11 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
         }
     }
 
-    inner class StScoreAchievementViewHolder(private val binding: ItemStScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreAchievementViewHolder(private val binding: ItemStProgressAchievementBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Achievement) {
             with(binding) {
-                title.text = item.title
-                deskripsi.text = item.description
+                tvTitle.text = item.title
+                tvDescription.text = item.description
             }
         }
     }

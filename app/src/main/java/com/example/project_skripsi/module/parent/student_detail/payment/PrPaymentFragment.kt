@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.databinding.FragmentPrPaymentBinding
@@ -46,6 +47,8 @@ class PrPaymentFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
             tab.text = StPaymentViewModel.tabHeader[position]
         }.attach()
+
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 

@@ -7,27 +7,18 @@
     android:orientation="vertical"
     tools:context=".module.teacher.main.study_class.TcStudyClassFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Daftar Kelas"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:padding="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Wali Kelas"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
@@ -38,7 +29,7 @@
             android:minWidth="100dp"
             android:text="XII - IPA - 10"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
 
     </LinearLayout>
@@ -53,13 +44,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mata Pelajaran"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
@@ -76,13 +67,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Kelas"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 

@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.ScoreSectionData
-import com.example.project_skripsi.databinding.ItemStScoreContentCollapseBinding
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.databinding.ItemStProgressScoreChildBinding
 import com.example.project_skripsi.module.teacher.student_detail.viewmodel.TcStudentDetailViewModel
 
 
@@ -17,7 +16,7 @@ class TcStudentDetailScoreChildAdapter(private val viewModel: TcStudentDetailVie
         parent: ViewGroup,
         viewType: Int
     ): StScoreContentChildViewHolder {
-        val itemScoreContentChildV = ItemStScoreContentCollapseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemScoreContentChildV = ItemStProgressScoreChildBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StScoreContentChildViewHolder(itemScoreContentChildV)
     }
 
@@ -31,7 +30,7 @@ class TcStudentDetailScoreChildAdapter(private val viewModel: TcStudentDetailVie
     }
 
 
-    inner class StScoreContentChildViewHolder(private val binding: ItemStScoreContentCollapseBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreContentChildViewHolder(private val binding: ItemStProgressScoreChildBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(sectionData: ScoreSectionData) {
             binding.subject.text = (sectionData as AssignedTaskForm).title
             binding.score.text = (sectionData as AssignedTaskForm).score.toString()

@@ -52,23 +52,27 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
                     "2" -> imvChoice2
                     "3" -> imvChoice3
                     "4" -> imvChoice4
-                    else -> imvChoice5
-                }.setImageResource(R.drawable.ic_indicator_answer_key)
+                    "5" -> imvChoice5
+                    else -> null
+                }?.setImageResource(R.drawable.ic_indicator_answer_key)
 
                 tvTitle.text = item.title
 
-                when(item.answer?.text) {
+                when(item.answer?.answerText) {
                     "1" -> llChoice1
                     "2" -> llChoice2
                     "3" -> llChoice3
                     "4" -> llChoice4
-                    else -> llChoice5
-                }.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!,
-                    if (item.scoreWeight == item.answer?.score) R.color.answer_correct
+                    "5" -> llChoice5
+                    else -> null
+                }?.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!,
+                    if (item.answerKey == item.answer?.answerText) R.color.answer_correct
                     else R.color.answer_incorrect,
                     null
                 ))
-                tvScore.text = if (item.scoreWeight == item.answer?.score) item.scoreWeight.toString() else "0"
+
+                tvScoreWeight.text = ("Nilai (0/${item.scoreWeight}): ")
+                tvScore.text = if (item.answerKey == item.answer?.answerText) item.scoreWeight.toString() else "0"
             }
         }
     }
@@ -78,7 +82,7 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
             with(binding) {
                 tvNumber.text = ("${position+1}.")
                 tvTitle.text = item.title
-                item.answer?.text?.let { tvAnswer.text = it.toString() }
+                item.answer?.answerText?.let { tvAnswer.text = it }
                 tvScoreWeight.text = ("Nilai (0 - ${item.scoreWeight}): ")
                 item.answer?.score.let { edtScore.setText(it.toString()) }
                 btnSetZero.text = ("SET 0")

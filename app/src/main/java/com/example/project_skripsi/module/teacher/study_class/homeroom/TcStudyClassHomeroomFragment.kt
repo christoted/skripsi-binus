@@ -45,6 +45,8 @@ class TcStudyClassHomeroomFragment : Fragment(), ItemClickListener {
             binding.rvItem.adapter = HomeroomStudentViewHolder(viewModel, it, this).getAdapter()
         })
 
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+
         return binding.root
     }
 

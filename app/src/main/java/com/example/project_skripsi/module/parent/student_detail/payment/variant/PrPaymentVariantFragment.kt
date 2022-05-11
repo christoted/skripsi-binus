@@ -9,11 +9,12 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.databinding.FragmentStPaymentVariantBinding
+import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail.payment.PrPaymentViewModel
 
 class PrPaymentVariantFragment(private val viewModel: PrPaymentViewModel, private val viewType: Int) : Fragment() {
 
-    private var _binding: FragmentStPaymentVariantBinding? = null
+    private var _binding: ViewRecyclerViewBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -21,11 +22,11 @@ class PrPaymentVariantFragment(private val viewModel: PrPaymentViewModel, privat
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentStPaymentVariantBinding.inflate(inflater, container, false)
+        _binding = ViewRecyclerViewBinding.inflate(inflater, container, false)
 
-        binding.rvSubjectContainer.layoutManager = LinearLayoutManager(context)
+        binding.rvContainer.layoutManager = LinearLayoutManager(context)
         getPaymentVariant().observe(viewLifecycleOwner, {
-            binding.rvSubjectContainer.adapter = PrPaymentVariantViewHolder(viewType, getPaymentVariant().value!!).getAdapter()
+            binding.rvContainer.adapter = PrPaymentVariantViewHolder(viewType, getPaymentVariant().value!!).getAdapter()
         })
 
         return binding.root

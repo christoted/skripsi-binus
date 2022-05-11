@@ -15,6 +15,7 @@ import com.example.project_skripsi.module.student.task.form.StFormAdapter
 import com.example.project_skripsi.module.student.task.form.StTaskFormFragmentArgs
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DisplayHelper
 
 class TcPreviewTaskFormFragment : Fragment() {
 
@@ -31,8 +32,6 @@ class TcPreviewTaskFormFragment : Fragment() {
         viewModel = ViewModelProvider(this)[TcPreviewTaskFormViewModel::class.java]
         _binding = FragmentTcPreviewTaskFormBinding.inflate(inflater, container, false)
 
-        retrieveArgs()
-
         binding.rvQuestion.layoutManager = LinearLayoutManager(context)
         binding.rvQuestion.isNestedScrollingEnabled = true
         viewModel.taskForm.observe(viewLifecycleOwner, { taskForm ->
@@ -47,13 +46,15 @@ class TcPreviewTaskFormFragment : Fragment() {
                     tvEndDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
                     tvEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
                 }
-                taskForm.questions?.let {
-                    rvQuestion.adapter = TcPreviewFormAdapter(it)
-                }
+                taskForm.questions?.let { rvQuestion.adapter = TcPreviewFormAdapter(it) }
+                val durationDis = DateHelper.getDuration(taskForm.startTime, taskForm.endTime)
+                tvDuration.text = DisplayHelper.getDurationDisplay(durationDis.first, durationDis.second)
             }
         })
 
         viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
+
+        retrieveArgs()
 
         return binding.root
     }

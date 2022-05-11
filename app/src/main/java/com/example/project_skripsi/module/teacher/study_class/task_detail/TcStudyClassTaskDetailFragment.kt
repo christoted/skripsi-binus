@@ -33,8 +33,6 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
         viewModel = ViewModelProvider(this)[TcStudyClassTaskDetailViewModel::class.java]
         _binding = FragmentTcStudyClassTaskDetailBinding.inflate(inflater, container, false)
 
-        retrieveArgs()
-
         binding.btnPreviewForm.setOnClickListener {
             view?.findNavController()?.navigate(
                 TcStudyClassTaskDetailFragmentDirections.actionTcStudyClassTaskDetailFragmentToTcPreviewTaskFormFragment(
@@ -43,30 +41,15 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
             )
         }
 
-        viewModel.studyClass.observe(viewLifecycleOwner, {
-            binding.tvClassName.text = it.name
-        })
-
-        viewModel.taskForm.observe(viewLifecycleOwner, {
-            with(binding) {
-                tvTaskTitle.text = it.title
-
-                it.startTime?.let {
-                    tvStartDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
-                    tvStartTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
-                }
-
-                it.endTime?.let {
-                    tvEndDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
-                    tvEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
-                }
-
-                tvDuration.text = ("${TaskFormStatus.getDuration(it)} menit")
-            }
-        })
+        viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
+        viewModel.taskForm.observe(viewLifecycleOwner, { binding.tvTaskTitle.text = it.title })
 
         binding.vpContainer.adapter = ScreenSlidePagerAdapter(this)
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
+
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+
+        retrieveArgs()
 
         return binding.root
     }

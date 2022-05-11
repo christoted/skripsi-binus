@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStTaskFormBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DisplayHelper
 
 class StTaskFormFragment : Fragment() {
 
@@ -44,6 +45,8 @@ class StTaskFormFragment : Fragment() {
                     tvEndDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
                     tvEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
                 }
+                val durationDis = DateHelper.getDuration(taskForm.startTime, taskForm.endTime)
+                tvDuration.text = DisplayHelper.getDurationDisplay(durationDis.first, durationDis.second)
             }
         })
 

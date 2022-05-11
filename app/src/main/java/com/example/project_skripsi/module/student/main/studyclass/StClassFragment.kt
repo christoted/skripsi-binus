@@ -25,8 +25,6 @@ class StClassFragment : Fragment() {
     private var _binding: FragmentStClassBinding? = null
     private val binding get() = _binding!!
 
-    private var isExpanded = true
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,13 +36,9 @@ class StClassFragment : Fragment() {
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
-                isExpanded = false
-                Handler(Looper.getMainLooper()).postDelayed({
-                    if (!isExpanded) binding.collapseLayout.title = binding.tvClassName.text
-                }, 750)
+                binding.collapseLayout.title = binding.tvClassName.text
             } else {
                 binding.collapseLayout.title = ""
-                isExpanded = true
             }
         })
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="275dp"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Tipe Form"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_subject_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Grup: 12 - Biologi"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:paddingHorizontal="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btn_add_exam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ujian"/>
+
+
+    <Button
+        android:id="@+id/btn_add_assignment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tugas"/>
+
+</LinearLayout>

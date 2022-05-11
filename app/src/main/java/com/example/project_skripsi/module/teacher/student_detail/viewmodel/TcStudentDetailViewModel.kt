@@ -14,7 +14,7 @@ import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSection
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.example.project_skripsi.module.student.main.score.viewmodel.averageOf
+import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 

@@ -1,143 +1,107 @@
 package com.example.project_skripsi.module.student.main.score.view
 
+import android.animation.LayoutTransition
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import androidx.lifecycle.Observer
-import com.example.project_skripsi.databinding.FragmentStScoreBinding
+import android.widget.Toast
+import androidx.core.view.updateLayoutParams
+import androidx.navigation.findNavController
+import com.example.project_skripsi.databinding.FragmentStProgressBinding
+import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreViewPagerAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.example.project_skripsi.utils.helper.MyViewModelFactory
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.google.android.material.tabs.TabLayoutMediator
 import com.github.mikephil.charting.data.BarDataSet
 
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.BarData
+import com.google.android.material.tabs.TabLayout
 
-class StScoreFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
+class StScoreFragment : Fragment()  {
 
     private lateinit var viewModel: StScoreViewModel
-    private var _binding: FragmentStScoreBinding? = null
+    private var _binding: FragmentStProgressBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel = ViewModelProvider(this)[StScoreViewModel::class.java]
-        _binding = FragmentStScoreBinding.inflate(inflater, container, false)
-
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-
-        })
+        _binding = FragmentStProgressBinding.inflate(inflater, container, false)
 
         binding.vpContainer.adapter = StScoreViewPagerAdapter(activity!!, viewModel)
-        TabLayoutMediator(binding.tabLayout, binding.vpContainer) {
-            tab, position ->
-            Log.d("987", "onCreateView: pos $position")
+        TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
             tab.text = StScoreViewModel.tabHeader[position]
         }.attach()
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.position.let { position ->
+                    with(binding) {
+                        flScore.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+                        flAttendance.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+                        flAchievement.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+
+                        val circleExpand = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90f, resources.displayMetrics).toInt()
+                        val circleShrink = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt()
+
+                        flScore.updateLayoutParams { height = if (position == PrProgressViewModel.VIEW_TYPE_SCORE) circleExpand else circleShrink }
+                        flAttendance.updateLayoutParams { height = if (position == PrProgressViewModel.VIEW_TYPE_ATTENDANCE) circleExpand else circleShrink }
+                        flAchievement.updateLayoutParams { height = if (position == PrProgressViewModel.VIEW_TYPE_ACHIEVEMENT) circleExpand else circleShrink }
+                    }
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        with(binding) {
+            imvScore.setOnClickListener { Toast.makeText(context, "Rata-rata nilai akhir", Toast.LENGTH_SHORT).show() }
+            imvAttendance.setOnClickListener { Toast.makeText(context, "Jumlah Absen", Toast.LENGTH_SHORT).show() }
+            imvAchievement.setOnClickListener { Toast.makeText(context, "Jumlah Pencapaian", Toast.LENGTH_SHORT).show() }
+        }
+
+        viewModel.scoreFragmentData.observe(viewLifecycleOwner, {
+            with(binding) {
+                cpvScore.setValueAnimated(it.totalScore.toFloat())
+                cpvAttendance.setValueAnimated(it.totalAbsent.toFloat())
+                cpvAchievement.setValueAnimated(it.totalAchievement.toFloat())
+                tvScore.text = it.totalScore.toString()
+                tvAttendance.text = it.totalAbsent.toString()
+                tvAchievement.text = it.totalAchievement.toString()
+            }
+        })
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            setupBarChart(chart = chart1)
-        }
-        setScoreTopData()
-    }
 
-    private fun setScoreTopData() {
-        viewModel.scoreFragmentData.observe(viewLifecycleOwner, {
-            with(binding) {
-                tvScore.text = it.totalScore.toString()
-                tvAbsent.text = it.totalAbsent.toString()
-            }
-        })
-        viewModel.achievements.observe(viewLifecycleOwner, {
-            with(binding) {
-                tvAchievement.text = it.count().toString()
-            }
-        })
-    }
+//    private fun setScoreTopData() {
+//        viewModel.scoreFragmentData.observe(viewLifecycleOwner, {
+//            with(binding) {
+//                tvScore.text = it.totalScore.toString()
+//                tvAbsent.text = it.totalAbsent.toString()
+//            }
+//        })
+//        viewModel.achievements.observe(viewLifecycleOwner, {
+//            with(binding) {
+//                tvAchievement.text = it.count().toString()
+//            }
+//        })
+//    }
 
-    private fun setupBarChart(chart: BarChart) {
-
-        // Set Data
-        val entries: MutableList<BarEntry> = ArrayList()
-        entries.add(BarEntry(0f, 30f))
-        entries.add(BarEntry(1f, 80f))
-        entries.add(BarEntry(2f, 60f))
-        entries.add(BarEntry(3f, 50f))
-        // gap of 2f
-        // gap of 2f
-        entries.add(BarEntry(4f, 90f))
-        entries.add(BarEntry(5f, 70f))
-        entries.add(BarEntry(6f, 60f))
-
-        val set = BarDataSet(entries, "BarDataSet")
-        val data = BarData(set)
-
-
-        chart.description.isEnabled = false
-        chart.setMaxVisibleValueCount(60)
-        // scaling can now only be done on x- and y-axis separately
-
-        // scaling can now only be done on x- and y-axis separately
-        chart.setPinchZoom(false)
-
-        chart.setDrawBarShadow(false)
-        chart.setDrawGridBackground(false)
-
-        val xAxis = chart.xAxis
-        xAxis.position = XAxisPosition.BOTTOM
-        xAxis.setDrawGridLines(false)
-
-        chart.axisLeft.setDrawGridLines(false)
-
-        // add a nice and smooth animation
-
-        // add a nice and smooth animation
-        chart.animateY(1500)
-        chart.legend.isEnabled = false
-        data.setBarWidth(0.9f) // set custom bar width
-        chart.setData(data)
-        chart.setFitBars(true) // make the x-axis fit exactly all bars
-        chart.invalidate() // refresh
-
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-
-    }
-
-    override fun onStartTrackingTouch(p0: SeekBar?) {
-
-    }
-
-    override fun onStopTrackingTouch(p0: SeekBar?) {
-
-    }
-
-    // TODO:
-    //  Use Live Data in StScoreViewModel
-    //  Count all the value then divided by total subject that has a score
-    //  Home filter by current date
 }

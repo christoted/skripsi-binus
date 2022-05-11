@@ -22,37 +22,26 @@ class StHomeFragment : Fragment(), ItemListener {
     private lateinit var viewModel: StHomeViewModel
     private var _binding: FragmentStHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var homeMainSectionAdapter: StHomeRecyclerViewMainAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel = ViewModelProvider(this)[StHomeViewModel::class.java]
         _binding = FragmentStHomeBinding.inflate(inflater, container, false)
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-
         viewModel.profileName.observe(viewLifecycleOwner, { binding.tvProfileName.text = it })
         viewModel.profileClass.observe(viewLifecycleOwner, { binding.tvProfileClass.text = it })
 
-        viewModel.sectionData.observe(viewLifecycleOwner, {
-            homeMainSectionAdapter = StHomeRecyclerViewMainAdapter(it, this)
-            with(binding.recyclerviewClass) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = homeMainSectionAdapter
-                addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-            }
-        })
+        with(binding.recyclerviewClass) {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            viewModel.sectionData.observe(viewLifecycleOwner, { adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment) })
+        }
 
+        return binding.root
     }
 
     override fun onDestroyView() {

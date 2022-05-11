@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
-import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
 
 class StTaskAssignmentFragment : Fragment() {
 
@@ -23,13 +23,15 @@ class StTaskAssignmentFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel = ViewModelProvider(this)[StTaskAssignmentViewModel::class.java]
         _binding = FragmentStTaskAssignmentBinding.inflate(inflater, container, false)
 
         binding.vpContainer.adapter = ScreenSlidePagerAdapter()
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
+
+        binding.imvBack.setOnClickListener { activity?.finish() }
 
         return binding.root
     }

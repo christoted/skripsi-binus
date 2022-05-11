@@ -26,7 +26,7 @@ class HomeroomStudentViewHolder(
         adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemTcStudyClassStudentBinding
             with(view) {
-                tvAbsentNumber.text = "1."
+                tvAbsentNumber.text = "${item.attendanceNumber}"
                 tvName.text = item.name
                 tvAbsent.text = viewModel.getAttendanceAbsent(item).toString()
 

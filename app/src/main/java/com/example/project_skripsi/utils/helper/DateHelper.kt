@@ -4,13 +4,25 @@ import android.annotation.SuppressLint
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 class DateHelper {
 
     companion object {
 
+//        const val EDMY = "EEEE, dd - MM - yyyy"
+        const val E = "EEEE"
         const val DMY = "dd - MM - yyyy"
         const val hm = "HH:mm"
+        val mapWeekDay = mapOf(
+            "Monday" to "Senin",
+            "Tuesday" to "Selasa",
+            "Wednesday" to "Rabu",
+            "Thursday" to "Kamis",
+            "Friday" to "Jumat",
+            "Saturday" to "Sabtu",
+            "Sunday" to "Minggu",
+        )
 
         fun getCurrentDate() : Date = Calendar.getInstance().time
 
@@ -24,6 +36,12 @@ class DateHelper {
         @SuppressLint("SimpleDateFormat")
         fun getFormattedDateTime(format: String?, date: Date): String? {
             return SimpleDateFormat(format).format(date.time)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getFormattedDateTimeWithWeekDay(date: Date): String? {
+            val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
+            return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }
 
         fun updateDate(date : Date, time : Long) : Date{
@@ -48,6 +66,26 @@ class DateHelper {
             currentDate.set(Calendar.MINUTE, minute)
 
             return currentDate.time
+        }
+
+        fun getTomorrow() : Date {
+            val c = Calendar.getInstance()
+            c.time = Date()
+            c.add(Calendar.DATE, 1)
+            return c.time
+        }
+
+        fun getDuration(startTime : Date?, endTime : Date?) : Pair<Float, String> {
+            if (startTime == null || endTime == null) return Pair(0f, "menit")
+
+            val minutes = (endTime.time - startTime.time) / (1000 * 60)
+            if (minutes <= 180) return Pair(minutes.toFloat(), "menit")
+
+            val hours = minutes / 60f
+            if (hours <= 72) return Pair(hours, "jam")
+
+            val days = hours / 24f
+            return Pair(days, "hari")
         }
 
 

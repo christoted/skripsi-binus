@@ -9,9 +9,9 @@ import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalen
 import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarViewModel.Companion.TYPE_EXAM
 import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarViewModel.Companion.TYPE_MEETING
 import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarViewModel.Companion.TYPE_PAYMENT
-import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrHomeAssignmentViewHolder
-import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrHomeExamViewHolder
-import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrHomeMeetingViewHolder
+import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrCalendarAssignmentViewHolder
+import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrCalendarExamViewHolder
+import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrCalendarMeetingViewHolder
 import com.example.project_skripsi.module.student.main._sharing.agenda.*
 
 class PrCalendarAdapter(private val dataList: List<CalendarItem>) :
@@ -19,13 +19,13 @@ class PrCalendarAdapter(private val dataList: List<CalendarItem>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
-            TYPE_MEETING -> PrHomeMeetingViewHolder(
+            TYPE_MEETING -> PrCalendarMeetingViewHolder(
                 ItemPrCalendarGeneralBinding.inflate(
                 LayoutInflater.from(viewGroup.context), viewGroup, false))
-            TYPE_EXAM -> PrHomeExamViewHolder(
+            TYPE_EXAM -> PrCalendarExamViewHolder(
                 ItemPrCalendarGeneralBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
-            TYPE_ASSIGNMENT -> PrHomeAssignmentViewHolder(
+            TYPE_ASSIGNMENT -> PrCalendarAssignmentViewHolder(
                 ItemPrCalendarGeneralBinding.inflate(
                     LayoutInflater.from(viewGroup.context), viewGroup, false))
             TYPE_PAYMENT -> StHomePaymentViewHolder(
@@ -38,9 +38,9 @@ class PrCalendarAdapter(private val dataList: List<CalendarItem>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (dataList[position].viewType) {
-            TYPE_MEETING -> (holder as PrHomeMeetingViewHolder).bind(dataList[position].item)
-            TYPE_EXAM -> (holder as PrHomeExamViewHolder).bind(dataList[position].item)
-            TYPE_ASSIGNMENT -> (holder as PrHomeAssignmentViewHolder).bind(dataList[position].item)
+            TYPE_MEETING -> (holder as PrCalendarMeetingViewHolder).bind(dataList[position].item)
+            TYPE_EXAM -> (holder as PrCalendarExamViewHolder).bind(dataList[position].item)
+            TYPE_ASSIGNMENT -> (holder as PrCalendarAssignmentViewHolder).bind(dataList[position].item)
             TYPE_PAYMENT -> (holder as StHomePaymentViewHolder).bind(dataList[position].item)
             else -> (holder as StHomeAnnouncementViewHolder).bind(dataList[position].item)
         }

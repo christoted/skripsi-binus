@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.Achievement
-import com.example.project_skripsi.databinding.ItemStScorePencapaianBinding
+import com.example.project_skripsi.databinding.ItemStProgressAchievementBinding
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
 
 class StScoreAchievementAdapter(private val viewModel: StScoreViewModel): RecyclerView.Adapter<StScoreAchievementAdapter.StScoreAchievementViewHolder>() {
@@ -13,7 +13,7 @@ class StScoreAchievementAdapter(private val viewModel: StScoreViewModel): Recycl
         parent: ViewGroup,
         viewType: Int
     ): StScoreAchievementViewHolder {
-        val item = ItemStScorePencapaianBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val item = ItemStProgressAchievementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StScoreAchievementViewHolder(item)
     }
 
@@ -26,11 +26,11 @@ class StScoreAchievementAdapter(private val viewModel: StScoreViewModel): Recycl
 
     override fun getItemCount(): Int = viewModel.achievements.value?.size?: 0
 
-    inner class StScoreAchievementViewHolder(private val binding: ItemStScorePencapaianBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreAchievementViewHolder(private val binding: ItemStProgressAchievementBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Achievement) {
             with(binding) {
-                title.text = item.title
-                deskripsi.text = item.description
+                tvTitle.text = item.title
+                tvDescription.text = item.description
                 viewIndicator.setBackgroundColor(Color.parseColor("#006400"))
             }
         }

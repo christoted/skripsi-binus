@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:background="@color/purple_500">
+        android:paddingHorizontal="8dp"
+        android:background="@color/blue_700">
 
         <TextView
             android:id="@+id/tv_title"
@@ -22,14 +21,15 @@
             tools:text="Daftar Materi"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"/>
 
         <Button
             android:id="@+id/btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Konfirmasi"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/blue_500"
             android:backgroundTint="@color/white"/>
 
     </LinearLayout>

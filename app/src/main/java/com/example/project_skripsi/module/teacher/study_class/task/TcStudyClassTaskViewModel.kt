@@ -13,6 +13,13 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 
 class TcStudyClassTaskViewModel : ViewModel() {
 
+    companion object {
+        const val TAB_EXAM = 0
+        const val TAB_ASSIGNMENT = 1
+        const val tabCount = 2
+        val tabHeader = arrayOf("Ujian", "Tugas")
+    }
+
     private val _studyClass = MutableLiveData<StudyClass>()
     val studyClass: LiveData<StudyClass> = _studyClass
 

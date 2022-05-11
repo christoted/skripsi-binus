@@ -8,6 +8,7 @@ import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,6 +23,8 @@ class TcCalendarViewModel : ViewModel() {
         const val TYPE_ANNOUNCEMENT = 4
         const val TYPE_MORE = 10
     }
+
+    var currentSelectedDate: CalendarDay = DateHelper.getCurrentDateNow()
 
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
     val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList

@@ -29,7 +29,7 @@ class TcAlterResourceFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: TcAlterResourceViewModel
 
-    var materialType = ""
+    private var materialType = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +37,6 @@ class TcAlterResourceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTcAlterResourceBinding.inflate(inflater, container, false)
-        //binding.tvTest.text = this.toString().split("{")[0]
         viewModel = ViewModelProvider(this)[TcAlterResourceViewModel::class.java]
         return binding.root
     }
@@ -50,7 +49,7 @@ class TcAlterResourceFragment : Fragment() {
     }
 
     private fun submit() {
-        binding.toggleButton.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        binding.toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when(checkedId) {
                     binding.btnSlide.id -> {
@@ -72,12 +71,12 @@ class TcAlterResourceFragment : Fragment() {
         binding.btnUpload.setOnClickListener {
             with(binding) {
                 if (edtTitle.text!!.isEmpty()) {
-                    Toast.makeText(context, "Title must be filled", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Judul materi harus diisi", Toast.LENGTH_SHORT).show()
                     viewModel.isValid = false
                 }
 
                 if (edtLink.text!!.isEmpty()) {
-                    Toast.makeText(context, "Link must be filled", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Link materi harus diisi", Toast.LENGTH_SHORT).show()
                     viewModel.isValid = false
                 }
                 toggleButton.isSelectionRequired = true
@@ -89,10 +88,10 @@ class TcAlterResourceFragment : Fragment() {
         }
         viewModel.status.observe(viewLifecycleOwner) {
             if (it) {
-                Toast.makeText(context, "Success to Create a Task", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Materi baru berhasil dibuat", Toast.LENGTH_SHORT).show()
                 view?.findNavController()?.popBackStack()
             } else {
-                Toast.makeText(context, "Failed to Create a Task", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Materi berhasil diubah", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -104,6 +103,7 @@ class TcAlterResourceFragment : Fragment() {
             btnRequirementResource.setOnClickListener {
                 showBottomSheet(TcAlterResourceViewModel.QUERY_RESOURCE)
             }
+            imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
         }
     }
 
@@ -115,12 +115,12 @@ class TcAlterResourceFragment : Fragment() {
     private fun retrieveArgs() {
         val args: TcAlterResourceFragmentArgs by navArgs()
         with(binding) {
-            tvClass.text = ("${args.subjectName} - ${args.gradeLevel}")
+            tvSubjectGroup.text = ("${args.subjectName} - ${args.gradeLevel}")
         }
         args.documentId?.let {
             viewModel.resourceDocumentId = it
             viewModel.getAlterResourceData()
-            binding.btnUpload.text = "Update Resource"
+            binding.btnUpload.text = ("Update Resource")
         }
         viewModel.initData(args.subjectName, args.gradeLevel)
         setData()
@@ -132,27 +132,13 @@ class TcAlterResourceFragment : Fragment() {
             with(binding) {
                 edtTitle.setText(it.title)
                 when(it.type) {
-                    "slide" -> {
-                        Log.d("333", "setData: masuk")
-                        toggleButton.check(R.id.btn_slide)
-                    }
-                    "Slide" -> {
-                        toggleButton.check(R.id.btn_slide)
-                    }
-                    "recording" -> {
-                        Log.d("333", "setData: masuk")
-                        toggleButton.check(R.id.btn_recording)
-                    }
-                    "Recording" -> {
-                        toggleButton.check(R.id.btn_recording)
-                    }
-                    else -> {
-                        Log.d("333", "setData: masuk bawah")
-                    }
+                    "slide", "Slide" -> toggleButton.check(R.id.btn_slide)
+                    "recording", "Recording" -> toggleButton.check(R.id.btn_recording)
+                    else -> Log.d("333", "setData: masuk bawah")
                 }
                 edtLink.setText(it.link)
-                tvClassChoosen.text = "${it.assignedClasses?.size} Terpilih"
-                tvRequirementResource.text = "${it.prerequisites?.size} Terpilih"
+                tvClassChoosen.text = ("${it.assignedClasses?.size} Terpilih")
+                tvRequirementResource.text = ("${it.prerequisites?.size} Terpilih")
             }
         }
     }

@@ -10,7 +10,7 @@
         android:id="@+id/rv_attendance"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_st_score_absensi"
+        tools:listitem="@layout/item_st_progress_attendance"
         />
 
 </LinearLayout>

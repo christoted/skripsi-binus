@@ -18,7 +18,7 @@ class StSubjectAttendanceFragment(private val viewModel : StSubjectViewModel) : 
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentStSubjectAttendanceBinding.inflate(inflater, container, false)
         binding.rvAttendance.layoutManager = LinearLayoutManager(context)

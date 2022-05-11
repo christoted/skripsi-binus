@@ -7,27 +7,24 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
-
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.project_skripsi.core.model.firestore.Question
+import com.example.project_skripsi.databinding.FragmentTcAlterTaskBinding
 import com.example.project_skripsi.module.teacher._sharing.AssignmentViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
-
-import com.example.project_skripsi.core.model.firestore.Question
-import com.example.project_skripsi.databinding.FragmentTcAlterTaskBinding
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.helper.NumberHelper
-import com.example.project_skripsi.utils.helper.ValidationHelper
 import com.example.project_skripsi.utils.helper.ValidationHelper.Companion.isStringEmpty
 import com.example.project_skripsi.utils.helper.ValidationHelper.Companion.isStringInteger
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -166,6 +163,8 @@ class TcAlterTaskFragment : Fragment() {
                 }
             })
         }
+
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
         return binding.root
