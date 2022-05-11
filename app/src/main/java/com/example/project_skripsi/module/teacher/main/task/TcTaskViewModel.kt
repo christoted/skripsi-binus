@@ -12,6 +12,13 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 
 class TcTaskViewModel : ViewModel() {
 
+    companion object {
+        const val TAB_EXAM = 0
+        const val TAB_ASSIGNMENT = 1
+        const val tabCount = 2
+        val tabHeader = arrayOf("Ujian", "Tugas")
+    }
+
     private val _subjectGroupList = MutableLiveData<List<SubjectGroup>>()
     val subjectGroupList : LiveData<List<SubjectGroup>> = _subjectGroupList
 
@@ -76,6 +83,12 @@ class TcTaskViewModel : ViewModel() {
         examIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_EXAM }
         assignmentIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_ASSIGNMENT }
         return null
+    }
+
+    fun isChipPositionTop(position: Int): Boolean {
+        if (position < 4) return true;
+        if (position < 8) return false;
+        return position % 2 == 0;
     }
 
 }

@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTaskBinding
+import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
 
@@ -30,19 +32,14 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
 
         retrieveArgs()
 
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
+        binding.tabLayout.setupWithViewPager(binding.vpContainer)
+
         viewModel.studyClass.observe(viewLifecycleOwner, {
             binding.tvClassName.text = it.name
         })
 
-        binding.rvExam.layoutManager = LinearLayoutManager(context)
-        viewModel.examList.observe(viewLifecycleOwner, {
-            binding.rvExam.adapter = TaskViewHolder(it, this).getAdapter()
-        })
-
-        binding.rvAssignment.layoutManager = LinearLayoutManager(context)
-        viewModel.assignmentList.observe(viewLifecycleOwner, {
-            binding.rvAssignment.adapter = TaskViewHolder(it, this).getAdapter()
-        })
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
     }
@@ -64,5 +61,46 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
                 viewModel.studyClassId, viewModel.subjectName, itemId
             )
         )
+    }
+
+    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+
+        lateinit var layoutInflater: LayoutInflater
+
+        override fun getCount(): Int =
+            TcStudyClassTaskViewModel.tabCount
+
+        override fun isViewFromObject(view: View, `object`: Any): Boolean =
+            view == `object`
+
+        override fun getPageTitle(position: Int): CharSequence =
+            TcStudyClassTaskViewModel.tabHeader[position]
+
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            layoutInflater = LayoutInflater.from(context)
+            val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
+
+            bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
+            when(position) {
+                TcStudyClassTaskViewModel.TAB_EXAM -> {
+                    viewModel.examList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                    })
+                }
+                TcStudyClassTaskViewModel.TAB_ASSIGNMENT -> {
+                    viewModel.assignmentList.observe(viewLifecycleOwner, {
+                        bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                    })
+                }
+            }
+
+            container.addView(bindingRV.root, 0)
+            return bindingRV.root
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
+        }
     }
 }

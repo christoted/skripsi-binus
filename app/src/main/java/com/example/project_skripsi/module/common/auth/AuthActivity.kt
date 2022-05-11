@@ -44,11 +44,7 @@ class AuthActivity : AppCompatActivity() {
         with(binding) {
             btnAutoStudent.setOnClickListener{ viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT) }
             btnAutoTeacher.setOnClickListener{ viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER) }
-            btnAutoParent.setOnClickListener{
-//                Log.d("12345", "test");
-//                Toast.makeText(baseContext, "oi", Toast.LENGTH_SHORT).show()
-                viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT)
-            }
+            btnAutoParent.setOnClickListener{ viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT) }
         }
         FirestoreDummy()
 

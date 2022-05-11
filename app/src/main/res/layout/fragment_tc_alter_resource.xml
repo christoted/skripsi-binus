@@ -1,80 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_margin="6dp"
     tools:context=".module.teacher.resource.view.TcAlterResourceFragment">
-    <androidx.cardview.widget.CardView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="4dp">
+        android:layout_height="?actionBarSize"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imv_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/tv_form_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Form Baru"
+            android:textColor="@color/black"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="16dp"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:gravity="end"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Form Materi"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:text="Grup Mata Pelajaran"/>
 
-            <androidx.legacy.widget.Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_subject_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="end">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Grup Mata Pelajaran"/>
-                <TextView
-                    android:id="@+id/tv_class"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="Sejarah - 12"/>
-
-            </LinearLayout>
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                tools:text="Sejarah - 12"/>
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="6dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Judul"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            />
+        android:paddingHorizontal="8dp"
+        android:paddingBottom="8dp">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Masukkan judul materi"
+            android:hint="Judul"
+            android:padding="8dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -83,24 +86,26 @@
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp">
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tipe"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                />
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:text="Tipe materi"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
             <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleButton"
+                android:id="@+id/toggle_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:singleSelection="true">
@@ -118,161 +123,129 @@
                     android:text="Rekaman"
                     style="?attr/materialButtonOutlinedStyle"/>
             </com.google.android.material.button.MaterialButtonToggleGroup>
+
         </LinearLayout>
-        <LinearLayout
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextFieldLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="6dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Link"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                />
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextFieldLink"
+            android:hint="Link"
+            android:padding="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_link"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Masukkan link materi"
+                android:layout_height="wrap_content" />
 
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_link"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:dividerInsetStart="8dp"
             app:dividerInsetEnd="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginVertical="4dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp">
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Kelas"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_class_choosen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Terpilih" />
+                    android:text="tidak terpilih"
+                    android:textSize="12sp"/>
+
             </LinearLayout>
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <com.google.android.material.button.MaterialButton
+
+            <Button
                 android:id="@+id/btn_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit"/>
+
         </LinearLayout>
 
-    </LinearLayout>
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:dividerInsetStart="8dp"
-        app:dividerInsetEnd="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="6dp">
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dividerInsetStart="8dp"
+            app:dividerInsetEnd="8dp"
+            android:layout_marginVertical="4dp"/>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_preq_resource"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prasyarat Materi"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
-            <TextView
-                android:id="@+id/tv_requirement_resource"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prasyarat materi"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_requirement_resource"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tidak terpilih"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_requirement_resource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Terpilih" />
+                android:text="Edit"/>
+
         </LinearLayout>
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <androidx.legacy.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"/>
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_requirement_resource"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_upload"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit"/>
+            android:text="Upload Materi" />
+
     </LinearLayout>
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:dividerInsetStart="8dp"
-        app:dividerInsetEnd="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"/>
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_margin="6dp">-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Prasyarat Tugas"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textStyle="bold"/>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_requirement_task"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Terpilih" />-->
-<!--        </LinearLayout>-->
-<!--        <Space-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"/>-->
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_requirement_task"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Edit"/>-->
-<!--    </LinearLayout>-->
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_upload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload Materi"
-        />
 
 </LinearLayout>
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentPrCalendarBinding
 import com.example.project_skripsi.databinding.FragmentPrHomeBinding
 import com.example.project_skripsi.module.student.main.calendar.StCalendarAdapter
+import com.example.project_skripsi.module.teacher.main.calendar.TcCalendarAdapter
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.material.appbar.AppBarLayout
@@ -44,6 +45,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
             }
         })
 
+        binding.calendar.selectedDate = viewModel.currentSelectedDate
         binding.calendar.setOnDateChangedListener(this)
         binding.rvEvent.layoutManager = LinearLayoutManager(context)
 
@@ -51,6 +53,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
             eventList.map { dayEvent ->
                 binding.calendar.addDecorator(EventDecorator(dayEvent.key, dayEvent.value))
             }
+            refreshList(viewModel.currentSelectedDate)
         }
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
@@ -66,6 +69,10 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
         selected: Boolean
     ) {
         viewModel.currentSelectedDate = date
+        refreshList(date)
+    }
+
+    private fun refreshList(date : CalendarDay){
         binding.rvEvent.adapter = PrCalendarAdapter(viewModel.currentDataList[date] ?: emptyList())
     }
 

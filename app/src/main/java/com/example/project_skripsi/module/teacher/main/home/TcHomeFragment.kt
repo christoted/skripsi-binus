@@ -1,6 +1,7 @@
 package com.example.project_skripsi.module.teacher.main.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,7 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("12345-","destroy")
         _binding = null
     }
 

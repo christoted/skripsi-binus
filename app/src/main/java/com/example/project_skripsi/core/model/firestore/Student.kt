@@ -137,7 +137,9 @@ data class Achievement (
 @IgnoreExtraProperties
 data class Answer (
 
-    val text: String? = null,
+    @get: PropertyName("answer_text")
+    @set: PropertyName("answer_text")
+    var answerText: String? = null,
 
     val score: Int? = null,
 

@@ -351,16 +351,29 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     )
 
     init {
-        addGeneratedTaskForms()
-        upload(COLLECTION_STUDENT, students) // replace
-        upload(COLLECTION_PARENT, parents) // replace
-        upload(COLLECTION_TEACHER, teachers) // replace
-        upload(COLLECTION_ADMINISTRATOR, administrators) // replace
-        upload(COLLECTION_STUDY_CLASS, studyClasses) // replace
-        upload(COLLECTION_ANNOUNCEMENT, announcements) // replace
-        upload(COLLECTION_RESOURCE, resources) // replace
-        upload(COLLECTION_TASK_FORM, taskFroms) // replace
-        upload(COLLECTION_SCHOOL, schools) // replace
+//        addGeneratedTaskForms()
+//        upload(COLLECTION_STUDENT, students) // replace
+//        upload(COLLECTION_PARENT, parents) // replace
+//        upload(COLLECTION_TEACHER, teachers) // replace
+//        upload(COLLECTION_ADMINISTRATOR, administrators) // replace
+//        upload(COLLECTION_STUDY_CLASS, studyClasses) // replace
+//        upload(COLLECTION_ANNOUNCEMENT, announcements) // replace
+//        upload(COLLECTION_RESOURCE, resources) // replace
+//        upload(COLLECTION_TASK_FORM, taskFroms) // replace
+//        upload(COLLECTION_SCHOOL, schools) // replace
+        test()
+    }
+
+    private fun test() {
+//        val tmp = mutableMapOf<String, Any>()
+//        tmp["MEET1"] = "oi"
+//        tmp["MEET2"] = "oi"
+//        val item = mutableMapOf<String, Any>()
+//        item["meet.MEET1.eh"] = "ok"
+
+//        db.collection("test").document("svwlGVv5nMTIK128Amcf").update(item)
+
+
     }
 
     private fun upload(collection: String, items: Map<String, Any>) {

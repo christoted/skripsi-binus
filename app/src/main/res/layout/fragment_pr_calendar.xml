@@ -59,7 +59,7 @@
                 app:contentScrim="@color/white"
                 app:scrimAnimationDuration="0"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-                app:collapsedTitleGravity="center"
+
                 app:collapsedTitleTextAppearance="@style/CustomToolbarText">
 
                 <com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -71,7 +71,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="40dp"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

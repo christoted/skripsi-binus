@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcStudyClassResourceBinding
@@ -35,6 +36,8 @@ class TcStudyClassResourceFragment : Fragment() {
         viewModel.resourceList.observe(viewLifecycleOwner, {
             binding.rvItem.adapter = ResourceViewHolder(it).getAdapter()
         })
+
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
 
         return binding.root

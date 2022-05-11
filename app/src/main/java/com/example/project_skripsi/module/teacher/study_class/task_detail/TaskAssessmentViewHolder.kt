@@ -7,7 +7,6 @@ import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.databinding.ItemTcStudyClassTaskDetailBinding
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
-
 class TaskAssessmentViewHolder(
     private val taskType : Int,
     private val viewModel : TcStudyClassTaskDetailViewModel,
@@ -23,13 +22,14 @@ class TaskAssessmentViewHolder(
         adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemTcStudyClassTaskDetailBinding
             with(view) {
-                tvAbsentNumber.text = ("${item.attendanceNumber}.")
+                tvAbsentNumber.text = ("${item.attendanceNumber}")
                 tvName.text = item.name
 
-                if (taskType == TcStudyClassTaskDetailViewModel.TASK_UNCHECKED)
-                    tvScore.visibility = View.GONE
-                else
+                if (taskType == TcStudyClassTaskDetailViewModel.TASK_CHECKED) {
                     tvScore.text = viewModel.getTaskScore(item).toString()
+                    tvScore.visibility = View.VISIBLE
+                    tvScoreHeader.visibility = View.VISIBLE
+                }
 
                 item.id?.let { id -> root.setOnClickListener { listener.onItemClick(id) } }
             }

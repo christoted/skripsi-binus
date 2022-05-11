@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 class DateHelper {
 
@@ -67,12 +68,27 @@ class DateHelper {
             return currentDate.time
         }
 
-        fun getTomorrow() : Date{
+        fun getTomorrow() : Date {
             val c = Calendar.getInstance()
             c.time = Date()
             c.add(Calendar.DATE, 1)
             return c.time
         }
+
+        fun getDuration(startTime : Date?, endTime : Date?) : Pair<Float, String> {
+            if (startTime == null || endTime == null) return Pair(0f, "menit")
+
+            val minutes = (endTime.time - startTime.time) / (1000 * 60)
+            if (minutes <= 180) return Pair(minutes.toFloat(), "menit")
+
+            val hours = minutes / 60f
+            if (hours <= 72) return Pair(hours, "jam")
+
+            val days = hours / 24f
+            return Pair(days, "hari")
+        }
+
+
 
 
     }

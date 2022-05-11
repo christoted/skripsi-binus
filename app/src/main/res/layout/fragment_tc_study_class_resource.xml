@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:text="Materi"
+            android:text="Materi Kelas"
             android:textColor="@color/black"
             android:paddingHorizontal="8dp"
             android:paddingVertical="16dp"/>
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingVertical="8dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -100,28 +100,22 @@
 
     </LinearLayout>
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:dividerInsetStart="16dp"
-        app:dividerInsetEnd="16dp"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Materi"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:padding="8dp"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:text="Daftar Materi"
         android:textAlignment="center"
-        android:background="@color/purple_500"/>
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@color/blue_700"
+        android:layout_marginVertical="4dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/recyclerview_background"
         tools:listitem="@layout/item_st_subject_resource"/>
 
 </LinearLayout>

@@ -39,18 +39,17 @@ class TcResourceViewModel: ViewModel() {
         }
     }
 
-    fun loadResource(subjectGroup: SubjectGroup, isChecked: Boolean) {
-        if (isChecked) {
-            val listResourceIds = mapResourceIdsBySubjectGroup[subjectGroup]
-            if (listResourceIds == null) {
-                _resources.postValue(mutableListOf())
-            } else {
-                mapResourceIdsBySubjectGroup[subjectGroup]?.toList()?.let {
-                    loadResourceForm(it, _resources)
-                }
+    fun loadResource(subjectGroup: SubjectGroup) {
+        val listResourceIds = mapResourceIdsBySubjectGroup[subjectGroup]
+        if (listResourceIds == null) {
+            _resources.postValue(mutableListOf())
+        } else {
+            mapResourceIdsBySubjectGroup[subjectGroup]?.toList()?.let {
+                loadResourceForm(it, _resources)
             }
-            currentSubjectGroup = subjectGroup
         }
+        currentSubjectGroup = subjectGroup
+
     }
 
     private fun loadResourceForm(uids: List<String>, mutableLiveData: MutableLiveData<List<Resource>>) {
@@ -71,5 +70,11 @@ class TcResourceViewModel: ViewModel() {
     fun refreshData() {
         mapResourceIdsBySubjectGroup.clear()
         loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+    }
+
+    fun isChipPositionTop(position: Int): Boolean {
+        if (position < 4) return true;
+        if (position < 8) return false;
+        return position % 2 == 0;
     }
 }

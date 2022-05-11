@@ -3,7 +3,6 @@ package com.example.project_skripsi.module.student.task.form
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.*
-import com.example.project_skripsi.core.model.firestore.Question
 import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
@@ -45,8 +44,8 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
                 choice4.text = item.choices?.getOrNull(3)
                 choice5.text = item.choices?.getOrNull(4)
                 tvTitle.text = item.title
-                item.answer?.text?.let {
-                    when (it.toString().toInt()) {
+                item.answer?.answerText?.let {
+                    when (it.toInt()) {
                         1 -> choice1.isChecked = true
                         2 -> choice2.isChecked = true
                         3 -> choice3.isChecked = true
@@ -64,7 +63,7 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
             with(binding) {
                 tvNumber.text = ("${position+1}.")
                 tvTitle.text = item.title
-                item.answer?.text?.let { edtAnswer.setText(it) }
+                item.answer?.answerText?.let { edtAnswer.setText(it) }
                 tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
             }
         }

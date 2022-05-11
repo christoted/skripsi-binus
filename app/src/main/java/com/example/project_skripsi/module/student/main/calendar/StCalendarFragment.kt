@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.module.student.main.home.view.StHomeFragmentDirections
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.task.StTaskViewModel
+import com.example.project_skripsi.module.teacher.main.calendar.TcCalendarAdapter
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.material.appbar.AppBarLayout
@@ -47,6 +48,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
             }
         })
 
+        binding.calendar.selectedDate = viewModel.currentSelectedDate
         binding.calendar.setOnDateChangedListener(this)
         binding.rvEvent.layoutManager = LinearLayoutManager(context)
 
@@ -54,6 +56,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
             eventList.map { dayEvent ->
                 binding.calendar.addDecorator(EventDecorator(dayEvent.key, dayEvent.value))
             }
+            refreshList(viewModel.currentSelectedDate)
         }
         return binding.root
     }
@@ -64,9 +67,12 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         selected: Boolean
     ) {
         viewModel.currentSelectedDate = date
-        binding.rvEvent.adapter = StCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
+        refreshList(date)
     }
 
+    private fun refreshList(date : CalendarDay){
+        binding.rvEvent.adapter = StCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
