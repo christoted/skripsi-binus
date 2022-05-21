@@ -19,7 +19,7 @@ class PrAnnouncementViewModel : ViewModel() {
 
     private fun loadAnnouncement() {
         FireRepository.instance.getAllItems<Announcement>().first.observeOnce {
-            Log.d("12345-", it.toString())
+//            Log.d("12345-", it.toString())
             _announcementList.postValue(it)
         }
     }

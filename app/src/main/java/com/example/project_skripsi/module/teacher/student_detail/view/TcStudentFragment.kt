@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudentBinding
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreViewPagerAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
@@ -35,6 +37,15 @@ class TcStudentFragment : Fragment() {
             tab.text = TcStudentDetailViewModel.tabHeader[position]
         }.attach()
 
+        viewModel.student.observe(viewLifecycleOwner, {
+            with(binding) {
+                tvStudentName.text = it.name
+                it.phoneNumber?.let { imvStudentPhone.setImageResource(R.drawable.whatsapp) }
+            }
+        })
+
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+
         return binding.root
     }
 
@@ -51,7 +62,7 @@ class TcStudentFragment : Fragment() {
 
     private fun retrieveArgs() {
         val args: TcStudentFragmentArgs by navArgs()
-        Log.d("Student", "retrieveArgs: ${args.studentId}")
+        Log.d("12345-Student", "retrieveArgs: ${args.studentId}")
         viewModel.studentUID = args.studentId
     }
 }

@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Achievement
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
@@ -17,6 +19,7 @@ import com.example.project_skripsi.databinding.ItemStProgressAttendanceBinding
 import com.example.project_skripsi.databinding.ItemStProgressScoreBinding
 import com.example.project_skripsi.module.student.main.score.view.StScoreFragmentDirections
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.utils.app.App
 
 interface ScoreContentListener {
     fun onAttendanceTapped()
@@ -115,6 +118,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 tvPresenceSick.text = item.totalSick.toString()
                 tvPresenceLeave.text = item.totalLeave.toString()
                 tvPresenceNoReason.text = item.totalAlpha.toString()
+                viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.indicator_attendance, null))
                 root.setOnClickListener {
                     listener.onAttendanceTapped()
                     val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()

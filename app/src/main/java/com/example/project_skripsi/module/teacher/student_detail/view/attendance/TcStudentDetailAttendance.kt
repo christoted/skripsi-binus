@@ -19,14 +19,11 @@ class TcStudentDetailAttendance(private val viewModel: TcStudentDetailViewModel)
     private var _binding: FragmentTcStudentDetailAttendanceBinding? = null
     private val binding get() = _binding!!
     private lateinit var contentAdapter: TcStudentDetailScoreAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTcStudentDetailAttendanceBinding.inflate(inflater, container, false)
         contentAdapter = TcStudentDetailScoreAdapter(viewModel,1, this)
 
@@ -39,11 +36,6 @@ class TcStudentDetailAttendance(private val viewModel: TcStudentDetailViewModel)
         }
         viewModel.loadCurrentStudent(viewModel.studentUID)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onDestroy() {

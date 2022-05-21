@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Achievement
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.Score
@@ -21,6 +23,7 @@ import com.example.project_skripsi.module.student.main.score.view.adapter.ScoreC
 import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentChildAdapter
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
 import com.example.project_skripsi.module.teacher.student_detail.viewmodel.TcStudentDetailViewModel
+import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
 
 class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewModel, private val tab: Int, private val listener: ScoreContentListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -113,6 +116,7 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
                 tvPresenceSick.text = item.totalSick.toString()
                 tvPresenceLeave.text = item.totalLeave.toString()
                 tvPresenceNoReason.text = item.totalAlpha.toString()
+                viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.indicator_attendance, null))
 //                root.setOnClickListener {
 //                    listener.onAttendanceTapped()
 //                    val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()

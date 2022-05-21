@@ -40,7 +40,7 @@ android {
 dependencies {
     // Core
     implementation 'androidx.core:core-ktx:1.7.0'
-
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.21'
 
     // UI
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -77,4 +77,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.20"
 }

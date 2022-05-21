@@ -17,15 +17,22 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
     companion object {
         var instance = FireRepository()
 
+        const val COLLECTION_ADMINISTRATOR = "administrators"
+        const val COLLECTION_TASK_FORM = "task_forms"
+        const val COLLECTION_RESOURCE = "resources"
         const val COLLECTION_STUDENT = "students"
         const val COLLECTION_TEACHER = "teachers"
         const val COLLECTION_PARENT = "parents"
-        const val COLLECTION_ADMINISTRATOR = "administrators"
         const val COLLECTION_STUDY_CLASS = "study_classes"
-        const val COLLECTION_TASK_FORM = "task_forms"
-        const val COLLECTION_RESOURCE = "resources"
         const val COLLECTION_ANNOUNCEMENT = "announcements"
         const val COLLECTION_SCHOOL = "schools"
+
+//        const val COLLECTION_STUDY_CLASS = "admin-study-class"
+//        const val COLLECTION_STUDENT = "admin-student"
+//        const val COLLECTION_SCHOOL = "admin-school"
+//        const val COLLECTION_PARENT = "admin-parent"
+//        const val COLLECTION_TEACHER = "admin-lecture"
+//        const val COLLECTION_ANNOUNCEMENT = "admin-announcement"
 
         val mapCollection = mapOf(
             Student::class to COLLECTION_STUDENT,
@@ -240,7 +247,10 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
             db.collection(collection)
                 .get()
                 .addOnSuccessListener { result ->
-                    result.map { document -> list.add(document.toObject(T::class.java)) }
+                    result.map { document ->
+                        Log.d("123456-", document.id)
+                        list.add(document.toObject(T::class.java))
+                    }
                     data.postValue(list)
                 }
                 .addOnFailureListener { ex -> exception.postValue(ex)}

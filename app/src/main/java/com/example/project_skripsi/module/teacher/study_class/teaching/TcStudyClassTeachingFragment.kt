@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTeachingBinding
@@ -73,10 +74,9 @@ class TcStudyClassTeachingFragment : Fragment() {
     }
 
     private fun retrieveArgs() {
-        val args = "eMsulnik6kEpW0ESKI9V"
-        val subjectName = "Biologi"
-        viewModel.setClassAndSubject(args, subjectName)
-        binding.tvRole.text = ("Guru $subjectName")
+        val args : TcStudyClassTeachingFragmentArgs by navArgs()
+        viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
+        binding.tvRole.text = ("Guru ${args.subjectName}")
     }
 
 }

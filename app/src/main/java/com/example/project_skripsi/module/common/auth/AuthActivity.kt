@@ -42,9 +42,30 @@ class AuthActivity : AppCompatActivity() {
         })
 
         with(binding) {
-            btnAutoStudent.setOnClickListener{ viewModel.login("luis2@gmail.com","123456", LOGIN_STUDENT) }
-            btnAutoTeacher.setOnClickListener{ viewModel.login("devita@gmail.com","devita", LOGIN_TEACHER) }
-            btnAutoParent.setOnClickListener{ viewModel.login("arum@gmail.com","arum123", LOGIN_PARENT) }
+            btnAutoStudent.setOnClickListener{
+                edtEmail.setText("luis2@gmail.com")
+                edtPassword.setText("123456")
+                cgLoginAs.check(R.id.chip_student)
+            }
+            btnAutoTeacher.setOnClickListener{
+                edtEmail.setText("devita@gmail.com")
+                edtPassword.setText("devita")
+                cgLoginAs.check(R.id.chip_teacher)
+            }
+            btnAutoParent.setOnClickListener{
+                edtEmail.setText("arum@gmail.com")
+                edtPassword.setText("arum123")
+                cgLoginAs.check(R.id.chip_parent)
+            }
+            btnLogin.setOnClickListener {
+                viewModel.login(edtEmail.text.toString(), edtPassword.text.toString(),
+                    when (cgLoginAs.checkedChipId) {
+                        R.id.chip_student -> LOGIN_STUDENT
+                        R.id.chip_teacher -> LOGIN_TEACHER
+                        else -> LOGIN_PARENT
+                    }
+                )
+            }
         }
         FirestoreDummy()
 

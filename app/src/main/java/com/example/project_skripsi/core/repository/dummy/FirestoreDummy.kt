@@ -2,6 +2,7 @@ package com.example.project_skripsi.core.repository.dummy
 
 import android.util.Log
 import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_ADMINISTRATOR
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_ANNOUNCEMENT
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_PARENT
@@ -11,6 +12,7 @@ import com.example.project_skripsi.core.repository.FireRepository.Companion.COLL
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_STUDY_CLASS
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_TASK_FORM
 import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_TEACHER
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
 import java.util.*
 import kotlin.random.Random
+import kotlin.reflect.full.memberProperties
 
 class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
@@ -361,18 +364,37 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 //        upload(COLLECTION_RESOURCE, resources) // replace
 //        upload(COLLECTION_TASK_FORM, taskFroms) // replace
 //        upload(COLLECTION_SCHOOL, schools) // replace
-        test()
+        checkNullable()
     }
 
-    private fun test() {
-//        val tmp = mutableMapOf<String, Any>()
-//        tmp["MEET1"] = "oi"
-//        tmp["MEET2"] = "oi"
-//        val item = mutableMapOf<String, Any>()
-//        item["meet.MEET1.eh"] = "ok"
-
-//        db.collection("test").document("svwlGVv5nMTIK128Amcf").update(item)
-
+    private fun checkNullable() {
+        FireRepository.instance.getAllItems<Administrator>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<Announcement>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<Parent>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<Resource>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<School>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<Student>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<StudyClass>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<TaskForm>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
+        FireRepository.instance.getAllItems<Teacher>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
+        }
 
     }
 

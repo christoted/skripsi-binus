@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal"
     tools:context=".module.common.auth.AuthActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -39,44 +41,78 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_login_as"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:singleSelection="true"
+        app:selectionRequired="true">
         
         <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
+            android:id="@+id/chip_student"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:text="Siswa"/>
 
         <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
+            android:id="@+id/chip_parent"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:text="Orang tua"/>
 
         <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
+            android:id="@+id/chip_teacher"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:text="Guru"/>
         
     </com.google.android.material.chip.ChipGroup>
 
     <Button
-        android:id="@+id/btn_auto_student"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_login"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Auto Siswa"/>
+        android:text="Login" />
 
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/btn_auto_teacher"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Auto Guru"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_auto_parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Auto Orang tua"/>
+        <Button
+            android:id="@+id/btn_auto_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto Siswa"
+            android:layout_marginEnd="4dp"/>
 
+        <Button
+            android:id="@+id/btn_auto_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto Guru"
+            android:layout_marginEnd="4dp"/>
+
+        <Button
+            android:id="@+id/btn_auto_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto Ortu"/>
+
+    </LinearLayout>
 
 </LinearLayout>

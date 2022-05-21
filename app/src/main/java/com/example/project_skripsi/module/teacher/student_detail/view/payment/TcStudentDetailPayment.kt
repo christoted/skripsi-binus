@@ -23,10 +23,7 @@ class TcStudentDetailPayment(private val viewModel: TcStudentDetailViewModel) : 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         _binding = FragmentTcStudentDetailPaymentBinding.inflate(inflater, container, false)
-        //  binding.tvTest.text = this.toString().split("{")[0]
         return binding.root
     }
 

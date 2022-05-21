@@ -4,22 +4,30 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
-import com.example.project_skripsi.core.model.firestore.AttendedMeeting
-import com.example.project_skripsi.core.model.firestore.Payment
-import com.example.project_skripsi.core.model.firestore.Subject
+import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSection
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_ASSIGNMENT
+import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_FINAL_EXAM
+import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_MID_EXAM
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 
 class TcStudentDetailViewModel: ViewModel() {
     var studentUID = ""
+
+    private val _student = MutableLiveData<Student>()
+    val student: LiveData<Student> = _student
+
+    private val _parent = MutableLiveData<Parent>()
+    val parent: LiveData<Parent> = _parent
+
     // Payment
     private val _listPaymentSection: MutableLiveData<List<TcStudentDetailPaymentSection>> = MutableLiveData()
     val listPaymentSection: LiveData<List<TcStudentDetailPaymentSection>> = _listPaymentSection
@@ -39,14 +47,6 @@ class TcStudentDetailViewModel: ViewModel() {
     companion object {
         const val tabCount = 3
         val tabHeader = arrayOf("Nilai", "Absensi", "Pembayaran")
-
-        const val MID_EXAM_WEIGHT = 40
-        const val FINAL_EXAM_WEIGHT = 40
-        const val ASSIGNMENT_WEIGHT = 20
-
-        const val TYPE_MID_EXAM = "ujian_tengah_semester"
-        const val TYPE_FINAL_EXAM = "ujian_akhir_semester"
-        const val TYPE_ASSIGNMENT = "tugas"
     }
 
     //  MARK: - Get Payment Flow
@@ -66,10 +66,10 @@ class TcStudentDetailViewModel: ViewModel() {
         _payments.observeOnce {
             Log.d("987 ", "getPayments: palign bawah" + it)
             paymentSection[0].payments = it.filter {
-                it.paymentDeadline!! < DateHelper.getCurrentDate()
+                it.paymentDeadline!! < DateHelper.getCurrentDate() && it.paymentDate == null
             }
             paymentSection[1].payments = it.filter {
-                it.paymentDeadline!! > DateHelper.getCurrentDate()
+                it.paymentDeadline!! > DateHelper.getCurrentDate() && it.paymentDate == null
             }
             _listPaymentSection.postValue(paymentSection)
         }
@@ -79,6 +79,8 @@ class TcStudentDetailViewModel: ViewModel() {
     fun loadCurrentStudent(uid: String) {
         FireRepository.instance.getStudent(uid).let { response ->
             response.first.observeOnce { student ->
+                _student.postValue(student)
+//                loadParent(student.parent)
                 student.studyClass?.let {
                     loadStudyClass(it)
                 }
@@ -120,19 +122,19 @@ class TcStudentDetailViewModel: ViewModel() {
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
                     val midExam: Int? = mutableListOfTask.filter {
-                        getTaskFilter(it, StScoreViewModel.TYPE_MID_EXAM, subjectName)
+                        getTaskFilter(it, TASK_TYPE_MID_EXAM, subjectName)
                     }.let {
                         if (it.isEmpty()) null else it[0].score ?: 0
                     }
 
                     val finalExam: Int? = mutableListOfTask.filter {
-                        getTaskFilter(it, StScoreViewModel.TYPE_FINAL_EXAM, subjectName)
+                        getTaskFilter(it, TASK_TYPE_FINAL_EXAM, subjectName)
                     }.let {
                         if (it.isEmpty()) null else it[0].score ?: 0
                     }
 
                     val totalAssignment : Int? = mutableListOfTask.filter {
-                        getTaskFilter(it, StScoreViewModel.TYPE_ASSIGNMENT, subjectName)
+                        getTaskFilter(it, TASK_TYPE_ASSIGNMENT, subjectName)
                     }.let {
                         if (it.isEmpty()) null else it.averageOf { task -> task.score ?: 0 }
                     }
@@ -169,8 +171,10 @@ class TcStudentDetailViewModel: ViewModel() {
         listDataAttendance.add(AttendanceMainSection(subjectName, totalPresence,0, 0,0 ))
     }
 
-    private fun getAttendances() {
-
+    private fun loadParent(uid: String) {
+        FireRepository.instance.getItem<Parent>(uid).first.observeOnce{ _parent.postValue(it) }
     }
+
+
 }
 

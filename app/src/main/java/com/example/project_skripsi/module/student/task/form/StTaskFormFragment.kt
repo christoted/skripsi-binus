@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentStTaskFormBinding
@@ -59,6 +60,10 @@ class StTaskFormFragment : Fragment() {
         })
 
         viewModel.questionList.observe(viewLifecycleOwner, { binding.rvQuestion.adapter = StFormAdapter(it) })
+
+        binding.btnSubmit.setOnClickListener {
+//            view?.findNavController()?.popBackStack()
+        }
 
         return binding.root
     }

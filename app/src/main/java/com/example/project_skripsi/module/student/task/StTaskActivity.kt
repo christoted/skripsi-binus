@@ -34,10 +34,16 @@ class StTaskActivity : AppCompatActivity() {
 
         viewModel.navType.observe(this, {
             when(it) {
-                StTaskViewModel.NAVIGATION_EXAM ->
-                    navController.navigate(R.id.navigation_st_task_exam_fragment,null, navOptions)
-                StTaskViewModel.NAVIGATION_ASSIGNMENT ->
-                    navController.navigate(R.id.navigation_st_task_assignment_fragment,null, navOptions)
+                StTaskViewModel.NAVIGATION_EXAM -> {
+                    navController.navigate(DummyFragmentDirections.actionNavigationDummyFragmentToNavigationStTaskExamFragment(),navOptions)
+//                    navController.navigate(R.id.navigation_st_task_exam_fragment,null, navOptions)
+                }
+
+                StTaskViewModel.NAVIGATION_ASSIGNMENT -> {
+                    navController.navigate(DummyFragmentDirections.actionNavigationDummyFragmentToNavigationStTaskAssignmentFragment(),navOptions)
+//                    navController.navigate(R.id.navigation_st_task_assignment_fragment,null, navOptions)
+                }
+
                 StTaskViewModel.NAVIGATION_FORM -> {
                     val toTaskFormFragment = DummyFragmentDirections.actionNavigationDummyFragmentToNavigationStTaskFormFragment(
                         viewModel.taskFormId.value!!
@@ -53,6 +59,11 @@ class StTaskActivity : AppCompatActivity() {
     private fun retrieveArgs(){
         val args: StTaskActivityArgs by navArgs()
         viewModel.setNavigationData(args.navigationType, args.taskFormId)
+    }
+
+    override fun onBackPressed() {
+        val hasBack = findNavController(R.id.nav_host_fragment_activity_student_task).popBackStack()
+        if (!hasBack) finish()
     }
 
 }

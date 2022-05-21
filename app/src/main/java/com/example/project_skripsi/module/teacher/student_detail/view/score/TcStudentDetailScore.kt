@@ -17,14 +17,10 @@ class TcStudentDetailScore(private val viewModel: TcStudentDetailViewModel) : Fr
     private var _binding: FragmentTcStudentDetailScoreBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentTcStudentDetailScoreBinding.inflate(inflater, container, false)
         viewModel.sectionDatas.observe(viewLifecycleOwner) {

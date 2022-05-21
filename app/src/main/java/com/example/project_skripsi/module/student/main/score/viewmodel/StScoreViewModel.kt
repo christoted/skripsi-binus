@@ -45,10 +45,6 @@ class StScoreViewModel : ViewModel() {
         const val MID_EXAM_WEIGHT = 40
         const val FINAL_EXAM_WEIGHT = 40
         const val ASSIGNMENT_WEIGHT = 20
-
-        const val TYPE_MID_EXAM = "ujian_tengah_semester"
-        const val TYPE_FINAL_EXAM = "ujian_akhir_semester"
-        const val TYPE_ASSIGNMENT = "tugas"
     }
 
     init {

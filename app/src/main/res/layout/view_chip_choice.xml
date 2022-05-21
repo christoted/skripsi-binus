@@ -5,7 +5,7 @@
     android:id="@+id/item_chip"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minWidth="100dp"
+    android:minWidth="110dp"
     android:text="Sejarah"
     android:textAlignment="center"
     android:textSize="16sp"/>
