@@ -2,8 +2,6 @@ package com.example.project_skripsi.module.student.main.calendar
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +12,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.module.student.main.home.view.StHomeFragmentDirections
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
-import com.example.project_skripsi.module.student.task.StTaskViewModel
-import com.example.project_skripsi.module.teacher.main.calendar.TcCalendarAdapter
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.material.appbar.AppBarLayout
@@ -80,9 +75,9 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
     }
 
     override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
-        val toTaskActivity = StCalendarFragmentDirections.actionNavigationCalendarFragmentToStTaskActivity(taskFormId)
-        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
-        view?.findNavController()?.navigate(toTaskActivity)
+        view?.findNavController()?.navigate(
+            StCalendarFragmentDirections.actionNavigationCalendarFragmentToStTaskFormFragment(taskFormId)
+        )
     }
 
     override fun onClassItemClicked(Position: Int) {

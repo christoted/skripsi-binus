@@ -31,7 +31,7 @@ class StTaskExamFragment : Fragment() {
         binding.vpContainer.adapter = ScreenSlidePagerAdapter()
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
-        binding.imvBack.setOnClickListener { activity?.finish() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
     }

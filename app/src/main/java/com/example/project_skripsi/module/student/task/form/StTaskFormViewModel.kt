@@ -119,6 +119,9 @@ class StTaskFormViewModel : ViewModel() {
         curStudent.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
             it.answers?.mapIndexed { index, answer -> answer.answerText = newAnswer[index] }
         }
+        curStudent.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
+            it.answers?.mapIndexed { index, answer -> answer.answerText = newAnswer[index] }
+        }
         FireRepository.inst.alterItems(listOf(curStudent)).first.observeOnce {
             _isSubmitted.postValue(it)
         }

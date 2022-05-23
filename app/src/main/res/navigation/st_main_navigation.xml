@@ -10,8 +10,8 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_st_home" >
         <action
-            android:id="@+id/action_navigation_home_to_stTaskActivity"
-            app:destination="@id/stTaskActivity" />
+            android:id="@+id/action_navigation_home_fragment_to_stTaskFormFragment"
+            app:destination="@id/stTaskFormFragment" />
     </fragment>
 
     <fragment
@@ -20,21 +20,24 @@
         android:label="Class"
         tools:layout="@layout/fragment_st_class" >
         <action
-            android:id="@+id/action_navigation_class_to_stSubjectActivity"
-            app:destination="@id/stSubjectActivity" />
+            android:id="@+id/action_navigation_class_fragment_to_stSubjectFragment"
+            app:destination="@id/stSubjectFragment" />
         <action
-            android:id="@+id/action_navigation_class_to_stTaskActivity"
-            app:destination="@id/stTaskActivity" />
+            android:id="@+id/action_navigation_class_fragment_to_stTaskExamFragment"
+            app:destination="@id/stTaskExamFragment" />
+        <action
+            android:id="@+id/action_navigation_class_fragment_to_stTaskAssignmentFragment"
+            app:destination="@id/stTaskAssignmentFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_calendar_fragment"
         android:name="com.example.project_skripsi.module.student.main.calendar.StCalendarFragment"
         android:label="Calendar"
-        tools:layout="@layout/fragment_st_class" >
+        tools:layout="@layout/fragment_st_calendar" >
         <action
-            android:id="@+id/action_navigation_calendar_fragment_to_stTaskActivity"
-            app:destination="@id/stTaskActivity" />
+            android:id="@+id/action_navigation_calendar_fragment_to_stTaskFormFragment"
+            app:destination="@id/stTaskFormFragment" />
     </fragment>
 
     <fragment
@@ -43,8 +46,8 @@
         android:label="Score"
         tools:layout="@layout/fragment_st_progress" >
         <action
-            android:id="@+id/action_navigation_score_fragment_to_stSubjectActivity"
-            app:destination="@id/stSubjectActivity" />
+            android:id="@+id/action_navigation_score_fragment_to_stSubjectFragment"
+            app:destination="@id/stSubjectFragment" />
     </fragment>
 
     <fragment
@@ -53,30 +56,45 @@
         android:label="Payment"
         tools:layout="@layout/fragment_st_payment" />
 
-    <activity
-        android:id="@+id/stSubjectActivity"
-        android:name="com.example.project_skripsi.module.student.subject_detail.StSubjectActivity"
-        android:label="activity_st_subject"
-        tools:layout="@layout/activity_st_subject" >
+    <fragment
+        android:id="@+id/stSubjectFragment"
+        android:name="com.example.project_skripsi.module.student.subject_detail.StSubjectFragment"
+        android:label="fragment_st_subject"
+        tools:layout="@layout/fragment_st_subject" >
+        <action
+            android:id="@+id/action_stSubjectFragment_to_stTaskFormFragment"
+            app:destination="@id/stTaskFormFragment" />
         <argument
             android:name="subjectName"
-            app:argType="string"
-            android:defaultValue="default_subject_name" />
-    </activity>
-    <activity
-        android:id="@+id/stTaskActivity"
-        android:name="com.example.project_skripsi.module.student.task.StTaskActivity"
-        android:label="activity_st_task"
-        tools:layout="@layout/activity_st_task" >
-        <argument
-            android:name="navigationType"
-            app:argType="integer"
-            android:defaultValue="0" />
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/stTaskAssignmentFragment"
+        android:name="com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentFragment"
+        android:label="fragment_st_task_assignment"
+        tools:layout="@layout/fragment_st_task_assignment" >
+        <action
+            android:id="@+id/action_stTaskAssignmentFragment_to_stTaskFormFragment"
+            app:destination="@id/stTaskFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stTaskExamFragment"
+        android:name="com.example.project_skripsi.module.student.task.exam.StTaskExamFragment"
+        android:label="fragment_st_task_exam"
+        tools:layout="@layout/fragment_st_task_exam" >
+        <action
+            android:id="@+id/action_stTaskExamFragment_to_stTaskFormFragment"
+            app:destination="@id/stTaskFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stTaskFormFragment"
+        android:name="com.example.project_skripsi.module.student.task.form.StTaskFormFragment"
+        android:label="fragment_st_task_form"
+        tools:layout="@layout/fragment_st_task_form">
         <argument
             android:name="taskFormId"
-            app:argType="string"
-            app:nullable="true" />
-    </activity>
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

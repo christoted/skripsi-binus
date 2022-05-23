@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.student.main.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import com.example.project_skripsi.module.student.task.StTaskViewModel
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -50,10 +48,9 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
-        Log.d("TaskForm", "onTaskFormItemClicked: ")
-        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity(taskFormId)
-        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
-        view?.findNavController()?.navigate(toTaskActivity)
+        view?.findNavController()?.navigate(
+            StHomeFragmentDirections.actionNavigationHomeFragmentToStTaskFormFragment(taskFormId)
+        )
     }
 
     override fun onClassItemClicked(Position: Int) {

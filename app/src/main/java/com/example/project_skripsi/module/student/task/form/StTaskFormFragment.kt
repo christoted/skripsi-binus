@@ -65,18 +65,23 @@ class StTaskFormFragment : Fragment() {
         viewModel.questionList.observe(viewLifecycleOwner, {
             val adapter = StFormAdapter(it)
             binding.rvQuestion.adapter = adapter
-            binding.btnSubmit.setOnClickListener { submitAnswer(adapter) }
+            binding.btnSubmit.setOnClickListener {
+                submitAnswer(adapter)
+                binding.btnSubmit.isEnabled = false
+            }
 
             viewModel.timerLeft.observe(viewLifecycleOwner, { timer ->
-                if (timer.forceSubmit) submitAnswer(adapter)
+                if (timer.forceSubmit) {
+                    submitAnswer(adapter)
+                    binding.btnSubmit.isEnabled = false
+                }
                 else binding.btnTime.text = ("${timer.hour} : ${timer.minute} : ${timer.second}")
             })
         })
 
         viewModel.isSubmitted.observe(viewLifecycleOwner, {
-            if (it) view?.findNavController()?.popBackStack()?.let { pop ->
-                if (!pop) activity?.finish()
-            }
+            if (it) view?.findNavController()?.popBackStack()
+            binding.btnSubmit.isEnabled = true
         })
 
         return binding.root

@@ -354,10 +354,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 //        upload(COLLECTION_RESOURCE, resources) // replace
 //        upload(COLLECTION_TASK_FORM, taskFroms) // replace
 //        upload(COLLECTION_SCHOOL, schools) // replace
-//        checkNullable()
+//        checkNull()
     }
 
-    private fun checkNullable() {
+    private fun checkNull() {
         FireRepository.inst.getAllItems<Administrator>().first.observeOnce{ ls ->
             ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummy", it.toString()) }
         }

@@ -1,8 +1,6 @@
 package com.example.project_skripsi.module.student.main.studyclass
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,6 @@ import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStClassBinding
 import com.example.project_skripsi.databinding.FragmentStClassSubjectBinding
-import com.example.project_skripsi.module.student.task.StTaskViewModel
 import com.google.android.material.appbar.AppBarLayout
 import kotlin.math.abs
 
@@ -42,17 +39,16 @@ class StClassFragment : Fragment() {
             }
         })
 
-        binding.btnAssignment.setOnClickListener{ view ->
-            val toTaskActivity = StClassFragmentDirections.actionNavigationClassToStTaskActivity(null)
-            toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_ASSIGNMENT
-            view.findNavController().navigate(toTaskActivity)
+        binding.btnExam.setOnClickListener { view ->
+            view.findNavController()
+                .navigate(StClassFragmentDirections.actionNavigationClassFragmentToStTaskExamFragment())
         }
 
-        binding.btnExam.setOnClickListener{ view ->
-            val toTaskActivity = StClassFragmentDirections.actionNavigationClassToStTaskActivity(null)
-            toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_EXAM
-            view.findNavController().navigate(toTaskActivity)
+        binding.btnAssignment.setOnClickListener { view ->
+            view.findNavController()
+                .navigate(StClassFragmentDirections.actionNavigationClassFragmentToStTaskAssignmentFragment())
         }
+
 
         viewModel.studyClass.observe(viewLifecycleOwner, {
             with(binding) {

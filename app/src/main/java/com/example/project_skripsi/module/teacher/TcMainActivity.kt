@@ -42,11 +42,12 @@ class TcMainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.tcHomeFragment -> showBottomNav()
-                R.id.tcStudyClassFragment -> showBottomNav()
-                R.id.tcCalendarFragment -> showBottomNav()
-                R.id.tcResourceFragment -> showBottomNav()
-                R.id.tcTaskFragment -> showBottomNav()
+                R.id.tcHomeFragment,
+                R.id.tcStudyClassFragment,
+                R.id.tcCalendarFragment,
+                R.id.tcResourceFragment,
+                R.id.tcTaskFragment ->
+                    showBottomNav()
                 else -> hideBottomNav()
             }
         }

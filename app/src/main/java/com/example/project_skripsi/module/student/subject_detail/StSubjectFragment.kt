@@ -16,7 +16,6 @@ import com.example.project_skripsi.module.student.subject_detail.assignment.StSu
 import com.example.project_skripsi.module.student.subject_detail.attendance.StSubjectAttendanceFragment
 import com.example.project_skripsi.module.student.subject_detail.exam.StSubjectExamFragment
 import com.example.project_skripsi.module.student.subject_detail.resource.StSubjectResourceFragment
-import com.example.project_skripsi.module.student.task.StTaskViewModel
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -48,7 +47,7 @@ class StSubjectFragment : Fragment(), ItemClickListener {
             }
         })
 
-        binding.imvBack.setOnClickListener { activity?.finish() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 
@@ -79,8 +78,8 @@ class StSubjectFragment : Fragment(), ItemClickListener {
     }
 
     override fun onItemClick(itemId: String) {
-        val action = StSubjectFragmentDirections.actionStSubjectFragmentToStTaskActivity(itemId)
-        action.navigationType = StTaskViewModel.NAVIGATION_FORM
-        view?.findNavController()?.navigate(action)
+        view?.findNavController()?.navigate(
+            StSubjectFragmentDirections.actionStSubjectFragmentToStTaskFormFragment(itemId)
+        )
     }
 }

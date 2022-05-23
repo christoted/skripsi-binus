@@ -26,13 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.student.task.StTaskActivity"
-            android:exported="false" />
-        <activity
-            android:name=".module.student.subject_detail.StSubjectActivity"
-            android:exported="false" />
-        <activity
-            android:name=".module.student.main.StMainActivity"
+            android:name=".module.student.StMainActivity"
             android:exported="false"
             android:label="@string/title_activity_student_main" />
     </application>

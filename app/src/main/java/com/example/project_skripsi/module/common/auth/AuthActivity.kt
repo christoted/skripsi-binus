@@ -3,7 +3,6 @@ package com.example.project_skripsi.module.common.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.project_skripsi.R
@@ -13,7 +12,7 @@ import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGI
 import com.example.project_skripsi.core.repository.dummy.FirestoreDummy
 import com.example.project_skripsi.databinding.ActivityAuthBinding
 import com.example.project_skripsi.module.parent.PrMainActivity
-import com.example.project_skripsi.module.student.main.StMainActivity
+import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.module.teacher.TcMainActivity
 
 class AuthActivity : AppCompatActivity() {
@@ -73,7 +72,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun redirectToStudent() {
         Toast.makeText(applicationContext, "Login Success as Student", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this,StMainActivity::class.java)
+        val intent = Intent(this, StMainActivity::class.java)
         startActivity(intent)
     }
 

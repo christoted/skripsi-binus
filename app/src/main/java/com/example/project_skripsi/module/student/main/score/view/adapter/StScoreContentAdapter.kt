@@ -121,9 +121,9 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.indicator_attendance, null))
                 root.setOnClickListener {
                     listener.onAttendanceTapped()
-                    val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()
-                    toStSubjectActivity.subjectName = item.subjectName
-                    it.findNavController().navigate(toStSubjectActivity)
+                    it.findNavController().navigate(
+                        StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectFragment(item.subjectName)
+                    )
                 }
             }
         }
