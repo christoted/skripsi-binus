@@ -39,7 +39,7 @@ class StPaymentViewModel : ViewModel() {
     }
 
     private fun loadPayments() {
-        FireRepository.instance.getStudent(AuthRepository.instance.getCurrentUser().uid).let { response ->
+        FireRepository.inst.getStudent(AuthRepository.instance.getCurrentUser().uid).let { response ->
             response.first.observeOnce{ student ->
                 var totalCharge = 0
                 var totalPaid = 0

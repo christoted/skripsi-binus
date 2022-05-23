@@ -7,8 +7,6 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_ASSIGNMENT
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
@@ -33,7 +31,7 @@ class TcStudyClassTeachingViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _studyClass.postValue(studyClass)
                 studyClass.classChief?.let { loadClassChief(it) }
@@ -43,7 +41,7 @@ class TcStudyClassTeachingViewModel : ViewModel() {
     }
 
     private fun loadClassChief(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.inst.getStudent(uid).let { response ->
             response.first.observeOnce { _classChief.postValue(it) }
         }
     }
@@ -51,7 +49,7 @@ class TcStudyClassTeachingViewModel : ViewModel() {
     private fun loadStudents(uids: List<String>) {
         val studentList = ArrayList<Student>()
         uids.map { uid ->
-            FireRepository.instance.getStudent(uid).let { response ->
+            FireRepository.inst.getStudent(uid).let { response ->
                 response.first.observeOnce {
                     studentList.add(it)
                     if (studentList.size == uids.size) _studentList.postValue(studentList.toList())

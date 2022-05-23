@@ -15,7 +15,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
     companion object {
-        var instance = FireRepository()
+        var inst = FireRepository()
 
         const val COLLECTION_ADMINISTRATOR = "administrators"
         const val COLLECTION_TASK_FORM = "task_forms"

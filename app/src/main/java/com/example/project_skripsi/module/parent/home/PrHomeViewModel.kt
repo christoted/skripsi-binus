@@ -9,7 +9,6 @@ import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
 import kotlin.math.min
 
 class PrHomeViewModel : ViewModel() {
@@ -73,13 +72,13 @@ class PrHomeViewModel : ViewModel() {
 
 
     private fun loadParent(uid: String) {
-        FireRepository.instance.getItem<Parent>(uid).first.observeOnce { parent ->
+        FireRepository.inst.getItem<Parent>(uid).first.observeOnce { parent ->
             parent.children?.let { loadStudent(it) }
         }
     }
 
     private fun loadStudent(uids: List<String>) {
-        FireRepository.instance.getItems<Student>(uids).first.observeOnce {
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce {
             _studentList.postValue(it)
 
             val meetingList = mutableListOf<ParentAgendaMeeting>()
@@ -109,7 +108,7 @@ class PrHomeViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.instance.getAllItems<Announcement>().first.observeOnce {
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce {
             _listPaymentSectionDataAnnouncement.postValue(it)
         }
     }

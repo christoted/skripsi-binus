@@ -39,7 +39,7 @@ class PrPaymentViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getItem<Student>(uid).first.observeOnce { student ->
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             var totalCharge = 0
             var totalPaid = 0
             val upcomingPayment = mutableListOf<Payment>()

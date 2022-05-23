@@ -46,14 +46,14 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
     }
 
     private fun loadTaskForm(uid: String) {
-        FireRepository.instance.getTaskForm(uid).first.observeOnce {
+        FireRepository.inst.getTaskForm(uid).first.observeOnce {
             taskForm = it
             loadStudent(studentId)
         }
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).first.observeOnce { student ->
+        FireRepository.inst.getStudent(uid).first.observeOnce { student ->
             currentStudent = student
             _student.postValue(student)
             when(taskForm.type) {
@@ -93,7 +93,7 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
                 val pos = it.indexOfFirst { item -> item.id == taskForm.id }
                 it.set(pos, newAssignedTaskForm)
             }
-            FireRepository.instance.alterItems(listOf(currentStudent)).first.observeOnce{
+            FireRepository.inst.alterItems(listOf(currentStudent)).first.observeOnce{
                 _assessmentComplete.postValue(it)
             }
         }

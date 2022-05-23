@@ -34,7 +34,7 @@ class StTaskAssignmentViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.inst.getStudent(uid).let { response ->
             response.first.observeOnce { student ->
                 with(student) {
                     studyClass?.let { uid -> loadStudyClass(uid) }
@@ -45,7 +45,7 @@ class StTaskAssignmentViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 val allAssignments = ArrayList<String>()
                 with(studyClass) {
@@ -61,7 +61,7 @@ class StTaskAssignmentViewModel : ViewModel() {
         val ongoingList = ArrayList<TaskFormStatus>()
         val pastList = ArrayList<TaskFormStatus>()
         uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).let { response ->
+            FireRepository.inst.getTaskForm(uid).let { response ->
                 response.first.observeOnce { taskForm ->
                     mAssignedTaskForms[uid]?.let {
                         if (taskForm.endTime!! > DateHelper.getCurrentDate()) {

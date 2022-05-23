@@ -26,7 +26,7 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _studyClass.postValue(studyClass)
                 studyClass.classChief?.let { loadClassChief(it) }
@@ -36,7 +36,7 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     }
 
     private fun loadClassChief(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.inst.getStudent(uid).let { response ->
             response.first.observeOnce { _classChief.postValue(it) }
         }
     }
@@ -44,7 +44,7 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     private fun loadStudents(uids: List<String>) {
         val studentList = ArrayList<Student>()
         uids.map { uid ->
-            FireRepository.instance.getStudent(uid).let { response ->
+            FireRepository.inst.getStudent(uid).let { response ->
                 response.first.observeOnce {
                     studentList.add(it)
                     if (studentList.size == uids.size) _studentList.postValue(studentList.toList())

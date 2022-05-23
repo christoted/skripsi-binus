@@ -78,7 +78,7 @@ class StHomeViewModel : ViewModel() {
     }
 
     private fun loadCurrentStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).let {
+        FireRepository.inst.getStudent(uid).let {
             response ->
             response.first.observeOnce {
                 student ->
@@ -94,7 +94,7 @@ class StHomeViewModel : ViewModel() {
 
     private fun loadStudyClass(uid: String) {
 
-        FireRepository.instance.getStudyClass(uid).let {
+        FireRepository.inst.getStudyClass(uid).let {
             response ->
             response.first.observeOnce { studyClass ->
 
@@ -119,7 +119,7 @@ class StHomeViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.instance.getAnnouncements().let {
+        FireRepository.inst.getAnnouncements().let {
             response ->
             response.first.observeOnce {
                 // TODO: Load Announcement
@@ -131,7 +131,7 @@ class StHomeViewModel : ViewModel() {
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
         val taskFormList = ArrayList<TaskForm>()
         uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).let { response ->
+            FireRepository.inst.getTaskForm(uid).let { response ->
                 response.first.observeOnce { taskForm ->
                     taskFormList.add(taskForm)
                     if (taskFormList.size == uids.size)

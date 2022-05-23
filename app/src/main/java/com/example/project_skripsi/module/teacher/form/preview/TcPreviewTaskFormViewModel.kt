@@ -30,11 +30,11 @@ class TcPreviewTaskFormViewModel : ViewModel() {
     }
 
     private fun loadTaskForm(uid: String) {
-        FireRepository.instance.getTaskForm(uid).first.observeOnce { _taskForm.postValue(it) }
+        FireRepository.inst.getTaskForm(uid).first.observeOnce { _taskForm.postValue(it) }
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).first.observeOnce { _studyClass.postValue(it) }
+        FireRepository.inst.getStudyClass(uid).first.observeOnce { _studyClass.postValue(it) }
     }
 
 }

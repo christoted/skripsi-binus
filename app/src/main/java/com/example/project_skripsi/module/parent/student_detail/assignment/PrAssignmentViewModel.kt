@@ -33,7 +33,7 @@ class PrAssignmentViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getItem<Student>(uid).first.observeOnce { student ->
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             with(student) {
                 studyClass?.let { uid -> loadStudyClass(uid) }
                 assignedAssignments?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) }}
@@ -42,7 +42,7 @@ class PrAssignmentViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
             val allAssignments = mutableListOf<String>()
             with(studyClass) {
                 name?.let { className = it }
@@ -53,7 +53,7 @@ class PrAssignmentViewModel : ViewModel() {
     }
 
     private fun loadTaskForms(uids: List<String>) {
-        FireRepository.instance.getItems<TaskForm>(uids).first.observeOnce {
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce {
             val ongoingList = mutableListOf<TaskFormStatus>()
             val pastList = mutableListOf<TaskFormStatus>()
             it.map { taskForm ->

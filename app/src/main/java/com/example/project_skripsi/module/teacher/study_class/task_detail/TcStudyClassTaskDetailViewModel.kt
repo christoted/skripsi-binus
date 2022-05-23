@@ -43,7 +43,7 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _studyClass.postValue(studyClass)
                 studyClass.students?.let { loadStudents(it) }
@@ -52,7 +52,7 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
     }
 
     private fun loadTaskForm(uid: String) {
-        FireRepository.instance.getTaskForm(uid).let { response ->
+        FireRepository.inst.getTaskForm(uid).let { response ->
             response.first.observeOnce { taskForm -> _taskForm.postValue(taskForm) }
         }
     }
@@ -61,7 +61,7 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
         val uncheckedList : MutableList<Student> = mutableListOf()
         val checkedList : MutableList<Student> = mutableListOf()
         uids.map { uid ->
-            FireRepository.instance.getStudent(uid).let { response ->
+            FireRepository.inst.getStudent(uid).let { response ->
                 response.first.observeOnce { student ->
                     student.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
                         if (it.isChecked!!) checkedList.add(student)

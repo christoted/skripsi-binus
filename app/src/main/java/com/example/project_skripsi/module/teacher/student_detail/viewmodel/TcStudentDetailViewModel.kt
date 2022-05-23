@@ -6,12 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
-import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSection
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_FINAL_EXAM
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_MID_EXAM
@@ -54,7 +52,7 @@ class TcStudentDetailViewModel: ViewModel() {
         val paymentSection: MutableList<TcStudentDetailPaymentSection> = mutableListOf()
         val payments: MutableList<Payment> = mutableListOf()
         val _payments: MutableLiveData<List<Payment>> = MutableLiveData()
-        FireRepository.instance.getStudent(studentUID).first.observeOnce { student ->
+        FireRepository.inst.getStudent(studentUID).first.observeOnce { student ->
             student.payments?.let {
 
                 payments.addAll(it)
@@ -77,7 +75,7 @@ class TcStudentDetailViewModel: ViewModel() {
 
     // MARK: - Get Score Flow
     fun loadCurrentStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.inst.getStudent(uid).let { response ->
             response.first.observeOnce { student ->
                 _student.postValue(student)
 //                loadParent(student.parent)
@@ -107,7 +105,7 @@ class TcStudentDetailViewModel: ViewModel() {
 
     private fun loadStudyClass(uid: String) {
         getScores()
-        FireRepository.instance.getStudyClass(uid).let {
+        FireRepository.inst.getStudyClass(uid).let {
                 response ->
             response.first.observeOnce {
                 it.subjects.let { subjects ->
@@ -172,7 +170,7 @@ class TcStudentDetailViewModel: ViewModel() {
     }
 
     private fun loadParent(uid: String) {
-        FireRepository.instance.getItem<Parent>(uid).first.observeOnce{ _parent.postValue(it) }
+        FireRepository.inst.getItem<Parent>(uid).first.observeOnce{ _parent.postValue(it) }
     }
 
 

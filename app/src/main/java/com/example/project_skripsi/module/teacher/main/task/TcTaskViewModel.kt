@@ -40,7 +40,7 @@ class TcTaskViewModel : ViewModel() {
     }
 
     private fun loadTeacher(uid : String) {
-        FireRepository.instance.getTeacher(uid).first.observeOnce { teacher ->
+        FireRepository.inst.getTeacher(uid).first.observeOnce { teacher ->
             val subjectGroups = mutableListOf<SubjectGroup>()
             with(teacher) {
                 teachingGroups?.map { group ->
@@ -72,7 +72,7 @@ class TcTaskViewModel : ViewModel() {
     private fun loadTaskForm(uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
         val taskFormList = mutableListOf<TaskForm>()
         uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).first.observeOnce {
+            FireRepository.inst.getTaskForm(uid).first.observeOnce {
                 taskFormList.add(it)
                 if (taskFormList.size == uids.size) mutableLiveData.postValue(taskFormList)
             }

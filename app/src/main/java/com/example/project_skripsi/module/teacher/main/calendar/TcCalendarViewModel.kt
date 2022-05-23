@@ -69,7 +69,7 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.instance.getItem<Teacher>(uid).first.observeOnce { teacher ->
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             teacher.payments?.let { _paymentList.postValue(it) }
 
             val classes = mutableListOf<ClassIdSubject>()
@@ -83,7 +83,7 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudyClasses(uids: List<ClassIdSubject>) {
-        FireRepository.instance.getItems<StudyClass>(uids.map { it.studyClassId }).first.observeOnce{
+        FireRepository.inst.getItems<StudyClass>(uids.map { it.studyClassId }).first.observeOnce{
             val meetings = mutableListOf<TeacherAgendaMeeting>()
             val exams = mutableListOf<ClassTaskFormId>()
             val assignments = mutableListOf<ClassTaskFormId>()
@@ -109,7 +109,7 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadTaskForms(uids: List<ClassTaskFormId>, _liveData: MutableLiveData<List<TeacherAgendaTaskForm>>) {
-        FireRepository.instance.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
+        FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
             val taskFormList = ArrayList<TeacherAgendaTaskForm>()
             it.mapIndexed { index, taskForm ->
                 taskFormList.add(TeacherAgendaTaskForm(uids[index].studyClassId, uids[index].studyClassName, taskForm))
@@ -119,7 +119,7 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.instance.getAnnouncements().first.observeOnce { _announcementList.postValue(it) }
+        FireRepository.inst.getAnnouncements().first.observeOnce { _announcementList.postValue(it) }
     }
 
     private fun propagateEvent(item : List<HomeSectionData>, type: Int) {

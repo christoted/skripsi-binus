@@ -88,7 +88,7 @@ class PrProgressViewModel : ViewModel() {
     }
 
     private fun loadCurrentStudent(uid: String) {
-        FireRepository.instance.getItem<Student>(uid).first.observeOnce { student ->
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
 
             student.studyClass?.let { loadStudyClass(it) }
 
@@ -104,7 +104,7 @@ class PrProgressViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getItem<StudyClass>(uid).first.observeOnce {
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce {
             it.subjects.let { subjects -> _subjects.postValue(subjects) }
         }
     }

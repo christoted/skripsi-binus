@@ -3,11 +3,8 @@ package com.example.project_skripsi.module.teacher.study_class.task
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.Resource
-import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.model.firestore.TaskForm
-import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
@@ -39,7 +36,7 @@ class TcStudyClassTaskViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _studyClass.postValue(studyClass)
                 studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classExams?.let {
@@ -56,7 +53,7 @@ class TcStudyClassTaskViewModel : ViewModel() {
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
         val taskFormList = ArrayList<TaskForm>()
         uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).let { response ->
+            FireRepository.inst.getTaskForm(uid).let { response ->
                 response.first.observeOnce {
                     taskFormList.add(it)
                     if (taskFormList.size == uids.size)

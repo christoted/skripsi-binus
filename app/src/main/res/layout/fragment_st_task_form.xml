@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -197,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/recyclerview_background"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:listitem="@layout/item_st_task_form_mc" />
+                    tools:listitem="@layout/item_st_task_form_essay" />
 
                 <Button
                     android:id="@+id/btn_submit"
@@ -222,12 +221,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/black"
-        android:text="24 : 12"
+        android:text="3 : 24 : 12"
         android:textColor="@color/white"
         app:icon="@drawable/ic_baseline_hourglass_bottom_24"
         app:iconTint="@color/white"
         app:layout_anchor="@id/mainview"
-        app:layout_anchorGravity="bottom|start"/>
+        app:layout_anchorGravity="bottom|start" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout >
 

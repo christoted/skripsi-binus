@@ -46,23 +46,29 @@ class TcAssessmentTaskFormFragment : Fragment() {
                     if (assignedQuestion.type == Constant.TASK_FORM_ESSAY) {
                         with(binding.rvQuestion.getChildAt(index)) {
                             val score = findViewById<TextView>(R.id.edt_score).text.toString()
-                            if (ValidationHelper.isStringEmpty(context!!, score, "Nilai - ${index+1}")) {
+                            if (ValidationHelper.isStringEmpty(context, score, "Nilai - ${index+1}")) {
                                 isOK = false
                                 return@mapIndexed
                             }
-                            if (ValidationHelper.isStringInteger(context!!, score, "Nilai - ${index+1}")) {
+                            if (ValidationHelper.isStringInteger(context, score, "Nilai - ${index+1}")) {
                                 isOK = false
                                 return@mapIndexed
                             }
                             val scoreInt = score.toInt()
-                            val text = findViewById<TextView>(R.id.tv_title).text.toString()
-                            adapter.questionList[index].answer = Answer(text, scoreInt)
+                            if (scoreInt < 0 || scoreInt > (assignedQuestion.scoreWeight ?: 0)) {
+                                Toast.makeText(
+                                    context,
+                                    "Nilai harus 0 - ${assignedQuestion.scoreWeight}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@mapIndexed
+                            }
+                            adapter.questionList[index].answer = Answer(assignedQuestion.answer?.answerText, scoreInt)
                         }
                     } else {
                         with(binding.rvQuestion.getChildAt(index)) {
-                            val text = findViewById<TextView>(R.id.tv_title).text.toString()
                             val score = findViewById<TextView>(R.id.tv_score).text.toString().toInt()
-                            adapter.questionList[index].answer = Answer(text, score)
+                            adapter.questionList[index].answer = Answer(assignedQuestion.answer?.answerText, score)
                         }
 
                     }

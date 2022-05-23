@@ -45,7 +45,7 @@ class StSubjectViewModel : ViewModel() {
 
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.inst.getStudent(uid).let { response ->
             response.first.observeOnce { student ->
                 with(student) {
                     attendedMeetings?.map { meeting -> meeting.id?.let { mAttendedMeetings.add(it) } }
@@ -58,7 +58,7 @@ class StSubjectViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 studyClass.name?.let { className = it }
                 studyClass.subjects?.filter { it.subjectName == this.subjectName }?.map { subject ->
@@ -75,7 +75,7 @@ class StSubjectViewModel : ViewModel() {
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.instance.getTeacher(uid).let { response ->
+        FireRepository.inst.getTeacher(uid).let { response ->
             response.first.observeOnce { _teacher.postValue(it) }
         }
     }
@@ -92,7 +92,7 @@ class StSubjectViewModel : ViewModel() {
     private fun loadResources(uids: List<String>) {
         val resourceList = ArrayList<Resource>()
         uids.map { uid ->
-            FireRepository.instance.getResource(uid).let { response ->
+            FireRepository.inst.getResource(uid).let { response ->
                 response.first.observeOnce {
                     resourceList.add(it)
                     if (resourceList.size == uids.size)
@@ -105,7 +105,7 @@ class StSubjectViewModel : ViewModel() {
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskFormStatus>>) {
         val taskFormList = ArrayList<TaskFormStatus>()
         uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).let { response ->
+            FireRepository.inst.getTaskForm(uid).let { response ->
                 response.first.observeOnce { taskForm ->
                     mAssignedTaskForms[uid]?.let {
                         taskFormList.add(TaskFormStatus(className, taskForm, it))

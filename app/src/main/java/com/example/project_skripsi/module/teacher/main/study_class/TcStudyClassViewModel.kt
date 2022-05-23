@@ -27,7 +27,7 @@ class TcStudyClassViewModel : ViewModel() {
     }
 
     private fun loadTeacher(uid : String) {
-        FireRepository.instance.getTeacher(uid).first.observeOnce { teacher ->
+        FireRepository.inst.getTeacher(uid).first.observeOnce { teacher ->
             with(teacher) {
                 homeroomClass?.let { loadHomeroomClass(it) }
 
@@ -44,7 +44,7 @@ class TcStudyClassViewModel : ViewModel() {
     }
 
     private fun loadHomeroomClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _homeroomClass.postValue(studyClass)
             }
@@ -55,7 +55,7 @@ class TcStudyClassViewModel : ViewModel() {
         val uids = subjectClasses[subjectName]
         val classList = mutableListOf<StudyClass>()
         uids?.map { uid ->
-            FireRepository.instance.getStudyClass(uid).let { response ->
+            FireRepository.inst.getStudyClass(uid).let { response ->
                 response.first.observeOnce {
                     classList.add(it)
                     if (classList.size == uids.size)

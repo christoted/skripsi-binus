@@ -7,7 +7,6 @@ import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.teacher.main.calendar.TcCalendarViewModel
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -73,7 +72,7 @@ class StCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getItem<Student>(uid).let { response ->
+        FireRepository.inst.getItem<Student>(uid).let { response ->
             response.first.observeOnce { student ->
                 student.studyClass?.let { loadStudyClass(it) }
                 student.payments?.let { _paymentList.postValue(it) }
@@ -82,7 +81,7 @@ class StCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getItem<StudyClass>(uid).let { response ->
+        FireRepository.inst.getItem<StudyClass>(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 val meetings = ArrayList<ClassMeeting>()
                 val examIds = ArrayList<String>()
@@ -104,7 +103,7 @@ class StCalendarViewModel : ViewModel() {
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
         val taskFormList = ArrayList<TaskForm>()
         uids.map { uid ->
-            FireRepository.instance.getItem<TaskForm>(uid).let { response ->
+            FireRepository.inst.getItem<TaskForm>(uid).let { response ->
                 response.first.observeOnce { taskForm ->
                     taskFormList.add(taskForm)
                     if (taskFormList.size == uids.size)
@@ -115,7 +114,7 @@ class StCalendarViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.instance.getAnnouncements().let { response ->
+        FireRepository.inst.getAnnouncements().let { response ->
             response.first.observeOnce { _announcementList.postValue(it) }
         }
     }

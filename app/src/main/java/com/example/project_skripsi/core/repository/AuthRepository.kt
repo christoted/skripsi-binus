@@ -53,7 +53,7 @@ class AuthRepository {
 
                         firebaseAuth.currentUser?.let { user ->
                             currentUser = firebaseAuth.currentUser
-                            FireRepository.instance
+                            FireRepository.inst
                                 .let {
                                     when (loginAs) {
                                         LOGIN_STUDENT -> it.getItem<Student>(user.uid)
