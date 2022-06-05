@@ -33,6 +33,11 @@ class DateHelper {
             return CalendarDay.from(date)
         }
 
+        fun convertDateToCalendar(date: Date): Calendar {
+            val calendar = Calendar.getInstance()
+            calendar.time = date
+            return calendar
+        }
 //        fun convertCalendarDayToDate(date: CalendarDay?): Date {
 //            if (date == null) return getCurrentDate()
 //            return CalendarDay.from(date)
