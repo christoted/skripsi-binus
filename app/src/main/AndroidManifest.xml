@@ -37,6 +37,10 @@
         <activity
             android:name=".module.teacher.TcMainActivity"
             android:exported="false" />
+        <receiver
+            android:name=".utils.service.alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
         <activity
             android:name=".module.common.auth.AuthActivity"
             android:exported="true">

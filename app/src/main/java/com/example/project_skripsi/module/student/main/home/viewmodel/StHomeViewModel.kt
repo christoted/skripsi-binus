@@ -14,6 +14,8 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 
@@ -27,6 +29,9 @@ class StHomeViewModel : ViewModel() {
 
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
+
+    private val _listAttendedMeeting = MutableLiveData<List<AttendedMeeting>>()
+    var attendedMeeting = _listAttendedMeeting
 
     private val _listHomeSectionDataClassSchedule = MutableLiveData<List<ClassMeeting>>()
     private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
@@ -134,5 +139,6 @@ class StHomeViewModel : ViewModel() {
             )
         }
     }
+
 
 }

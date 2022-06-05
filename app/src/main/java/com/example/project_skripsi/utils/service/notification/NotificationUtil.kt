@@ -10,6 +10,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.project_skripsi.R
@@ -30,24 +31,24 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
     }
 
     companion object {
-        fun scheduleNotification(context: Context, attendedMeeting: AttendedMeeting) {
+        private fun scheduleNotification(context: Context, attendedMeeting: AttendedMeeting) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, AlarmReceiver::class.java)
             var timeInMillis: Long = 0
             attendedMeeting.startTime?.let {
                 timeInMillis = DateHelper.convertDateToCalendar(it).timeInMillis
                 intent.putExtra("timeinmillis", timeInMillis)
-            }
-            val notificationId = createNotificationId(timeInMillis)
-            val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-            // Call once
-            attendedMeeting.startTime?.let { startTime ->
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.convertDateToCalendar(startTime).timeInMillis, pendingIntent)
+                Log.d("987", "scheduleNotification: $timeInMillis")
+
+                val notificationId = createNotificationId(timeInMillis)
+                val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.convertDateToCalendar(it).timeInMillis, pendingIntent)
             }
         }
 
-        fun cancelNotification(context: Context, attendedMeeting: AttendedMeeting) {
+       private fun cancelNotification(context: Context, attendedMeeting: AttendedMeeting) {
             attendedMeeting.startTime?.let {
                 val intent = Intent(context, AlarmReceiver::class.java)
                 val timeMillis = DateHelper.convertDateToCalendar(it).timeInMillis
@@ -64,12 +65,16 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             }
         }
 
-        fun scheduleAllNotification() {
-
+        fun scheduleAllNotification(context: Context, attendedMeetings: List<AttendedMeeting>) {
+            attendedMeetings.forEach{ meeting ->
+                scheduleNotification(context, meeting)
+            }
         }
 
-        fun cancelAllNotification() {
-
+        fun cancelAllNotification(context: Context, attendedMeetings: List<AttendedMeeting>) {
+            attendedMeetings.forEach { meeting ->
+                cancelNotification(context, meeting)
+            }
         }
 
         fun createNotificationId(timeMillis: Long): Int {

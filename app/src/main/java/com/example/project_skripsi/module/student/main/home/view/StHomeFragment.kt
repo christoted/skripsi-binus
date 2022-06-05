@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
@@ -52,6 +51,7 @@ class StHomeFragment : Fragment(), ItemListener {
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             viewModel.sectionData.observe(viewLifecycleOwner, { adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment) })
         }
+        triggerNotification()
 
         binding.imvAnnouncement.setOnClickListener {
             view?.findNavController()?.navigate(
@@ -72,8 +72,13 @@ class StHomeFragment : Fragment(), ItemListener {
         _binding = null
     }
 
+    private fun triggerNotification() {
+        viewModel.attendedMeeting.observe(viewLifecycleOwner) {
+            NotificationUtil.scheduleAllNotification(requireActivity(), it)
+        }
+    }
+
     override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
-        view?.findNavController()?.navigate(
             StHomeFragmentDirections.actionNavigationHomeFragmentToStTaskFormFragment(taskFormId)
         )
     }
