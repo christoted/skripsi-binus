@@ -23,7 +23,7 @@ class TcStudyClassViewModel : ViewModel() {
     private val subjectClasses = mutableMapOf<String, MutableList<String>>()
 
     init {
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
     private fun loadTeacher(uid : String) {

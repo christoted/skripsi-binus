@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentPrAnnouncementBinding
+import com.example.project_skripsi.utils.helper.UIHelper
+
 class PrAnnouncementFragment : Fragment() {
 
     private lateinit var viewModel: PrAnnouncementViewModel
@@ -26,7 +28,14 @@ class PrAnnouncementFragment : Fragment() {
 
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         viewModel.announcementList.observe(viewLifecycleOwner, {
-            binding.rvContainer.adapter = AnnouncementViewHolder(it).getAdapter()
+            if (it.isEmpty()){
+                binding.llParent.addView(UIHelper.getEmptyList(
+                    "Tidak ada pengumuman",
+                    inflater, binding.llParent
+                ))
+            } else {
+                binding.rvContainer.adapter = AnnouncementViewHolder(it).getAdapter()
+            }
         })
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }

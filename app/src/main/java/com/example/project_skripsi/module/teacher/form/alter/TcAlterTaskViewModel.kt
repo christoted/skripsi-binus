@@ -73,7 +73,7 @@ class TcAlterTaskViewModel : ViewModel() {
         _questionList.postValue(emptyList())
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         if (taskFormId != null) { loadTaskForm(taskFormId) }
     }
 

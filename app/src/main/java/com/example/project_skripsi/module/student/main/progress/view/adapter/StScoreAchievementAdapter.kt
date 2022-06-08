@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.score.view.adapter
+package com.example.project_skripsi.module.student.main.progress.view.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.Achievement
 import com.example.project_skripsi.databinding.ItemStProgressAchievementBinding
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
 
 class StScoreAchievementAdapter(private val viewModel: StScoreViewModel): RecyclerView.Adapter<StScoreAchievementAdapter.StScoreAchievementViewHolder>() {
     override fun onCreateViewHolder(

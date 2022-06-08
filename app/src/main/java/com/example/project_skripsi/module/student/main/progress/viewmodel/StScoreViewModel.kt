@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.score.viewmodel
+package com.example.project_skripsi.module.student.main.progress.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,9 +31,10 @@ class StScoreViewModel : ViewModel() {
     // Attendance
     private val _sectionAttendance = MutableLiveData<List<AttendanceMainSection>>()
     val sectionAttendance: LiveData<List<AttendanceMainSection>> = _sectionAttendance
-    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
     private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
     private val mutableListOfAttendance: MutableList<AttendedMeeting> = mutableListOf()
+    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
+
     // Achievement
     private val _achievements = MutableLiveData<List<Achievement>>()
     val achievements: LiveData<List<Achievement>> = _achievements
@@ -65,23 +66,23 @@ class StScoreViewModel : ViewModel() {
             _sectionScore.postValue(listDataScore)
             _sectionAttendance.postValue(listDataAttendance)
         }
-        loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
+        loadCurrentStudent(AuthRepository.inst.getCurrentUser().uid)
     }
 
 
     private fun loadCurrentStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
 
-            student.studyClass?.let { loadStudyClass(it) }
 
             student.assignedExams?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
             student.assignedAssignments?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
-            student.achievements?.let { _achievements.postValue(it) }
+            student.studyClass?.let { loadStudyClass(it) }
 
-            student.attendedMeetings.let {
-                _mapAttendanceBySubject.postValue(it?.groupBy { subject -> subject.subjectName!! })
-                if (it != null) { mutableListOfAttendance.addAll(it) }
+            student.attendedMeetings?.let {
+                _mapAttendanceBySubject.postValue( it.groupBy { subject -> subject.subjectName!! })
+                mutableListOfAttendance.addAll(it)
             }
+            student.achievements?.let { _achievements.postValue(it) }
         }
     }
 

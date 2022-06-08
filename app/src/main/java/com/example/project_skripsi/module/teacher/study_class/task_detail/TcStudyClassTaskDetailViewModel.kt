@@ -43,40 +43,33 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                _studyClass.postValue(studyClass)
-                studyClass.students?.let { loadStudents(it) }
-            }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            _studyClass.postValue(studyClass)
+            studyClass.students?.let { loadStudents(it) }
         }
     }
 
     private fun loadTaskForm(uid: String) {
-        FireRepository.inst.getTaskForm(uid).let { response ->
-            response.first.observeOnce { taskForm -> _taskForm.postValue(taskForm) }
-        }
+        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { _taskForm.postValue(it) }
     }
 
     private fun loadStudents(uids: List<String>) {
         val uncheckedList : MutableList<Student> = mutableListOf()
         val checkedList : MutableList<Student> = mutableListOf()
-        uids.map { uid ->
-            FireRepository.inst.getStudent(uid).let { response ->
-                response.first.observeOnce { student ->
-                    student.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
-                        if (it.isChecked!!) checkedList.add(student)
-                        else uncheckedList.add(student)
-                    }
-                    student.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
-                        if (it.isChecked!!) checkedList.add(student)
-                        else uncheckedList.add(student)
-                    }
-                    if (uncheckedList.size + checkedList.size == uids.size) {
-                        _uncheckedList.postValue(uncheckedList)
-                        _checkedList.postValue(checkedList)
-                    }
+
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce { list ->
+            list.map { student ->
+                student.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
+                    if (it.isChecked!!) checkedList.add(student)
+                    else uncheckedList.add(student)
+                }
+                student.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
+                    if (it.isChecked!!) checkedList.add(student)
+                    else uncheckedList.add(student)
                 }
             }
+            _uncheckedList.postValue(uncheckedList)
+            _checkedList.postValue(checkedList)
         }
     }
 
@@ -89,8 +82,4 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
         }
         return 0
     }
-
-
-
-
 }

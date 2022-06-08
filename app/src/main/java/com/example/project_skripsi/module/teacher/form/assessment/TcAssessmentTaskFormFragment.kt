@@ -83,7 +83,7 @@ class TcAssessmentTaskFormFragment : Fragment() {
 
         viewModel.student.observe(viewLifecycleOwner, {
             with(binding) {
-                tvAbsentNumber.text = it.attendanceNumber.toString()
+                tvAttendanceNumber.text = it.attendanceNumber.toString()
                 tvName.text = it.name
             }
         })

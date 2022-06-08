@@ -233,7 +233,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
                 it.second.observeOnce{ _exception -> exception.postValue(_exception) }
             }
         }
-
+        if (results.size == uids.size) data.postValue(results)
         return Pair(data, exception)
     }
 

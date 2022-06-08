@@ -8,6 +8,8 @@ import com.example.project_skripsi.utils.app.App
 import androidx.core.graphics.drawable.DrawableCompat
 
 import android.graphics.drawable.Drawable
+import com.bumptech.glide.Glide
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ItemTcStudyClassStudentBinding
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
@@ -26,7 +28,13 @@ class HomeroomStudentViewHolder(
         adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemTcStudyClassStudentBinding
             with(view) {
-                tvAbsentNumber.text = "${item.attendanceNumber}"
+                Glide
+                    .with(root.context)
+                    .load(item.profile)
+                    .placeholder(R.drawable.profile_empty)
+                    .into(ivProfilePicture)
+
+                tvAttendanceNumber.text = "${item.attendanceNumber}"
                 tvName.text = item.name
                 tvAbsent.text = viewModel.getAttendanceAbsent(item).toString()
 

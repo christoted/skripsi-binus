@@ -26,31 +26,19 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                _studyClass.postValue(studyClass)
-                studyClass.classChief?.let { loadClassChief(it) }
-                studyClass.students?.let { loadStudents(it) }
-            }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            _studyClass.postValue(studyClass)
+            studyClass.classChief?.let { loadClassChief(it) }
+            studyClass.students?.let { loadStudents(it) }
         }
     }
 
     private fun loadClassChief(uid: String) {
-        FireRepository.inst.getStudent(uid).let { response ->
-            response.first.observeOnce { _classChief.postValue(it) }
-        }
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { _classChief.postValue(it) }
     }
 
     private fun loadStudents(uids: List<String>) {
-        val studentList = ArrayList<Student>()
-        uids.map { uid ->
-            FireRepository.inst.getStudent(uid).let { response ->
-                response.first.observeOnce {
-                    studentList.add(it)
-                    if (studentList.size == uids.size) _studentList.postValue(studentList.toList())
-                }
-            }
-        }
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce { _studentList.postValue(it) }
     }
 
     fun getAttendanceAbsent(student: Student): Int =

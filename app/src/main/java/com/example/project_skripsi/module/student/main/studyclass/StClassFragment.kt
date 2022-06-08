@@ -56,6 +56,13 @@ class StClassFragment : Fragment() {
                 viewpagerSubject.adapter = ScreenSlidePagerAdapter()
                 tablSubject.setupWithViewPager(binding.viewpagerSubject)
                 if (viewModel.getSubjectPageCount() <= 1) binding.tablSubject.visibility = View.GONE
+
+                it.id?.let { studyClassId ->
+                    fabStudentList.setOnClickListener { _ ->
+                        view?.findNavController()?.navigate(StClassFragmentDirections
+                            .actionNavigationClassFragmentToStStudentListFragment(studyClassId,it.name!!))
+                    }
+                }
             }
         })
 
@@ -72,6 +79,11 @@ class StClassFragment : Fragment() {
                 it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
             }
         })
+
+        binding.btnAnnouncement.setOnClickListener {
+            view?.findNavController()?.navigate(StClassFragmentDirections
+                .actionNavigationClassFragmentToStAnnouncementFragment())
+        }
 
         return binding.root
     }

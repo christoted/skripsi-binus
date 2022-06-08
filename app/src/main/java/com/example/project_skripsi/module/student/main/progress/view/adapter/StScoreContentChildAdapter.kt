@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.score.view.adapter
+package com.example.project_skripsi.module.student.main.progress.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStProgressScoreChildBinding
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
 
 class StScoreContentChildAdapter(private val viewModel: StScoreViewModel, private val scoreMainData: ScoreMainSection): RecyclerView.Adapter<StScoreContentChildAdapter.StScoreContentChildViewHolder>() {
 

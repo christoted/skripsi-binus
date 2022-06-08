@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudentDetailAttendanceBinding
-import com.example.project_skripsi.databinding.FragmentTcStudentDetailPaymentBinding
-import com.example.project_skripsi.module.student.main.score.view.adapter.ScoreContentListener
-import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreContentAdapter
+import com.example.project_skripsi.module.student.main.progress.view.adapter.ScoreContentListener
 import com.example.project_skripsi.module.teacher.student_detail.view.score.adapter.TcStudentDetailScoreAdapter
 import com.example.project_skripsi.module.teacher.student_detail.viewmodel.TcStudentDetailViewModel
+import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudentDetailAttendance(private val viewModel: TcStudentDetailViewModel) : Fragment(), ScoreContentListener {
@@ -27,14 +25,19 @@ class TcStudentDetailAttendance(private val viewModel: TcStudentDetailViewModel)
         _binding = FragmentTcStudentDetailAttendanceBinding.inflate(inflater, container, false)
         contentAdapter = TcStudentDetailScoreAdapter(viewModel,1, this)
 
-        viewModel.sectionDatas.observe(viewLifecycleOwner) {
-            with(binding.rvAttendance) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = contentAdapter
+        viewModel.sectionScore.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.llParent.addView(
+                    UIHelper.getEmptyList("Tidak ada absensi", inflater, binding.llParent)
+                )
+            } else {
+                with(binding.rvAttendance) {
+                    layoutManager = LinearLayoutManager(context)
+                    setHasFixedSize(true)
+                    adapter = contentAdapter
+                }
             }
         }
-        viewModel.loadCurrentStudent(viewModel.studentUID)
         return binding.root
     }
 

@@ -64,7 +64,7 @@ class TcCalendarViewModel : ViewModel() {
             propagateEvent(it, TYPE_ANNOUNCEMENT)
             _eventList.postValue(currentList)
         }
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
     }
 

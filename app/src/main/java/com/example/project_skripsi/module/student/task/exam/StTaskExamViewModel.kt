@@ -29,7 +29,7 @@ class StTaskExamViewModel : ViewModel() {
     private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
 
     init {
-        loadStudent(AuthRepository.instance.getCurrentUser().uid)
+        loadStudent(AuthRepository.inst.getCurrentUser().uid)
     }
 
     private fun loadStudent(uid: String) {

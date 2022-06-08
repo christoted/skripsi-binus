@@ -24,7 +24,7 @@ class StClassViewModel : ViewModel() {
     val classChief: LiveData<Student> = _classChief
 
     init {
-        loadStudent(AuthRepository.instance.getCurrentUser().uid)
+        loadStudent(AuthRepository.inst.getCurrentUser().uid)
     }
 
     private fun loadStudent(uid: String) {

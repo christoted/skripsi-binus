@@ -17,6 +17,8 @@ data class Student(
 
     val name: String? = null,
 
+    val profile: String? = null,
+
     @get: PropertyName("attendance_number")
     @set: PropertyName("attendance_number")
     var attendanceNumber: Int? = null,
@@ -116,9 +118,13 @@ data class AttendedMeeting (
 
     val status: String? = null,
 
-    val startTime: Date? = null,
+    @get: PropertyName("start_time")
+    @set: PropertyName("start_time")
+    var startTime: Date? = null,
 
-    val endTime: Date? = null,
+    @get: PropertyName("end_time")
+    @set: PropertyName("end_time")
+    var endTime: Date? = null,
 
     @get: PropertyName("subject_name")
     @set: PropertyName("subject_name")

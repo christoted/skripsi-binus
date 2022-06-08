@@ -93,10 +93,10 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_centerVertical="true"
-                android:translationY="-5dp"
                 android:layout_marginStart="-5dp"
                 android:layout_toEndOf="@id/tv_score"
                 android:src="@drawable/info"
+                android:translationY="-5dp"
                 app:tint="#999999" />
 
         </RelativeLayout>

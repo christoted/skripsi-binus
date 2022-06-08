@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentPrStudentDetailBinding
+import com.example.project_skripsi.databinding.ViewEmptyItemBinding
 import com.example.project_skripsi.module.parent.student_detail.viewholder.PrSubjectViewHolder
 
 class PrStudentDetailFragment : Fragment() {
@@ -29,6 +31,16 @@ class PrStudentDetailFragment : Fragment() {
         _binding = FragmentPrStudentDetailBinding.inflate(inflater, container, false)
 
         viewModel.student.observe(viewLifecycleOwner, { student ->
+
+            binding.tvProfileName.text = ("${student.name} (${student.attendanceNumber})")
+
+            student.profile?.let { imageUrl ->
+                Glide
+                    .with(context!!)
+                    .load(imageUrl)
+                    .into(binding.ivProfilePicture)
+            }
+
             student.id?.let { id ->
                 with(binding) {
                     ivPayment.setOnClickListener {
@@ -69,7 +81,13 @@ class PrStudentDetailFragment : Fragment() {
 
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         viewModel.subjectList.observe(viewLifecycleOwner, {
-            binding.rvContainer.adapter = PrSubjectViewHolder(it).getAdapter()
+            if (it.isEmpty()) {
+                val emptyView = ViewEmptyItemBinding.inflate(inflater, binding.llParent, false)
+                emptyView.tvEmpty.text = ("Tidak ada mata pelajaran")
+                binding.llParent.addView(emptyView.root)
+            } else {
+                binding.rvContainer.adapter = PrSubjectViewHolder(it).getAdapter()
+            }
         })
 
         retrieveArgs()

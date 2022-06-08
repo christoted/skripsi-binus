@@ -13,6 +13,8 @@ import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.model.local.TaskFormTimer
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_ESSAY
+import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import kotlinx.coroutines.delay
@@ -22,8 +24,8 @@ class StTaskFormViewModel : ViewModel() {
 
     companion object {
         val TASK_FORM_TYPE = mapOf(
-            "pilihan berganda" to 0,
-            "essai" to 1,
+            TASK_FORM_MC to 0,
+            TASK_FORM_ESSAY to 1,
         )
     }
 
@@ -56,7 +58,7 @@ class StTaskFormViewModel : ViewModel() {
     private fun loadTaskForm(uid: String) =
         FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce {
             _taskForm.postValue(it)
-            loadStudent(AuthRepository.instance.getCurrentUser().uid)
+            loadStudent(AuthRepository.inst.getCurrentUser().uid)
 
             viewModelScope.launch {
                 it.endTime?.let { endTime ->

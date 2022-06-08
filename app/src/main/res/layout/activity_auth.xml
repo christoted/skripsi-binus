@@ -10,6 +10,13 @@
     android:gravity="center_horizontal"
     tools:context=".module.common.auth.AuthActivity">
 
+    <ImageView
+        android:id="@+id/imv_splash_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/temp_logo"
+        android:scaleType="center"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
         android:layout_width="match_parent"
@@ -57,20 +64,20 @@
             android:text="Siswa"/>
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_parent"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Orang tua"/>
-
-        <com.google.android.material.chip.Chip
             android:id="@+id/chip_teacher"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="Guru"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_parent"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Orang tua"/>
         
     </com.google.android.material.chip.ChipGroup>
 

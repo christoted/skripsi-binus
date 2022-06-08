@@ -13,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTaskBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.utils.generic.ItemClickListener
+import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
@@ -85,12 +86,24 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
             when(position) {
                 TcStudyClassTaskViewModel.TAB_EXAM -> {
                     viewModel.examList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(
+                                UIHelper.getEmptyList("Tidak ada ujian", layoutInflater, bindingRV.llParent)
+                            )
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                        }
                     })
                 }
                 TcStudyClassTaskViewModel.TAB_ASSIGNMENT -> {
                     viewModel.assignmentList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(
+                                UIHelper.getEmptyList("Tidak ada tugas", layoutInflater, bindingRV.llParent)
+                            )
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                        }
                     })
                 }
             }

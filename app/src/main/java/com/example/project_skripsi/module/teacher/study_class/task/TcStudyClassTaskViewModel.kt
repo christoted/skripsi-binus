@@ -36,7 +36,7 @@ class TcStudyClassTaskViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
+        FireRepository.inst.getItem<StudyClass>(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 _studyClass.postValue(studyClass)
                 studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classExams?.let {
@@ -51,16 +51,7 @@ class TcStudyClassTaskViewModel : ViewModel() {
 
 
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
-        val taskFormList = ArrayList<TaskForm>()
-        uids.map { uid ->
-            FireRepository.inst.getTaskForm(uid).let { response ->
-                response.first.observeOnce {
-                    taskFormList.add(it)
-                    if (taskFormList.size == uids.size)
-                        _taskFormList.postValue(taskFormList.toList())
-                }
-            }
-        }
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { _taskFormList.postValue(it) }
     }
 
 

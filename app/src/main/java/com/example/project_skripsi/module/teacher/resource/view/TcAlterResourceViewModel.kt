@@ -52,7 +52,7 @@ class TcAlterResourceViewModel: ViewModel() {
     }
 
     init {
-       loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+       loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
     fun initData(subjectName: String, gradeLevel: Int) {

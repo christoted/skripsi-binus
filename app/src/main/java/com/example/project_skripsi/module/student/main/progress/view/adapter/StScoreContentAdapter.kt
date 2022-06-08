@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.score.view.adapter
+package com.example.project_skripsi.module.student.main.progress.view.adapter
 
 import android.graphics.Color
 import android.util.Log
@@ -17,8 +17,8 @@ import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.databinding.ItemStProgressAchievementBinding
 import com.example.project_skripsi.databinding.ItemStProgressAttendanceBinding
 import com.example.project_skripsi.databinding.ItemStProgressScoreBinding
-import com.example.project_skripsi.module.student.main.score.view.StScoreFragmentDirections
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.module.student.main.progress.view.StScoreFragmentDirections
+import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
 import com.example.project_skripsi.utils.app.App
 
 interface ScoreContentListener {

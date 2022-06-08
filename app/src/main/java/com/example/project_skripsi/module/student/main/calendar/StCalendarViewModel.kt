@@ -66,7 +66,7 @@ class StCalendarViewModel : ViewModel() {
             _eventList.postValue(currentList)
         }
 
-        loadStudent(AuthRepository.instance.getCurrentUser().uid)
+        loadStudent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
 
     }

@@ -31,38 +31,26 @@ class TcStudyClassTeachingViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                _studyClass.postValue(studyClass)
-                studyClass.classChief?.let { loadClassChief(it) }
-                studyClass.students?.let { loadStudents(it) }
-            }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            _studyClass.postValue(studyClass)
+            studyClass.classChief?.let { loadClassChief(it) }
+            studyClass.students?.let { loadStudents(it) }
         }
     }
 
     private fun loadClassChief(uid: String) {
-        FireRepository.inst.getStudent(uid).let { response ->
-            response.first.observeOnce { _classChief.postValue(it) }
-        }
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { _classChief.postValue(it) }
     }
 
     private fun loadStudents(uids: List<String>) {
-        val studentList = ArrayList<Student>()
-        uids.map { uid ->
-            FireRepository.inst.getStudent(uid).let { response ->
-                response.first.observeOnce {
-                    studentList.add(it)
-                    if (studentList.size == uids.size) _studentList.postValue(studentList.toList())
-                }
-            }
-        }
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce { _studentList.postValue(it) }
     }
 
     fun getAttendanceAbsent(student: Student): Int =
         student.attendedMeetings?.filter { it.status != "hadir" && it.subjectName == subjectName }?.size ?: 0
 
     fun getLastAssignmentStatus(student: Student): Pair<String, Int> {
-        val asg = student.assignedAssignments?.last { it.subjectName == subjectName && it.type == TASK_TYPE_ASSIGNMENT }
+        val asg = student.assignedAssignments?.lastOrNull { it.subjectName == subjectName && it.type == TASK_TYPE_ASSIGNMENT }
             ?: return Pair("tidak ada tugas", R.color.last_assignment_null)
 
         if ((asg.answers?.size ?: 0) == 0 ) return Pair("tidak kumpul", R.color.last_assignment_not_submit)

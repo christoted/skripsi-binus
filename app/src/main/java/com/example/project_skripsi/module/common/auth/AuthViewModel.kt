@@ -15,7 +15,7 @@ class AuthViewModel : ViewModel() {
     val errorLogin : LiveData<Boolean> = _errorLogin
 
     fun login(email : String, password : String , loginAs : Int) {
-        AuthRepository.instance.login(email, password, loginAs).let { response ->
+        AuthRepository.inst.login(email, password, loginAs).let { response ->
             response.first.observeOnce{ _successLoginAs.postValue(loginAs) }
             response.second.observeOnce{ _errorLogin.postValue(true) }
         }

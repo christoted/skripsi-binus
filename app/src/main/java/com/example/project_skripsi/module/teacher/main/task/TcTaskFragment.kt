@@ -17,6 +17,7 @@ import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskViewModel
 import com.example.project_skripsi.module.teacher.study_class.task.TaskViewHolder
 import com.example.project_skripsi.utils.generic.ItemClickListener
+import com.example.project_skripsi.utils.helper.UIHelper
 import com.google.android.material.chip.Chip
 
 class TcTaskFragment : Fragment(), ItemClickListener {
@@ -24,6 +25,9 @@ class TcTaskFragment : Fragment(), ItemClickListener {
     private lateinit var viewModel : TcTaskViewModel
     private var _binding: FragmentTcTaskBinding? = null
     private val binding get() = _binding!!
+
+    private var examEmptyView : View? = null
+    private var assignmentEmptyView : View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -158,11 +162,23 @@ class TcTaskFragment : Fragment(), ItemClickListener {
             when(position) {
                 TcTaskViewModel.TAB_EXAM -> {
                     viewModel.examList.observe(viewLifecycleOwner, {
+                        examEmptyView?.let { bindingRV.llParent.removeView(it) }
+                        if (it.isEmpty()) {
+                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian", layoutInflater, bindingRV.llParent)
+                            bindingRV.llParent.addView(emptyView)
+                            examEmptyView = emptyView
+                        }
                         bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcTaskFragment).getAdapter()
                     })
                 }
                 TcTaskViewModel.TAB_ASSIGNMENT -> {
                     viewModel.assignmentList.observe(viewLifecycleOwner, {
+                        assignmentEmptyView?.let { bindingRV.llParent.removeView(it) }
+                        if (it.isEmpty()) {
+                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas", layoutInflater, bindingRV.llParent)
+                            bindingRV.llParent.addView(emptyView)
+                            assignmentEmptyView = emptyView
+                        }
                         bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcTaskFragment).getAdapter()
                     })
                 }

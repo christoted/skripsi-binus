@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTeachingBinding
 import com.example.project_skripsi.module.teacher.study_class.homeroom.HomeroomStudentViewHolder
+import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudyClassTeachingFragment : Fragment() {
@@ -44,7 +45,13 @@ class TcStudyClassTeachingFragment : Fragment() {
 
         binding.rvItem.layoutManager = LinearLayoutManager(context)
         viewModel.studentList.observe(viewLifecycleOwner, {
-            binding.rvItem.adapter = TeachingStudentViewHolder(viewModel, it).getAdapter()
+            if (it.isEmpty()) {
+                binding.llParent.addView(
+                    UIHelper.getEmptyList("Tidak ada siswa", inflater, binding.llParent)
+                )
+            } else {
+                binding.rvItem.adapter = TeachingStudentViewHolder(viewModel, it).getAdapter()
+            }
         })
 
         binding.btnResource.setOnClickListener {

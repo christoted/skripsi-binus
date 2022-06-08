@@ -65,7 +65,7 @@ class PrHomeViewModel : ViewModel() {
         }
 
 
-        loadParent(AuthRepository.instance.getCurrentUser().uid)
+        loadParent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
     }
 

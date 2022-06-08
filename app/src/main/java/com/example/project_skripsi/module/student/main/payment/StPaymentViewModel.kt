@@ -31,7 +31,7 @@ class StPaymentViewModel : ViewModel() {
 
     companion object {
         const val tabCount = 3
-        val tabHeader = arrayOf("Mendatang", "Jatuh Tempo", "Terbayar")
+        val tabHeader = arrayOf("Mendatang", "Telat", "Terbayar")
     }
 
     init {
@@ -39,7 +39,7 @@ class StPaymentViewModel : ViewModel() {
     }
 
     private fun loadPayments() {
-        FireRepository.inst.getStudent(AuthRepository.instance.getCurrentUser().uid).let { response ->
+        FireRepository.inst.getStudent(AuthRepository.inst.getCurrentUser().uid).let { response ->
             response.first.observeOnce{ student ->
                 var totalCharge = 0
                 var totalPaid = 0

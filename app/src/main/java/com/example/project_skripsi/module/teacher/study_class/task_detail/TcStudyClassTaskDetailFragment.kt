@@ -17,6 +17,7 @@ import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 import com.example.project_skripsi.module.teacher.study_class.task.TcStudyClassTaskFragmentDirections
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
@@ -87,22 +88,42 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
             when(position) {
                 TcStudyClassTaskDetailViewModel.TASK_UNCHECKED -> {
                     viewModel.uncheckedList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
-                            TcStudyClassTaskDetailViewModel.TASK_UNCHECKED,
-                            viewModel,
-                            it,
-                            listener
-                        ).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(
+                                UIHelper.getEmptyList(
+                                    "Tidak ada form yang belum dikoreksi",
+                                    layoutInflater,
+                                    bindingRV.llParent
+                                )
+                            )
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
+                                TcStudyClassTaskDetailViewModel.TASK_UNCHECKED,
+                                viewModel,
+                                it,
+                                listener
+                            ).getAdapter()
+                        }
                     })
                 }
                 TcStudyClassTaskDetailViewModel.TASK_CHECKED -> {
                     viewModel.checkedList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
-                            TcStudyClassTaskDetailViewModel.TASK_CHECKED,
-                            viewModel,
-                            it,
-                            listener
-                        ).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(
+                                UIHelper.getEmptyList(
+                                    "Tidak ada form yang sudah dikoreksi",
+                                    layoutInflater,
+                                    bindingRV.llParent
+                                )
+                            )
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
+                                TcStudyClassTaskDetailViewModel.TASK_CHECKED,
+                                viewModel,
+                                it,
+                                listener
+                            ).getAdapter()
+                        }
                     })
                 }
             }

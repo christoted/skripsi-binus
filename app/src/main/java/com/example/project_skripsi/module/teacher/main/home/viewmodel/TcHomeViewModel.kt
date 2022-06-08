@@ -46,7 +46,7 @@ class TcHomeViewModel: ViewModel() {
 
     init {
         initData()
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncement()
     }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentPrProgressAchievementBinding
+import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
 
 class PrProgressAchievementFragment(private val viewModel: PrProgressViewModel) : Fragment() {
@@ -23,7 +24,13 @@ class PrProgressAchievementFragment(private val viewModel: PrProgressViewModel) 
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.achievements.observe(viewLifecycleOwner, {
-            binding.recyclerView.adapter = PrProgressAchievementViewHolder(it).getAdapter()
+            if (it.isEmpty()) {
+                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                emptyView.tvEmpty.text = ("Tidak ada nilai")
+                binding.llParent.addView(emptyView.root)
+            } else {
+                binding.recyclerView.adapter = PrProgressAchievementViewHolder(it).getAdapter()
+            }
         })
 
         return binding.root

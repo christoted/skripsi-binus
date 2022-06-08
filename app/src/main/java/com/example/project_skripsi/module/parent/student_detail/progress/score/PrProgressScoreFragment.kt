@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentPrProgressScoreBinding
+import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
 import com.example.project_skripsi.module.parent.student_detail.progress.score.viewholder.PrProgressScoreViewHolder
 
@@ -24,7 +25,13 @@ class PrProgressScoreFragment(private val viewModel: PrProgressViewModel) : Frag
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.sectionScore.observe(viewLifecycleOwner, {
-            binding.recyclerView.adapter = PrProgressScoreViewHolder(it).getAdapter()
+            if (it.isEmpty()) {
+                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                emptyView.tvEmpty.text = ("Tidak ada nilai")
+                binding.llParent.addView(emptyView.root)
+            } else {
+                binding.recyclerView.adapter = PrProgressScoreViewHolder(it).getAdapter()
+            }
         })
 
         return binding.root

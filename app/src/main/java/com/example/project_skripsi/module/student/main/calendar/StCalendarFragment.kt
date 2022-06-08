@@ -2,6 +2,7 @@ package com.example.project_skripsi.module.student.main.calendar
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.databinding.ViewEmptyItemBinding
+import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
@@ -24,6 +27,8 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
     private lateinit var viewModel: StCalendarViewModel
     private var _binding: FragmentStCalendarBinding? = null
     private val binding get() = _binding!!
+
+    private var curEmptyView : View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +71,13 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
     }
 
     private fun refreshList(date : CalendarDay){
+        curEmptyView?.let { binding.llRvParent.removeView(it) }
+        if (viewModel.currentDataList[date].isNullOrEmpty()) {
+            val emptyView = ViewEmptyItemBinding.inflate(layoutInflater, binding.llRvParent, false)
+            emptyView.tvEmpty.text = "Tidak ada kegiatan"
+            binding.llRvParent.addView(emptyView.root)
+            curEmptyView = emptyView.root
+        }
         binding.rvEvent.adapter = StCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
     }
 

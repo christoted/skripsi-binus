@@ -1,10 +1,7 @@
 package com.example.project_skripsi.module.student.subject_detail
 
 import androidx.lifecycle.*
-import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
-import com.example.project_skripsi.core.model.firestore.ClassMeeting
-import com.example.project_skripsi.core.model.firestore.Resource
-import com.example.project_skripsi.core.model.firestore.Teacher
+import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.Attendance
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
@@ -40,80 +37,70 @@ class StSubjectViewModel : ViewModel() {
 
     fun setSubject(subjectName : String) {
         this.subjectName = subjectName
-        loadStudent(AuthRepository.instance.getCurrentUser().uid)
+        loadStudent(AuthRepository.inst.getCurrentUser().uid)
     }
 
 
     private fun loadStudent(uid: String) {
-        FireRepository.inst.getStudent(uid).let { response ->
-            response.first.observeOnce { student ->
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
                 with(student) {
                     attendedMeetings?.map { meeting -> meeting.id?.let { mAttendedMeetings.add(it) } }
-                    assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) }}
-                    assignedAssignments?.map { asg -> asg.id?.let { mAssignedTaskForms.put(it, asg) }}
+                    assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) } }
+                    assignedAssignments?.map { asg ->
+                        asg.id?.let {
+                            mAssignedTaskForms.put(
+                                it,
+                                asg
+                            )
+                        }
+                    }
                     studyClass?.let { loadStudyClass(it) }
                 }
-            }
         }
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                studyClass.name?.let { className = it }
-                studyClass.subjects?.filter { it.subjectName == this.subjectName }?.map { subject ->
-                    with(subject) {
-                        classAssignments?.let { loadTaskForms(it, _assignmentList) }
-                        classExams?.let { loadTaskForms(it, _examList) }
-                        classMeetings?.let { loadAttendances(it) }
-                        classResources?.let { loadResources(it) }
-                        teacher?.let { loadTeacher(it) }
-                    }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            studyClass.name?.let { className = it }
+            studyClass.subjects?.filter { it.subjectName == this.subjectName }?.map { subject ->
+                with(subject) {
+                    classAssignments?.let { loadTaskForms(it, _assignmentList) }
+                    classExams?.let { loadTaskForms(it, _examList) }
+                    classMeetings?.let { loadAttendances(it) }
+                    classResources?.let { loadResources(it) }
+                    teacher?.let { loadTeacher(it) }
                 }
             }
         }
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.inst.getTeacher(uid).let { response ->
-            response.first.observeOnce { _teacher.postValue(it) }
-        }
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { _teacher.postValue(it) }
     }
 
     private fun loadAttendances(meetings: List<ClassMeeting>) {
-        val attendanceList = ArrayList<Attendance>()
+        val attendanceList = mutableListOf<Attendance>()
         meetings.map { meeting ->
             attendanceList.add(Attendance(meeting, mAttendedMeetings.contains(meeting.id)))
-            if (attendanceList.size == meetings.size)
-                _attendanceList.postValue(attendanceList.toList())
+            if (attendanceList.size == meetings.size) _attendanceList.postValue(attendanceList)
         }
+        if (attendanceList.size == meetings.size) _attendanceList.postValue(attendanceList)
     }
 
     private fun loadResources(uids: List<String>) {
-        val resourceList = ArrayList<Resource>()
-        uids.map { uid ->
-            FireRepository.inst.getResource(uid).let { response ->
-                response.first.observeOnce {
-                    resourceList.add(it)
-                    if (resourceList.size == uids.size)
-                        _resourceList.postValue(resourceList.toList())
-                }
-            }
-        }
+        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { _resourceList.postValue(it) }
     }
 
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskFormStatus>>) {
-        val taskFormList = ArrayList<TaskFormStatus>()
+        val taskFormList = mutableListOf<TaskFormStatus>()
         uids.map { uid ->
-            FireRepository.inst.getTaskForm(uid).let { response ->
-                response.first.observeOnce { taskForm ->
-                    mAssignedTaskForms[uid]?.let {
-                        taskFormList.add(TaskFormStatus(className, taskForm, it))
-                    }
-                    if (taskFormList.size == uids.size)
-                        _taskFormList.postValue(taskFormList.toList())
+            FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { taskForm ->
+                mAssignedTaskForms[uid]?.let {
+                    taskFormList.add(TaskFormStatus(className, taskForm, it))
                 }
+                if (taskFormList.size == uids.size) _taskFormList.postValue(taskFormList)
             }
         }
+        if (taskFormList.size == uids.size) _taskFormList.postValue(taskFormList)
     }
 }

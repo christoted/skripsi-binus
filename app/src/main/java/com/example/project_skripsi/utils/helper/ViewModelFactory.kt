@@ -1,10 +1,9 @@
 package com.example.project_skripsi.utils.helper
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 
 import androidx.lifecycle.ViewModelProvider
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
 
 
 class MyViewModelFactory() :

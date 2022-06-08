@@ -1,10 +1,13 @@
 package com.example.project_skripsi.module.teacher.study_class.teaching
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.bumptech.glide.Glide
+import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.databinding.ItemTcStudyClassStudentBinding
 import com.example.project_skripsi.utils.app.App
@@ -23,7 +26,13 @@ class TeachingStudentViewHolder(
         adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemTcStudyClassStudentBinding
             with(view) {
-                tvAbsentNumber.text = ("${item.attendanceNumber}")
+                Glide
+                    .with(root.context)
+                    .load(item.profile)
+                    .placeholder(R.drawable.profile_empty)
+                    .into(ivProfilePicture)
+
+                tvAttendanceNumber.text = ("${item.attendanceNumber}")
                 tvName.text = item.name
                 tvAbsent.text = viewModel.getAttendanceAbsent(item).toString()
 

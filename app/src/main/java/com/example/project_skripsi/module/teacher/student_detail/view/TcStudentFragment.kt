@@ -11,9 +11,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudentBinding
-import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreViewPagerAdapter
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceFragmentArgs
 import com.example.project_skripsi.module.teacher.student_detail.view.adapter.TcScoreViewPagerAdapter
 import com.example.project_skripsi.module.teacher.student_detail.viewmodel.TcStudentDetailViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -63,7 +60,8 @@ class TcStudentFragment : Fragment() {
     private fun retrieveArgs() {
         val args: TcStudentFragmentArgs by navArgs()
         Log.d("12345-Student", "retrieveArgs: ${args.studentId}")
-        viewModel.studentUID = args.studentId
+        viewModel.setStudent(args.studentId)
+//        viewModel.studentUID = args.studentId
     }
 }
 

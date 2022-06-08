@@ -33,7 +33,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_absent_number"
+                        android:id="@+id/tv_attendance_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="40dp"

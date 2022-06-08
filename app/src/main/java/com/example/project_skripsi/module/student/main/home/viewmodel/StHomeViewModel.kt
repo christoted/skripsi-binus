@@ -18,8 +18,8 @@ import com.example.project_skripsi.utils.helper.DateHelper
 
 class StHomeViewModel : ViewModel() {
 
-    private val _profileName = MutableLiveData<String>()
-    val profileName : LiveData<String> = _profileName
+    private val _currentStudent = MutableLiveData<Student>()
+    val currentStudent : LiveData<Student> = _currentStudent
 
     private val _profileClass = MutableLiveData<String>()
     val profileClass : LiveData<String> = _profileClass
@@ -34,9 +34,7 @@ class StHomeViewModel : ViewModel() {
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
     
     init {
-        _profileName.value = "Luis Anthonie Alkins (21)"
-        _profileClass.value = "XII - IPA - 1"
-        loadCurrentStudent(AuthRepository.instance.getCurrentUser().uid)
+        loadCurrentStudent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
         initData()
     }
@@ -78,43 +76,37 @@ class StHomeViewModel : ViewModel() {
     }
 
     private fun loadCurrentStudent(uid: String) {
-        FireRepository.inst.getStudent(uid).let {
-            response ->
-            response.first.observeOnce {
-                student ->
-                Log.d("Data Student", "${student}")
-                student.name?.let { _profileName.postValue(it) }
-                // TODO: Take the Class id
-                student.studyClass?.let { loadStudyClass(it) }
-                // TODO: Load the Payment
-                student.payments?.let { _listPaymentSectionDataPayment.postValue(it) }
-            }
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
+            Log.d("Data Student", "$student")
+            _currentStudent.postValue(student)
+            // TODO: Take the Class id
+            student.studyClass?.let { loadStudyClass(it) }
+            // TODO: Load the Payment
+            student.payments?.let { _listPaymentSectionDataPayment.postValue(it) }
         }
     }
 
     private fun loadStudyClass(uid: String) {
 
-        FireRepository.inst.getStudyClass(uid).let {
-            response ->
-            response.first.observeOnce { studyClass ->
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
 
-                studyClass.name?.let { _profileClass.postValue(it) }
-                val meetingList = mutableListOf<ClassMeeting>()
-                val examList = mutableListOf<String>()
-                val assignmentList = mutableListOf<String>()
-                studyClass.subjects?.map { subject ->
-                    with(subject) {
-                        subject.classMeetings?.let { meetingList.addAll(it) }
-                        // TODO: Take the class exams
-                        classExams?.let { exams -> examList.addAll(exams) }
-                        // TODO: Take the class assignments
-                        classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
-                    }
+            studyClass.name?.let { _profileClass.postValue(it) }
+            val meetingList = mutableListOf<ClassMeeting>()
+            val examList = mutableListOf<String>()
+            val assignmentList = mutableListOf<String>()
+            studyClass.subjects?.map { subject ->
+                with(subject) {
+                    subject.classMeetings?.let { meetingList.addAll(it) }
+                    // TODO: Take the class exams
+                    classExams?.let { exams -> examList.addAll(exams) }
+                    // TODO: Take the class assignments
+                    classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                 }
-                _listHomeSectionDataClassSchedule.postValue(meetingList)
-                loadTaskForms(examList, _listHomeSectionDataExam)
-                loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
             }
+            _listHomeSectionDataClassSchedule.postValue(meetingList)
+            loadTaskForms(examList, _listHomeSectionDataExam)
+            loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
+
         }
     }
 

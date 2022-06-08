@@ -64,7 +64,7 @@ class TcResourceViewModel: ViewModel() {
 
     fun refreshData() {
         mapResourceIdsBySubjectGroup.clear()
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
     fun isChipPositionTop(position: Int): Boolean {

@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.student.main.score.view
+package com.example.project_skripsi.module.student.main.progress.view
 
 import android.animation.LayoutTransition
 import androidx.lifecycle.ViewModelProvider
@@ -13,15 +13,10 @@ import androidx.core.view.updateLayoutParams
 import androidx.navigation.findNavController
 import com.example.project_skripsi.databinding.FragmentStProgressBinding
 import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
-import com.example.project_skripsi.module.student.main.score.view.adapter.StScoreViewPagerAdapter
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.XAxis.XAxisPosition
+import com.example.project_skripsi.module.student.main.progress.view.adapter.StScoreViewPagerAdapter
+import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import com.github.mikephil.charting.data.BarDataSet
 
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.BarData
 import com.google.android.material.tabs.TabLayout
 
 class StScoreFragment : Fragment()  {
@@ -68,6 +63,12 @@ class StScoreFragment : Fragment()  {
             imvScore.setOnClickListener { Toast.makeText(context, "Rata-rata nilai akhir", Toast.LENGTH_SHORT).show() }
             imvAttendance.setOnClickListener { Toast.makeText(context, "Jumlah Absen", Toast.LENGTH_SHORT).show() }
             imvAchievement.setOnClickListener { Toast.makeText(context, "Jumlah Pencapaian", Toast.LENGTH_SHORT).show() }
+
+            btnGraphic.setOnClickListener {
+                view?.findNavController()?.navigate(
+                    StScoreFragmentDirections.actionNavigationScoreFragmentToStProgressGraphicFragment()
+                )
+            }
         }
 
         viewModel.scoreFragmentData.observe(viewLifecycleOwner, {
@@ -83,22 +84,6 @@ class StScoreFragment : Fragment()  {
 
         return binding.root
     }
-
-
-//    private fun setScoreTopData() {
-//        viewModel.scoreFragmentData.observe(viewLifecycleOwner, {
-//            with(binding) {
-//                tvScore.text = it.totalScore.toString()
-//                tvAbsent.text = it.totalAbsent.toString()
-//            }
-//        })
-//        viewModel.achievements.observe(viewLifecycleOwner, {
-//            with(binding) {
-//                tvAchievement.text = it.count().toString()
-//            }
-//        })
-//    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

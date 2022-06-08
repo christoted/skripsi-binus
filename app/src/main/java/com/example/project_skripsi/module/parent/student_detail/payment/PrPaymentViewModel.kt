@@ -31,7 +31,7 @@ class PrPaymentViewModel : ViewModel() {
 
     companion object {
         const val tabCount = 3
-        val tabHeader = arrayOf("Mendatang", "Jatuh Tempo", "Terbayar")
+        val tabHeader = arrayOf("Mendatang", "Telat", "Terbayar")
     }
 
     fun setStudent(studentId: String) {
