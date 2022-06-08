@@ -14,7 +14,7 @@ class DateHelper {
         const val E = "EEEE"
         const val DMY = "dd - MM - yyyy"
         const val hm = "HH:mm"
-        val mapWeekDay = mapOf(
+        private val mapWeekDay = mapOf(
             "Monday" to "Senin",
             "Tuesday" to "Selasa",
             "Wednesday" to "Rabu",
@@ -34,12 +34,12 @@ class DateHelper {
         }
 
         @SuppressLint("SimpleDateFormat")
-        fun getFormattedDateTime(format: String?, date: Date): String? {
-            return SimpleDateFormat(format).format(date.time)
+        fun getFormattedDateTime(format: String?, date: Date?): String? {
+            return date?.let { SimpleDateFormat(format).format(it) }
         }
 
         @SuppressLint("SimpleDateFormat")
-        fun getFormattedDateTimeWithWeekDay(date: Date): String? {
+        fun getFormattedDateTimeWithWeekDay(date: Date): String {
             val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
             return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }

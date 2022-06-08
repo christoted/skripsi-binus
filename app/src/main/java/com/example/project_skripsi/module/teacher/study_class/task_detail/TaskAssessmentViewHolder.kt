@@ -22,7 +22,7 @@ class TaskAssessmentViewHolder(
         adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemTcStudyClassTaskDetailBinding
             with(view) {
-                tvAbsentNumber.text = ("${item.attendanceNumber}")
+                tvAttendanceNumber.text = ("${item.attendanceNumber}")
                 tvName.text = item.name
 
                 if (taskType == TcStudyClassTaskDetailViewModel.TASK_CHECKED) {

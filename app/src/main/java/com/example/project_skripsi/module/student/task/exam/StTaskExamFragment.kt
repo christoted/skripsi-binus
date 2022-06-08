@@ -1,6 +1,7 @@
 package com.example.project_skripsi.module.student.task.exam
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStTaskExamBinding
+import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 
@@ -31,7 +34,8 @@ class StTaskExamFragment : Fragment() {
         binding.vpContainer.adapter = ScreenSlidePagerAdapter()
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
-        binding.imvBack.setOnClickListener { activity?.finish() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+
 
         return binding.root
     }
@@ -63,12 +67,24 @@ class StTaskExamFragment : Fragment() {
             when(position) {
                 StTaskExamViewModel.EXAM_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
+                        if (it.isEmpty()) {
+                            val emptyView = ViewEmptyListBinding.inflate(layoutInflater, container, false)
+                            emptyView.tvEmpty.text = "Tidak ada ujian yang sedang berlangsung"
+                            bindingRV.llParent.addView(emptyView.root)
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
+                        }
                     })
                 }
                 StTaskExamViewModel.EXAM_PAST -> {
                     viewModel.pastList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
+                        if (it.isEmpty()) {
+                            val emptyView = ViewEmptyListBinding.inflate(layoutInflater, container, false)
+                            emptyView.tvEmpty.text = "Tidak ada ujian yang sudah selesai"
+                            bindingRV.llParent.addView(emptyView.root)
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, it).getAdapter()
+                        }
                     })
                 }
             }

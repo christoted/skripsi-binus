@@ -12,6 +12,7 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcResourceBinding
 import com.example.project_skripsi.module.teacher.main.resource.adapter.ResourceAdapter
 import com.example.project_skripsi.module.teacher.main.resource.viewmodel.TcResourceViewModel
+import com.example.project_skripsi.utils.helper.UIHelper
 import com.google.android.material.chip.Chip
 
 class TcResourceFragment : Fragment() {
@@ -19,7 +20,9 @@ class TcResourceFragment : Fragment() {
     private var _binding: FragmentTcResourceBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: TcResourceViewModel
-    private lateinit var resourceAdapter: ResourceAdapter
+
+    private var curEmptyView : View? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -83,11 +86,16 @@ class TcResourceFragment : Fragment() {
             }
         }
         viewModel.resources.observe(viewLifecycleOwner) {
-            resourceAdapter = ResourceAdapter(it)
+            curEmptyView?.let { binding.llParent.removeView(it) }
+            if (it.isEmpty()) {
+                val emptyView = UIHelper.getEmptyList("Tidak ada materi", layoutInflater, binding.llParent)
+                binding.llParent.addView(emptyView)
+                curEmptyView = emptyView
+            }
             with(binding) {
                 recyclerView.layoutManager = LinearLayoutManager(context)
                 recyclerView.setHasFixedSize(true)
-                recyclerView.adapter = resourceAdapter
+                recyclerView.adapter = ResourceAdapter(it)
             }
         }
     }

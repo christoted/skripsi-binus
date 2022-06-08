@@ -66,7 +66,6 @@ class PrProgressViewModel : ViewModel() {
 
 
     init {
-
         _subjects.observeOnce { subjects ->
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
@@ -88,10 +87,7 @@ class PrProgressViewModel : ViewModel() {
     }
 
     private fun loadCurrentStudent(uid: String) {
-        FireRepository.instance.getItem<Student>(uid).first.observeOnce { student ->
-
-            student.studyClass?.let { loadStudyClass(it) }
-
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             student.assignedExams?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
             student.assignedAssignments?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
             student.achievements?.let { _achievements.postValue(it) }
@@ -100,11 +96,12 @@ class PrProgressViewModel : ViewModel() {
                 _mapAttendanceBySubject.postValue(it?.groupBy { subject -> subject.subjectName!! })
                 if (it != null) { mutableListOfAttendance.addAll(it) }
             }
+            student.studyClass?.let { loadStudyClass(it) }
         }
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getItem<StudyClass>(uid).first.observeOnce {
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce {
             it.subjects.let { subjects -> _subjects.postValue(subjects) }
         }
     }

@@ -11,9 +11,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentPrExamBinding
+import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
 import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
+import com.example.project_skripsi.utils.helper.UIHelper
+
 class PrExamFragment : Fragment() {
 
     private lateinit var viewModel: PrExamViewModel
@@ -72,12 +75,24 @@ class PrExamFragment : Fragment() {
             when(position) {
                 PrExamViewModel.EXAM_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(UIHelper.getEmptyList(
+                                "Tidak ada ujian yang sedang berlangsung",
+                                layoutInflater, container))
+                        } else {
+                            bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        }
                     })
                 }
                 PrExamViewModel.EXAM_PAST -> {
                     viewModel.pastList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(UIHelper.getEmptyList(
+                                "Tidak ada ujian yang sudah selesai",
+                                layoutInflater, container))
+                        } else {
+                            bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        }
                     })
                 }
             }

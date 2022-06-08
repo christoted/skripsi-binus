@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".module.student.main.score.view.StScoreFragment">
+    tools:context=".module.student.main.progress.view.StScoreFragment">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,6 +26,7 @@
             android:paddingVertical="16dp"/>
 
         <Button
+            android:id="@+id/btn_graphic"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:layout_marginEnd="8dp"
@@ -82,10 +84,10 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_centerVertical="true"
-                android:translationY="-5dp"
                 android:layout_marginStart="-5dp"
                 android:layout_toEndOf="@id/tv_score"
                 android:src="@drawable/info"
+                android:translationY="-5dp"
                 app:tint="#999999" />
 
         </RelativeLayout>

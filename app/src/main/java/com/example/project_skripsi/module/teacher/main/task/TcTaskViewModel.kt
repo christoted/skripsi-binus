@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.TaskForm
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -36,11 +37,11 @@ class TcTaskViewModel : ViewModel() {
     fun refreshData() {
         examIds.clear()
         assignmentIds.clear()
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
     private fun loadTeacher(uid : String) {
-        FireRepository.instance.getTeacher(uid).first.observeOnce { teacher ->
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             val subjectGroups = mutableListOf<SubjectGroup>()
             with(teacher) {
                 teachingGroups?.map { group ->
@@ -62,21 +63,15 @@ class TcTaskViewModel : ViewModel() {
 
 
     private fun loadExam(subjectGroup : SubjectGroup) {
-        examIds[subjectGroup]?.toList()?.let { loadTaskForm(it, _examList) }
+        loadTaskForm((examIds[subjectGroup]?.toList()?: emptyList()), _examList)
     }
 
     private fun loadAssignment(subjectGroup : SubjectGroup) {
-        assignmentIds[subjectGroup]?.toList()?.let { loadTaskForm(it, _assignmentList) }
+        loadTaskForm((assignmentIds[subjectGroup]?.toList()?: emptyList()), _assignmentList)
     }
 
     private fun loadTaskForm(uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
-        val taskFormList = mutableListOf<TaskForm>()
-        uids.map { uid ->
-            FireRepository.instance.getTaskForm(uid).first.observeOnce {
-                taskFormList.add(it)
-                if (taskFormList.size == uids.size) mutableLiveData.postValue(taskFormList)
-            }
-        }
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { mutableLiveData.postValue(it) }
     }
 
     fun getTaskFormType(taskFormId: String) : Int? {

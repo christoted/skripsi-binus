@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTeachingBinding
 import com.example.project_skripsi.module.teacher.study_class.homeroom.HomeroomStudentViewHolder
+import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudyClassTeachingFragment : Fragment() {
@@ -43,7 +45,13 @@ class TcStudyClassTeachingFragment : Fragment() {
 
         binding.rvItem.layoutManager = LinearLayoutManager(context)
         viewModel.studentList.observe(viewLifecycleOwner, {
-            binding.rvItem.adapter = TeachingStudentViewHolder(viewModel, it).getAdapter()
+            if (it.isEmpty()) {
+                binding.llParent.addView(
+                    UIHelper.getEmptyList("Tidak ada siswa", inflater, binding.llParent)
+                )
+            } else {
+                binding.rvItem.adapter = TeachingStudentViewHolder(viewModel, it).getAdapter()
+            }
         })
 
         binding.btnResource.setOnClickListener {
@@ -73,10 +81,9 @@ class TcStudyClassTeachingFragment : Fragment() {
     }
 
     private fun retrieveArgs() {
-        val args = "eMsulnik6kEpW0ESKI9V"
-        val subjectName = "Biologi"
-        viewModel.setClassAndSubject(args, subjectName)
-        binding.tvRole.text = ("Guru $subjectName")
+        val args : TcStudyClassTeachingFragmentArgs by navArgs()
+        viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
+        binding.tvRole.text = ("Guru ${args.subjectName}")
     }
 
 }

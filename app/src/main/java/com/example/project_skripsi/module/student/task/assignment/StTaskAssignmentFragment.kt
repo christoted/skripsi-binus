@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
+import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 
@@ -31,7 +32,8 @@ class StTaskAssignmentFragment : Fragment() {
         binding.vpContainer.adapter = ScreenSlidePagerAdapter()
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
-        binding.imvBack.setOnClickListener { activity?.finish() }
+        binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+
 
         return binding.root
     }
@@ -64,12 +66,24 @@ class StTaskAssignmentFragment : Fragment() {
             when(position) {
                 StTaskAssignmentViewModel.ASSIGNMENT_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
+                        if (it.isEmpty()) {
+                            val emptyView = ViewEmptyListBinding.inflate(layoutInflater, container, false)
+                            emptyView.tvEmpty.text = "Tidak ada tugas yang sedang berlangsung"
+                            bindingRV.llParent.addView(emptyView.root)
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
+                        }
                     })
                 }
                 StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
                     viewModel.pastList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
+                        if (it.isEmpty()) {
+                            val emptyView = ViewEmptyListBinding.inflate(layoutInflater, container, false)
+                            emptyView.tvEmpty.text = "Tidak ada tugas yang sudah selesai"
+                            bindingRV.llParent.addView(emptyView.root)
+                        } else {
+                            bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, it).getAdapter()
+                        }
                     })
                 }
             }

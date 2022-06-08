@@ -12,6 +12,7 @@ import com.example.project_skripsi.databinding.FragmentTcCalendarBinding
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.UIHelper
 import com.google.android.material.appbar.AppBarLayout
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -24,6 +25,8 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
     private lateinit var viewModel: TcCalendarViewModel
     private var _binding: FragmentTcCalendarBinding? = null
     private val binding get() = _binding!!
+
+    private var curEmptyView : View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,6 +74,12 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
     }
 
     private fun refreshList(date : CalendarDay){
+        curEmptyView?.let { binding.llRvParent.removeView(it) }
+        if (viewModel.currentDataList[date].isNullOrEmpty()) {
+            val emptyView = UIHelper.getEmptyItem("Tidak ada kegiatan", layoutInflater, binding.llRvParent)
+            binding.llRvParent.addView(emptyView)
+            curEmptyView = emptyView
+        }
         binding.rvEvent.adapter = TcCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
     }
 

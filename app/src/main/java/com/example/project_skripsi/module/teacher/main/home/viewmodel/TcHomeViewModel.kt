@@ -8,7 +8,6 @@ import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
@@ -48,7 +47,7 @@ class TcHomeViewModel: ViewModel() {
 
     init {
         initData()
-        loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncement()
     }
 
@@ -84,7 +83,7 @@ class TcHomeViewModel: ViewModel() {
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.instance.getItem<Teacher>(uid).first.observeOnce {
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce {
             it.payments?.let { payments ->
                 _paymentList.postValue(payments)
             }
@@ -108,7 +107,7 @@ class TcHomeViewModel: ViewModel() {
     }
     // Load Study Classes
     private fun loadStudyClasses(uids: List<ClassIdSubject>) {
-        FireRepository.instance.getItems<StudyClass>(uids.map {
+        FireRepository.inst.getItems<StudyClass>(uids.map {
             it.studyClassId
         }).first.observeOnce {
             val meetings = mutableListOf<TeacherAgendaMeeting>()
@@ -142,7 +141,7 @@ class TcHomeViewModel: ViewModel() {
     }
 
     private fun loadTaskForm(uids: List<ClassTaskFormId>, mutableLiveData: MutableLiveData<List<TeacherAgendaTaskForm>>) {
-        FireRepository.instance.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
+        FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
             val taskFormList = ArrayList<TeacherAgendaTaskForm>()
             // TODO: Add Here
             it.filter { it.startTime?.let { date ->
@@ -159,7 +158,7 @@ class TcHomeViewModel: ViewModel() {
     // Load Announcement
     private fun loadAnnouncement(){
         val announcements: MutableList<Announcement> = mutableListOf()
-        FireRepository.instance.getAnnouncements().first.observeOnce {
+        FireRepository.inst.getAnnouncements().first.observeOnce {
             announcements.addAll(it)
         }
         _announcements.postValue(announcements)

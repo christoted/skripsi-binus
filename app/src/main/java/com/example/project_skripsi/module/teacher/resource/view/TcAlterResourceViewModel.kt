@@ -52,7 +52,7 @@ class TcAlterResourceViewModel: ViewModel() {
     }
 
     init {
-       loadTeacher(AuthRepository.instance.getCurrentUser().uid)
+       loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
     fun initData(subjectName: String, gradeLevel: Int) {
@@ -61,7 +61,7 @@ class TcAlterResourceViewModel: ViewModel() {
 
     fun getAlterResourceData() {
         isFirstTimeCreated = false
-        FireRepository.instance.getResource(resourceDocumentId).first.observeOnce {
+        FireRepository.inst.getResource(resourceDocumentId).first.observeOnce {
             _singleResource.postValue(it)
             selectedClass = it.assignedClasses ?: emptyList()
             selectedResource = it.prerequisites ?: emptyList()
@@ -69,7 +69,7 @@ class TcAlterResourceViewModel: ViewModel() {
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.instance.getTeacher(uid).let { response ->
+        FireRepository.inst.getTeacher(uid).let { response ->
             response.first.observeOnce {
                 currentTeacher = it
                 it.teachingGroups.let { teachingGroups ->
@@ -94,7 +94,7 @@ class TcAlterResourceViewModel: ViewModel() {
     fun loadClass() {
         val itemList = mutableListOf<StudyClass>()
         classIds.map { uid ->
-            FireRepository.instance.getStudyClass(uid).first.observeOnce {
+            FireRepository.inst.getStudyClass(uid).first.observeOnce {
                 itemList.add(it)
                 if (itemList.size == classIds.size)  _classList.postValue(itemList)
             }
@@ -104,7 +104,7 @@ class TcAlterResourceViewModel: ViewModel() {
     fun loadResource() {
         val itemList = mutableListOf<Resource>()
         resourceIds.map { uid ->
-            FireRepository.instance.getResource(uid).first.observeOnce {
+            FireRepository.inst.getResource(uid).first.observeOnce {
                 itemList.add(it)
                 Log.d("View Model", "loadResource: " + it)
                 if (itemList.size == resourceIds.size) _resourceList.postValue(itemList)
@@ -114,7 +114,7 @@ class TcAlterResourceViewModel: ViewModel() {
     fun loadAssignment() {
         val itemList = mutableListOf<TaskForm>()
         assignmentIds.map { uid ->
-            FireRepository.instance.getTaskForm(uid).first.observeOnce {
+            FireRepository.inst.getTaskForm(uid).first.observeOnce {
                 itemList.add(it)
                 if (itemList.size == assignmentIds.size) _assignmentList.postValue(itemList)
             }
@@ -139,7 +139,7 @@ class TcAlterResourceViewModel: ViewModel() {
                     prerequisites = selectedResource,
                     assignedClasses = selectedClass
                 )
-                FireRepository.instance.addResource(resource, currentTeacher).let { response ->
+                FireRepository.inst.addResource(resource, currentTeacher).let { response ->
                     response.first.observeOnce {
                         _status.postValue(it)
                     }
@@ -155,7 +155,7 @@ class TcAlterResourceViewModel: ViewModel() {
                     prerequisites = selectedResource,
                     assignedClasses = selectedClass
                 )
-                FireRepository.instance.addResource(resource, null).let { response ->
+                FireRepository.inst.addResource(resource, null).let { response ->
                     response.first.observeOnce {
                         _status.postValue(it)
                     }

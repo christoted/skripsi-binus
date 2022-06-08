@@ -1,20 +1,21 @@
 package com.example.project_skripsi.module.student.main.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import com.example.project_skripsi.module.student.task.StTaskViewModel
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -32,7 +33,17 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel = ViewModelProvider(this)[StHomeViewModel::class.java]
         _binding = FragmentStHomeBinding.inflate(inflater, container, false)
 
-        viewModel.profileName.observe(viewLifecycleOwner, { binding.tvProfileName.text = it })
+        viewModel.currentStudent.observe(viewLifecycleOwner, {
+            binding.tvProfileName.text = ("${it.name} (${it.attendanceNumber})")
+            it.profile?.let { imageUrl ->
+                Glide
+                    .with(context!!)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.profile_empty)
+                    .into(binding.ivProfilePicture)
+            }
+        })
+
         viewModel.profileClass.observe(viewLifecycleOwner, { binding.tvProfileClass.text = it })
 
         with(binding.recyclerviewClass) {
@@ -41,6 +52,11 @@ class StHomeFragment : Fragment(), ItemListener {
             viewModel.sectionData.observe(viewLifecycleOwner, { adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment) })
         }
 
+        binding.imvSettings.setOnClickListener {
+            view?.findNavController()?.navigate(
+                StHomeFragmentDirections.actionNavigationHomeFragmentToStProfileFragment()
+            )
+        }
         return binding.root
     }
 
@@ -50,10 +66,9 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
-        Log.d("TaskForm", "onTaskFormItemClicked: ")
-        val toTaskActivity = StHomeFragmentDirections.actionNavigationHomeToStTaskActivity(taskFormId)
-        toTaskActivity.navigationType = StTaskViewModel.NAVIGATION_FORM
-        view?.findNavController()?.navigate(toTaskActivity)
+        view?.findNavController()?.navigate(
+            StHomeFragmentDirections.actionNavigationHomeFragmentToStTaskFormFragment(taskFormId)
+        )
     }
 
     override fun onClassItemClicked(Position: Int) {

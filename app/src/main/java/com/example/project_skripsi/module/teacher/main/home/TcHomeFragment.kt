@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcHomeBinding
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.module.teacher.main.home.adapter.TcHomeMainAdapter
@@ -38,6 +40,11 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
             with(binding) {
                 tvProfileName.text = it.name
                 studyClassId = it.homeroomClass.toString()
+                Glide
+                    .with(root)
+                    .load(it.profile)
+                    .placeholder(R.drawable.profile_empty)
+                    .into(ivProfilePicture)
             }
         }
 
@@ -57,6 +64,11 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
             }
         }
 
+        binding.imvSettings.setOnClickListener {
+            view.findNavController().navigate(
+                TcHomeFragmentDirections.actionTcHomeFragmentToTcProfileFragment()
+            )
+        }
     }
 
     override fun onDestroyView() {

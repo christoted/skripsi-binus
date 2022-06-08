@@ -2,15 +2,8 @@ package com.example.project_skripsi.core.repository.dummy
 
 import android.util.Log
 import com.example.project_skripsi.core.model.firestore.*
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_ADMINISTRATOR
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_ANNOUNCEMENT
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_PARENT
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_RESOURCE
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_SCHOOL
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_STUDENT
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_STUDY_CLASS
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_TASK_FORM
-import com.example.project_skripsi.core.repository.FireRepository.Companion.COLLECTION_TEACHER
+import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -28,6 +21,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 Student("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
                     "123456789",
                     "Luis B",
+                    "https://media-exp1.licdn.com/dms/image/C5603AQErx4vpP4mHkA/profile-displayphoto-shrink_200_200/0/1625740341499?e=1657756800&v=beta&t=KQxAFRTMH4sLuPbY0yN3-xE08u4MPokPWygzMtPRY1I",
                     21,
                     "Jalan Timur",
                     "082363007520",
@@ -121,6 +115,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
         "EAwxIDeIQfRWuNHW4P92B6Ko5G53" to
             Teacher("EAwxIDeIQfRWuNHW4P92B6Ko5G53",
                 "Devita",
+                "https://www.google.com/search?q=devita+setyaningrum&sxsrf=ALiCzsZvO6qPVHPXAV21dASGyM69ZfwLxA:1654423545740&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjqwYH-h5b4AhVD7XMBHcCRC-cQ_AUoAXoECAEQAw&biw=1536&bih=784&dpr=1.25#imgrc=cWTYUVfkb5WQRM",
                 "0821123123",
                 "perempuan",
                 "eMsulnik6kEpW0ESKI9V",
@@ -361,18 +356,38 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 //        upload(COLLECTION_RESOURCE, resources) // replace
 //        upload(COLLECTION_TASK_FORM, taskFroms) // replace
 //        upload(COLLECTION_SCHOOL, schools) // replace
-        test()
+
+        checkNull()
     }
 
-    private fun test() {
-//        val tmp = mutableMapOf<String, Any>()
-//        tmp["MEET1"] = "oi"
-//        tmp["MEET2"] = "oi"
-//        val item = mutableMapOf<String, Any>()
-//        item["meet.MEET1.eh"] = "ok"
-
-//        db.collection("test").document("svwlGVv5nMTIK128Amcf").update(item)
-
+    private fun checkNull() {
+        FireRepository.inst.getAllItems<Administrator>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyAdministrator", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyAnnouncement", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<Parent>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyParent", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<Resource>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyResource", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<School>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummySchool", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<Student>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyStudent", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<StudyClass>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyStudyClass", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<TaskForm>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyTaskForm", it.toString()) }
+        }
+        FireRepository.inst.getAllItems<Teacher>().first.observeOnce{ ls ->
+            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyTeacher", it.toString()) }
+        }
 
     }
 

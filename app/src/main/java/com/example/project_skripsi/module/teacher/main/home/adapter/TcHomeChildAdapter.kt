@@ -51,7 +51,6 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        Log.d("88", "getItemCount: ${item.sectionItem}")
         return item.sectionItem.size
     }
 

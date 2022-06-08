@@ -33,7 +33,7 @@ class PrStudentDetailViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getItem<Student>(uid).first.observeOnce { student ->
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             _student.postValue(student)
             student.school?.let { loadSchool(it) }
             student.studyClass?.let { loadStudyClass(it) }
@@ -41,11 +41,11 @@ class PrStudentDetailViewModel : ViewModel() {
     }
 
     private fun loadSchool(uid: String) {
-        FireRepository.instance.getItem<School>(uid).first.observeOnce { _school.postValue(it) }
+        FireRepository.inst.getItem<School>(uid).first.observeOnce { _school.postValue(it) }
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
             _studyClass.postValue(studyClass)
             studyClass.homeroomTeacher?.let { loadHomeroomTeacher(it) }
 
@@ -97,11 +97,11 @@ class PrStudentDetailViewModel : ViewModel() {
     }
 
     private fun loadHomeroomTeacher(uid: String) {
-        FireRepository.instance.getItem<Teacher>(uid).first.observeOnce { _homeroomTeacher.postValue(it) }
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { _homeroomTeacher.postValue(it) }
     }
 
     private fun loadTeachers(uid: List<TeacherSubjectId>) {
-        FireRepository.instance.getItems<Teacher>(uid.map { it.teacherId }).first.observeOnce {
+        FireRepository.inst.getItems<Teacher>(uid.map { it.teacherId }).first.observeOnce {
             it.mapIndexed { index, teacher ->
                 mapSubjectToParentSubject[uid[index].subjectName]?.teacherName = teacher.name
                 mapSubjectToParentSubject[uid[index].subjectName]?.teacherPhoneNumber = teacher.phoneNumber

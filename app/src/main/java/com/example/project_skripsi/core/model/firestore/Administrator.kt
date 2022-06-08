@@ -16,8 +16,4 @@ data class Administrator(
     @set: PropertyName("phone_number")
     var phoneNumber: String? = null,
 
-    @get: PropertyName("grade_level")
-    @set: PropertyName("grade_level")
-    var gradeLevel: String? = null,
-
 )

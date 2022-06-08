@@ -4,16 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcPreviewTaskFormBinding
-import com.example.project_skripsi.databinding.FragmentTemplateBinding
-import com.example.project_skripsi.module.student.task.form.StFormAdapter
-import com.example.project_skripsi.module.student.task.form.StTaskFormFragmentArgs
-import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DisplayHelper
 

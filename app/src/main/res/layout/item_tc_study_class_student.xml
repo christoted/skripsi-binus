@@ -16,18 +16,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_absent_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:text="40"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:padding="2dp"
-            android:textAlignment="center"
-            android:background="@color/blue_500"/>
+        <ImageView
+            android:id="@+id/iv_profile_picture"
+            android:layout_width="75dp"
+            android:layout_height="75dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,8 +35,9 @@
 
                 <TextView
                     android:id="@+id/tv_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Luis"
                     android:textSize="16sp"
                     android:textColor="@color/black"
@@ -55,6 +48,18 @@
                     android:paddingBottom="2dp"
                     android:background="@color/white"/>
 
+                <TextView
+                    android:id="@+id/tv_attendance_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="40dp"
+                    android:text="40"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:padding="2dp"
+                    android:textAlignment="center"
+                    android:background="@color/blue_500"/>
 
             </LinearLayout>
 

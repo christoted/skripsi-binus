@@ -19,8 +19,8 @@ class PrCalendarAssignmentViewHolder(private val binding: ItemPrCalendarGeneralB
                 ResourcesCompat.getColor(App.resourses!!, R.color.indicator_assignment, null))
             tvTitle.text = data.subjectName
             tvLocation.text = data.location
-            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
-                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
+            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime)} - " +
+                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime)}")
         }
     }
 }

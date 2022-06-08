@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudyClassHomeroomBinding
 import com.example.project_skripsi.utils.generic.ItemClickListener
+import com.example.project_skripsi.utils.helper.UIHelper
 
 class TcStudyClassHomeroomFragment : Fragment(), ItemClickListener {
 
@@ -42,7 +44,13 @@ class TcStudyClassHomeroomFragment : Fragment(), ItemClickListener {
 
         binding.rvItem.layoutManager = LinearLayoutManager(context)
         viewModel.studentList.observe(viewLifecycleOwner, {
-            binding.rvItem.adapter = HomeroomStudentViewHolder(viewModel, it, this).getAdapter()
+            if (it.isEmpty()) {
+                binding.llParent.addView(
+                    UIHelper.getEmptyList("Tidak ada siswa", inflater, binding.llParent)
+                )
+            } else {
+                binding.rvItem.adapter = HomeroomStudentViewHolder(viewModel, it, this).getAdapter()
+            }
         })
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
@@ -56,9 +64,8 @@ class TcStudyClassHomeroomFragment : Fragment(), ItemClickListener {
     }
 
     private fun retrieveArgs(){
-//        val args:  by navArgs()
-        val args = "eMsulnik6kEpW0ESKI9V"
-        viewModel.setClass(args)
+        val args: TcStudyClassHomeroomFragmentArgs by navArgs()
+        viewModel.setClass(args.studyClassId)
     }
 
     override fun onItemClick(itemId: String) {

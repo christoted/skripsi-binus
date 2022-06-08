@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.Resource
-import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -17,34 +16,21 @@ class TcStudyClassResourceViewModel : ViewModel() {
     private val _resourceList = MutableLiveData<List<Resource>>()
     val resourceList: LiveData<List<Resource>> = _resourceList
 
-
     fun setClassAndSubject(studyClassId: String, subjectName: String) {
         loadStudyClass(studyClassId, subjectName)
     }
 
     private fun loadStudyClass(uid: String, subjectName: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                _studyClass.postValue(studyClass)
-                studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classResources?.let {
-                    loadResources(it)
-                }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            _studyClass.postValue(studyClass)
+            studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classResources?.let {
+                loadResources(it)
             }
         }
     }
-
 
     private fun loadResources(uids: List<String>) {
-        val resourceList = ArrayList<Resource>()
-        uids.map { uid ->
-            FireRepository.instance.getResource(uid).let { response ->
-                response.first.observeOnce {
-                    resourceList.add(it)
-                    if (resourceList.size == uids.size) _resourceList.postValue(resourceList.toList())
-                }
-            }
-        }
+        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { _resourceList.postValue(it) }
     }
-
 
 }

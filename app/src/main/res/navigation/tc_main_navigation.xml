@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_tcHomeFragment_to_tcStudyClassTaskDetailFragment"
             app:destination="@id/tcStudyClassTaskDetailFragment" />
+        <action
+            android:id="@+id/action_tcHomeFragment_to_tcProfileFragment"
+            app:destination="@id/tcProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/tcStudyClassFragment"
@@ -205,5 +208,10 @@
             android:name="taskFormId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/tcProfileFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.home.profile.TcProfileFragment"
+        android:label="fragment_tc_profile"
+        tools:layout="@layout/fragment_tc_profile" />
 
 </navigation>

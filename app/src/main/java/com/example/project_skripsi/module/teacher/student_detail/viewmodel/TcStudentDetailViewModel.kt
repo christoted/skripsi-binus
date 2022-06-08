@@ -1,176 +1,167 @@
 package com.example.project_skripsi.module.teacher.student_detail.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
-import com.example.project_skripsi.core.model.firestore.AttendedMeeting
-import com.example.project_skripsi.core.model.firestore.Payment
-import com.example.project_skripsi.core.model.firestore.Subject
+import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSection
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
+import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 
 class TcStudentDetailViewModel: ViewModel() {
-    var studentUID = ""
-    // Payment
-    private val _listPaymentSection: MutableLiveData<List<TcStudentDetailPaymentSection>> = MutableLiveData()
-    val listPaymentSection: LiveData<List<TcStudentDetailPaymentSection>> = _listPaymentSection
-    // Score
-    private val _sectionDatas = MutableLiveData<List<ScoreMainSection>>()
-    val sectionDatas: LiveData<List<ScoreMainSection>> = _sectionDatas
-    private val _subjects = MutableLiveData<List<Subject>>()
-    private val mutableListOfTask: MutableList<AssignedTaskForm> = mutableListOf()
-    private val listData = arrayListOf<ScoreMainSection>()
-    // Attendance
-    private val _sectionAttendances = MutableLiveData<List<AttendanceMainSection>>()
-    val sectionAttendances: LiveData<List<AttendanceMainSection>> = _sectionAttendances
-    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
-    private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
-    private val attendances: MutableList<AttendedMeeting> = mutableListOf()
 
     companion object {
         const val tabCount = 3
         val tabHeader = arrayOf("Nilai", "Absensi", "Pembayaran")
-
-        const val MID_EXAM_WEIGHT = 40
-        const val FINAL_EXAM_WEIGHT = 40
-        const val ASSIGNMENT_WEIGHT = 20
-
-        const val TYPE_MID_EXAM = "ujian_tengah_semester"
-        const val TYPE_FINAL_EXAM = "ujian_akhir_semester"
-        const val TYPE_ASSIGNMENT = "tugas"
     }
 
-    //  MARK: - Get Payment Flow
-    fun getPayments() {
-        val paymentSection: MutableList<TcStudentDetailPaymentSection> = mutableListOf()
-        val payments: MutableList<Payment> = mutableListOf()
-        val _payments: MutableLiveData<List<Payment>> = MutableLiveData()
-        FireRepository.instance.getStudent(studentUID).first.observeOnce { student ->
-            student.payments?.let {
+    private var studentId = ""
 
-                payments.addAll(it)
-            }
-            _payments.postValue(payments)
-        }
-        paymentSection.add(TcStudentDetailPaymentSection(title = "Jatuh Tempo", payments = emptyList()))
-        paymentSection.add(TcStudentDetailPaymentSection(title = "Mendatang", payments = emptyList()))
-        _payments.observeOnce {
-            Log.d("987 ", "getPayments: palign bawah" + it)
-            paymentSection[0].payments = it.filter {
-                it.paymentDeadline!! < DateHelper.getCurrentDate()
-            }
-            paymentSection[1].payments = it.filter {
-                it.paymentDeadline!! > DateHelper.getCurrentDate()
-            }
-            _listPaymentSection.postValue(paymentSection)
-        }
-    }
+    private val _student = MutableLiveData<Student>()
+    val student: LiveData<Student> = _student
 
-    // MARK: - Get Score Flow
-    fun loadCurrentStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
-            response.first.observeOnce { student ->
-                student.studyClass?.let {
-                    loadStudyClass(it)
-                }
-                //  val assignedTask: MutableMap<String, MutableList<AssignedTaskForm>> = mutableMapOf()
+    private val _parent = MutableLiveData<Parent>()
+    val parent: LiveData<Parent> = _parent
 
-                student.assignedAssignments?.filter { it.isChecked == true }?.let {
-                    mutableListOfTask.addAll(it)
-                }
 
-                student.assignedExams?.filter { it.isChecked == true }?.let {
-                    mutableListOfTask.addAll(it)
-                }
-                student.attendedMeetings.let {
-                    _mapAttendanceBySubject.postValue(it?.groupBy {
-                        it.subjectName!!
-                    })
-                    if (it != null) {
-                        attendances.addAll(it)
-                    }
-                }
-            }
-        }
-    }
+    // Score
+    private val _sectionScore = MutableLiveData<List<ScoreMainSection>>()
+    val sectionScore: LiveData<List<ScoreMainSection>> = _sectionScore
 
-    private fun loadStudyClass(uid: String) {
-        getScores()
-        FireRepository.instance.getStudyClass(uid).let {
-                response ->
-            response.first.observeOnce {
-                it.subjects.let { subjects ->
-                    _subjects.postValue(subjects)
-                }
-            }
-        }
-    }
+    private val _subjects = MutableLiveData<List<Subject>>()
+    private val mutableListOfTask: MutableList<AssignedTaskForm> = mutableListOf()
+    private val listDataScore = arrayListOf<ScoreMainSection>()
 
-    private fun getScores() {
+    // Attendance
+    private val _sectionAttendance = MutableLiveData<List<AttendanceMainSection>>()
+    val sectionAttendance: LiveData<List<AttendanceMainSection>> = _sectionAttendance
+
+    private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
+    private val mutableListOfAttendance: MutableList<AttendedMeeting> = mutableListOf()
+    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
+
+    // Payment
+    private val _sectionPayment: MutableLiveData<List<TcStudentDetailPaymentSection>> = MutableLiveData()
+    val sectionPayment: LiveData<List<TcStudentDetailPaymentSection>> = _sectionPayment
+
+    init {
         _subjects.observeOnce { subjects ->
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
-                    val midExam: Int? = mutableListOfTask.filter {
-                        getTaskFilter(it, StScoreViewModel.TYPE_MID_EXAM, subjectName)
-                    }.let {
-                        if (it.isEmpty()) null else it[0].score ?: 0
-                    }
-
-                    val finalExam: Int? = mutableListOfTask.filter {
-                        getTaskFilter(it, StScoreViewModel.TYPE_FINAL_EXAM, subjectName)
-                    }.let {
-                        if (it.isEmpty()) null else it[0].score ?: 0
-                    }
-
-                    val totalAssignment : Int? = mutableListOfTask.filter {
-                        getTaskFilter(it, StScoreViewModel.TYPE_ASSIGNMENT, subjectName)
-                    }.let {
-                        if (it.isEmpty()) null else it.averageOf { task -> task.score ?: 0 }
-                    }
-
-                    val totalScore = StScoreViewModel.MID_EXAM_WEIGHT * (midExam ?: 0) +
-                            StScoreViewModel.FINAL_EXAM_WEIGHT * (finalExam ?: 0) +
-                            StScoreViewModel.ASSIGNMENT_WEIGHT * (totalAssignment ?: 0)
-
-                    val scoreWeight = StScoreViewModel.MID_EXAM_WEIGHT * (midExam?.let { 1 } ?: 0) +
-                            StScoreViewModel.FINAL_EXAM_WEIGHT * (finalExam?.let { 1 } ?: 0) +
-                            StScoreViewModel.ASSIGNMENT_WEIGHT * (totalAssignment?.let { 1 } ?: 0)
-
-                    listData.add(ScoreMainSection(
-                        subjectName = subjectName,
-                        mid_exam = midExam,
-                        final_exam = finalExam,
-                        total_assignment = totalAssignment,
-                        total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
-                        sectionItem = mutableListOfTask.filter { it.subjectName == subjectName }))
-
-                    addAttendanceData(subjectName, attendances.filter { it.subjectName == subjectName && it.status == "hadir"}.count())
+                    listDataScore.add(getScore(subjectName, mutableListOfTask.filter { it.subjectName == subjectName }))
+                    listDataAttendance.add(getAttendance(subjectName, mutableListOfAttendance.filter { it.subjectName == subjectName }))
                 }
             }
-            _sectionDatas.postValue(listData)
-            _sectionAttendances.postValue(listDataAttendance)
+            _sectionScore.postValue(listDataScore)
+            _sectionAttendance.postValue(listDataAttendance)
         }
     }
 
-    private fun getTaskFilter(atf: AssignedTaskForm, taskType : String, subjectName : String) =
-        atf.type == taskType && atf.isChecked == true && atf.subjectName == subjectName
-
-    // Get Attendances
-    private fun addAttendanceData(subjectName: String, totalPresence: Int) {
-        listDataAttendance.add(AttendanceMainSection(subjectName, totalPresence,0, 0,0 ))
+    fun setStudent(studentId: String) {
+        this.studentId = studentId
+        loadCurrentStudent(studentId)
     }
 
-    private fun getAttendances() {
+    private fun loadCurrentStudent(uid: String) {
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
+            _student.postValue(student)
+//            loadParent(student.parent)
+
+            student.assignedExams?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
+            student.assignedAssignments?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
+
+            student.attendedMeetings?.let {
+                _mapAttendanceBySubject.postValue( it.groupBy { subject -> subject.subjectName!! })
+                mutableListOfAttendance.addAll(it)
+            }
+
+            student.payments?.let {
+                val paymentSection: MutableList<TcStudentDetailPaymentSection> = mutableListOf()
+                paymentSection.add(TcStudentDetailPaymentSection(title = "Telat", payments = emptyList()))
+                paymentSection.add(TcStudentDetailPaymentSection(title = "Mendatang", payments = emptyList()))
+                paymentSection[0].payments = it.filter { payment ->
+                    payment.paymentDeadline!! < DateHelper.getCurrentDate() && payment.paymentDate == null
+                }
+                paymentSection[1].payments = it.filter { payment ->
+                    payment.paymentDeadline!! > DateHelper.getCurrentDate() && payment.paymentDate == null
+                }
+                _sectionPayment.postValue(paymentSection)
+
+            }
+
+            student.studyClass?.let { loadStudyClass(it) }
+        }
 
     }
+
+    private fun loadStudyClass(uid: String) {
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce {
+            it.subjects.let { subjects -> _subjects.postValue(subjects) }
+        }
+    }
+
+    private fun getScore(subjectName: String, itemList : List<AssignedTaskForm>) : ScoreMainSection {
+        val midExam: Int? = itemList.filter {
+            getTaskFilter(it, Constant.TASK_TYPE_MID_EXAM)
+        }.let {
+            if (it.isEmpty()) null else it[0].score ?: 0
+        }
+
+        val finalExam: Int? = itemList.filter {
+            getTaskFilter(it, Constant.TASK_TYPE_FINAL_EXAM)
+        }.let {
+            if (it.isEmpty()) null else it[0].score ?: 0
+        }
+
+        val totalAssignment : Int? = itemList.filter {
+            getTaskFilter(it, Constant.TASK_TYPE_ASSIGNMENT)
+        }.let {
+            if (it.isEmpty()) null else it.averageOf { task -> task.score ?: 0 }
+        }
+
+        val totalScore = PrProgressViewModel.MID_EXAM_WEIGHT * (midExam ?: 0) +
+                PrProgressViewModel.FINAL_EXAM_WEIGHT * (finalExam ?: 0) +
+                PrProgressViewModel.ASSIGNMENT_WEIGHT * (totalAssignment ?: 0)
+
+        val scoreWeight = PrProgressViewModel.MID_EXAM_WEIGHT * (midExam?.let { 1 } ?: 0) +
+                PrProgressViewModel.FINAL_EXAM_WEIGHT * (finalExam?.let { 1 } ?: 0) +
+                PrProgressViewModel.ASSIGNMENT_WEIGHT * (totalAssignment?.let { 1 } ?: 0)
+
+        return ScoreMainSection(
+            subjectName = subjectName,
+            mid_exam = midExam,
+            final_exam = finalExam,
+            total_assignment = totalAssignment,
+            total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
+            sectionItem = itemList
+        )
+
+    }
+
+    private fun getAttendance(subjectName: String, itemList : List<AttendedMeeting>) : AttendanceMainSection {
+        return AttendanceMainSection(
+            subjectName = subjectName,
+            totalPresence = itemList.count { it.status == Constant.ATTENDANCE_ATTEND },
+            totalSick = itemList.count { it.status == Constant.ATTENDANCE_SICK },
+            totalLeave = itemList.count { it.status == Constant.ATTENDANCE_LEAVE },
+            totalAlpha = itemList.count { it.status == Constant.ATTENDANCE_ALPHA },
+            sectionItem = itemList
+        )
+    }
+
+    private fun loadParent(uid: String) {
+        FireRepository.inst.getItem<Parent>(uid).first.observeOnce{ _parent.postValue(it) }
+    }
+
+    private fun getTaskFilter(atf: AssignedTaskForm, taskType : String) =
+        atf.type == taskType && atf.isChecked == true
+
 }
 

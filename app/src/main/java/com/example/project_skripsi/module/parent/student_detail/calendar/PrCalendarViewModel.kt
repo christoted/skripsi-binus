@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.parent.student_detail.calendar
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
-import java.util.*
 
 class PrCalendarViewModel : ViewModel() {
 
@@ -36,14 +34,14 @@ class PrCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getItem<Student>(uid).first.observeOnce { student ->
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             student.studyClass?.let { loadStudyClass(it) }
             student.payments?.let { propagateEvent(it, TYPE_PAYMENT) }
         }
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getItem<StudyClass>(uid).let { response ->
+        FireRepository.inst.getItem<StudyClass>(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 val meetings = mutableListOf<ClassMeeting>()
                 val examIds = mutableListOf<String>()
@@ -63,11 +61,11 @@ class PrCalendarViewModel : ViewModel() {
     }
 
     private fun loadTaskForms(uids: List<String>, type: Int) {
-        FireRepository.instance.getItems<TaskForm>(uids).first.observeOnce { propagateEvent(it, type) }
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { propagateEvent(it, type) }
     }
 
     private fun loadAnnouncements() {
-        FireRepository.instance.getAllItems<Announcement>().first.observeOnce { propagateEvent(it, TYPE_ANNOUNCEMENT) }
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { propagateEvent(it, TYPE_ANNOUNCEMENT) }
     }
 
     private fun propagateEvent(item : List<HomeSectionData>, type: Int) {

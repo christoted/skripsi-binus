@@ -15,6 +15,8 @@ import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
 import com.example.project_skripsi.module.parent.student_detail.exam.PrExamFragmentArgs
 import com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentViewModel
+import com.example.project_skripsi.utils.helper.UIHelper
+
 class PrAssignmentFragment : Fragment() {
 
     private lateinit var viewModel: PrAssignmentViewModel
@@ -72,12 +74,24 @@ class PrAssignmentFragment : Fragment() {
             when(position) {
                 StTaskAssignmentViewModel.ASSIGNMENT_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(UIHelper.getEmptyList(
+                                "Tidak ada tugas yang sedang berlangsung",
+                                layoutInflater, container))
+                        } else {
+                            bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        }
                     })
                 }
                 StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
                     viewModel.pastList.observe(viewLifecycleOwner, {
-                        bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        if (it.isEmpty()) {
+                            bindingRV.llParent.addView(UIHelper.getEmptyList(
+                                "Tidak ada tugas yang sudah selesai",
+                                layoutInflater, container))
+                        } else {
+                            bindingRV.rvContainer.adapter = PrTaskViewHolder(it).getAdapter()
+                        }
                     })
                 }
             }

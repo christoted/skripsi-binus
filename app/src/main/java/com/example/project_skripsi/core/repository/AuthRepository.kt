@@ -17,7 +17,7 @@ import com.google.firebase.auth.AuthResult
 class AuthRepository {
 
     companion object {
-        var instance = AuthRepository()
+        var inst = AuthRepository()
 
         const val LOGIN_STUDENT = 0
         const val LOGIN_TEACHER = 1
@@ -53,7 +53,7 @@ class AuthRepository {
 
                         firebaseAuth.currentUser?.let { user ->
                             currentUser = firebaseAuth.currentUser
-                            FireRepository.instance
+                            FireRepository.inst
                                 .let {
                                     when (loginAs) {
                                         LOGIN_STUDENT -> it.getItem<Student>(user.uid)
@@ -73,6 +73,7 @@ class AuthRepository {
                         failure.postValue(true)
                     }
                 }
+
         }
         return Pair(data, failure)
     }

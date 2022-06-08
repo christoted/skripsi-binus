@@ -2,14 +2,16 @@ package com.example.project_skripsi.module.parent.student_detail.progress
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.project_skripsi.module.parent.student_detail.payment.PrPaymentFragmentArgs
@@ -18,11 +20,8 @@ import com.example.project_skripsi.module.parent.student_detail.progress.PrProgr
 import com.example.project_skripsi.module.parent.student_detail.progress.achievement.PrProgressAchievementFragment
 import com.example.project_skripsi.module.parent.student_detail.progress.attendance.PrProgressAttendanceFragment
 import com.example.project_skripsi.module.parent.student_detail.progress.score.PrProgressScoreFragment
-import com.example.project_skripsi.module.student.main.score.viewmodel.StScoreViewModel
+import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import android.widget.Toast
-import androidx.core.view.updateLayoutParams
-import androidx.navigation.findNavController
 import com.example.project_skripsi.databinding.FragmentPrProgressBinding
 import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel.Companion.VIEW_TYPE_ACHIEVEMENT
 import com.google.android.material.tabs.TabLayout

@@ -24,11 +24,11 @@ class StClassViewModel : ViewModel() {
     val classChief: LiveData<Student> = _classChief
 
     init {
-        loadStudent(AuthRepository.instance.getCurrentUser().uid)
+        loadStudent(AuthRepository.inst.getCurrentUser().uid)
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.inst.getStudent(uid).let { response ->
             response.first.observeOnce { student ->
                 student.studyClass?.let { loadStudyClass(it) }
             }
@@ -36,7 +36,7 @@ class StClassViewModel : ViewModel() {
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.instance.getStudyClass(uid).let { response ->
+        FireRepository.inst.getStudyClass(uid).let { response ->
             response.first.observeOnce { studyClass ->
                 with(studyClass) {
                     _studyClass.postValue(this)
@@ -48,13 +48,13 @@ class StClassViewModel : ViewModel() {
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.instance.getTeacher(uid).let { response ->
+        FireRepository.inst.getTeacher(uid).let { response ->
             response.first.observeOnce { _teacher.postValue(it) }
         }
     }
 
     private fun loadClassChief(uid: String) {
-        FireRepository.instance.getStudent(uid).let { response ->
+        FireRepository.inst.getStudent(uid).let { response ->
             response.first.observeOnce { _classChief.postValue(it) }
         }
     }

@@ -19,8 +19,8 @@ class PrCalendarExamViewHolder(private val binding: ItemPrCalendarGeneralBinding
                 ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null))
             tvTitle.text = data.subjectName
             tvLocation.text = data.location
-            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
-                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
+            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime)} - " +
+                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime)}")
         }
     }
 }

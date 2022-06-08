@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.core.model.firestore.Payment
-import com.example.project_skripsi.databinding.FragmentStPaymentVariantBinding
+import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail.payment.PrPaymentViewModel
+import com.example.project_skripsi.module.student.main.payment.variant.StPaymentVariantViewHolder
 
 class PrPaymentVariantFragment(private val viewModel: PrPaymentViewModel, private val viewType: Int) : Fragment() {
 
@@ -21,12 +22,22 @@ class PrPaymentVariantFragment(private val viewModel: PrPaymentViewModel, privat
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = ViewRecyclerViewBinding.inflate(inflater, container, false)
 
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         getPaymentVariant().observe(viewLifecycleOwner, {
-            binding.rvContainer.adapter = PrPaymentVariantViewHolder(viewType, getPaymentVariant().value!!).getAdapter()
+            if (it.isEmpty()) {
+                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                when (viewType) {
+                    StPaymentVariantViewHolder.TYPE_UPCOMING -> emptyView.tvEmpty.text = ("Tidak ada pembayaran mendatang")
+                    StPaymentVariantViewHolder.TYPE_UNPAID -> emptyView.tvEmpty.text = ("Tidak ada pembayaran jatuh tempo")
+                    StPaymentVariantViewHolder.TYPE_PAID -> emptyView.tvEmpty.text = ("Tidak ada pembayaran terbayar")
+                }
+                binding.llParent.addView(emptyView.root)
+            } else {
+                binding.rvContainer.adapter = PrPaymentVariantViewHolder(viewType, getPaymentVariant().value!!).getAdapter()
+            }
         })
 
         return binding.root

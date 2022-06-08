@@ -7,8 +7,10 @@ import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
 import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_ESSAY
+import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
 
-class StFormAdapter(private val questionList: List<AssignedQuestion>) :
+class StFormAdapter(val questionList: List<AssignedQuestion>) :
     Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
@@ -21,9 +23,9 @@ class StFormAdapter(private val questionList: List<AssignedQuestion>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (questionList[position].type) {
-            Constant.TASK_FORM_MC ->
+            TASK_FORM_MC ->
                 (holder as MultipleChoiceViewHolder).bind(questionList[position], position)
-            Constant.TASK_FORM_ESSAY ->
+            TASK_FORM_ESSAY ->
                 (holder as EssayViewHolder).bind(questionList[position], position)
         }
     }

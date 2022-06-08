@@ -27,9 +27,9 @@ class SubjectAdapter(private val subjectList: List<Subject>) :
             }
 
             binding.root.setOnClickListener { view ->
-                val toStSubjectActivity = StClassFragmentDirections.actionNavigationClassToStSubjectActivity()
-                toStSubjectActivity.subjectName = item.subjectName!!
-                view.findNavController().navigate(toStSubjectActivity)
+                view.findNavController().navigate(
+                    StClassFragmentDirections.actionNavigationClassFragmentToStSubjectFragment(item.subjectName!!)
+                )
             }
         }
     }

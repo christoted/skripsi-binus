@@ -65,21 +65,20 @@ class PrHomeViewModel : ViewModel() {
             _sectionData.postValue(listData)
         }
 
-
-        loadParent(AuthRepository.instance.getCurrentUser().uid)
+        loadParent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
     }
 
 
 
     private fun loadParent(uid: String) {
-        FireRepository.instance.getItem<Parent>(uid).first.observeOnce { parent ->
+        FireRepository.inst.getItem<Parent>(uid).first.observeOnce { parent ->
             parent.children?.let { loadStudent(it) }
         }
     }
 
     private fun loadStudent(uids: List<String>) {
-        FireRepository.instance.getItems<Student>(uids).first.observeOnce {
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce {
             _studentList.postValue(it)
 
             val meetingList = mutableListOf<ParentAgendaMeeting>()
@@ -109,7 +108,7 @@ class PrHomeViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.instance.getAllItems<Announcement>().first.observeOnce {
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce {
             _listPaymentSectionDataAnnouncement.postValue(it)
         }
     }

@@ -12,6 +12,8 @@ data class Teacher(
 
     val name: String? = null,
 
+    val profile: String? = null,
+
     @get: PropertyName("phone_number")
     @set: PropertyName("phone_number")
     var phoneNumber: String? = null,

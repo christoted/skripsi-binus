@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.parent.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,8 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.project_skripsi.databinding.*
+import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.parent.home.viewholder.agenda.PrHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.parent.home.viewholder.student.StudentViewHolder
+import com.example.project_skripsi.module.teacher.TcMainActivity
+import com.example.project_skripsi.service.StorageSP
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
 class PrHomeFragment : Fragment(), ItemClickListener {
@@ -54,11 +59,19 @@ class PrHomeFragment : Fragment(), ItemClickListener {
             }
         })
 
-
         with(binding.recyclerviewClass) {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             viewModel.sectionData.observe(viewLifecycleOwner, { adapter = PrHomeRecyclerViewMainAdapter(it) })
+        }
+
+        binding.imvLogout.setOnClickListener {
+            StorageSP.set(requireActivity(), StorageSP.SP_EMAIL, "")
+            StorageSP.set(requireActivity(), StorageSP.SP_PASSWORD, "")
+            StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
+            val intent = Intent(binding.root.context, AuthActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
 
         return binding.root

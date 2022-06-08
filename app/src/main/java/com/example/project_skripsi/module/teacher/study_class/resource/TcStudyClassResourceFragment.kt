@@ -1,6 +1,7 @@
 package com.example.project_skripsi.module.teacher.study_class.resource
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcStudyClassResourceBinding
+import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudyClassResourceFragment : Fragment() {
@@ -34,7 +36,13 @@ class TcStudyClassResourceFragment : Fragment() {
 
         binding.rvItem.layoutManager = LinearLayoutManager(context)
         viewModel.resourceList.observe(viewLifecycleOwner, {
-            binding.rvItem.adapter = ResourceViewHolder(it).getAdapter()
+            if (it.isEmpty()) {
+                binding.llParent.addView(
+                    UIHelper.getEmptyList("Tidak ada materi", inflater, binding.llParent)
+                )
+            } else {
+                binding.rvItem.adapter = ResourceViewHolder(it).getAdapter()
+            }
         })
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
