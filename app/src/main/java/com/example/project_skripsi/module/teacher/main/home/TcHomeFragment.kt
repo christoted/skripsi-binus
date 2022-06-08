@@ -69,11 +69,11 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
                 TcHomeFragmentDirections.actionTcHomeFragmentToTcProfileFragment()
             )
         }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("12345-","destroy")
         _binding = null
     }
 

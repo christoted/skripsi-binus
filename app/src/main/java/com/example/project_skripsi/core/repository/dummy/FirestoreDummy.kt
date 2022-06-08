@@ -356,6 +356,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 //        upload(COLLECTION_RESOURCE, resources) // replace
 //        upload(COLLECTION_TASK_FORM, taskFroms) // replace
 //        upload(COLLECTION_SCHOOL, schools) // replace
+
         checkNull()
     }
 

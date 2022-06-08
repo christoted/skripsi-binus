@@ -62,7 +62,6 @@
                         android:layout_height="wrap_content"
                         android:text="nilai sebelumnya: "
                         android:visibility="gone"/>
-
                     <TextView
                         android:id="@+id/tv_score"
                         android:layout_width="wrap_content"

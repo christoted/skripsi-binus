@@ -57,7 +57,6 @@ class StHomeFragment : Fragment(), ItemListener {
                 StHomeFragmentDirections.actionNavigationHomeFragmentToStProfileFragment()
             )
         }
-
         return binding.root
     }
 

@@ -9,6 +9,7 @@ import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 import kotlin.math.min
 
 class PrHomeViewModel : ViewModel() {
@@ -63,7 +64,6 @@ class PrHomeViewModel : ViewModel() {
             listData[4] = HomeMainSection(Constant.SECTION_ANNOUNCEMENT, sectionItem = it)
             _sectionData.postValue(listData)
         }
-
 
         loadParent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()

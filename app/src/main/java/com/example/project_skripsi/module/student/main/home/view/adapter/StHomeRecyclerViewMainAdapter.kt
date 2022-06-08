@@ -17,12 +17,12 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.helper.UIHelper
 
+
 class StHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMainSection>, val listener: ItemListener):
     RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
     val isExpanded = BooleanArray(listHomeSectionData.size){true}
     val hasAddEmptyView = BooleanArray(listHomeSectionData.size){false}
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder =
         StHomeMainSectionViewHolder(
@@ -75,6 +75,16 @@ class StHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMa
 
                     TransitionManager.beginDelayedTransition(llCollapseGroup, AutoTransition())
                     llCollapseGroup.isVisible = isExpanded[absoluteAdapterPosition]
+                    imvShowHide.setImageResource(
+                        if (isExpanded[absoluteAdapterPosition]) R.drawable.ic_baseline_arrow_drop_up_24
+                        else R.drawable.ic_baseline_arrow_drop_down_24
+                    )
+                }
+
+                sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
+                imvShowHide.setOnClickListener {
+                    isExpanded[absoluteAdapterPosition] = !isExpanded[absoluteAdapterPosition]
+                    sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
                     imvShowHide.setImageResource(
                         if (isExpanded[absoluteAdapterPosition]) R.drawable.ic_baseline_arrow_drop_up_24
                         else R.drawable.ic_baseline_arrow_drop_down_24

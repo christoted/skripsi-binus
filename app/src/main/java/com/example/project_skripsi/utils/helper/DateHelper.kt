@@ -39,7 +39,7 @@ class DateHelper {
         }
 
         @SuppressLint("SimpleDateFormat")
-        fun getFormattedDateTimeWithWeekDay(date: Date): String? {
+        fun getFormattedDateTimeWithWeekDay(date: Date): String {
             val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
             return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }

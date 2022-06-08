@@ -34,6 +34,7 @@ class StTaskAssignmentFragment : Fragment() {
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
+
         return binding.root
     }
 

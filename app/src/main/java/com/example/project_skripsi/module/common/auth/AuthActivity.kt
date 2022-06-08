@@ -37,6 +37,7 @@ class AuthActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+
         viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
         viewModel.successLoginAs.observe(this, { loginAs ->
@@ -98,6 +99,7 @@ class AuthActivity : AppCompatActivity() {
         }, 500)
 
         FirestoreDummy()
+
     }
 
     private fun initEvent() {

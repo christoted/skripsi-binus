@@ -1,24 +1,22 @@
 package com.example.project_skripsi.module.student.main.calendar
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.project_skripsi.databinding.FragmentStCalendarBinding
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.databinding.FragmentStCalendarBinding
 import com.example.project_skripsi.databinding.ViewEmptyItemBinding
-import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.material.appbar.AppBarLayout
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import kotlin.math.abs
 
 
