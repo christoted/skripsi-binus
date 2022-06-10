@@ -35,7 +35,9 @@ class StHomeViewModel : ViewModel() {
 
     private val _listHomeSectionDataClassSchedule = MutableLiveData<List<ClassMeeting>>()
     private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
+    var listHomeSectionDataExam = _listHomeSectionDataExam
     private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
+    var listHomeSectionDataAssignment = _listHomeSectionDataAssignment
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
     
@@ -93,7 +95,6 @@ class StHomeViewModel : ViewModel() {
                         .sortedBy { it.paymentDeadline }
                 )
             student.attendedMeetings?.let {
-                Log.d("987", "loadCurrentStudent: attenden meeting ${it}")
                 _listAttendedMeeting.postValue(it)
             }
         }
@@ -116,8 +117,11 @@ class StHomeViewModel : ViewModel() {
                         ?.map {
                         meetingList.add(it)
                     }
-                    classExams?.let { exams -> examList.addAll(exams) }
-                    classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
+                    classExams?.let { exams -> examList.addAll(exams)
+                        Log.d("123", "loadStudyClass exams: $exams" )
+                    }
+                    classAssignments?.let { assignments -> assignmentList.addAll(assignments)
+                        Log.d("123", "loadStudyClass assignments: $assignments" )}
                 }
             }
             _listHomeSectionDataClassSchedule.postValue(
@@ -126,7 +130,6 @@ class StHomeViewModel : ViewModel() {
             )
             loadTaskForms(examList, _listHomeSectionDataExam)
             loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
-
         }
     }
 

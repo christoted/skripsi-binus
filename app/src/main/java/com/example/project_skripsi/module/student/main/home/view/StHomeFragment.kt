@@ -81,18 +81,71 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     private fun triggerNotification() {
+        // Class Meeting
         viewModel.attendedMeeting.observe(viewLifecycleOwner) {
             it.map { attendedMeeting ->
                 attendedMeeting.startTime?.let { it ->
+                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         it,
                         "Hai, jangan lupa",
-                        "Class Meeting ${attendedMeeting.subjectName}"
+                        "Pertemuan kelas ${attendedMeeting.subjectName}"
                     )
                 }
             }
-
+        }
+        // Exam
+        viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) {
+            it.map { taskForm ->
+                Log.d("987", "triggerNotification Exam start Time: $taskForm")
+                // Start time
+                taskForm.startTime?.let {
+                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.scheduleSingleNotification(
+                        requireActivity(),
+                        it,
+                        "Hai, 10 menit lagi, ujian kamu",
+                        "${taskForm.subjectName} dimulai"
+                    )
+                }
+                // End time
+                taskForm.endTime?.let {
+                    Log.d("987", "triggerNotification Exam end Time: $taskForm")
+                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.scheduleSingleNotification(
+                        requireActivity(),
+                        it,
+                        "Hai, kurang 10 menit lagi, ujian kamu",
+                        "${taskForm.subjectName} selesai"
+                    )
+                }
+            }
+        }
+        // Task
+        viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
+            it.map { taskForm ->
+                // Start time
+                taskForm.startTime?.let {
+                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.scheduleSingleNotification(
+                        requireActivity(),
+                        it,
+                        "Hai, 10 menit lagi, tugas kamu",
+                        "${taskForm.subjectName} dimulai"
+                    )
+                }
+                // End time
+                taskForm.endTime?.let {
+                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.scheduleSingleNotification(
+                        requireActivity(),
+                        it,
+                        "Hai, kurang 10 menit lagi, tugas kamu",
+                        "${taskForm.subjectName} selesai"
+                    )
+                }
+            }
         }
     }
 
