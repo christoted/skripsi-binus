@@ -15,8 +15,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.AttendedMeeting
+import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.alarm.AlarmReceiver
+import java.util.*
 
 class NotificationUtil(base: Context) : ContextWrapper(base) {
     val CHANNEL_ID = "App Alert Notification ID"
@@ -31,7 +33,28 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
     }
 
     companion object {
-        private fun scheduleNotification(context: Context, attendedMeeting: AttendedMeeting) {
+        fun scheduleSingleNotification(context: Context, date: Date, title: String, body: String) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, AlarmReceiver::class.java)
+            var timeInMillis: Long = 0
+            timeInMillis =  DateHelper.convertToCalendarDayBeforeStart(
+                date
+            ).timeInMillis
+            intent.putExtra("timeinmillis", timeInMillis)
+            intent.putExtra("title", title)
+            intent.putExtra("body", body)
+            Log.d("987 ", "scheduleSingleNotification: current ${DateHelper.convertDateToCalendar(date)}")
+            Log.d("987 ", "scheduleSingleNotification: min ${DateHelper.convertToCalendarDayBeforeStart(date)}")
+            Log.d("987", "timeinMilis: ${timeInMillis}")
+            val notificationId = createNotificationId(timeInMillis)
+            val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis, pendingIntent)
+        }
+        /*
+        // MARK: Meeting
+        // TODO: Research 10 minutes before start
+        private fun scheduleNotificationMeeting(context: Context, attendedMeeting: AttendedMeeting) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, AlarmReceiver::class.java)
             var timeInMillis: Long = 0
@@ -39,17 +62,63 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 timeInMillis = DateHelper.convertDateToCalendar(it).timeInMillis
                 intent.putExtra("timeinmillis", timeInMillis)
                 Log.d("987", "scheduleNotification: $timeInMillis")
-
                 val notificationId = createNotificationId(timeInMillis)
                 val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.convertDateToCalendar(it).timeInMillis, pendingIntent)
             }
         }
+        fun scheduleAllNotificationMeeting(context: Context, attendedMeetings: List<AttendedMeeting>) {
+            attendedMeetings.forEach{ meeting ->
+                scheduleNotificationMeeting(context, meeting)
+            }
+        }
+       private fun cancelNotificationMeeting(context: Context, attendedMeeting: AttendedMeeting) {
+           attendedMeeting.startTime?.let {
+               val intent = Intent(context, AlarmReceiver::class.java)
+               val timeMillis = DateHelper.convertDateToCalendar(it).timeInMillis
+               val notificationId = createNotificationId(timeMillis)
+               val pending = PendingIntent.getBroadcast(
+                   context,
+                   notificationId,
+                   intent,
+                   PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+               )
+               // Cancel notification
+               val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+               manager.cancel(pending)
+           }
+       }
+        fun cancelAllNotificationMeeting(context: Context, attendedMeetings: List<AttendedMeeting>) {
+            attendedMeetings.forEach { meeting ->
+                cancelNotificationMeeting(context, meeting)
+            }
+        }
 
-       private fun cancelNotification(context: Context, attendedMeeting: AttendedMeeting) {
-            attendedMeeting.startTime?.let {
+        // MARK: Exam and Task
+        // TODO: Research 10 minutes before start
+        private fun scheduleNotificationExamAssignment(context: Context, taskForm: TaskForm) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, AlarmReceiver::class.java)
+            var timeInMillis: Long = 0
+            taskForm.startTime?.let {
+                timeInMillis = DateHelper.convertDateToCalendar(it).timeInMillis
+                intent.putExtra("timeinmillis", timeInMillis)
+                Log.d("987", "scheduleNotification: $timeInMillis")
+                val notificationId = createNotificationId(timeInMillis)
+                val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.convertDateToCalendar(it).timeInMillis, pendingIntent)
+            }
+        }
+        fun scheduleAllNotificationExamAssignment(context: Context, taskForms: List<TaskForm>) {
+            taskForms.forEach {
+                scheduleNotificationExamAssignment(context, it)
+            }
+        }
+
+        private fun cancelNotificationExamAssignment(context: Context, taskForm: TaskForm) {
+            taskForm.startTime?.let {
                 val intent = Intent(context, AlarmReceiver::class.java)
                 val timeMillis = DateHelper.convertDateToCalendar(it).timeInMillis
                 val notificationId = createNotificationId(timeMillis)
@@ -64,18 +133,13 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 manager.cancel(pending)
             }
         }
-
-        fun scheduleAllNotification(context: Context, attendedMeetings: List<AttendedMeeting>) {
-            attendedMeetings.forEach{ meeting ->
-                scheduleNotification(context, meeting)
+        fun cancelAllNotificationExamAssignment(context: Context, taskForms: List<TaskForm>) {
+            taskForms.forEach { taskForm ->
+                cancelNotificationExamAssignment(context, taskForm)
             }
         }
+        */
 
-        fun cancelAllNotification(context: Context, attendedMeetings: List<AttendedMeeting>) {
-            attendedMeetings.forEach { meeting ->
-                cancelNotification(context, meeting)
-            }
-        }
 
         fun createNotificationId(timeMillis: Long): Int {
             return (timeMillis % 2000000000).toInt()
@@ -95,7 +159,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         return manager as NotificationManager
     }
 
-    fun getNotificationBuilder(): NotificationCompat.Builder {
+    fun getNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
         // TODO: Implement the intent but using navigation graph
         /*
             val intent = Intent(this, MainActivity::class.java).apply {
@@ -104,8 +168,8 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
         */
         return NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setContentTitle("Alarm!")
-            .setContentText("Your AlarmManager is working.")
+            .setContentTitle(title)
+            .setContentText(body)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setColor(Color.YELLOW)
 //            .setContentIntent(pendingIntent)

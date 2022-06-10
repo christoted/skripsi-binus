@@ -1,6 +1,7 @@
 package com.example.project_skripsi.module.student.main.home.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
 
 
@@ -33,16 +36,16 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel = ViewModelProvider(this)[StHomeViewModel::class.java]
         _binding = FragmentStHomeBinding.inflate(inflater, container, false)
 
-        viewModel.currentStudent.observe(viewLifecycleOwner, {
+        viewModel.currentStudent.observe(viewLifecycleOwner) {
             binding.tvProfileName.text = ("${it.name} (${it.attendanceNumber})")
             it.profile?.let { imageUrl ->
                 Glide
-                    .with(context!!)
+                    .with(requireContext())
                     .load(imageUrl)
                     .placeholder(R.drawable.profile_empty)
                     .into(binding.ivProfilePicture)
             }
-        })
+        }
 
         viewModel.profileClass.observe(viewLifecycleOwner, { binding.tvProfileClass.text = it })
 
@@ -51,7 +54,7 @@ class StHomeFragment : Fragment(), ItemListener {
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             viewModel.sectionData.observe(viewLifecycleOwner, { adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment) })
         }
-        triggerNotification()
+
 
         binding.imvAnnouncement.setOnClickListener {
             view?.findNavController()?.navigate(
@@ -67,6 +70,11 @@ class StHomeFragment : Fragment(), ItemListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        triggerNotification()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -74,13 +82,22 @@ class StHomeFragment : Fragment(), ItemListener {
 
     private fun triggerNotification() {
         viewModel.attendedMeeting.observe(viewLifecycleOwner) {
-            NotificationUtil.scheduleAllNotification(requireActivity(), it)
+            it.map { attendedMeeting ->
+                attendedMeeting.startTime?.let { it ->
+                    NotificationUtil.scheduleSingleNotification(
+                        requireActivity(),
+                        it,
+                        "Hai, jangan lupa",
+                        "Class Meeting ${attendedMeeting.subjectName}"
+                    )
+                }
+            }
+
         }
     }
 
     override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
             StHomeFragmentDirections.actionNavigationHomeFragmentToStTaskFormFragment(taskFormId)
-        )
     }
 
     override fun onClassItemClicked(Position: Int) {

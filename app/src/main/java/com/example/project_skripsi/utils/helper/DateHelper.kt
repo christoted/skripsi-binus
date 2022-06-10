@@ -33,6 +33,14 @@ class DateHelper {
             return CalendarDay.from(date)
         }
 
+        // MARK: 10 min before start
+        fun convertToCalendarDayBeforeStart(date: Date) : Calendar {
+            val calendar = Calendar.getInstance()
+            calendar.time = date
+            calendar.add(Calendar.MINUTE, -10)
+            return calendar
+        }
+
         fun convertDateToCalendar(date: Date): Calendar {
             val calendar = Calendar.getInstance()
             calendar.time = date

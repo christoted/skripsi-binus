@@ -85,7 +85,6 @@ class StHomeViewModel : ViewModel() {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             Log.d("Data Student", "$student")
             _currentStudent.postValue(student)
-            // TODO: Take the Class id
             student.studyClass?.let { loadStudyClass(it) }
             // TODO: Load the Payment
             student.payments?.let { list ->
@@ -93,6 +92,9 @@ class StHomeViewModel : ViewModel() {
                     list.filter { convertDateToCalendarDay(it.paymentDeadline) == getCurrentDate() }
                         .sortedBy { it.paymentDeadline }
                 )
+            student.attendedMeetings?.let {
+                Log.d("987", "loadCurrentStudent: attenden meeting ${it}")
+                _listAttendedMeeting.postValue(it)
             }
         }
     }
@@ -105,10 +107,16 @@ class StHomeViewModel : ViewModel() {
             val assignmentList = mutableListOf<String>()
             studyClass.subjects?.map { subject ->
                 with(subject) {
-                    subject.classMeetings?.let { meetingList.addAll(it) }
-                    // TODO: Take the class exams
+                    subject.classMeetings
+//                        ?.filter {
+//                        it.startTime?.let { date ->
+//                            DateHelper.convertDateToCalendarDay(date)
+//                        } == DateHelper.getCurrentDateNow()
+//                    }
+                        ?.map {
+                        meetingList.add(it)
+                    }
                     classExams?.let { exams -> examList.addAll(exams) }
-                    // TODO: Take the class assignments
                     classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                 }
             }
