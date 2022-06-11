@@ -53,6 +53,9 @@
         android:label="TcTaskFragment"
         tools:layout="@layout/fragment_tc_task">
         <action
+            android:id="@+id/action_tcTaskFragment_to_tcTaskDraftFragment"
+            app:destination="@id/tcTaskDraftFragment" />
+        <action
             android:id="@+id/action_tcTaskFragment_to_tcAlterTaskFragment"
             app:destination="@id/tcAlterTaskFragment" />
     </fragment>
@@ -213,5 +216,20 @@
         android:name="com.example.project_skripsi.module.teacher.main.home.profile.TcProfileFragment"
         android:label="fragment_tc_profile"
         tools:layout="@layout/fragment_tc_profile" />
+    <fragment
+        android:id="@+id/tcTaskDraftFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.task.draft.TcTaskDraftFragment"
+        android:label="fragment_tc_task_draft"
+        tools:layout="@layout/fragment_tc_task_draft" >
+        <action
+            android:id="@+id/action_tcTaskDraftFragment_to_tcAlterTaskFragment"
+            app:destination="@id/tcAlterTaskFragment" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="gradeLevel"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

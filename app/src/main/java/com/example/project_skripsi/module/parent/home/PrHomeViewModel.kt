@@ -10,6 +10,8 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import kotlin.math.min
 
 class PrHomeViewModel : ViewModel() {
@@ -78,15 +80,15 @@ class PrHomeViewModel : ViewModel() {
     }
 
     private fun loadStudent(uids: List<String>) {
-        FireRepository.inst.getItems<Student>(uids).first.observeOnce {
-            _studentList.postValue(it)
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce { list ->
+            _studentList.postValue(list.sortedByDescending { it.age })
 
             val meetingList = mutableListOf<ParentAgendaMeeting>()
             val examList = mutableListOf<ParentAgendaTaskForm>()
             val assignmentList = mutableListOf<ParentAgendaTaskForm>()
             val paymentList = mutableListOf<ParentAgendaPayment>()
 
-            it.map { student ->
+            list.map { student ->
                 paymentList.addAll(
                     student.payments?.map { ParentAgendaPayment(student.name, it) } ?: emptyList()
                 )
@@ -100,16 +102,35 @@ class PrHomeViewModel : ViewModel() {
                     student.assignedAssignments?.map { ParentAgendaTaskForm(student.name, it) } ?: emptyList()
                 )
             }
-            _listHomeSectionDataClassMeeting.postValue(meetingList)
-            _listHomeSectionDataExam.postValue(examList)
-            _listHomeSectionDataAssignment.postValue(assignmentList)
-            _listPaymentSectionDataPayment.postValue(paymentList)
+            _listHomeSectionDataClassMeeting.postValue(
+                meetingList
+                    .filter { convertDateToCalendarDay(it.attendedMeeting?.startTime) == getCurrentDate() }
+                    .sortedBy { it.attendedMeeting?.startTime }
+            )
+            _listHomeSectionDataExam.postValue(
+                examList
+                    .filter { convertDateToCalendarDay(it.assignedTaskForm?.startTime) == getCurrentDate() }
+                    .sortedBy { it.assignedTaskForm?.startTime }
+            )
+            _listHomeSectionDataAssignment.postValue(
+                assignmentList
+                    .filter { convertDateToCalendarDay(it.assignedTaskForm?.startTime) == getCurrentDate() }
+                    .sortedBy { it.assignedTaskForm?.startTime }
+            )
+            _listPaymentSectionDataPayment.postValue(
+                paymentList
+                    .filter { convertDateToCalendarDay(it.payment?.paymentDeadline) == getCurrentDate() }
+                    .sortedBy { it.payment?.paymentDeadline }
+            )
         }
     }
 
     private fun loadAnnouncements() {
-        FireRepository.inst.getAllItems<Announcement>().first.observeOnce {
-            _listPaymentSectionDataAnnouncement.postValue(it)
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
+            _listPaymentSectionDataAnnouncement.postValue(
+                list.filter { convertDateToCalendarDay(it.date) == getCurrentDate() }
+                    .sortedBy { it.date }
+            )
         }
     }
 

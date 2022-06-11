@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -18,10 +19,9 @@ class PrCalendarViewModel : ViewModel() {
         const val TYPE_ASSIGNMENT = 2
         const val TYPE_PAYMENT = 3
         const val TYPE_ANNOUNCEMENT = 4
-        const val TYPE_MORE = 10
     }
 
-    var currentSelectedDate: CalendarDay = DateHelper.getCurrentDateNow()
+    var currentSelectedDate: CalendarDay = DateHelper.getCurrentDate()
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
     val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
@@ -79,13 +79,15 @@ class PrCalendarViewModel : ViewModel() {
             }?.let { date ->
                 // push to calendar view
                 currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(DayEvent(date, type))
-
                 // push to recycler view
                 currentDataList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(
-                    CalendarItem(it, type)
+                    CalendarItem(it, date, type)
                 )
             }
         }
+        currentList.map { it.value.sortWith(CalendarComparator.comp) }
+        currentDataList.map { it.value.sortWith(CalendarComparator.compData) }
+
         _eventList.postValue(currentList)
     }
 }

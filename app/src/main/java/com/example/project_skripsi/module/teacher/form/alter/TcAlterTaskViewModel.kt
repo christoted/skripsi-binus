@@ -68,8 +68,8 @@ class TcAlterTaskViewModel : ViewModel() {
 
 
     fun initData(subjectName: String, gradeLevel: Int, formType : Int, taskFormId : String?) {
-        _startDate.postValue(DateHelper.getCurrentDate())
-        _endDate.postValue(DateHelper.getCurrentDate())
+        _startDate.postValue(DateHelper.getCurrentTime())
+        _endDate.postValue(DateHelper.getCurrentTime())
         _questionList.postValue(emptyList())
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType
@@ -79,7 +79,7 @@ class TcAlterTaskViewModel : ViewModel() {
 
     private fun loadTaskForm(uid: String) {
         isNewForm = false
-        FireRepository.inst.getTaskForm(uid).first.observeOnce{
+        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce{
             _oldTaskForm.postValue(it)
             with(it) {
                 startTime?.let { time -> _startDate.postValue(time) }
@@ -94,7 +94,7 @@ class TcAlterTaskViewModel : ViewModel() {
     }
 
     private fun loadTeacher(uid : String) {
-        FireRepository.inst.getTeacher(uid).first.observeOnce { teacher ->
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             currentTeacher = teacher
             teacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
                 ?.let { group ->
@@ -108,33 +108,15 @@ class TcAlterTaskViewModel : ViewModel() {
     }
 
     fun loadClass() {
-        val itemList = mutableListOf<StudyClass>()
-        classIds.map { uid ->
-            FireRepository.inst.getStudyClass(uid).first.observeOnce {
-                itemList.add(it)
-                if (itemList.size == classIds.size) _classList.postValue(itemList)
-            }
-        }
+        FireRepository.inst.getItems<StudyClass>(classIds).first.observeOnce { _classList.postValue(it) }
     }
 
     fun loadResource() {
-        val itemList = mutableListOf<Resource>()
-        resourceIds.map { uid ->
-            FireRepository.inst.getResource(uid).first.observeOnce {
-                itemList.add(it)
-                if (itemList.size == resourceIds.size) _resourceList.postValue(itemList)
-            }
-        }
+        FireRepository.inst.getItems<Resource>(resourceIds).first.observeOnce { _resourceList.postValue(it) }
     }
 
     fun loadAssignment() {
-        val itemList = mutableListOf<TaskForm>()
-        assignmentIds.map { uid ->
-            FireRepository.inst.getTaskForm(uid).first.observeOnce {
-                itemList.add(it)
-                if (itemList.size == assignmentIds.size) _assignmentList.postValue(itemList)
-            }
-        }
+        FireRepository.inst.getItems<TaskForm>(assignmentIds).first.observeOnce { _assignmentList.postValue(it) }
     }
 
     fun updateStartDate(date : Date) {

@@ -24,17 +24,17 @@ data class Attendance(
     companion object {
         fun getStatus(classMeeting: ClassMeeting, hasAttend: Boolean) : String =
             when {
-                classMeeting.startTime!! > DateHelper.getCurrentDate() -> "-"
+                classMeeting.startTime!! > DateHelper.getCurrentTime() -> "-"
                 hasAttend -> "hadir"
-                classMeeting.endTime!! < DateHelper.getCurrentDate() -> "absen"
+                classMeeting.endTime!! < DateHelper.getCurrentTime() -> "absen"
                 else -> "-"
             }
 
         fun getStatusColor(classMeeting: ClassMeeting, hasAttend: Boolean) : Int =
             when {
-                classMeeting.startTime!! > DateHelper.getCurrentDate() -> R.color.attendance_incoming
+                classMeeting.startTime!! > DateHelper.getCurrentTime() -> R.color.attendance_incoming
                 hasAttend -> R.color.attendance_attend
-                classMeeting.endTime!! < DateHelper.getCurrentDate() -> R.color.attendance_not_attend
+                classMeeting.endTime!! < DateHelper.getCurrentTime() -> R.color.attendance_not_attend
                 else -> R.color.attendance_incoming
             }
     }

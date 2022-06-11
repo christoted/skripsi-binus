@@ -33,8 +33,10 @@ class StClassFragment : Fragment() {
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                binding.toolbar.visibility = View.VISIBLE
                 binding.collapseLayout.title = binding.tvClassName.text
             } else {
+                binding.toolbar.visibility = View.GONE
                 binding.collapseLayout.title = ""
             }
         })
@@ -80,7 +82,7 @@ class StClassFragment : Fragment() {
             }
         })
 
-        binding.btnAnnouncement.setOnClickListener {
+        binding.imvAnnouncement.setOnClickListener {
             view?.findNavController()?.navigate(StClassFragmentDirections
                 .actionNavigationClassFragmentToStAnnouncementFragment())
         }

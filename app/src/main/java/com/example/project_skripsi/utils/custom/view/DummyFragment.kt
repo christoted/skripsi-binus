@@ -1,4 +1,4 @@
-package com.example.project_skripsi.utils.custom_views
+package com.example.project_skripsi.utils.custom.view
 
 import androidx.fragment.app.Fragment
 

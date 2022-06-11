@@ -54,8 +54,8 @@ data class TaskFormStatus(
 
         fun getStatus(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm) : String =
             when {
-                taskForm.endTime!! < DateHelper.getCurrentDate() -> "selesai"
-                taskForm.startTime!! > DateHelper.getCurrentDate() -> "belum dimulai"
+                taskForm.endTime!! < DateHelper.getCurrentTime() -> "selesai"
+                taskForm.startTime!! > DateHelper.getCurrentTime() -> "belum dimulai"
                 assignedTaskForm.answers!!.isEmpty() -> "belum terkumpul"
                 else -> "terkumpul"
             }
@@ -64,7 +64,7 @@ data class TaskFormStatus(
             when {
                 assignedTaskForm.answers!!.isNotEmpty() -> R.color.task_submit
                 assignedTaskForm.answers.isEmpty() &&
-                        taskForm.endTime!! < DateHelper.getCurrentDate() -> R.color.task_not_submit
+                        taskForm.endTime!! < DateHelper.getCurrentTime() -> R.color.task_not_submit
                 else -> R.color.task_ongoing
             }
 

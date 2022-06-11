@@ -42,9 +42,11 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                binding.toolbar.visibility = View.VISIBLE
                 binding.collapseLayout.title =
                     DateHelper.getFormattedDateTimeWithWeekDay(viewModel.currentSelectedDate.date)
             } else {
+                binding.toolbar.visibility = View.GONE
                 binding.collapseLayout.title = ""
             }
         })

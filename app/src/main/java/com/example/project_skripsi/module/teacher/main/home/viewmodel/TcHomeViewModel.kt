@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.main.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -120,7 +119,7 @@ class TcHomeViewModel: ViewModel() {
                 }.let { subject ->
 
                     subject?.classMeetings?.filter {
-                        it.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
+                        it.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDate()
                     }?.map { meeting ->
                         meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
                     }
@@ -148,7 +147,7 @@ class TcHomeViewModel: ViewModel() {
                 DateHelper.convertDateToCalendarDay(
                     date
                 )
-            } == DateHelper.getCurrentDateNow() }.mapIndexed { index, taskForm ->
+            } == DateHelper.getCurrentDate() }.mapIndexed { index, taskForm ->
                 taskFormList.add(TeacherAgendaTaskForm(uids[index].studyClassId, uids[index].studyClassName, taskForm))
             }
             mutableLiveData.postValue(taskFormList)
@@ -157,11 +156,7 @@ class TcHomeViewModel: ViewModel() {
 
     // Load Announcement
     private fun loadAnnouncement(){
-        val announcements: MutableList<Announcement> = mutableListOf()
-        FireRepository.inst.getAnnouncements().first.observeOnce {
-            announcements.addAll(it)
-        }
-        _announcements.postValue(announcements)
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { _announcements.postValue(it) }
     }
 
     // Load Schedule

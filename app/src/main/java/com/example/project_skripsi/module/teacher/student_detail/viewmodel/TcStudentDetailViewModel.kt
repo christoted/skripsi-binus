@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.AttendanceMainSection
-import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSection
 import com.example.project_skripsi.core.repository.FireRepository
@@ -87,18 +86,15 @@ class TcStudentDetailViewModel: ViewModel() {
                 paymentSection.add(TcStudentDetailPaymentSection(title = "Telat", payments = emptyList()))
                 paymentSection.add(TcStudentDetailPaymentSection(title = "Mendatang", payments = emptyList()))
                 paymentSection[0].payments = it.filter { payment ->
-                    payment.paymentDeadline!! < DateHelper.getCurrentDate() && payment.paymentDate == null
-                }
+                    payment.paymentDeadline!! < DateHelper.getCurrentTime() && payment.paymentDate == null
+                }.sortedBy { payment -> payment.paymentDeadline }
                 paymentSection[1].payments = it.filter { payment ->
-                    payment.paymentDeadline!! > DateHelper.getCurrentDate() && payment.paymentDate == null
-                }
+                    payment.paymentDeadline!! > DateHelper.getCurrentTime() && payment.paymentDate == null
+                }.sortedBy { payment -> payment.paymentDeadline }
                 _sectionPayment.postValue(paymentSection)
-
             }
-
             student.studyClass?.let { loadStudyClass(it) }
         }
-
     }
 
     private fun loadStudyClass(uid: String) {

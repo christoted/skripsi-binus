@@ -81,9 +81,9 @@ class TcTaskViewModel : ViewModel() {
     }
 
     fun isChipPositionTop(position: Int): Boolean {
-        if (position < 4) return true;
-        if (position < 8) return false;
-        return position % 2 == 0;
+        if (position < 4) return true
+        if (position < 8) return false
+        return position % 2 == 0
     }
 
 }

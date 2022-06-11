@@ -28,35 +28,27 @@ class StClassViewModel : ViewModel() {
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.inst.getStudent(uid).let { response ->
-            response.first.observeOnce { student ->
-                student.studyClass?.let { loadStudyClass(it) }
-            }
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
+            student.studyClass?.let { loadStudyClass(it) }
         }
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                with(studyClass) {
-                    _studyClass.postValue(this)
-                    homeroomTeacher?.let { loadTeacher(it) }
-                    classChief?.let { loadClassChief(it) }
-                }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            with(studyClass) {
+                _studyClass.postValue(this)
+                homeroomTeacher?.let { loadTeacher(it) }
+                classChief?.let { loadClassChief(it) }
             }
         }
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.inst.getTeacher(uid).let { response ->
-            response.first.observeOnce { _teacher.postValue(it) }
-        }
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { _teacher.postValue(it) }
     }
 
     private fun loadClassChief(uid: String) {
-        FireRepository.inst.getStudent(uid).let { response ->
-            response.first.observeOnce { _classChief.postValue(it) }
-        }
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { _classChief.postValue(it) }
     }
 
 

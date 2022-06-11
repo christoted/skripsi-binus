@@ -1,24 +1,44 @@
 package com.example.project_skripsi.module.student.main.progress.graphic
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+
 import com.example.project_skripsi.databinding.FragmentStProgressGraphicBinding
+import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class StProgressGraphicFragment : Fragment() {
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+
+import com.github.mikephil.charting.components.YAxis
+
+
+class StProgressGraphicFragment : Fragment(), ItemClickListener {
 
     private lateinit var viewModel: StProgressGraphicViewModel
     private var _binding: FragmentStProgressGraphicBinding? = null
     private val binding get() = _binding!!
+
+    private var dialog : BottomSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +49,12 @@ class StProgressGraphicFragment : Fragment() {
         viewModel = ViewModelProvider(this)[StProgressGraphicViewModel::class.java]
         _binding = FragmentStProgressGraphicBinding.inflate(inflater, container, false)
 
-        setupBarChart(binding.barchartExam)
+        reloadGraph("")
+
+        viewModel.subjects.observe(viewLifecycleOwner, { list ->
+            binding.btnFilter.setOnClickListener { showBottomSheet(list) }
+            if (list.isNotEmpty()) reloadGraph(list[0])
+        })
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
@@ -41,45 +66,107 @@ class StProgressGraphicFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupBarChart(chart: BarChart) {
+    @SuppressLint("InflateParams")
+    private fun showBottomSheet(list: List<String>) {
+        dialog = BottomSheetDialog(context!!)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_st_filter, null)
 
-        // Set Data
+        val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
+        rvItem.layoutManager = LinearLayoutManager(context)
+        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        rvItem.addItemDecoration(dividerItemDecoration)
+
+        rvItem.adapter = StSubjectFilterViewHolder(list, this@StProgressGraphicFragment).getAdapter()
+
+        dialog?.let {
+            it.setContentView(view)
+            it.show()
+        }
+    }
+
+    override fun onItemClick(itemId: String) {
+        dialog?.hide()
+        reloadGraph(itemId)
+    }
+
+    private fun reloadGraph(subjectName: String) {
+        binding.tvExam.text = ("Ujian $subjectName")
+        binding.tvAssignment.text = ("Tugas $subjectName")
+        if (subjectName.isEmpty()) {
+            setupBarChart(binding.barchartExam, binding.tvEmptyExam, emptyList())
+            setupBarChart(binding.barchartAssignment, binding.tvEmptyAssignment, emptyList())
+        } else {
+            viewModel.exams.removeObservers(viewLifecycleOwner)
+            viewModel.assignment.removeObservers(viewLifecycleOwner)
+
+            viewModel.exams.observe(viewLifecycleOwner) {
+                setupBarChart(binding.barchartExam, binding.tvEmptyExam,it[subjectName] ?: emptyList())
+            }
+            viewModel.assignment.observe(viewLifecycleOwner) {
+                setupBarChart(binding.barchartAssignment, binding.tvEmptyAssignment, it[subjectName] ?: emptyList())
+            }
+        }
+    }
+
+
+    private fun setupBarChart(chart: BarChart, tvEmpty: TextView, list: List<AssignedTaskForm>) {
+        chart.clear()
+        val labels: MutableList<String> = ArrayList()
         val entries: MutableList<BarEntry> = ArrayList()
-        entries.add(BarEntry(0f, 30f))
-        entries.add(BarEntry(1f, 80f))
-        entries.add(BarEntry(2f, 60f))
-        entries.add(BarEntry(3f, 50f))
-        // gap of 2f
-        // gap of 2f
-        entries.add(BarEntry(4f, 90f))
-        entries.add(BarEntry(5f, 70f))
-        entries.add(BarEntry(6f, 60f))
 
-        val set = BarDataSet(entries, "BarDataSet")
-        val data = BarData(set)
-        data.barWidth = 0.9f // set custom bar width
+        list.mapIndexed { idx, it  ->
+            labels.add(it.title ?: "null")
+            entries.add(BarEntry(idx.toFloat(), it.score?.toFloat() ?: 0f))
+        }
 
-        chart.description.isEnabled = false
-        chart.setMaxVisibleValueCount(60)
+        tvEmpty.isVisible = labels.isEmpty()
 
         chart.setScaleEnabled(false)
         chart.axisLeft.axisMinimum = 0f
         chart.axisLeft.axisMaximum = 100f
-
         chart.setDrawBarShadow(false)
+        chart.setDrawValueAboveBar(true)
+        chart.description.isEnabled = false
+        chart.setPinchZoom(false)
+        chart.setScaleEnabled(false)
         chart.setDrawGridBackground(false)
+        val yAxis: YAxis = chart.axisLeft
 
-        val xAxis = chart.xAxis
+        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+        yAxis.granularity = 1f
+        yAxis.isGranularityEnabled = true
+        chart.axisRight.isEnabled = false
+        val xAxis: XAxis = chart.xAxis
+        xAxis.granularity = 1f
+        xAxis.isGranularityEnabled = true
+        xAxis.setDrawGridLines(true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setDrawGridLines(false)
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
 
-        chart.axisLeft.setDrawGridLines(false)
+        val set1: BarDataSet
+        if (chart.data != null && chart.data.dataSetCount > 0) {
+            set1 = chart.data.getDataSetByIndex(0) as BarDataSet
+            set1.values = entries
+            chart.data.notifyDataChanged()
+            chart.notifyDataSetChanged()
+        } else {
+            // create 2 datasets with different types
+            set1 = BarDataSet(entries, "SCORE")
+//            set1.color = Color.rgb(255, 204, 0)
+            val dataSets = ArrayList<IBarDataSet>()
+            dataSets.add(set1)
+            val data = BarData(dataSets)
+            data.barWidth = 0.5f
 
-        // add a nice and smooth animation
-        chart.animateY(1000)
+            chart.data = data
+        }
+        chart.setFitBars(true)
         chart.legend.isEnabled = false
-        chart.data = data
-        chart.setFitBars(true) // make the x-axis fit exactly all bars
-        chart.invalidate() // refresh
+        chart.setDrawGridBackground(false)
+        chart.axisLeft.setDrawGridLines(false)
+        chart.xAxis.setDrawGridLines(false)
+        chart.animateY(1000)
+        chart.invalidate()
     }
+
 }

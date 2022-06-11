@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 class DateHelper {
 
@@ -24,12 +23,13 @@ class DateHelper {
             "Sunday" to "Minggu",
         )
 
-        fun getCurrentDate() : Date = Calendar.getInstance().time
+        fun getCurrentTime() : Date = Calendar.getInstance().time
 
-        fun getCurrentDateNow(): CalendarDay = CalendarDay.today()
+        fun getCurrentDate(): CalendarDay = CalendarDay.today()
 
         // TODO: Create a function that take Date as parameter and return Calendar Day
-        fun convertDateToCalendarDay(date: Date): CalendarDay {
+        fun convertDateToCalendarDay(date: Date?): CalendarDay {
+            if (date == null) return getCurrentDate()
             return CalendarDay.from(date)
         }
 

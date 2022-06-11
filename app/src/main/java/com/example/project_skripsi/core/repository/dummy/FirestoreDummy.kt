@@ -33,14 +33,14 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         Payment("Uang SPP",
                             200000,
                             "5271123456",
-                            DateHelper.getCurrentDate(),
+                            DateHelper.getCurrentTime(),
                             null
                         ),
                         Payment("Uang SPP2",
                             200000,
                             "5271123456",
-                            DateHelper.getCurrentDate(),
-                            DateHelper.getCurrentDate()
+                            DateHelper.getCurrentTime(),
+                            DateHelper.getCurrentTime()
                         ),
                         Payment("Uang SPP3",
                             200000,
@@ -53,8 +53,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         AttendedMeeting(
                             "MEET001",
                             "hadir",
-                            DateHelper.getCurrentDate(),
-                            DateHelper.getCurrentDate(),
+                            DateHelper.getCurrentTime(),
+                            DateHelper.getCurrentTime(),
                             "Biologi",
 
                         )
@@ -64,7 +64,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
                             "Ujian Tengah Semester",
                             "ujian_tengah_semester",
-                            DateHelper.getCurrentDate(),
+                            DateHelper.getCurrentTime(),
                             true,
                             false,
                             "Biologi",
@@ -78,7 +78,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         AssignedTaskForm("ripyBsBZObBfarZpd085",
                             "Tugas tentang minyak hewani",
                             "tugas",
-                            DateHelper.getCurrentDate(),
+                            DateHelper.getCurrentTime(),
                             true,
                             true,
                             "Biologi",
@@ -135,8 +135,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         title = "Pembayaran SPP Genap",
                         nominal = 2000000,
                         accountNumber = "521812312",
-                        paymentDate = DateHelper.getCurrentDate(),
-                        paymentDeadline = DateHelper.getCurrentDate()
+                        paymentDate = DateHelper.getCurrentTime(),
+                        paymentDeadline = DateHelper.getCurrentTime()
                     )
                 )
             )
@@ -157,77 +157,77 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
             Announcement("1UYvc8ji8ip4Zoejke9d",
                 "Lomba Sekolah 2",
                 "Kategori lomba dibagi menjadi 4 cabang",
-                DateHelper.getCurrentDate()),
+                DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L661" to
             Announcement("5vlpa3hwTPQcfHZ2L66z",
                 "Pengumuman Sekolah 2",
                 "Pembelajaran jarak jauh dikarenakan covid 19",
-                DateHelper.getCurrentDate()),
+                DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L662" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L663" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L664" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L665" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L666" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L667" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L668" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L669" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L660" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L66a" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L66b" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L66v" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
         "5vlpa3hwTPQcfHZ2L66c" to
                 Announcement("5vlpa3hwTPQcfHZ2L66z",
                     "Pengumuman Sekolah 2",
                     "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentDate()),
+                    DateHelper.getCurrentTime()),
     )
 
 
@@ -259,8 +259,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         "Ujian Tengah Semester",
                         12,
                         "ujian_tengah_semester",
-                        DateHelper.getCurrentDate(),
-                        DateHelper.getCurrentDate(),
+                        DateHelper.getCurrentTime(),
+                        DateHelper.getCurrentTime(),
                         "Online",
                         "Biologi",
                         listOf(
@@ -277,8 +277,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         "Tugas tentang minyak hewani",
                         12,
                         "tugas",
-                        DateHelper.getCurrentDate(),
-                        DateHelper.getCurrentDate(),
+                        DateHelper.getCurrentTime(),
+                        DateHelper.getCurrentTime(),
                         "Online",
                         "Biologi",
                         listOf(
@@ -318,8 +318,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         mutableListOf(
                             ClassMeeting("MEET001",
                                 "Biologi",
-                                DateHelper.getCurrentDate(),
-                                DateHelper.getCurrentDate(),
+                                DateHelper.getCurrentTime(),
+                                DateHelper.getCurrentTime(),
                                 "online",
                                 "berlangsung",
                                 "feiaZB0ds1rbaWT1g8hJ",

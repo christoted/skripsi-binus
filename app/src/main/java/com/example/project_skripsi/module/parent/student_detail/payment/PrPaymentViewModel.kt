@@ -47,7 +47,7 @@ class PrPaymentViewModel : ViewModel() {
             val paidPayment = mutableListOf<Payment>()
             student.payments?.map { payment ->
                 if (payment.paymentDate == null) {
-                    if (payment.paymentDeadline!! > DateHelper.getCurrentDate()) upcomingPayment.add(payment)
+                    if (payment.paymentDeadline!! > DateHelper.getCurrentTime()) upcomingPayment.add(payment)
                     else unpaidPayment.add(payment)
                     totalCharge += (payment.nominal ?: 0)
                 } else {
@@ -58,9 +58,9 @@ class PrPaymentViewModel : ViewModel() {
             }
             _totalCharge.postValue(totalCharge)
             _totalPaid.postValue(totalPaid)
-            _upcomingPayment.postValue(upcomingPayment)
-            _unpaidPayment.postValue(unpaidPayment)
-            _paidPayment.postValue(paidPayment)
+            _upcomingPayment.postValue(upcomingPayment.sortedBy { it.paymentDeadline })
+            _unpaidPayment.postValue(unpaidPayment.sortedBy { it.paymentDeadline })
+            _paidPayment.postValue(paidPayment.sortedByDescending { it.paymentDeadline })
         }
     }
 

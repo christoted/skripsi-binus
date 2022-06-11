@@ -46,14 +46,14 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
     }
 
     private fun loadTaskForm(uid: String) {
-        FireRepository.inst.getTaskForm(uid).first.observeOnce {
+        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce {
             taskForm = it
             loadStudent(studentId)
         }
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.inst.getStudent(uid).first.observeOnce { student ->
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             currentStudent = student
             _student.postValue(student)
             when(taskForm.type) {

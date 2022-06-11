@@ -79,12 +79,9 @@ class StSubjectViewModel : ViewModel() {
     }
 
     private fun loadAttendances(meetings: List<ClassMeeting>) {
-        val attendanceList = mutableListOf<Attendance>()
-        meetings.map { meeting ->
-            attendanceList.add(Attendance(meeting, mAttendedMeetings.contains(meeting.id)))
-            if (attendanceList.size == meetings.size) _attendanceList.postValue(attendanceList)
-        }
-        if (attendanceList.size == meetings.size) _attendanceList.postValue(attendanceList)
+        _attendanceList.postValue(meetings.map { meeting ->
+            Attendance(meeting, mAttendedMeetings.contains(meeting.id))
+        }.sortedBy { it.startTime })
     }
 
     private fun loadResources(uids: List<String>) {
@@ -92,15 +89,14 @@ class StSubjectViewModel : ViewModel() {
     }
 
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskFormStatus>>) {
-        val taskFormList = mutableListOf<TaskFormStatus>()
-        uids.map { uid ->
-            FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { taskForm ->
-                mAssignedTaskForms[uid]?.let {
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
+            val taskFormList = mutableListOf<TaskFormStatus>()
+            list.map { taskForm ->
+                mAssignedTaskForms[taskForm.id]?.let {
                     taskFormList.add(TaskFormStatus(className, taskForm, it))
                 }
-                if (taskFormList.size == uids.size) _taskFormList.postValue(taskFormList)
             }
+            _taskFormList.postValue(taskFormList.sortedByDescending { it.endTime })
         }
-        if (taskFormList.size == uids.size) _taskFormList.postValue(taskFormList)
     }
 }

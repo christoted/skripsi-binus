@@ -38,14 +38,16 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     }
 
     private fun loadStudents(uids: List<String>) {
-        FireRepository.inst.getItems<Student>(uids).first.observeOnce { _studentList.postValue(it) }
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce { list ->
+            _studentList.postValue(list.sortedBy { it.attendanceNumber })
+        }
     }
 
     fun getAttendanceAbsent(student: Student): Int =
         student.attendedMeetings?.filter { it.status != "hadir" }?.size ?: 0
 
     fun getPaymentStatus(student: Student): Pair<String, Int> {
-        if ((student.payments?.filter { it.paymentDate == null && it.paymentDeadline!! < DateHelper.getCurrentDate() }?.size ?: 0) > 0)
+        if ((student.payments?.filter { it.paymentDate == null && it.paymentDeadline!! < DateHelper.getCurrentTime() }?.size ?: 0) > 0)
             return Pair("jatuh tempo", R.color.payment_late)
 
         if ((student.payments?.filter { it.paymentDate == null }?.size ?: 0) > 0)

@@ -58,7 +58,7 @@ class TcAlterTaskFragment : Fragment() {
                         .build()
                     datePicker.addOnPositiveButtonClickListener {
                         viewModel.updateStartDate(DateHelper.updateDate(
-                            viewModel.startDate.value ?: DateHelper.getCurrentDate(), it
+                            viewModel.startDate.value ?: DateHelper.getCurrentTime(), it
                         ))
                     }
                     datePicker.show(sfm, "Tag")
@@ -75,7 +75,7 @@ class TcAlterTaskFragment : Fragment() {
                         val newHour: Int = timePicker.hour
                         val newMinute: Int = timePicker.minute
                         viewModel.updateStartDate(DateHelper.updateTime(
-                            viewModel.startDate.value ?: DateHelper.getCurrentDate(), newHour, newMinute
+                            viewModel.startDate.value ?: DateHelper.getCurrentTime(), newHour, newMinute
                         ))
                     }
                     timePicker.show(sfm, "Tag")
@@ -90,7 +90,7 @@ class TcAlterTaskFragment : Fragment() {
                     datePicker.addOnPositiveButtonClickListener {
                         viewModel.updateEndDate(
                             DateHelper.updateDate(
-                                viewModel.endDate.value ?: DateHelper.getCurrentDate(), it
+                                viewModel.endDate.value ?: DateHelper.getCurrentTime(), it
                             )
                         )
                     }
@@ -109,7 +109,7 @@ class TcAlterTaskFragment : Fragment() {
                         val newMinute: Int = timePicker.minute
                         viewModel.updateEndDate(
                             DateHelper.updateTime(
-                                viewModel.endDate.value ?: DateHelper.getCurrentDate(), newHour, newMinute
+                                viewModel.endDate.value ?: DateHelper.getCurrentTime(), newHour, newMinute
                             )
                         )
                     }

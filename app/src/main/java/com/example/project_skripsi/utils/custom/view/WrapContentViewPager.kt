@@ -1,4 +1,4 @@
-package com.example.project_skripsi.utils.custom_views
+package com.example.project_skripsi.utils.custom.view
 
 import android.content.Context
 import android.util.AttributeSet

@@ -44,7 +44,7 @@ class TcAlterResourceViewModel: ViewModel() {
     var isValid = true
     var materialType = ""
     var resourceDocumentId = ""
-    var isFirstTimeCreated = true
+    private var isFirstTimeCreated = true
 
     companion object {
         const val QUERY_CLASS = 0
@@ -61,7 +61,7 @@ class TcAlterResourceViewModel: ViewModel() {
 
     fun getAlterResourceData() {
         isFirstTimeCreated = false
-        FireRepository.inst.getResource(resourceDocumentId).first.observeOnce {
+        FireRepository.inst.getItem<Resource>(resourceDocumentId).first.observeOnce {
             _singleResource.postValue(it)
             selectedClass = it.assignedClasses ?: emptyList()
             selectedResource = it.prerequisites ?: emptyList()
@@ -69,97 +69,80 @@ class TcAlterResourceViewModel: ViewModel() {
     }
 
     private fun loadTeacher(uid: String) {
-        FireRepository.inst.getTeacher(uid).let { response ->
-            response.first.observeOnce {
-                currentTeacher = it
-                it.teachingGroups.let { teachingGroups ->
-                    teachingGroups?.map {  teachingGroup ->
-                        if (teachingGroup.subjectName == subjectGroup.subjectName && teachingGroup.gradeLevel == subjectGroup.gradeLevel) {
-                            teachingGroup.createdAssignments?.let { ids ->
-                                assignmentIds.addAll(ids)
-                            }
-                            teachingGroup.createdResources?.let { ids ->
-                                resourceIds.addAll(ids)
-                            }
-                            teachingGroup.teachingClasses?.let { ids ->
-                                classIds.addAll(ids)
-                            }
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce {
+            currentTeacher = it
+            it.teachingGroups.let { teachingGroups ->
+                teachingGroups?.map { teachingGroup ->
+                    if (teachingGroup.subjectName == subjectGroup.subjectName && teachingGroup.gradeLevel == subjectGroup.gradeLevel) {
+                        teachingGroup.createdAssignments?.let { ids ->
+                            assignmentIds.addAll(ids)
+                        }
+                        teachingGroup.createdResources?.let { ids ->
+                            resourceIds.addAll(ids)
+                        }
+                        teachingGroup.teachingClasses?.let { ids ->
+                            classIds.addAll(ids)
                         }
                     }
                 }
             }
         }
     }
+
     // Load Class
     fun loadClass() {
-        val itemList = mutableListOf<StudyClass>()
-        classIds.map { uid ->
-            FireRepository.inst.getStudyClass(uid).first.observeOnce {
-                itemList.add(it)
-                if (itemList.size == classIds.size)  _classList.postValue(itemList)
-            }
-        }
+        FireRepository.inst.getItems<StudyClass>(classIds).first.observeOnce { _classList.postValue(it) }
     }
+
     // Load Resource
     fun loadResource() {
-        val itemList = mutableListOf<Resource>()
-        resourceIds.map { uid ->
-            FireRepository.inst.getResource(uid).first.observeOnce {
-                itemList.add(it)
-                Log.d("View Model", "loadResource: " + it)
-                if (itemList.size == resourceIds.size) _resourceList.postValue(itemList)
-            }
-        }
+        FireRepository.inst.getItems<Resource>(resourceIds).first.observeOnce { _resourceList.postValue(it) }
     }
-    fun loadAssignment() {
-        val itemList = mutableListOf<TaskForm>()
-        assignmentIds.map { uid ->
-            FireRepository.inst.getTaskForm(uid).first.observeOnce {
-                itemList.add(it)
-                if (itemList.size == assignmentIds.size) _assignmentList.postValue(itemList)
-            }
 
-        }
+    fun loadAssignment() {
+        FireRepository.inst.getItems<TaskForm>(assignmentIds).first.observeOnce { _assignmentList.postValue(it) }
     }
+
     fun submitResource(title: String, type: String, link: String) {
-            // TODO: Handle Update Resource
-            if (isFirstTimeCreated) {
-                val id = UUIDHelper.getUUID()
-                currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }?.let {
+        // TODO: Handle Update Resource
+        if (isFirstTimeCreated) {
+            val id = UUIDHelper.getUUID()
+            currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
+                ?.let {
                     it.createdResources?.add(id)
                 }
-                val resource = Resource(
-                    id = id,
-                    title = title,
-                    gradeLevel = subjectGroup.gradeLevel,
-                    type = type,
-                    link = link,
-                    subjectName = subjectGroup.subjectName,
-                    // MARK -
-                    prerequisites = selectedResource,
-                    assignedClasses = selectedClass
-                )
-                FireRepository.inst.addResource(resource, currentTeacher).let { response ->
-                    response.first.observeOnce {
-                        _status.postValue(it)
-                    }
-                }
-            } else {
-                val resource = Resource(
-                    id = resourceDocumentId,
-                    title = title,
-                    gradeLevel = subjectGroup.gradeLevel,
-                    type = type,
-                    link = link,
-                    subjectName = subjectGroup.subjectName,
-                    prerequisites = selectedResource,
-                    assignedClasses = selectedClass
-                )
-                FireRepository.inst.addResource(resource, null).let { response ->
-                    response.first.observeOnce {
-                        _status.postValue(it)
-                    }
+            val resource = Resource(
+                id = id,
+                title = title,
+                gradeLevel = subjectGroup.gradeLevel,
+                type = type,
+                link = link,
+                subjectName = subjectGroup.subjectName,
+                // MARK -
+                prerequisites = selectedResource,
+                assignedClasses = selectedClass
+            )
+            FireRepository.inst.addResource(resource, currentTeacher).let { response ->
+                response.first.observeOnce {
+                    _status.postValue(it)
                 }
             }
+        } else {
+            val resource = Resource(
+                id = resourceDocumentId,
+                title = title,
+                gradeLevel = subjectGroup.gradeLevel,
+                type = type,
+                link = link,
+                subjectName = subjectGroup.subjectName,
+                prerequisites = selectedResource,
+                assignedClasses = selectedClass
+            )
+            FireRepository.inst.addResource(resource, null).let { response ->
+                response.first.observeOnce {
+                    _status.postValue(it)
+                }
+            }
+        }
     }
 }
