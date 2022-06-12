@@ -96,72 +96,61 @@ class StHomeFragment : Fragment(), ItemListener {
     private fun everyDayNotification() {
         val listEveryDayNotificationObservable = MutableLiveData<List<NotificationModel>>()
         val listEveryDayNotification = mutableListOf<NotificationModel>()
-        var totalClassMeeting = -1
-        var totalAssignment = -1
-        var totalExam = -1
+        var totalClassMeeting = 0
+        var totalAssignment = 0
+        var totalExam = 0
         var count = 0
-        viewModel.sectionData.observe(viewLifecycleOwner) { listHomeSection ->
-            listHomeSection.forEach {
-                when(it.sectionName) {
-                    Constant.SECTION_MEETING -> {
-                        val meetings = it.sectionItem.map { homeSectionData ->
-                            homeSectionData as ClassMeeting
-                        }
-                        meetings.filter { meeting ->
-                            meeting.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
-                        }.map { meeting ->
-                            Log.d("456", "everyDayNotification: meeting ${meeting}}")
-                            val date = meeting.startTime
-                            date?.let {
-                                val notificationModel = NotificationModel(body = "Pertemuan", date = it)
-                                listEveryDayNotification.add(notificationModel)
-                            }
-                        }
-                    }
-                    Constant.SECTION_EXAM -> {
-                        val exams = it.sectionItem.map { exam ->
-                            exam as TaskForm
-                        }
-                        exams.filter { exam ->
-                            exam.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
-                        }.map { exam ->
-                            Log.d("456", "everyDayNotification: exam ${exam}}")
-                            val date = exam.startTime
-                            date?.let {
-                                val notificationModel = NotificationModel(body = "Ujian", date = it)
-                                listEveryDayNotification.add(notificationModel)
-                            }
-                        }
-                    }
-                    Constant.SECTION_ASSIGNMENT -> {
-                        val assignments = it.sectionItem.map { assignment ->
-                            assignment as TaskForm
-                        }
-                        assignments.filter { assignment ->
-                            assignment.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
-                        }.map { assignment ->
-                            Log.d("456", "everyDayNotification: Assignment ${assignment}}")
-                            val date = assignment.startTime
-                            date?.let {
-                                val notificationModel = NotificationModel(body = "Tugas", date = it)
-                                listEveryDayNotification.add(notificationModel)
-                            }
-                        }
-                    }
+
+        viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) { listExamTaskForms ->
+            listExamTaskForms.map {
+                val date = it.startTime
+                date?.let {
+                    val notificationModel = NotificationModel(body = "Exam", date = it)
+                    totalExam+=1
+                    listEveryDayNotification.add(notificationModel)
                 }
             }
+            count++
             listEveryDayNotificationObservable.postValue(listEveryDayNotification)
         }
-        listEveryDayNotificationObservable.observe(viewLifecycleOwner) {
-             totalClassMeeting = listEveryDayNotification.filter { it.body == "Pertemuan" }.size
-             totalAssignment = listEveryDayNotification.filter { it.body == "Tugas" }.size
-             totalExam = listEveryDayNotification.filter { it.body == "Ujian" }.size
 
-            NotificationUtil.cancelEveryDayNotification(requireActivity())
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalClassMeeting} Pertemuan," +
-                    "${totalAssignment} tugas, ${totalExam} ujian")
+        viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) { listAssignmentTaskForms ->
+            listAssignmentTaskForms.map {
+                val date = it.startTime
+                date?.let {
+                    val notificationModel = NotificationModel(body = "Assignment", date = it)
+                    totalAssignment+=1
+                    listEveryDayNotification.add(notificationModel)
+                }
+            }
+            count++
+            listEveryDayNotificationObservable.postValue(listEveryDayNotification)
         }
-//
+
+        viewModel.listHomeSectionDataClassSchedule.observe(viewLifecycleOwner) { listClassSchedule ->
+            listClassSchedule.map {
+                val date = it.startTime
+                date?.let {
+                    val notificationModel = NotificationModel(body = "Meeting", date = it)
+                    totalClassMeeting+=1
+                    listEveryDayNotification.add(notificationModel)
+                }
+            }
+            count++
+            listEveryDayNotificationObservable.postValue(listEveryDayNotification)
+        }
+
+        listEveryDayNotificationObservable.observe(viewLifecycleOwner) {
+            if (count == 3) {
+                triggerEveryDayNotification(totalMeeting = totalClassMeeting, totalAssignment, totalExam)
+            }
+        }
+    }
+
+    private fun triggerEveryDayNotification(totalMeeting: Int, totalAssignment: Int, totalExam: Int) {
+        NotificationUtil.cancelEveryDayNotification(requireActivity())
+        NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalMeeting} Pertemuan," +
+                "${totalAssignment} tugas, ${totalExam} ujian")
     }
 
     private fun classMeetingNotification() {

@@ -38,8 +38,8 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, 16)
-                set(Calendar.MINUTE, 41)
+                set(Calendar.HOUR_OF_DAY, 22)
+                set(Calendar.MINUTE, 36)
             }
             intent.putExtra("timeinmillis", calendar.timeInMillis)
             intent.putExtra("title", title)
@@ -91,13 +91,12 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         }
         fun cancelEveryDayNotification(context: Context) {
             val intent = Intent(context, AlarmReceiver::class.java)
-            var timeInMilis: Long = 0
-            val calendar = Calendar.getInstance()
-            calendar.set(Calendar.HOUR_OF_DAY, 8)
-            calendar.set(Calendar.MINUTE, 0)
-            calendar.set(Calendar.SECOND, 0)
-            timeInMilis = calendar.timeInMillis
-            val notificationId = createNotificationId(timeInMilis)
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, 22)
+                set(Calendar.MINUTE, 36)
+            }
+            val notificationId = createNotificationId(calendar.timeInMillis)
             val pending = PendingIntent.getBroadcast(
                 context,
                 notificationId,

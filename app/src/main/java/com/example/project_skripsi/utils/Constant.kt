@@ -21,6 +21,11 @@ class Constant {
         const val ATTENDANCE_SICK = "sakit"
         const val ATTENDANCE_LEAVE = "izin"
         const val ATTENDANCE_ALPHA = "alfa"
+
+        // Notification
+        const val NOTIF_CLASS_MEETING = "Meeting"
+        const val NOTIF_EXAM= "Exam"
+        const val NOTIF_ASSIGNMENT = "Assignment"
     }
 
 

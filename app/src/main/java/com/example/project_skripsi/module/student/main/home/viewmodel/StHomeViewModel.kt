@@ -35,6 +35,7 @@ class StHomeViewModel : ViewModel() {
     var attendedMeeting = _listAttendedMeeting
 
     private val _listHomeSectionDataClassSchedule = MutableLiveData<List<ClassMeeting>>()
+    var listHomeSectionDataClassSchedule = _listHomeSectionDataClassSchedule
     private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
     var listHomeSectionDataExam = _listHomeSectionDataExam
     private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
