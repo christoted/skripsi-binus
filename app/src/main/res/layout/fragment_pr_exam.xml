@@ -24,6 +24,7 @@
             android:focusable="true"/>
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,6 +36,7 @@
             android:paddingVertical="16dp"/>
 
         <Button
+            android:id="@+id/btn_filter"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:text="filter"

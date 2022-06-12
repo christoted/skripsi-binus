@@ -3,6 +3,7 @@ package com.example.project_skripsi.module.teacher.form.alter
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -17,7 +18,6 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Question
 import com.example.project_skripsi.databinding.FragmentTcAlterTaskBinding
 import com.example.project_skripsi.module.teacher._sharing.AssignmentViewHolder
-import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.helper.DateHelper
@@ -58,7 +58,7 @@ class TcAlterTaskFragment : Fragment() {
                         .build()
                     datePicker.addOnPositiveButtonClickListener {
                         viewModel.updateStartDate(DateHelper.updateDate(
-                            viewModel.startDate.value ?: DateHelper.getCurrentDate(), it
+                            viewModel.startDate.value ?: DateHelper.getCurrentTime(), it
                         ))
                     }
                     datePicker.show(sfm, "Tag")
@@ -75,7 +75,7 @@ class TcAlterTaskFragment : Fragment() {
                         val newHour: Int = timePicker.hour
                         val newMinute: Int = timePicker.minute
                         viewModel.updateStartDate(DateHelper.updateTime(
-                            viewModel.startDate.value ?: DateHelper.getCurrentDate(), newHour, newMinute
+                            viewModel.startDate.value ?: DateHelper.getCurrentTime(), newHour, newMinute
                         ))
                     }
                     timePicker.show(sfm, "Tag")
@@ -90,7 +90,7 @@ class TcAlterTaskFragment : Fragment() {
                     datePicker.addOnPositiveButtonClickListener {
                         viewModel.updateEndDate(
                             DateHelper.updateDate(
-                                viewModel.endDate.value ?: DateHelper.getCurrentDate(), it
+                                viewModel.endDate.value ?: DateHelper.getCurrentTime(), it
                             )
                         )
                     }
@@ -109,7 +109,7 @@ class TcAlterTaskFragment : Fragment() {
                         val newMinute: Int = timePicker.minute
                         viewModel.updateEndDate(
                             DateHelper.updateTime(
-                                viewModel.endDate.value ?: DateHelper.getCurrentDate(), newHour, newMinute
+                                viewModel.endDate.value ?: DateHelper.getCurrentTime(), newHour, newMinute
                             )
                         )
                     }
@@ -117,23 +117,14 @@ class TcAlterTaskFragment : Fragment() {
                 }
             }
 
-            btnClass.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_CLASS) }
             btnPreqResource.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_RESOURCE) }
             btnPreqAssignment.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_ASSIGNMENT) }
             btnQuestion.setOnClickListener { showBottomSheetForm() }
 
-            btnConfirm.setOnClickListener{
-                if (validateInput()) {
-                    viewModel.submitForm(edtTitle.text.toString())
-                    btnConfirm.isEnabled = false
-                }
-            }
-
             viewModel.oldTaskForm.observe(viewLifecycleOwner, {
-                tvFormType.text = ("Form Lama")
+                tvFormType.text = ("Formulir Draf")
                 edtTitle.setText(it.title)
                 tvQuestionCount.text = ("jumlah soal ${it.questions?.size}")
-                tvClassCount.text = ("terpilih ${it.assignedClasses?.size}")
                 tvResourceCount.text = ("terpilih ${it.prerequisiteResources?.size}")
                 tvAssignmentCount.text = ("terpilih ${it.prerequisiteTaskForms?.size}")
                 when (it.type) {
@@ -153,20 +144,51 @@ class TcAlterTaskFragment : Fragment() {
                 btnEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
             })
 
-            viewModel.taskFormCreated.observe(viewLifecycleOwner, {
-                if (it) {
-                    Toast.makeText(context,
-                        if (viewModel.isNewForm) "Form ujian baru berhasil dibuat"
-                        else "Form ujian berhasil diubah",
-                        Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
+            viewModel.draftSaved.observe(viewLifecycleOwner, {
+                if (it.hasBeenHandled) view?.findNavController()?.popBackStack()
+                it.getContentIfNotHandled()?.let { event ->
+                    if (event.first) {
+                        if (event.second) {
+                            view?.findNavController()?.navigate(
+                                TcAlterTaskFragmentDirections.actionTcAlterTaskFragmentToTcAlterTaskFinalizationFragment(
+                                    viewModel.subjectGroup.subjectName,
+                                    viewModel.subjectGroup.gradeLevel,
+                                    viewModel.formType,
+                                    viewModel.savedTaskFormId
+                                )
+                            )
+                        } else {
+                            Toast.makeText(context, "Draf berhasil disimpan", Toast.LENGTH_SHORT).show()
+                            view?.findNavController()?.popBackStack()
+                        }
+                    }
                 }
+
+                btnSaveDraf.isEnabled = true
+                btnFinalize.isEnabled = true
             })
+
+            btnSaveDraf.setOnClickListener {
+                if (validateInput(false)) {
+                    viewModel.submitForm(edtTitle.text.toString(), false)
+                    btnSaveDraf.isEnabled = false
+                    btnFinalize.isEnabled = false
+                }
+            }
+
+            btnFinalize.setOnClickListener {
+                if (validateInput(true)) {
+                    viewModel.submitForm(edtTitle.text.toString(), true)
+                    btnSaveDraf.isEnabled = false
+                    btnFinalize.isEnabled = false
+                }
+            }
         }
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
+
         return binding.root
     }
 
@@ -196,9 +218,7 @@ class TcAlterTaskFragment : Fragment() {
             }
         }
         viewModel.initData(args.subjectName, args.gradeLevel, args.formType, args.taskFormId)
-
     }
-
 
     @SuppressLint("InflateParams")
     private fun showBottomSheet(queryType : Int) {
@@ -206,7 +226,8 @@ class TcAlterTaskFragment : Fragment() {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task_general, null)
 
         val tvTitle = view.findViewById<TextView>(R.id.tv_title)
-        val btnClose = view.findViewById<Button>(R.id.btn_confirm)
+        val btnConfirm = view.findViewById<Button>(R.id.btn_confirm)
+        val btnCancel = view.findViewById<Button>(R.id.btn_cancel)
 
         val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
         rvItem.layoutManager = LinearLayoutManager(context)
@@ -214,26 +235,12 @@ class TcAlterTaskFragment : Fragment() {
         rvItem.addItemDecoration(dividerItemDecoration)
 
         when(queryType) {
-            TcAlterTaskViewModel.QUERY_CLASS -> {
-                viewModel.classList.observe(viewLifecycleOwner, {
-                    val adapter = ClassViewHolder(it, viewModel.selectedClass)
-                    tvTitle.text = ("Daftar Kelas")
-                    rvItem.adapter = adapter.getAdapter()
-                    btnClose.setOnClickListener {
-                        viewModel.selectedClass = adapter.getResult()
-                        binding.tvClassCount.text = ("terpilih ${adapter.getResult().size}")
-                        dialog.dismiss()
-                    }
-                    viewModel.classList.removeObservers(viewLifecycleOwner)
-                })
-                viewModel.loadClass()
-            }
             TcAlterTaskViewModel.QUERY_RESOURCE -> {
                 viewModel.resourceList.observe(viewLifecycleOwner, {
                     val adapter = ResourceViewHolder(it, viewModel.selectedResource)
                     tvTitle.text = ("Daftar Materi")
                     rvItem.adapter = adapter.getAdapter()
-                    btnClose.setOnClickListener {
+                    btnConfirm.setOnClickListener {
                         viewModel.selectedResource = adapter.getResult()
                         binding.tvResourceCount.text = ("terpilih ${adapter.getResult().size}")
                         dialog.dismiss()
@@ -247,7 +254,7 @@ class TcAlterTaskFragment : Fragment() {
                     val adapter = AssignmentViewHolder(it, viewModel.selectedAssignment)
                     tvTitle.text = ("Daftar Tugas")
                     rvItem.adapter = adapter.getAdapter()
-                    btnClose.setOnClickListener {
+                    btnConfirm.setOnClickListener {
                         viewModel.selectedAssignment = adapter.getResult()
                         binding.tvAssignmentCount.text = ("terpilih ${adapter.getResult().size}")
                         dialog.dismiss()
@@ -257,6 +264,8 @@ class TcAlterTaskFragment : Fragment() {
                 viewModel.loadAssignment()
             }
         }
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
 
         dialog.setContentView(view)
         dialog.show()
@@ -268,6 +277,7 @@ class TcAlterTaskFragment : Fragment() {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task_form, null)
 
         val btnConfirm = view.findViewById<Button>(R.id.btn_confirm)
+        val btnCancel = view.findViewById<Button>(R.id.btn_cancel)
         val btnAdd = view.findViewById<Button>(R.id.btn_add)
 
         val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
@@ -278,6 +288,7 @@ class TcAlterTaskFragment : Fragment() {
             rvItem.adapter = adapter
             btnConfirm.setOnClickListener {
                 var isOK = true
+                var totalScore = 0
                 adapter.questions.mapIndexed { index, question ->
                     val childView = rvItem.getChildAt(index)
                     when (question.type) {
@@ -289,10 +300,16 @@ class TcAlterTaskFragment : Fragment() {
                             isOK = false
                             return@mapIndexed
                         } else {
+                            totalScore += childView.findViewById<EditText>(R.id.edt_score_weight).text.toString().toInt()
                             adapter.questions[index] = newQuestion
                         }
                     }
                 }
+                if (isOK && totalScore != 100) {
+                    Toast.makeText(context, "Bobot total harus 100, total saat ini $totalScore", Toast.LENGTH_SHORT).show()
+                    isOK = false
+                }
+
                 if (isOK) {
                     viewModel.updateQuestions(adapter.questions)
                     binding.tvQuestionCount.text = ("jumlah soal ${adapter.questions.size}")
@@ -303,6 +320,8 @@ class TcAlterTaskFragment : Fragment() {
             btnAdd.setOnClickListener { showChoiceDialog(adapter) }
             viewModel.questionList.removeObservers(viewLifecycleOwner)
         })
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
 
         dialog.setCancelable(false)
         dialog.setContentView(view)
@@ -345,17 +364,29 @@ class TcAlterTaskFragment : Fragment() {
         dialog.show()
     }
 
-    private fun validateInput() : Boolean {
+    private fun validateInput(continueToFinalization: Boolean) : Boolean {
         with(binding) {
             if (isStringEmpty(context!!, edtTitle.text.toString(), "Judul")) return false
+        }
 
-            if (viewModel.taskType.isEmpty()) {
-                Toast.makeText(context, "Tipe ujian harus dipilih",Toast.LENGTH_SHORT).show()
+        if (continueToFinalization) {
+            if (viewModel.startDate.value!! > viewModel.endDate.value!!) {
+                Toast.makeText(context, "Waktu mulai harus mendahului waktu selesai",Toast.LENGTH_SHORT).show()
                 return false
             }
 
-            if (viewModel.startDate.value!! > viewModel.endDate.value!!) {
-                Toast.makeText(context, "Tanggal mulai harus mendahului tanggal selesai",Toast.LENGTH_SHORT).show()
+            if (viewModel.startDate.value!! < DateHelper.getCurrentTime()) {
+                Toast.makeText(context, "Waktu sekarang harus mendahului waktu selesai",Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if (DateHelper.getMinute(viewModel.startDate.value, viewModel.endDate.value) < 5) {
+                Toast.makeText(context, "Durasi minimal 5 menit",Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if ((viewModel.questionList.value?.size ?: 0) == 0) {
+                Toast.makeText(context, "Jumlah soal harus minimal 1",Toast.LENGTH_SHORT).show()
                 return false
             }
         }

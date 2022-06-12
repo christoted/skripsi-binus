@@ -99,6 +99,12 @@ class PrProgressFragment : Fragment() {
     private fun retrieveArgs() {
         val args: PrPaymentFragmentArgs by navArgs()
         viewModel.setStudent(args.studentId)
+
+        binding.btnGraphic.setOnClickListener {
+            view?.findNavController()?.navigate(
+                PrProgressFragmentDirections.actionPrProgressFragmentToPrProgressGraphicFragment(args.studentId)
+            )
+        }
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

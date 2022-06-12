@@ -68,8 +68,8 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
                     else uncheckedList.add(student)
                 }
             }
-            _uncheckedList.postValue(uncheckedList)
-            _checkedList.postValue(checkedList)
+            _uncheckedList.postValue(uncheckedList.sortedBy { it.attendanceNumber })
+            _checkedList.postValue(checkedList.sortedBy { it.attendanceNumber })
         }
     }
 

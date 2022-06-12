@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudyClassBinding
 import com.google.android.material.chip.Chip
 
-class TcStudyClassFragment : Fragment() {
+class TcStudyClassFragment : Fragment(), ClassClickListener {
 
     private lateinit var viewModel : TcStudyClassViewModel
     private var _binding: FragmentTcStudyClassBinding? = null
@@ -26,12 +28,13 @@ class TcStudyClassFragment : Fragment() {
         viewModel = ViewModelProvider(this)[TcStudyClassViewModel::class.java]
         _binding = FragmentTcStudyClassBinding.inflate(inflater, container, false)
 
-        binding.cpHomeroomClass.visibility = View.GONE
+        binding.llParent.visibility = View.GONE
         viewModel.homeroomClass.observe(viewLifecycleOwner, { studyClass ->
-            with(binding.cpHomeroomClass) {
-                text = studyClass.name
-                visibility = View.VISIBLE
-                setOnClickListener {
+            with(binding) {
+                tvClassName.text = studyClass.name
+                tvStudentCount.text = (studyClass.students?.size ?: 0).toString()
+                llParent.visibility = View.VISIBLE
+                llParent.setOnClickListener {
                     view?.findNavController()?.navigate(TcStudyClassFragmentDirections
                         .actionTcStudyClassFragmentToTcStudyClassHomeroomFragment(studyClass.id!!))
                 }
@@ -46,7 +49,6 @@ class TcStudyClassFragment : Fragment() {
                 chip.id = View.generateViewId()
                 chip.text = subjectName
                 chip.setOnCheckedChangeListener { _, isChecked ->
-                    binding.cgClass.removeAllViews()
                     if (isChecked) viewModel.loadClasses(subjectName)
                 }
                 binding.cgSubject.addView(chip)
@@ -58,18 +60,12 @@ class TcStudyClassFragment : Fragment() {
             }
         })
 
+        binding.rvClass.layoutManager = LinearLayoutManager(context)
+        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        binding.rvClass.addItemDecoration(dividerItemDecoration)
+
         viewModel.teachingClasses.observe(viewLifecycleOwner, { pairData ->
-            binding.cgClass.removeAllViews()
-            pairData.second.map { studyClass ->
-                val chip = inflater.inflate(R.layout.view_chip_action, binding.cgSubject, false) as Chip
-                chip.id = View.generateViewId()
-                chip.text = studyClass.name
-                chip.setOnClickListener {
-                    view?.findNavController()?.navigate(TcStudyClassFragmentDirections
-                        .actionTcStudyClassFragmentToTcStudyClassTeachingFragment(studyClass.id!!, pairData.first))
-                }
-                binding.cgClass.addView(chip)
-            }
+            binding.rvClass.adapter = TcStudyClassViewHolder(pairData.second, pairData.first, this@TcStudyClassFragment).getAdapter()
         })
 
         return binding.root
@@ -78,5 +74,10 @@ class TcStudyClassFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(classId: String, subjectName: String) {
+        view?.findNavController()?.navigate(TcStudyClassFragmentDirections
+            .actionTcStudyClassFragmentToTcStudyClassTeachingFragment(classId, subjectName))
     }
 }

@@ -63,7 +63,7 @@ class StTaskFormViewModel : ViewModel() {
             viewModelScope.launch {
                 it.endTime?.let { endTime ->
                     while (true) {
-                        val difTime = endTime.time - DateHelper.getCurrentDate().time
+                        val difTime = endTime.time - DateHelper.getCurrentTime().time
                         val s = difTime / 1000
                         val m = s / 60
                         val h = m / 60

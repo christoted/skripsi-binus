@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.Resource
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -23,9 +24,9 @@ class TcResourceViewModel: ViewModel() {
 
     private fun loadTeacher(uid: String) {
         mapResourceIdsBySubjectGroup.clear()
-        FireRepository.inst.getTeacher(uid).first.observeOnce {
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             val subjectGroups = mutableListOf<SubjectGroup>()
-            it.teachingGroups?.map { teachingGroup ->
+            teacher.teachingGroups?.map { teachingGroup ->
                 val sg = SubjectGroup(teachingGroup.subjectName!!, teachingGroup.gradeLevel!!)
                 subjectGroups.add(sg)
                 teachingGroup.createdResources?.map { mapResourceIdsBySubjectGroup.getOrPut(sg) { mutableListOf()}.add(it) }
@@ -48,18 +49,9 @@ class TcResourceViewModel: ViewModel() {
     }
 
     private fun loadResourceForm(uids: List<String>, mutableLiveData: MutableLiveData<List<Resource>>) {
-        val resourceFormList = mutableListOf<Resource>()
-        if (uids.isNotEmpty()) {
-            uids.map {
-                FireRepository.inst.getResource(it).first.observeOnce {
-                    resourceFormList.add(it)
-                    if (resourceFormList.size == uids.size) mutableLiveData.postValue(resourceFormList)
-                }
-            }
-        } else {
-            mutableLiveData.postValue(mutableListOf())
+        FireRepository.inst.getItems<Resource>(uids).first.observeOnce {
+            mutableLiveData.postValue(it)
         }
-
     }
 
     fun refreshData() {
@@ -68,8 +60,8 @@ class TcResourceViewModel: ViewModel() {
     }
 
     fun isChipPositionTop(position: Int): Boolean {
-        if (position < 4) return true;
-        if (position < 8) return false;
-        return position % 2 == 0;
+        if (position < 4) return true
+        if (position < 8) return false
+        return position % 2 == 0
     }
 }

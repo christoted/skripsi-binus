@@ -51,7 +51,9 @@ class TcStudyClassTaskViewModel : ViewModel() {
 
 
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
-        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { _taskFormList.postValue(it) }
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
+            _taskFormList.postValue(list.sortedByDescending { it.endTime })
+        }
     }
 
 

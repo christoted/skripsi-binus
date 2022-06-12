@@ -26,8 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="200dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_class_name"
@@ -39,6 +38,7 @@
                     android:textSize="25sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
+                    android:layout_marginTop="200dp"
                     android:layout_marginBottom="8dp"/>
 
                 <LinearLayout
@@ -200,7 +200,7 @@
                 android:layout_marginBottom="8dp"
                 android:textAlignment="center"/>
 
-            <com.example.project_skripsi.utils.custom_views.WrapContentViewPager
+            <com.example.project_skripsi.utils.custom.view.WrapContentViewPager
                 android:id="@+id/viewpager_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -213,12 +213,6 @@
                 app:tabBackground="@drawable/tab_selector"
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp"/>
-
-            <Button
-                android:id="@+id/btn_announcement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pengumuman"/>
 
         </LinearLayout>
 

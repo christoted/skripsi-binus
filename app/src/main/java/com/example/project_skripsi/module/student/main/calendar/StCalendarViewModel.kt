@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.main.calendar
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -24,58 +26,23 @@ class StCalendarViewModel : ViewModel() {
         const val TYPE_MORE = 10
     }
 
-    var currentSelectedDate: CalendarDay = DateHelper.getCurrentDateNow()
+    var currentSelectedDate: CalendarDay = DateHelper.getCurrentDate()
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
     val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
-
-
-    private val currentList : MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
+    private var currentList : MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
     val currentDataList : MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
 
-    private val _meetingList = MutableLiveData<List<ClassMeeting>>()
-    private val _examList = MutableLiveData<List<TaskForm>>()
-    private val _assignmentList = MutableLiveData<List<TaskForm>>()
-    private val _paymentList = MutableLiveData<List<Payment>>()
-    private val _announcementList = MutableLiveData<List<Announcement>>()
-
     init {
-
-        _meetingList.observeOnce {
-            propagateEvent(it, TYPE_MEETING)
-            _eventList.postValue(currentList)
-        }
-
-        _examList.observeOnce {
-            propagateEvent(it, TYPE_EXAM)
-            _eventList.postValue(currentList)
-        }
-
-        _assignmentList.observeOnce {
-            propagateEvent(it, TYPE_ASSIGNMENT)
-            _eventList.postValue(currentList)
-        }
-
-        _paymentList.observeOnce {
-            propagateEvent(it, TYPE_PAYMENT)
-            _eventList.postValue(currentList)
-        }
-
-        _announcementList.observeOnce {
-            propagateEvent(it, TYPE_ANNOUNCEMENT)
-            _eventList.postValue(currentList)
-        }
-
         loadStudent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
-
     }
 
     private fun loadStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).let { response ->
             response.first.observeOnce { student ->
                 student.studyClass?.let { loadStudyClass(it) }
-                student.payments?.let { _paymentList.postValue(it) }
+                student.payments?.let { propagateEvent(it, TYPE_PAYMENT) }
             }
         }
     }
@@ -93,30 +60,19 @@ class StCalendarViewModel : ViewModel() {
                         classAssignments?.let { assignmentIds.addAll(it) }
                     }
                 }
-                _meetingList.postValue(meetings)
-                loadTaskForms(examIds, _examList)
-                loadTaskForms(assignmentIds, _assignmentList)
+                propagateEvent(meetings, TYPE_MEETING)
+                loadTaskForms(examIds, TYPE_EXAM)
+                loadTaskForms(assignmentIds, TYPE_ASSIGNMENT)
             }
         }
     }
 
-    private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
-        val taskFormList = ArrayList<TaskForm>()
-        uids.map { uid ->
-            FireRepository.inst.getItem<TaskForm>(uid).let { response ->
-                response.first.observeOnce { taskForm ->
-                    taskFormList.add(taskForm)
-                    if (taskFormList.size == uids.size)
-                        _taskFormList.postValue(taskFormList.toList())
-                }
-            }
-        }
+    private fun loadTaskForms(uids: List<String>, type: Int) {
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { propagateEvent(it, type) }
     }
 
     private fun loadAnnouncements() {
-        FireRepository.inst.getAnnouncements().let { response ->
-            response.first.observeOnce { _announcementList.postValue(it) }
-        }
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { propagateEvent(it, TYPE_ANNOUNCEMENT) }
     }
 
     private fun propagateEvent(item : List<HomeSectionData>, type: Int) {
@@ -128,17 +84,19 @@ class StCalendarViewModel : ViewModel() {
                 is Announcement -> it.date
                 else -> null
             }?.let { date ->
-                propagateCalendarEvent(date, type)
+                currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(DayEvent(date, type))
                 currentDataList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(
-                    CalendarItem(it, type)
+                    CalendarItem(it, date, type)
                 )
             }
         }
+
+        currentList.map { it.value.sortWith(CalendarComparator.comp) }
+        currentDataList.map { it.value.sortWith(CalendarComparator.compData) }
+
+        _eventList.postValue(currentList)
     }
 
-    private fun propagateCalendarEvent(date : Date, type: Int) {
-         currentList.getOrPut(CalendarDay.from(date)) { ArrayList() }.add(DayEvent(date, type))
-    }
 
 
 }

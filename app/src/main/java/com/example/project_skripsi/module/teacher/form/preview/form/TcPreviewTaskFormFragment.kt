@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.teacher.form.preview
+package com.example.project_skripsi.module.teacher.form.preview.form
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.FragmentTcPreviewTaskFormBinding
 import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.helper.DisplayHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDuration
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getFormattedDateTime
+import com.example.project_skripsi.utils.helper.DisplayHelper.Companion.getDurationDisplay
 
 class TcPreviewTaskFormFragment : Fragment() {
 
@@ -34,20 +36,18 @@ class TcPreviewTaskFormFragment : Fragment() {
                 tvTitle.text = taskForm.title
                 tvSubjectName.text = taskForm.subjectName
                 taskForm.startTime?.let {
-                    tvStartDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
-                    tvStartTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
+                    tvStartDate.text = getFormattedDateTime(DateHelper.DMY, it)
+                    tvStartTime.text = getFormattedDateTime(DateHelper.hm, it)
                 }
                 taskForm.endTime?.let {
-                    tvEndDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
-                    tvEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
+                    tvEndDate.text = getFormattedDateTime(DateHelper.DMY, it)
+                    tvEndTime.text = getFormattedDateTime(DateHelper.hm, it)
                 }
                 taskForm.questions?.let { rvQuestion.adapter = TcPreviewFormAdapter(it) }
-                val durationDis = DateHelper.getDuration(taskForm.startTime, taskForm.endTime)
-                tvDuration.text = DisplayHelper.getDurationDisplay(durationDis.first, durationDis.second)
+                val durationDis = getDuration(taskForm.startTime, taskForm.endTime)
+                tvDuration.text = getDurationDisplay(durationDis.first, durationDis.second)
             }
         })
-
-        viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
 
         retrieveArgs()
 
@@ -61,6 +61,6 @@ class TcPreviewTaskFormFragment : Fragment() {
 
     private fun retrieveArgs(){
         val args: TcPreviewTaskFormFragmentArgs by navArgs()
-        viewModel.setTaskForm(args.studyClassId, args.taskFormId)
+        viewModel.setTaskForm(args.taskFormId)
     }
 }

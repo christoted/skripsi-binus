@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.main.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +14,8 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 
 class TcHomeViewModel: ViewModel() {
 
@@ -25,22 +26,10 @@ class TcHomeViewModel: ViewModel() {
     val studyClass: LiveData<StudyClass> = _studyClass
 
     private val _listMeeting: MutableLiveData<List<TeacherAgendaMeeting>> = MutableLiveData()
-    val listMeeting: LiveData<List<TeacherAgendaMeeting>> = _listMeeting
-
     private val _announcements: MutableLiveData<List<Announcement>> = MutableLiveData()
-    val announcements: LiveData<List<Announcement>> = _announcements
-
     private val _examList: MutableLiveData<List<TeacherAgendaTaskForm>> = MutableLiveData()
-    val examList: LiveData<List<TeacherAgendaTaskForm>> = _examList
-
     private val _assignmentList: MutableLiveData<List<TeacherAgendaTaskForm>> = MutableLiveData()
-    val assignmentList: LiveData<List<TeacherAgendaTaskForm>> = _assignmentList
-
     private val _paymentList = MutableLiveData<List<Payment>>()
-    val paymentList: LiveData<List<Payment>> = _paymentList
-
-    private val examIds: MutableList<String> = mutableListOf()
-    private val assignmentIds: MutableList<String> = mutableListOf()
 
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
@@ -84,107 +73,90 @@ class TcHomeViewModel: ViewModel() {
 
     private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce {
+            _teacherData.postValue(it)
+
             it.payments?.let { payments ->
-                _paymentList.postValue(payments)
+                _paymentList.postValue(
+                    payments
+                        .filter { payment -> convertDateToCalendarDay(payment.paymentDeadline) == getCurrentDate() }
+                        .sortedBy { payment -> payment.paymentDeadline }
+                )
             }
+
             val classes = mutableListOf<ClassIdSubject>()
-        //    val subjectGroups = mutableListOf<SubjectGroup>()
             it.teachingGroups?.map { teachingGroup ->
                 teachingGroup.teachingClasses?.map { classId ->
                     classes.add(ClassIdSubject(classId, teachingGroup.subjectName!!))
                 }
-//                val sg = SubjectGroup(teachingGroup.subjectName!!, teachingGroup.gradeLevel!!)
-//                subjectGroups.add(sg)
-//                teachingGroup.createdExams?.let { exams -> examIds.addAll(exams) }
-//                teachingGroup.createdAssignments?.let { assignments -> assignmentIds.addAll(assignments)}
             }
-            _teacherData.postValue(it)
+
             loadStudyClasses(classes)
-//            loadHomeRoomClass(it.homeroomClass ?: "")
-//            loadExam()
-//            loadAssignment()
         }
     }
     // Load Study Classes
     private fun loadStudyClasses(uids: List<ClassIdSubject>) {
         FireRepository.inst.getItems<StudyClass>(uids.map {
             it.studyClassId
-        }).first.observeOnce {
+        }).first.observeOnce { list ->
             val meetings = mutableListOf<TeacherAgendaMeeting>()
             val exams = mutableListOf<ClassTaskFormId>()
             val assignments = mutableListOf<ClassTaskFormId>()
 
-            it.mapIndexed { index, studyClass ->
+            list.mapIndexed { index, studyClass ->
+
                 studyClass.subjects?.firstOrNull { item ->
                     item.subjectName == uids[index].subjectName
                 }.let { subject ->
-
-                    subject?.classMeetings?.filter {
-                        it.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
-                    }?.map { meeting ->
-                        meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
-                    }
+                    subject?.classMeetings
+                        ?.map { meeting ->
+                            meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
+                        }
 
                     subject?.classAssignments?.map { asgId ->
-                        assignments.add(ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", asgId))
+                        assignments.add(
+                            ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", asgId)
+                        )
                     }
 
                     subject?.classExams?.map { examId ->
-                        exams.add(ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", examId ))
+                        exams.add(
+                            ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", examId)
+                        )
                     }
                 }
             }
-            _listMeeting.postValue(meetings)
+            _listMeeting.postValue(
+                meetings
+                    .filter { convertDateToCalendarDay(it.classMeeting.startTime) == getCurrentDate() }
+                    .sortedBy { it.classMeeting.startTime }
+            )
             loadTaskForm(exams, _examList)
             loadTaskForm(assignments, _assignmentList)
         }
     }
 
     private fun loadTaskForm(uids: List<ClassTaskFormId>, mutableLiveData: MutableLiveData<List<TeacherAgendaTaskForm>>) {
-        FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
+        FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce { list ->
             val taskFormList = ArrayList<TeacherAgendaTaskForm>()
-            // TODO: Add Here
-            it.filter { it.startTime?.let { date ->
-                DateHelper.convertDateToCalendarDay(
-                    date
-                )
-            } == DateHelper.getCurrentDateNow() }.mapIndexed { index, taskForm ->
+            list.mapIndexed { index, taskForm ->
                 taskFormList.add(TeacherAgendaTaskForm(uids[index].studyClassId, uids[index].studyClassName, taskForm))
             }
-            mutableLiveData.postValue(taskFormList)
+            mutableLiveData.postValue(
+                taskFormList
+                    .filter { convertDateToCalendarDay(it.taskForm.startTime) == getCurrentDate() }
+                    .sortedBy { it.taskForm.startTime }
+            )
         }
     }
 
     // Load Announcement
     private fun loadAnnouncement(){
-        val announcements: MutableList<Announcement> = mutableListOf()
-        FireRepository.inst.getAnnouncements().first.observeOnce {
-            announcements.addAll(it)
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
+            _announcements.postValue(
+                list.filter { convertDateToCalendarDay(it.date) == getCurrentDate() }
+                    .sortedBy { it.date }
+            )
         }
-        _announcements.postValue(announcements)
     }
-
-    // Load Schedule
-//    private fun loadHomeRoomClass(uid: String) {
-//        val meetings: MutableList<ClassMeeting> = mutableListOf()
-//        FireRepository.instance.getItem<StudyClass>(uid).first.observeOnce {
-//            _studyClass.postValue(it)
-//            it.subjects?.map { subject ->
-//                subject.classMeetings?.let { meets -> meetings.addAll(meets) }
-//            }
-//            // TODO:: Filter Here
-//            _listMeeting.postValue(meetings)
-//        }
-//    }
-
-    // Load Exam & Load Assignment
-//     private fun loadExam() {
-//        loadTaskForm(examIds.toList(), _examList)
-//    }
-//
-//    private fun loadAssignment() {
-//        loadTaskForm(assignmentIds.toList(), _assignmentList)
-//    }
-
 
 }

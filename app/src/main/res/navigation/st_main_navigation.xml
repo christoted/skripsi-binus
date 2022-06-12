@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_navigation_home_fragment_to_stProfileFragment"
             app:destination="@id/stProfileFragment" />
+        <action
+            android:id="@+id/action_navigation_home_fragment_to_stAnnouncementFragment"
+            app:destination="@id/stAnnouncementFragment" />
     </fragment>
 
     <fragment
@@ -31,9 +34,6 @@
         <action
             android:id="@+id/action_navigation_class_fragment_to_stTaskAssignmentFragment"
             app:destination="@id/stTaskAssignmentFragment" />
-        <action
-            android:id="@+id/action_navigation_class_fragment_to_stAnnouncementFragment"
-            app:destination="@id/stAnnouncementFragment" />
         <action
             android:id="@+id/action_navigation_class_fragment_to_stStudentListFragment"
             app:destination="@id/stStudentListFragment" />

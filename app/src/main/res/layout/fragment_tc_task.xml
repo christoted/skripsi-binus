@@ -20,16 +20,30 @@
             android:layout_weight="1"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:text="Ujian dan Tugas"
+            android:text="Ujian dan Tugas Final"
             android:textColor="@color/black"
-            android:padding="16dp"/>
+            android:padding="16dp" />
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
+        <ImageView
+            android:id="@+id/imv_draft"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_edit_note_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingHorizontal="8dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/imv_add"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_add_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingHorizontal="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Tambah"/>
+            android:clickable="true"
+            android:focusable="true"/>
 
     </LinearLayout>
 

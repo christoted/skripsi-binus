@@ -33,8 +33,10 @@ class StClassFragment : Fragment() {
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                binding.toolbar.visibility = View.VISIBLE
                 binding.collapseLayout.title = binding.tvClassName.text
             } else {
+                binding.toolbar.visibility = View.GONE
                 binding.collapseLayout.title = ""
             }
         })
@@ -48,7 +50,6 @@ class StClassFragment : Fragment() {
             view.findNavController()
                 .navigate(StClassFragmentDirections.actionNavigationClassFragmentToStTaskAssignmentFragment())
         }
-
 
         viewModel.studyClass.observe(viewLifecycleOwner, {
             with(binding) {
@@ -79,11 +80,6 @@ class StClassFragment : Fragment() {
                 it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
             }
         })
-
-        binding.btnAnnouncement.setOnClickListener {
-            view?.findNavController()?.navigate(StClassFragmentDirections
-                .actionNavigationClassFragmentToStAnnouncementFragment())
-        }
 
         return binding.root
     }

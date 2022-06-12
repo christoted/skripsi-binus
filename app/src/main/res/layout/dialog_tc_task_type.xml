@@ -6,17 +6,21 @@
     android:layout_height="wrap_content"
     android:minWidth="275dp"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pilih Tipe Form"
+        android:text="Pilih Tipe Formulir"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="19sp"
         android:textColor="@color/black"
-        android:paddingHorizontal="8dp"
-        android:paddingTop="8dp"/>
+        android:padding="8dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
     <TextView
         android:id="@+id/tv_subject_group"
@@ -24,22 +28,22 @@
         android:layout_height="wrap_content"
         tools:text="Grup: 12 - Biologi"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:paddingHorizontal="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"/>
 
     <Button
         android:id="@+id/btn_add_exam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ujian"/>
-
+        android:text="Ujian"
+        android:layout_marginHorizontal="8dp"/>
 
     <Button
         android:id="@+id/btn_add_assignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tugas"/>
+        android:text="Tugas"
+        android:layout_marginHorizontal="8dp"/>
 
 </LinearLayout>

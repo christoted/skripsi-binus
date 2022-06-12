@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 class DateHelper {
 
@@ -24,14 +23,20 @@ class DateHelper {
             "Sunday" to "Minggu",
         )
 
-        fun getCurrentDate() : Date = Calendar.getInstance().time
+        fun getCurrentTime() : Date = Calendar.getInstance().time
 
-        fun getCurrentDateNow(): CalendarDay = CalendarDay.today()
+        fun getCurrentDate(): CalendarDay = CalendarDay.today()
 
         // TODO: Create a function that take Date as parameter and return Calendar Day
-        fun convertDateToCalendarDay(date: Date): CalendarDay {
+        fun convertDateToCalendarDay(date: Date?): CalendarDay {
+            if (date == null) return getCurrentDate()
             return CalendarDay.from(date)
         }
+
+//        fun convertCalendarDayToDate(date: CalendarDay?): Date {
+//            if (date == null) return getCurrentDate()
+//            return CalendarDay.from(date)
+//        }
 
         @SuppressLint("SimpleDateFormat")
         fun getFormattedDateTime(format: String?, date: Date?): String? {
@@ -39,7 +44,8 @@ class DateHelper {
         }
 
         @SuppressLint("SimpleDateFormat")
-        fun getFormattedDateTimeWithWeekDay(date: Date): String {
+        fun getFormattedDateTimeWithWeekDay(date: Date?): String {
+            if (date == null) return "null date"
             val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
             return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }
@@ -88,10 +94,11 @@ class DateHelper {
             return Pair(days, "hari")
         }
 
-
-
+        fun getMinute(startTime : Date?, endTime : Date?) : Long {
+            if (startTime == null || endTime == null) return 0
+            return (endTime.time - startTime.time) / (1000 * 60)
+        }
 
     }
-
 
 }

@@ -90,6 +90,18 @@
         <argument
             android:name="studentId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_prProgressFragment_to_prProgressGraphicFragment"
+            app:destination="@id/prProgressGraphicFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/prProgressGraphicFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.progress.graphic.PrProgressGraphicFragment"
+        android:label="fragment_pr_progress_graphic"
+        tools:layout="@layout/fragment_pr_progress_graphic" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

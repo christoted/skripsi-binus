@@ -25,7 +25,7 @@ class StPaymentFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentStPaymentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[StPaymentViewModel::class.java]

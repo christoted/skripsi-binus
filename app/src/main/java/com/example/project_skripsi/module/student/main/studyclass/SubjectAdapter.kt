@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.core.model.firestore.Subject
 import com.example.project_skripsi.databinding.ItemStClassSubjectBinding
+import com.example.project_skripsi.module.student.main.studyclass.StClassViewModel.Companion.mapOfSubjectImage
 
 class SubjectAdapter(private val subjectList: List<Subject>) :
     Adapter<SubjectAdapter.SubjectViewHolder>() {
@@ -23,7 +24,8 @@ class SubjectAdapter(private val subjectList: List<Subject>) :
     class SubjectViewHolder ( private val binding : ItemStClassSubjectBinding) : ViewHolder(binding.root) {
         fun bind(item: Subject) {
             with(binding) {
-                this.textviewSubjectName.text = item.subjectName
+                tvSubjectName.text = item.subjectName
+                mapOfSubjectImage[item.subjectName]?.let { imvSubjectImage.setImageResource(it) }
             }
 
             binding.root.setOnClickListener { view ->

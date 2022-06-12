@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.Payment
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 
@@ -47,7 +48,7 @@ class PrPaymentViewModel : ViewModel() {
             val paidPayment = mutableListOf<Payment>()
             student.payments?.map { payment ->
                 if (payment.paymentDate == null) {
-                    if (payment.paymentDeadline!! > DateHelper.getCurrentDate()) upcomingPayment.add(payment)
+                    if (DateHelper.convertDateToCalendarDay(payment.paymentDeadline) >= DateHelper.getCurrentDate()) upcomingPayment.add(payment)
                     else unpaidPayment.add(payment)
                     totalCharge += (payment.nominal ?: 0)
                 } else {
@@ -58,9 +59,9 @@ class PrPaymentViewModel : ViewModel() {
             }
             _totalCharge.postValue(totalCharge)
             _totalPaid.postValue(totalPaid)
-            _upcomingPayment.postValue(upcomingPayment)
-            _unpaidPayment.postValue(unpaidPayment)
-            _paidPayment.postValue(paidPayment)
+            _upcomingPayment.postValue(upcomingPayment.sortedBy { it.paymentDeadline })
+            _unpaidPayment.postValue(unpaidPayment.sortedBy { it.paymentDeadline })
+            _paidPayment.postValue(paidPayment.sortedByDescending { it.paymentDeadline })
         }
     }
 

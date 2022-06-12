@@ -4,10 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.Payment
+import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
+import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class StPaymentViewModel : ViewModel() {
 
@@ -35,36 +40,36 @@ class StPaymentViewModel : ViewModel() {
     }
 
     init {
-        loadPayments()
+        loadPayments(AuthRepository.inst.getCurrentUser().uid)
     }
 
-    private fun loadPayments() {
-        FireRepository.inst.getStudent(AuthRepository.inst.getCurrentUser().uid).let { response ->
-            response.first.observeOnce{ student ->
-                var totalCharge = 0
-                var totalPaid = 0
-                val upcomingPayment = ArrayList<Payment>()
-                val unpaidPayment = ArrayList<Payment>()
-                val paidPayment = ArrayList<Payment>()
-                student.payments?.map { payment ->
-                    if (payment.paymentDate == null) {
-                        if (payment.paymentDeadline!! > DateHelper.getCurrentDate()) upcomingPayment.add(payment)
-                        else unpaidPayment.add(payment)
-                        totalCharge += (payment.nominal ?: 0)
-                    } else {
-                        paidPayment.add(payment)
-                        totalPaid += (payment.nominal?:0)
-                    }
-                    _accountNumber.postValue(payment.accountNumber?: "null" )
+    private fun loadPayments(uid: String) {
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
+            var totalCharge = 0
+            var totalPaid = 0
+            val upcomingPayment = mutableListOf<Payment>()
+            val unpaidPayment = mutableListOf<Payment>()
+            val paidPayment = mutableListOf<Payment>()
+            student.payments?.map { payment ->
+                if (payment.paymentDate == null) {
+                    if (convertDateToCalendarDay(payment.paymentDeadline) >= getCurrentDate())
+                        upcomingPayment.add(payment)
+                    else unpaidPayment.add(payment)
+                    totalCharge += (payment.nominal ?: 0)
+                } else {
+                    paidPayment.add(payment)
+                    totalPaid += (payment.nominal ?: 0)
                 }
-                _totalCharge.postValue(totalCharge)
-                _totalPaid.postValue(totalPaid)
-                _upcomingPayment.postValue(upcomingPayment.toList())
-                _unpaidPayment.postValue(unpaidPayment.toList())
-                _paidPayment.postValue(paidPayment.toList())
+                _accountNumber.postValue(payment.accountNumber ?: "null")
             }
-
+            _totalCharge.postValue(totalCharge)
+            _totalPaid.postValue(totalPaid)
+            _upcomingPayment.postValue(upcomingPayment.sortedBy { it.paymentDeadline })
+            _unpaidPayment.postValue(unpaidPayment.sortedBy { it.paymentDeadline })
+            _paidPayment.postValue(paidPayment.sortedByDescending { it.paymentDeadline })
         }
     }
 
 }
+
+

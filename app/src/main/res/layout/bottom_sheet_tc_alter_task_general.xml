@@ -32,6 +32,15 @@
             android:textColor="@color/blue_500"
             android:backgroundTint="@color/white"/>
 
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Batal"
+            android:textColor="@color/blue_500"
+            android:backgroundTint="@color/white"
+            android:layout_marginStart="8dp"/>
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

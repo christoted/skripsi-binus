@@ -16,6 +16,7 @@ import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -50,6 +51,12 @@ class StHomeFragment : Fragment(), ItemListener {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             viewModel.sectionData.observe(viewLifecycleOwner, { adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment) })
+        }
+
+        binding.imvAnnouncement.setOnClickListener {
+            view?.findNavController()?.navigate(
+                StHomeFragmentDirections
+                .actionNavigationHomeFragmentToStAnnouncementFragment())
         }
 
         binding.imvSettings.setOnClickListener {

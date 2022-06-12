@@ -19,6 +19,9 @@ class PrAssignmentViewModel : ViewModel() {
         val tabHeader = arrayOf("Berlangsung", "Selesai")
     }
 
+    private val _subjects = MutableLiveData<List<String>>()
+    val subjects : LiveData<List<String>> = _subjects
+
     private val _ongoingList = MutableLiveData<List<TaskFormStatus>>()
     val ongoingList : LiveData<List<TaskFormStatus>> = _ongoingList
 
@@ -27,6 +30,9 @@ class PrAssignmentViewModel : ViewModel() {
 
     private var className = ""
     private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
+
+    private val ongoingTaskForms = ArrayList<TaskFormStatus>()
+    private val pastTaskForms = ArrayList<TaskFormStatus>()
 
     fun setStudent(studentId: String) {
         loadStudent(studentId)
@@ -47,26 +53,41 @@ class PrAssignmentViewModel : ViewModel() {
             with(studyClass) {
                 name?.let { className = it }
                 subjects?.map { subject -> subject.classAssignments?.let { allAssignments.addAll(it) } }
+                subjects?.map { it.subjectName!! }?.let {
+                    val list = mutableListOf("Semua")
+                    list.addAll(it)
+                    _subjects.postValue(list)
+                }
             }
             loadTaskForms(allAssignments)
         }
     }
 
     private fun loadTaskForms(uids: List<String>) {
-        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce {
-            val ongoingList = mutableListOf<TaskFormStatus>()
-            val pastList = mutableListOf<TaskFormStatus>()
-            it.map { taskForm ->
-                mAssignedTaskForms[taskForm.id]?.let { assignTaskForm ->
-                    if (taskForm.endTime!! > DateHelper.getCurrentDate()) {
-                        ongoingList
+        ongoingTaskForms.clear()
+        pastTaskForms.clear()
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
+            list.map { taskForm ->
+                mAssignedTaskForms[taskForm.id]?.let {
+                    if (taskForm.endTime!! > DateHelper.getCurrentTime()) {
+                        ongoingTaskForms
                     } else {
-                        pastList
-                    }.add(TaskFormStatus(className, taskForm, assignTaskForm))
+                        pastTaskForms
+                    }.add(TaskFormStatus(className, taskForm, it))
                 }
             }
-            _ongoingList.postValue(ongoingList)
-            _pastList.postValue(pastList)
+            _ongoingList.postValue(ongoingTaskForms.sortedBy { it.endTime })
+            _pastList.postValue(pastTaskForms.sortedByDescending { it.endTime })
+        }
+    }
+
+    fun filter(subjectName: String) {
+        if (subjectName == "Semua") {
+            _ongoingList.postValue(ongoingTaskForms.sortedBy { it.endTime })
+            _pastList.postValue(pastTaskForms.sortedByDescending { it.endTime })
+        } else {
+            _ongoingList.postValue(ongoingTaskForms.filter { it.subjectName == subjectName }.sortedBy { it.endTime })
+            _pastList.postValue(pastTaskForms.filter { it.subjectName == subjectName }.sortedByDescending { it.endTime })
         }
     }
 

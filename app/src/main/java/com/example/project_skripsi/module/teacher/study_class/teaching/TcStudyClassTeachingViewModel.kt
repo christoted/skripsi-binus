@@ -43,7 +43,9 @@ class TcStudyClassTeachingViewModel : ViewModel() {
     }
 
     private fun loadStudents(uids: List<String>) {
-        FireRepository.inst.getItems<Student>(uids).first.observeOnce { _studentList.postValue(it) }
+        FireRepository.inst.getItems<Student>(uids).first.observeOnce { list ->
+            _studentList.postValue(list.sortedBy { it.attendanceNumber })
+        }
     }
 
     fun getAttendanceAbsent(student: Student): Int =

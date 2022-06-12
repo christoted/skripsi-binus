@@ -14,7 +14,8 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 
 class StHomeViewModel : ViewModel() {
 
@@ -53,12 +54,12 @@ class StHomeViewModel : ViewModel() {
         }
 
         _listHomeSectionDataExam.observeOnce {
-            listData[1] = (HomeMainSection(SECTION_EXAM, sectionItem = it.filter { it.startTime == DateHelper.getCurrentDate() }))
+            listData[1] = (HomeMainSection(SECTION_EXAM, sectionItem = it))
             _sectionData.postValue(listData)
         }
 
         _listHomeSectionDataAssignment.observeOnce {
-            listData[2] = (HomeMainSection(SECTION_ASSIGNMENT, sectionItem = it.filter { it.startTime == DateHelper.getCurrentDate() }))
+            listData[2] = (HomeMainSection(SECTION_ASSIGNMENT, sectionItem = it))
             _sectionData.postValue(listData)
         }
 
@@ -82,14 +83,17 @@ class StHomeViewModel : ViewModel() {
             // TODO: Take the Class id
             student.studyClass?.let { loadStudyClass(it) }
             // TODO: Load the Payment
-            student.payments?.let { _listPaymentSectionDataPayment.postValue(it) }
+            student.payments?.let { list ->
+                _listPaymentSectionDataPayment.postValue(
+                    list.filter { convertDateToCalendarDay(it.paymentDeadline) == getCurrentDate() }
+                        .sortedBy { it.paymentDeadline }
+                )
+            }
         }
     }
 
     private fun loadStudyClass(uid: String) {
-
         FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
-
             studyClass.name?.let { _profileClass.postValue(it) }
             val meetingList = mutableListOf<ClassMeeting>()
             val examList = mutableListOf<String>()
@@ -103,7 +107,10 @@ class StHomeViewModel : ViewModel() {
                     classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                 }
             }
-            _listHomeSectionDataClassSchedule.postValue(meetingList)
+            _listHomeSectionDataClassSchedule.postValue(
+                meetingList.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
+                    .sortedBy { it.startTime }
+            )
             loadTaskForms(examList, _listHomeSectionDataExam)
             loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
 
@@ -111,27 +118,21 @@ class StHomeViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.inst.getAnnouncements().let {
-            response ->
-            response.first.observeOnce {
-                // TODO: Load Announcement
-                _listPaymentSectionDataAnnouncement.postValue(it)
-            }
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
+            _listPaymentSectionDataAnnouncement.postValue(
+                list.filter { convertDateToCalendarDay(it.date) == getCurrentDate() }
+                    .sortedBy { it.date }
+            )
         }
     }
 
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskForm>>) {
-        val taskFormList = ArrayList<TaskForm>()
-        uids.map { uid ->
-            FireRepository.inst.getTaskForm(uid).let { response ->
-                response.first.observeOnce { taskForm ->
-                    taskFormList.add(taskForm)
-                    if (taskFormList.size == uids.size)
-                        _taskFormList.postValue(taskFormList.toList())
-                }
-            }
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
+            _taskFormList.postValue(
+                list.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
+                    .sortedBy { it.startTime }
+            )
         }
     }
-
 
 }

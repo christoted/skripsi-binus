@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.StudyClass
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -27,7 +28,7 @@ class TcStudyClassViewModel : ViewModel() {
     }
 
     private fun loadTeacher(uid : String) {
-        FireRepository.inst.getTeacher(uid).first.observeOnce { teacher ->
+        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             with(teacher) {
                 homeroomClass?.let { loadHomeroomClass(it) }
 
@@ -44,23 +45,13 @@ class TcStudyClassViewModel : ViewModel() {
     }
 
     private fun loadHomeroomClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                _homeroomClass.postValue(studyClass)
-            }
-        }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { _homeroomClass.postValue(it) }
     }
 
     fun loadClasses(subjectName: String) {
-        val uids = subjectClasses[subjectName]
-        val classList = mutableListOf<StudyClass>()
-        uids?.map { uid ->
-            FireRepository.inst.getStudyClass(uid).let { response ->
-                response.first.observeOnce {
-                    classList.add(it)
-                    if (classList.size == uids.size)
-                        _teachingClasses.postValue(Pair(subjectName, classList.toList()))
-                }
+        subjectClasses[subjectName]?.let { uids ->
+            FireRepository.inst.getItems<StudyClass>(uids).first.observeOnce {
+                _teachingClasses.postValue(Pair(subjectName, it))
             }
         }
     }

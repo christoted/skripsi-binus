@@ -91,7 +91,13 @@ data class AssignedTaskForm(
 
     val type: String? = null,
 
-    val startTime: Date? = null,
+    @get: PropertyName("start_time")
+    @set: PropertyName("start_time")
+    var startTime: Date? = null,
+
+    @get: PropertyName("end_time")
+    @set: PropertyName("end_time")
+    var endTime: Date? = null,
 
     @get: PropertyName("is_submitted")
     @set: PropertyName("is_submitted")

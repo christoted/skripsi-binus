@@ -39,9 +39,11 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                binding.toolbar.visibility = View.VISIBLE
                 binding.collapseLayout.title =
                     DateHelper.getFormattedDateTimeWithWeekDay(viewModel.currentSelectedDate.date)
             } else {
+                binding.toolbar.visibility = View.GONE
                 binding.collapseLayout.title = ""
             }
         })
@@ -76,7 +78,11 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
             binding.llRvParent.addView(emptyView.root)
             curEmptyView = emptyView.root
         }
-        binding.rvEvent.adapter = StCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
+        binding.rvEvent.adapter = StCalendarAdapter(
+            viewModel.currentDataList[date]
+                ?: emptyList(),
+            this
+        )
     }
 
     override fun onDestroyView() {

@@ -8,6 +8,7 @@ import com.example.project_skripsi.core.model.local.ParentSubject
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 
 class PrStudentDetailViewModel : ViewModel() {
 
@@ -68,7 +69,10 @@ class PrStudentDetailViewModel : ViewModel() {
                     subject.classExams?.map { classExam ->
                         countExamTotal++
                         student.value?.assignedExams?.firstOrNull {
-                            it.id == classExam && !it.answers.isNullOrEmpty()
+                            it.id == classExam
+                                    && (it.isSubmitted == true
+//                                    || it.endTime!! <= DateHelper.getCurrentTime()
+                                    )
                         }?.let { countSubmittedExam++ }
                     }
 
@@ -77,7 +81,10 @@ class PrStudentDetailViewModel : ViewModel() {
                     subject.classAssignments?.map { classAssignment ->
                         countAssignmentTotal++
                         student.value?.assignedAssignments?.firstOrNull {
-                            it.id == classAssignment && it.isSubmitted!!
+                            it.id == classAssignment
+                                    && (it.isSubmitted == true
+//                                    || it.endTime!! <= DateHelper.getCurrentTime()
+                                    )
                         }?.let { countSubmittedAssignment++ }
                     }
 

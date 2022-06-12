@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.firestore.Student
+import com.example.project_skripsi.core.model.firestore.StudyClass
+import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -19,6 +22,9 @@ class StTaskAssignmentViewModel : ViewModel() {
         val tabHeader = arrayOf("Berlangsung", "Selesai")
     }
 
+    private val _subjects = MutableLiveData<List<String>>()
+    val subjects : LiveData<List<String>> = _subjects
+
     private val _ongoingList = MutableLiveData<List<TaskFormStatus>>()
     val ongoingList : LiveData<List<TaskFormStatus>> = _ongoingList
 
@@ -28,54 +34,63 @@ class StTaskAssignmentViewModel : ViewModel() {
     private var className = ""
     private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
 
+    private val ongoingTaskForms = ArrayList<TaskFormStatus>()
+    private val pastTaskForms = ArrayList<TaskFormStatus>()
 
     init {
         loadStudent(AuthRepository.inst.getCurrentUser().uid)
     }
 
     private fun loadStudent(uid: String) {
-        FireRepository.inst.getStudent(uid).let { response ->
-            response.first.observeOnce { student ->
-                with(student) {
-                    studyClass?.let { uid -> loadStudyClass(uid) }
-                    assignedAssignments?.map { asg -> asg.id?.let { mAssignedTaskForms.put(it, asg) }}
-                }
+        FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
+            with(student) {
+                studyClass?.let { uid -> loadStudyClass(uid) }
+                assignedAssignments?.map { asg -> asg.id?.let { mAssignedTaskForms.put(it, asg) } }
             }
         }
     }
 
     private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getStudyClass(uid).let { response ->
-            response.first.observeOnce { studyClass ->
-                val allAssignments = ArrayList<String>()
-                with(studyClass) {
-                    name?.let { className = it }
-                    subjects?.map { subject -> subject.classAssignments?.let { allAssignments.addAll(it) } }
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            val allAssignments = ArrayList<String>()
+            with(studyClass) {
+                name?.let { className = it }
+                subjects?.map { subject -> subject.classAssignments?.let { allAssignments.addAll(it) } }
+                subjects?.map { it.subjectName!! }?.let {
+                    val list = mutableListOf("Semua")
+                    list.addAll(it)
+                    _subjects.postValue(list)
                 }
-                loadTaskForms(allAssignments)
             }
+            loadTaskForms(allAssignments)
         }
     }
 
     private fun loadTaskForms(uids: List<String>) {
-        val ongoingList = ArrayList<TaskFormStatus>()
-        val pastList = ArrayList<TaskFormStatus>()
-        uids.map { uid ->
-            FireRepository.inst.getTaskForm(uid).let { response ->
-                response.first.observeOnce { taskForm ->
-                    mAssignedTaskForms[uid]?.let {
-                        if (taskForm.endTime!! > DateHelper.getCurrentDate()) {
-                            ongoingList
-                        } else {
-                            pastList
-                        }.add(TaskFormStatus(className, taskForm, it))
-                    }
-                    if (ongoingList.size + pastList.size == uids.size) {
-                        _ongoingList.postValue(ongoingList)
-                        _pastList.postValue(pastList)
-                    }
+        ongoingTaskForms.clear()
+        pastTaskForms.clear()
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
+            list.map { taskForm ->
+                mAssignedTaskForms[taskForm.id]?.let {
+                    if (taskForm.endTime!! > DateHelper.getCurrentTime()) {
+                        ongoingTaskForms
+                    } else {
+                        pastTaskForms
+                    }.add(TaskFormStatus(className, taskForm, it))
                 }
             }
+            _ongoingList.postValue(ongoingTaskForms.sortedBy { it.endTime })
+            _pastList.postValue(pastTaskForms.sortedByDescending { it.endTime })
+        }
+    }
+
+    fun filter(subjectName: String) {
+        if (subjectName == "Semua") {
+            _ongoingList.postValue(ongoingTaskForms.sortedBy { it.endTime })
+            _pastList.postValue(pastTaskForms.sortedByDescending { it.endTime })
+        } else {
+            _ongoingList.postValue(ongoingTaskForms.filter { it.subjectName == subjectName }.sortedBy { it.endTime })
+            _pastList.postValue(pastTaskForms.filter { it.subjectName == subjectName }.sortedByDescending { it.endTime })
         }
     }
 }

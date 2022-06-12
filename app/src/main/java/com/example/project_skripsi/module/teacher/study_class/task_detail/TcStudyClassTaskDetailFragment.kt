@@ -34,16 +34,10 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
         viewModel = ViewModelProvider(this)[TcStudyClassTaskDetailViewModel::class.java]
         _binding = FragmentTcStudyClassTaskDetailBinding.inflate(inflater, container, false)
 
-        binding.btnPreviewForm.setOnClickListener {
-            view?.findNavController()?.navigate(
-                TcStudyClassTaskDetailFragmentDirections.actionTcStudyClassTaskDetailFragmentToTcPreviewTaskFormFragment(
-                    viewModel.studyClassId, viewModel.taskFormId
-                )
-            )
-        }
-
-        viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
-        viewModel.taskForm.observe(viewLifecycleOwner, { binding.tvTaskTitle.text = it.title })
+        viewModel.taskForm.observe(viewLifecycleOwner, { binding.tvHeader.text = it.title })
+        viewModel.studyClass.observe(viewLifecycleOwner, {
+            binding.tvHeaderClass.text = it.name
+        })
 
         binding.vpContainer.adapter = ScreenSlidePagerAdapter(this)
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
@@ -63,12 +57,13 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
     private fun retrieveArgs() {
         val args : TcStudyClassTaskDetailFragmentArgs by navArgs()
         viewModel.setData(args.studyClassId, args.subjectName, args.taskFormId)
-        binding.tvSubjectName.text = args.subjectName
     }
 
     private inner class ScreenSlidePagerAdapter(private val listener: ItemClickListener) : PagerAdapter(){
 
         lateinit var layoutInflater: LayoutInflater
+        var unCheckedEmptyView : View? = null
+        var checkedEmptyView : View? = null
 
         override fun getCount(): Int =
             TcStudyClassTaskDetailViewModel.tabCount
@@ -88,42 +83,40 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
             when(position) {
                 TcStudyClassTaskDetailViewModel.TASK_UNCHECKED -> {
                     viewModel.uncheckedList.observe(viewLifecycleOwner, {
+                        unCheckedEmptyView?.let { bindingRV.llParent.removeView(unCheckedEmptyView) }
                         if (it.isEmpty()) {
-                            bindingRV.llParent.addView(
-                                UIHelper.getEmptyList(
-                                    "Tidak ada form yang belum dikoreksi",
-                                    layoutInflater,
-                                    bindingRV.llParent
-                                )
+                            unCheckedEmptyView = UIHelper.getEmptyList(
+                                "Tidak ada form yang belum dikoreksi",
+                                layoutInflater,
+                                bindingRV.llParent
                             )
-                        } else {
-                            bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
-                                TcStudyClassTaskDetailViewModel.TASK_UNCHECKED,
-                                viewModel,
-                                it,
-                                listener
-                            ).getAdapter()
+                            bindingRV.llParent.addView(unCheckedEmptyView)
                         }
+                        bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
+                            TcStudyClassTaskDetailViewModel.TASK_UNCHECKED,
+                            viewModel,
+                            it,
+                            listener
+                        ).getAdapter()
                     })
                 }
                 TcStudyClassTaskDetailViewModel.TASK_CHECKED -> {
                     viewModel.checkedList.observe(viewLifecycleOwner, {
+                        checkedEmptyView?.let { bindingRV.llParent.removeView(checkedEmptyView) }
                         if (it.isEmpty()) {
-                            bindingRV.llParent.addView(
-                                UIHelper.getEmptyList(
-                                    "Tidak ada form yang sudah dikoreksi",
-                                    layoutInflater,
-                                    bindingRV.llParent
-                                )
+                            checkedEmptyView = UIHelper.getEmptyList(
+                                "Tidak ada form yang sudah dikoreksi",
+                                layoutInflater,
+                                bindingRV.llParent
                             )
-                        } else {
-                            bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
-                                TcStudyClassTaskDetailViewModel.TASK_CHECKED,
-                                viewModel,
-                                it,
-                                listener
-                            ).getAdapter()
+                            bindingRV.llParent.addView(checkedEmptyView)
                         }
+                        bindingRV.rvContainer.adapter = TaskAssessmentViewHolder(
+                            TcStudyClassTaskDetailViewModel.TASK_CHECKED,
+                            viewModel,
+                            it,
+                            listener
+                        ).getAdapter()
                     })
                 }
             }

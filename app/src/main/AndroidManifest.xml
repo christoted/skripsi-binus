@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project_skripsi">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".utils.app.App"
         android:allowBackup="true"
@@ -10,9 +12,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectskripsi">
+
+        <provider
+            android:authorities="com.example.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovide"/>
+
+        </provider>
+
+        <activity
+            android:name=".CameraActivity"
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".module.parent.PrMainActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".module.teacher.TcMainActivity"
             android:exported="false" />

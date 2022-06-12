@@ -80,16 +80,6 @@ class StHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMa
                         else R.drawable.ic_baseline_arrow_drop_down_24
                     )
                 }
-
-                sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
-                imvShowHide.setOnClickListener {
-                    isExpanded[absoluteAdapterPosition] = !isExpanded[absoluteAdapterPosition]
-                    sectionItemsRecyclerView.isVisible = isExpanded[absoluteAdapterPosition]
-                    imvShowHide.setImageResource(
-                        if (isExpanded[absoluteAdapterPosition]) R.drawable.ic_baseline_arrow_drop_up_24
-                        else R.drawable.ic_baseline_arrow_drop_down_24
-                    )
-                }
             }
         }
     }
