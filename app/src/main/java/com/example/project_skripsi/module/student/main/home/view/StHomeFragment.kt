@@ -7,16 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.firestore.ClassMeeting
+import com.example.project_skripsi.core.model.firestore.TaskForm
+import com.example.project_skripsi.core.model.local.NotificationModel
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
 
@@ -81,11 +87,89 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     private fun triggerNotification() {
+        classMeetingNotification()
+        examNotification()
+        assignmentNotification()
+        everyDayNotification()
+    }
+
+    private fun everyDayNotification() {
+        val listEveryDayNotificationObservable = MutableLiveData<List<NotificationModel>>()
+        val listEveryDayNotification = mutableListOf<NotificationModel>()
+        var totalClassMeeting = -1
+        var totalAssignment = -1
+        var totalExam = -1
+        var count = 0
+        viewModel.sectionData.observe(viewLifecycleOwner) { listHomeSection ->
+            listHomeSection.forEach {
+                when(it.sectionName) {
+                    Constant.SECTION_MEETING -> {
+                        val meetings = it.sectionItem.map { homeSectionData ->
+                            homeSectionData as ClassMeeting
+                        }
+                        meetings.filter { meeting ->
+                            meeting.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
+                        }.map { meeting ->
+                            Log.d("456", "everyDayNotification: meeting ${meeting}}")
+                            val date = meeting.startTime
+                            date?.let {
+                                val notificationModel = NotificationModel(body = "Pertemuan", date = it)
+                                listEveryDayNotification.add(notificationModel)
+                            }
+                        }
+                    }
+                    Constant.SECTION_EXAM -> {
+                        val exams = it.sectionItem.map { exam ->
+                            exam as TaskForm
+                        }
+                        exams.filter { exam ->
+                            exam.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
+                        }.map { exam ->
+                            Log.d("456", "everyDayNotification: exam ${exam}}")
+                            val date = exam.startTime
+                            date?.let {
+                                val notificationModel = NotificationModel(body = "Ujian", date = it)
+                                listEveryDayNotification.add(notificationModel)
+                            }
+                        }
+                    }
+                    Constant.SECTION_ASSIGNMENT -> {
+                        val assignments = it.sectionItem.map { assignment ->
+                            assignment as TaskForm
+                        }
+                        assignments.filter { assignment ->
+                            assignment.startTime?.let { date -> DateHelper.convertDateToCalendarDay(date) } == DateHelper.getCurrentDateNow()
+                        }.map { assignment ->
+                            Log.d("456", "everyDayNotification: Assignment ${assignment}}")
+                            val date = assignment.startTime
+                            date?.let {
+                                val notificationModel = NotificationModel(body = "Tugas", date = it)
+                                listEveryDayNotification.add(notificationModel)
+                            }
+                        }
+                    }
+                }
+            }
+            listEveryDayNotificationObservable.postValue(listEveryDayNotification)
+        }
+        listEveryDayNotificationObservable.observe(viewLifecycleOwner) {
+             totalClassMeeting = listEveryDayNotification.filter { it.body == "Pertemuan" }.size
+             totalAssignment = listEveryDayNotification.filter { it.body == "Tugas" }.size
+             totalExam = listEveryDayNotification.filter { it.body == "Ujian" }.size
+
+            NotificationUtil.cancelEveryDayNotification(requireActivity())
+            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalClassMeeting} Pertemuan," +
+                    "${totalAssignment} tugas, ${totalExam} ujian")
+        }
+//
+    }
+
+    private fun classMeetingNotification() {
         // Class Meeting
         viewModel.attendedMeeting.observe(viewLifecycleOwner) {
             it.map { attendedMeeting ->
                 attendedMeeting.startTime?.let { it ->
-                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.cancelNotification(requireActivity(), it)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         it,
@@ -95,13 +179,15 @@ class StHomeFragment : Fragment(), ItemListener {
                 }
             }
         }
+    }
+    private fun examNotification() {
         // Exam
         viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) {
             it.map { taskForm ->
                 Log.d("987", "triggerNotification Exam start Time: $taskForm")
                 // Start time
                 taskForm.startTime?.let {
-                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.cancelNotification(requireActivity(), it)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         it,
@@ -112,7 +198,7 @@ class StHomeFragment : Fragment(), ItemListener {
                 // End time
                 taskForm.endTime?.let {
                     Log.d("987", "triggerNotification Exam end Time: $taskForm")
-                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.cancelNotification(requireActivity(), it)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         it,
@@ -122,12 +208,14 @@ class StHomeFragment : Fragment(), ItemListener {
                 }
             }
         }
+    }
+    private fun assignmentNotification() {
         // Task
         viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
             it.map { taskForm ->
                 // Start time
                 taskForm.startTime?.let {
-                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.cancelNotification(requireActivity(), it)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         it,
@@ -137,7 +225,7 @@ class StHomeFragment : Fragment(), ItemListener {
                 }
                 // End time
                 taskForm.endTime?.let {
-                    NotificationUtil.cancelNotificationMeeting(requireActivity(), it)
+                    NotificationUtil.cancelNotification(requireActivity(), it)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         it,

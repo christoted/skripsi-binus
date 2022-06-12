@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.HomeMainSection
+import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
@@ -40,11 +41,12 @@ class StHomeViewModel : ViewModel() {
     var listHomeSectionDataAssignment = _listHomeSectionDataAssignment
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
-    
+
     init {
         loadCurrentStudent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
         initData()
+
     }
 
     private fun initData() {
@@ -79,8 +81,14 @@ class StHomeViewModel : ViewModel() {
             listData[4] = HomeMainSection(SECTION_ANNOUNCEMENT, sectionItem = it)
             _sectionData.postValue(listData)
         }
-
         _sectionData.postValue(listData)
+        loadDataForNotification()
+    }
+
+    private fun loadDataForNotification() {
+        _sectionData.observeOnce {
+
+        }
     }
 
     private fun loadCurrentStudent(uid: String) {
@@ -106,22 +114,20 @@ class StHomeViewModel : ViewModel() {
             val meetingList = mutableListOf<ClassMeeting>()
             val examList = mutableListOf<String>()
             val assignmentList = mutableListOf<String>()
+
             studyClass.subjects?.map { subject ->
                 with(subject) {
                     subject.classMeetings
-//                        ?.filter {
-//                        it.startTime?.let { date ->
-//                            DateHelper.convertDateToCalendarDay(date)
-//                        } == DateHelper.getCurrentDateNow()
-//                    }
+                        ?.filter {
+                        it.startTime?.let { date ->
+                            DateHelper.convertDateToCalendarDay(date)
+                        } == DateHelper.getCurrentDateNow()
+                    }
                         ?.map {
                         meetingList.add(it)
                     }
-                    classExams?.let { exams -> examList.addAll(exams)
-                        Log.d("123", "loadStudyClass exams: $exams" )
-                    }
-                    classAssignments?.let { assignments -> assignmentList.addAll(assignments)
-                        Log.d("123", "loadStudyClass assignments: $assignments" )}
+                    classExams?.let { exams -> examList.addAll(exams) }
+                    classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                 }
             }
             _listHomeSectionDataClassSchedule.postValue(
@@ -150,6 +156,5 @@ class StHomeViewModel : ViewModel() {
             )
         }
     }
-
 
 }
