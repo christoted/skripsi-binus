@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.databinding.DialogTcTaskTypeBinding
 import com.example.project_skripsi.databinding.FragmentTcTaskBinding
 import com.example.project_skripsi.databinding.FragmentTcTaskDraftBinding
@@ -37,10 +39,20 @@ class TcTaskDraftFragment : Fragment(), ItemClickListener {
         viewModel = ViewModelProvider(this)[TcTaskDraftViewModel::class.java]
         _binding = FragmentTcTaskDraftBinding.inflate(inflater, container, false)
 
+        binding.vpContainer.adapter = ScreenSlidePagerAdapter()
+        binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
+        retrieveArgs()
+
         return binding.root
+    }
+
+    private fun retrieveArgs() {
+        val args : TcTaskDraftFragmentArgs by navArgs()
+        viewModel.setSubjectGroup(SubjectGroup(args.subjectName, args.gradeLevel))
+        binding.tvTitle.text = ("Draf Formulir Kelas ${args.gradeLevel} - ${args.subjectName}")
     }
 
     override fun onResume() {
@@ -53,17 +65,17 @@ class TcTaskDraftFragment : Fragment(), ItemClickListener {
         _binding = null
     }
 
-
     override fun onItemClick(itemId: String) {
-//        viewModel.currentSubjectGroup?.let { subjectGroup ->
-//            viewModel.getTaskFormType(itemId)?.let { type ->
-//                view?.findNavController()?.navigate(
-//                    TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
-//                        subjectGroup.subjectName, subjectGroup.gradeLevel, type, itemId
-//                    )
-//                )
-//            }
-//        }
+        viewModel.getTaskFormType(itemId)?.let { type ->
+            view?.findNavController()?.navigate(
+                TcTaskDraftFragmentDirections.actionTcTaskDraftFragmentToTcAlterTaskFragment(
+                    viewModel.currentSubjectGroup.subjectName,
+                    viewModel.currentSubjectGroup.gradeLevel,
+                    type,
+                    itemId
+                )
+            )
+        }
     }
 
     private inner class ScreenSlidePagerAdapter : PagerAdapter(){

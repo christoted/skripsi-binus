@@ -17,15 +17,15 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
     companion object {
         var inst = FireRepository()
 
-        const val COLLECTION_ADMINISTRATOR = "administrators"
-        const val COLLECTION_TASK_FORM = "task_forms"
-        const val COLLECTION_RESOURCE = "resources"
-        const val COLLECTION_STUDENT = "students"
-        const val COLLECTION_TEACHER = "teachers"
-        const val COLLECTION_PARENT = "parents"
-        const val COLLECTION_STUDY_CLASS = "study_classes"
-        const val COLLECTION_ANNOUNCEMENT = "announcements"
-        const val COLLECTION_SCHOOL = "schools"
+        private const val COLLECTION_ADMINISTRATOR = "administrators"
+        private const val COLLECTION_TASK_FORM = "task_forms"
+        private const val COLLECTION_RESOURCE = "resources"
+        private const val COLLECTION_STUDENT = "students"
+        private const val COLLECTION_TEACHER = "teachers"
+        private const val COLLECTION_PARENT = "parents"
+        private const val COLLECTION_STUDY_CLASS = "study_classes"
+        private const val COLLECTION_ANNOUNCEMENT = "announcements"
+        private const val COLLECTION_SCHOOL = "schools"
 
 //        const val COLLECTION_STUDY_CLASS = "admin-study-class"
 //        const val COLLECTION_STUDENT = "admin-student"
@@ -162,6 +162,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
                     .addOnFailureListener { _exception -> exception.postValue(_exception) }
             }
         }
+        if (successCounter == items.size) isSuccess.postValue(true)
         return Pair(isSuccess, exception)
     }
 

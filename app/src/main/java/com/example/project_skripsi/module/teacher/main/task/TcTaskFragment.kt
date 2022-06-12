@@ -79,8 +79,8 @@ class TcTaskFragment : Fragment(), ItemClickListener {
                     )
                 )
             }
-
         }
+
         binding.imvAdd.setOnClickListener { showChoiceDialog() }
 
         return binding.root
@@ -142,11 +142,11 @@ class TcTaskFragment : Fragment(), ItemClickListener {
     override fun onItemClick(itemId: String) {
         viewModel.currentSubjectGroup?.let { subjectGroup ->
             viewModel.getTaskFormType(itemId)?.let { type ->
-//                view?.findNavController()?.navigate(
-//                    TcTaskFragmentDirections.actionTcTaskFragmentToTcAlterTaskFragment(
-//                        subjectGroup.subjectName, subjectGroup.gradeLevel, type, itemId
-//                    )
-//                )
+                view?.findNavController()?.navigate(
+                    TcTaskFragmentDirections.actionTcTaskFragmentToTcPreviewTaskFragment(
+                        subjectGroup.subjectName, subjectGroup.gradeLevel, type, itemId
+                    )
+                )
             }
         }
     }
@@ -177,7 +177,7 @@ class TcTaskFragment : Fragment(), ItemClickListener {
                     viewModel.examList.observe(viewLifecycleOwner, { list ->
                         examEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian yang final", layoutInflater, bindingRV.llParent)
                             bindingRV.llParent.addView(emptyView)
                             examEmptyView = emptyView
                         }
@@ -188,7 +188,7 @@ class TcTaskFragment : Fragment(), ItemClickListener {
                     viewModel.assignmentList.observe(viewLifecycleOwner, { list ->
                         assignmentEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas yang final", layoutInflater, bindingRV.llParent)
                             bindingRV.llParent.addView(emptyView)
                             assignmentEmptyView = emptyView
                         }

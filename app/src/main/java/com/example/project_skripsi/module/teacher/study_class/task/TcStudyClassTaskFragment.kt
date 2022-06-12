@@ -37,7 +37,7 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
         binding.tabLayout.setupWithViewPager(binding.vpContainer)
 
         viewModel.studyClass.observe(viewLifecycleOwner, {
-            binding.tvClassName.text = it.name
+            binding.tvHeader.text = ("Ujian dan Tugas Kelas ${it.name}")
         })
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
@@ -53,7 +53,6 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
     private fun retrieveArgs() {
         val args : TcStudyClassTaskFragmentArgs by navArgs()
         viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
-        binding.tvSubjectName.text = args.subjectName
     }
 
     override fun onItemClick(itemId: String) {

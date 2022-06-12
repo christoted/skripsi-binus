@@ -20,70 +20,56 @@ class TcTaskDraftViewModel : ViewModel() {
         val tabHeader = arrayOf("Ujian", "Tugas")
     }
 
-    private val _subjectGroupList = MutableLiveData<List<SubjectGroup>>()
-    val subjectGroupList : LiveData<List<SubjectGroup>> = _subjectGroupList
-
     private val _assignmentList = MutableLiveData<List<TaskForm>>()
     val assignmentList : LiveData<List<TaskForm>> = _assignmentList
 
     private val _examList = MutableLiveData<List<TaskForm>>()
     val examList : LiveData<List<TaskForm>> = _examList
 
-    private val examIds = mutableMapOf<SubjectGroup, MutableList<String>>()
-    private val assignmentIds = mutableMapOf<SubjectGroup, MutableList<String>>()
+    private val examIds = mutableListOf<String>()
+    private val assignmentIds = mutableListOf<String>()
 
-    var currentSubjectGroup : SubjectGroup? = null
+    lateinit var currentSubjectGroup : SubjectGroup
+
+    fun setSubjectGroup(subjectGroup: SubjectGroup) {
+        currentSubjectGroup = subjectGroup
+    }
 
     fun refreshData() {
-        examIds.clear()
-        assignmentIds.clear()
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
     private fun loadTeacher(uid : String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
-            val subjectGroups = mutableListOf<SubjectGroup>()
             with(teacher) {
-                teachingGroups?.map { group ->
-                    val sg = SubjectGroup(group.subjectName!!, group.gradeLevel!!)
-                    subjectGroups.add(sg)
-                    group.createdExams?.map { examIds.getOrPut(sg) { mutableListOf()}.add(it) }
-                    group.createdAssignments?.map { assignmentIds.getOrPut(sg) { mutableListOf()}.add(it) }
+                teachingGroups?.firstOrNull { group ->
+                    SubjectGroup(group.subjectName!!, group.gradeLevel!!) == currentSubjectGroup
+                }?.let { group ->
+                    group.createdExams?.let {
+                        examIds.addAll(it)
+                        loadTaskForm(it, _examList)
+                    }
+                    group.createdAssignments?.let {
+                        assignmentIds.addAll(it)
+                        loadTaskForm(it, _assignmentList)
+                    }
                 }
             }
-            _subjectGroupList.postValue(subjectGroups)
         }
     }
 
-    fun selectSubjectGroup(subjectGroup: SubjectGroup) {
-        currentSubjectGroup = subjectGroup
-        loadExam(subjectGroup)
-        loadAssignment(subjectGroup)
-    }
-
-
-    private fun loadExam(subjectGroup : SubjectGroup) {
-        loadTaskForm((examIds[subjectGroup]?.toList()?: emptyList()), _examList)
-    }
-
-    private fun loadAssignment(subjectGroup : SubjectGroup) {
-        loadTaskForm((assignmentIds[subjectGroup]?.toList()?: emptyList()), _assignmentList)
-    }
-
     private fun loadTaskForm(uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
-        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { mutableLiveData.postValue(it) }
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce {
+            mutableLiveData.postValue(
+                it.filter { taskForm -> taskForm.isFinalized == false }
+            )
+        }
     }
 
     fun getTaskFormType(taskFormId: String) : Int? {
-        examIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_EXAM }
-        assignmentIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_ASSIGNMENT }
+        examIds.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_EXAM }
+        assignmentIds.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_ASSIGNMENT }
         return null
-    }
-
-    fun isChipPositionTop(position: Int): Boolean {
-        if (position < 4) return true;
-        if (position < 8) return false;
-        return position % 2 == 0;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.project_skripsi.module.teacher.form.preview
+package com.example.project_skripsi.module.teacher.form.preview.form
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,21 +20,12 @@ class TcPreviewTaskFormViewModel : ViewModel() {
     private val _taskForm = MutableLiveData<TaskForm>()
     val taskForm: LiveData<TaskForm> = _taskForm
 
-    private val _studyClass = MutableLiveData<StudyClass>()
-    val studyClass: LiveData<StudyClass> = _studyClass
-
-
-    fun setTaskForm(studyClassId : String, taskFormId : String) {
+    fun setTaskForm(taskFormId : String) {
         loadTaskForm(taskFormId)
-        loadStudyClass(studyClassId)
     }
 
     private fun loadTaskForm(uid: String) {
         FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { _taskForm.postValue(it) }
-    }
-
-    private fun loadStudyClass(uid: String) {
-        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { _studyClass.postValue(it) }
     }
 
 }

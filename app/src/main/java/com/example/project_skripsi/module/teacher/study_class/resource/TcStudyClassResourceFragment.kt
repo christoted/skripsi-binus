@@ -31,7 +31,7 @@ class TcStudyClassResourceFragment : Fragment() {
 
         retrieveArgs()
         viewModel.studyClass.observe(viewLifecycleOwner, {
-            binding.tvClassName.text = it.name
+            binding.tvHeader.text = ("Materi Kelas ${it.name}")
         })
 
         binding.rvItem.layoutManager = LinearLayoutManager(context)
@@ -59,6 +59,5 @@ class TcStudyClassResourceFragment : Fragment() {
     private fun retrieveArgs() {
         val args : TcStudyClassResourceFragmentArgs by navArgs()
         viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
-        binding.tvSubjectName.text = args.subjectName
     }
 }

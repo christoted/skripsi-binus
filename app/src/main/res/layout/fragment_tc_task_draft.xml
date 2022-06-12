@@ -64,9 +64,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="?actionBarSize"/>
-
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
 

@@ -71,7 +71,11 @@ class TcTaskViewModel : ViewModel() {
     }
 
     private fun loadTaskForm(uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
-        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { mutableLiveData.postValue(it) }
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce {
+            mutableLiveData.postValue(
+                it.filter { taskForm -> taskForm.isFinalized == true }
+            )
+        }
     }
 
     fun getTaskFormType(taskFormId: String) : Int? {

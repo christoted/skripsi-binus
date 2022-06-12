@@ -43,16 +43,14 @@ class TcFormAdapter(questionList: List<Question>) : Adapter<ViewHolder>() {
 
     override fun getItemCount() = questions.size
 
-    @SuppressLint("NotifyDataSetChanged")
     fun addQuestion(questionType : String) {
         questions.add(Question(type = questionType))
-        notifyDataSetChanged()
+        notifyItemInserted(questions.size-1)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun deleteQuestion(position: Int) {
         questions.removeAt(position)
-        notifyDataSetChanged()
+        notifyItemRemoved(position)
     }
 
     inner class MultipleChoiceViewHolder ( private val binding : ItemTcAlterTaskFormMcBinding) : ViewHolder(binding.root) {
@@ -67,7 +65,7 @@ class TcFormAdapter(questionList: List<Question>) : Adapter<ViewHolder>() {
                 item.choices?.getOrNull(2)?.let { edtChoice3.setText(it)}
                 item.choices?.getOrNull(3)?.let { edtChoice4.setText(it)}
                 item.choices?.getOrNull(4)?.let { edtChoice5.setText(it)}
-                edtAnswerKey.setText(item.answerKey?.toString()?:"1")
+                edtAnswerKey.setText(item.answerKey ?:"1")
 
                 imvDelete.setOnClickListener{ deleteQuestion(position) }
             }

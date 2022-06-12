@@ -99,7 +99,6 @@ class AuthActivity : AppCompatActivity() {
         }, 500)
 
         FirestoreDummy()
-
     }
 
     private fun initEvent() {

@@ -16,335 +16,6 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    private val students = mapOf(
-        "P4T9d2CagYdNmhc7xFiGYh3l2oH2" to
-                Student("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                    "123456789",
-                    "Luis B",
-                    "https://media-exp1.licdn.com/dms/image/C5603AQErx4vpP4mHkA/profile-displayphoto-shrink_200_200/0/1625740341499?e=1657756800&v=beta&t=KQxAFRTMH4sLuPbY0yN3-xE08u4MPokPWygzMtPRY1I",
-                    21,
-                    "Jalan Timur",
-                    "082363007520",
-                    18,
-                    "laki-laki",
-                    "eMsulnik6kEpW0ESKI9V",
-                    "ksalsoodapp110Kkqllp",
-                    listOf(
-                        Payment("Uang SPP",
-                            200000,
-                            "5271123456",
-                            DateHelper.getCurrentTime(),
-                            null
-                        ),
-                        Payment("Uang SPP2",
-                            200000,
-                            "5271123456",
-                            DateHelper.getCurrentTime(),
-                            DateHelper.getCurrentTime()
-                        ),
-                        Payment("Uang SPP3",
-                            200000,
-                            "5271123456",
-                            DateHelper.getTomorrow(),
-                            null
-                        ),
-                    ),
-                    listOf(
-                        AttendedMeeting(
-                            "MEET001",
-                            "hadir",
-                            DateHelper.getCurrentTime(),
-                            DateHelper.getCurrentTime(),
-                            "Biologi",
-
-                        )
-                    ),
-                    emptyList(),
-                    mutableListOf(
-                        AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
-                            "Ujian Tengah Semester",
-                            "ujian_tengah_semester",
-                            DateHelper.getCurrentTime(),
-                            true,
-                            false,
-                            "Biologi",
-                            95,
-                            listOf(
-                                Answer("Ok Siap Essai", 0)
-                            )
-                        ),
-                    ),
-                    mutableListOf(
-                        AssignedTaskForm("ripyBsBZObBfarZpd085",
-                            "Tugas tentang minyak hewani",
-                            "tugas",
-                            DateHelper.getCurrentTime(),
-                            true,
-                            true,
-                            "Biologi",
-                            70,
-                            listOf(
-                                Answer("Minyak adalah mata uang", 0),
-                                Answer("2", 0)
-                            )
-                        ),
-                    ),
-                    mutableListOf(
-                        Achievement(
-                            "Juara 1 Lomba Renang",
-                            "Diadakan oleh SMA Maju Mundur pada tanggal 15 September 2022"
-                        )
-                    )
-                )
-    )
-
-    private val parents = mapOf(
-        "Zslqzb1vN1cehlD7TYaQBWHERo72" to
-            Parent("Zslqzb1vN1cehlD7TYaQBWHERo72",
-                "Arum",
-                "0821123123",
-                listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                "P4T9d2CagYdNmhc7xFiGYh3l2oH2")
-            )
-    )
-
-
-    private val teachers = mapOf(
-        "EAwxIDeIQfRWuNHW4P92B6Ko5G53" to
-            Teacher("EAwxIDeIQfRWuNHW4P92B6Ko5G53",
-                "Devita",
-                "https://www.google.com/search?q=devita+setyaningrum&sxsrf=ALiCzsZvO6qPVHPXAV21dASGyM69ZfwLxA:1654423545740&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjqwYH-h5b4AhVD7XMBHcCRC-cQ_AUoAXoECAEQAw&biw=1536&bih=784&dpr=1.25#imgrc=cWTYUVfkb5WQRM",
-                "0821123123",
-                "perempuan",
-                "eMsulnik6kEpW0ESKI9V",
-                "ksalsoodapp110Kkqllp",
-                mutableListOf(
-                    TeachingGroup(
-                        "Biologi",
-                        12,
-                        listOf("eMsulnik6kEpW0ESKI9V"),
-                        mutableListOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ", "RS1201", "RS1101", "RF1201"),
-                        mutableListOf("HaWuFgmvLAuZYeG5JuVw"),
-                        mutableListOf("ripyBsBZObBfarZpd085")
-                    )
-                ),
-                mutableListOf(
-                    Payment(
-                        title = "Pembayaran SPP Genap",
-                        nominal = 2000000,
-                        accountNumber = "521812312",
-                        paymentDate = DateHelper.getCurrentTime(),
-                        paymentDeadline = DateHelper.getCurrentTime()
-                    )
-                )
-            )
-    )
-
-
-    private val administrators = mapOf(
-        "zriNod2GJUSY1EZpqexfZCLlUwt2" to
-            Administrator("zriNod2GJUSY1EZpqexfZCLlUwt2",
-                "Admin",
-                "0821123123",
-            )
-    )
-
-
-    private val announcements = mapOf(
-        "1UYvc8ji8ip4Zoejke9d" to
-            Announcement("1UYvc8ji8ip4Zoejke9d",
-                "Lomba Sekolah 2",
-                "Kategori lomba dibagi menjadi 4 cabang",
-                DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L661" to
-            Announcement("5vlpa3hwTPQcfHZ2L66z",
-                "Pengumuman Sekolah 2",
-                "Pembelajaran jarak jauh dikarenakan covid 19",
-                DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L662" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L663" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L664" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L665" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L666" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L667" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L668" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L669" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L660" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L66a" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L66b" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L66v" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-        "5vlpa3hwTPQcfHZ2L66c" to
-                Announcement("5vlpa3hwTPQcfHZ2L66z",
-                    "Pengumuman Sekolah 2",
-                    "Pembelajaran jarak jauh dikarenakan covid 19",
-                    DateHelper.getCurrentTime()),
-    )
-
-
-    val resources = mapOf(
-        "dxXTXZcrj0yVh8PpzYk2" to
-            Resource("dxXTXZcrj0yVh8PpzYk2",
-                "Pertemuan 1",
-                12,
-                "recording",
-                "<<url>>",
-                "Biologi",
-                listOf("b1Ty3EisH2bkMlnBWGmp"),
-                listOf("eMsulnik6kEpW0ESKI9V")),
-        "feiaZB0ds1rbaWT1g8hJ" to
-            Resource("feiaZB0ds1rbaWT1g8hJ",
-                "Bab 1 Reproduksi",
-                12,
-                "slide",
-                "<<url>>",
-                "Biologi",
-                listOf(),
-                listOf("eMsulnik6kEpW0ESKI9V")),
-    )
-
-
-    private val taskFroms = mutableMapOf(
-            "HaWuFgmvLAuZYeG5JuVw" to
-                    TaskForm("HaWuFgmvLAuZYeG5JuVw",
-                        "Ujian Tengah Semester",
-                        12,
-                        "ujian_tengah_semester",
-                        DateHelper.getCurrentTime(),
-                        DateHelper.getCurrentTime(),
-                        "Online",
-                        "Biologi",
-                        listOf(
-                            Question("Essai ini",
-                                "essai",
-                                100,
-                                emptyList(),
-                                ""
-                            )
-                        ),
-                        listOf("eMsulnik6kEpW0ESKI9V")),
-            "ripyBsBZObBfarZpd085" to
-                    TaskForm("ripyBsBZObBfarZpd085",
-                        "Tugas tentang minyak hewani",
-                        12,
-                        "tugas",
-                        DateHelper.getCurrentTime(),
-                        DateHelper.getCurrentTime(),
-                        "Online",
-                        "Biologi",
-                        listOf(
-                            Question("Jelaskan maksud minyak hewan ",
-                                "essai",
-                                50,
-                                emptyList(),
-                                ""
-                            ),
-                            Question("Pililah jawaban yang benar. Apakah ikan hiu menghasilkan minyak?",
-                                "pilihan berganda",
-                                50,
-                                listOf("ya",
-                                    "tidak",
-                                    "kadang-kadang",
-                                    "sesekali",
-                                    "tidak ada jawaban yang benar"),
-                                "1"
-                            )
-                        ),
-                        listOf("eMsulnik6kEpW0ESKI9V")),
-            )
-
-
-
-    private val studyClasses = mapOf(
-        "eMsulnik6kEpW0ESKI9V" to
-            StudyClass("eMsulnik6kEpW0ESKI9V",
-                "XII-IPA-3",
-                12,
-                "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
-                "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                mutableListOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2"),
-                mutableListOf(
-                    Subject("Biologi",
-                        "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
-                        mutableListOf(
-                            ClassMeeting("MEET001",
-                                "Biologi",
-                                DateHelper.getCurrentTime(),
-                                DateHelper.getCurrentTime(),
-                                "online",
-                                "berlangsung",
-                                "feiaZB0ds1rbaWT1g8hJ",
-                                "123",
-                            )
-                        ),
-                        mutableListOf("HaWuFgmvLAuZYeG5JuVw"), // exam
-                        mutableListOf("ripyBsBZObBfarZpd085"), // asg
-                        mutableListOf("dxXTXZcrj0yVh8PpzYk2",
-                            "feiaZB0ds1rbaWT1g8hJ"
-                        )
-                    ),
-                ),
-            )
-    )
-
-    private val schools = mapOf(
-        "ksalsoodapp110Kkqllp" to
-                School("ksalsoodapp110Kkqllp",
-                    "SMA Methodist - 3",
-                    "0811123123",
-                    "Jalan Jati",
-                )
-    )
-
     init {
 //        addGeneratedTaskForms()
 //        upload(COLLECTION_STUDENT, students) // replace
@@ -357,7 +28,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 //        upload(COLLECTION_TASK_FORM, taskFroms) // replace
 //        upload(COLLECTION_SCHOOL, schools) // replace
 
-        checkNull()
+//        checkNull()
+
     }
 
     private fun checkNull() {
@@ -600,5 +272,334 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     private fun rnd50to50() = rnd(0,1) > 0
 
     private fun rnd(low: Int, high: Int) = Random.nextInt(low, high+1)
+
+    private val students = mapOf(
+        "P4T9d2CagYdNmhc7xFiGYh3l2oH2" to
+                Student("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                    "123456789",
+                    "Luis B",
+                    "https://media-exp1.licdn.com/dms/image/C5603AQErx4vpP4mHkA/profile-displayphoto-shrink_200_200/0/1625740341499?e=1657756800&v=beta&t=KQxAFRTMH4sLuPbY0yN3-xE08u4MPokPWygzMtPRY1I",
+                    21,
+                    "Jalan Timur",
+                    "082363007520",
+                    18,
+                    "laki-laki",
+                    "eMsulnik6kEpW0ESKI9V",
+                    "ksalsoodapp110Kkqllp",
+                    listOf(
+                        Payment("Uang SPP",
+                            200000,
+                            "5271123456",
+                            DateHelper.getCurrentTime(),
+                            null
+                        ),
+                        Payment("Uang SPP2",
+                            200000,
+                            "5271123456",
+                            DateHelper.getCurrentTime(),
+                            DateHelper.getCurrentTime()
+                        ),
+                        Payment("Uang SPP3",
+                            200000,
+                            "5271123456",
+                            DateHelper.getTomorrow(),
+                            null
+                        ),
+                    ),
+                    listOf(
+                        AttendedMeeting(
+                            "MEET001",
+                            "hadir",
+                            DateHelper.getCurrentTime(),
+                            DateHelper.getCurrentTime(),
+                            "Biologi",
+
+                            )
+                    ),
+                    emptyList(),
+                    mutableListOf(
+                        AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
+                            "Ujian Tengah Semester",
+                            "ujian_tengah_semester",
+                            DateHelper.getCurrentTime(),
+                            true,
+                            false,
+                            "Biologi",
+                            95,
+                            listOf(
+                                Answer("Ok Siap Essai", 0)
+                            )
+                        ),
+                    ),
+                    mutableListOf(
+                        AssignedTaskForm("ripyBsBZObBfarZpd085",
+                            "Tugas tentang minyak hewani",
+                            "tugas",
+                            DateHelper.getCurrentTime(),
+                            true,
+                            true,
+                            "Biologi",
+                            70,
+                            listOf(
+                                Answer("Minyak adalah mata uang", 0),
+                                Answer("2", 0)
+                            )
+                        ),
+                    ),
+                    mutableListOf(
+                        Achievement(
+                            "Juara 1 Lomba Renang",
+                            "Diadakan oleh SMA Maju Mundur pada tanggal 15 September 2022"
+                        )
+                    )
+                )
+    )
+
+    private val parents = mapOf(
+        "Zslqzb1vN1cehlD7TYaQBWHERo72" to
+                Parent("Zslqzb1vN1cehlD7TYaQBWHERo72",
+                    "Arum",
+                    "0821123123",
+                    listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                        "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                        "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                        "P4T9d2CagYdNmhc7xFiGYh3l2oH2")
+                )
+    )
+
+
+    private val teachers = mapOf(
+        "EAwxIDeIQfRWuNHW4P92B6Ko5G53" to
+                Teacher("EAwxIDeIQfRWuNHW4P92B6Ko5G53",
+                    "Devita",
+                    "https://www.google.com/search?q=devita+setyaningrum&sxsrf=ALiCzsZvO6qPVHPXAV21dASGyM69ZfwLxA:1654423545740&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjqwYH-h5b4AhVD7XMBHcCRC-cQ_AUoAXoECAEQAw&biw=1536&bih=784&dpr=1.25#imgrc=cWTYUVfkb5WQRM",
+                    "0821123123",
+                    "perempuan",
+                    "eMsulnik6kEpW0ESKI9V",
+                    "ksalsoodapp110Kkqllp",
+                    mutableListOf(
+                        TeachingGroup(
+                            "Biologi",
+                            12,
+                            listOf("eMsulnik6kEpW0ESKI9V"),
+                            mutableListOf("dxXTXZcrj0yVh8PpzYk2", "feiaZB0ds1rbaWT1g8hJ", "RS1201", "RS1101", "RF1201"),
+                            mutableListOf("HaWuFgmvLAuZYeG5JuVw"),
+                            mutableListOf("ripyBsBZObBfarZpd085")
+                        )
+                    ),
+                    mutableListOf(
+                        Payment(
+                            title = "Pembayaran SPP Genap",
+                            nominal = 2000000,
+                            accountNumber = "521812312",
+                            paymentDate = DateHelper.getCurrentTime(),
+                            paymentDeadline = DateHelper.getCurrentTime()
+                        )
+                    )
+                )
+    )
+
+
+    private val administrators = mapOf(
+        "zriNod2GJUSY1EZpqexfZCLlUwt2" to
+                Administrator("zriNod2GJUSY1EZpqexfZCLlUwt2",
+                    "Admin",
+                    "0821123123",
+                )
+    )
+
+
+    private val announcements = mapOf(
+        "1UYvc8ji8ip4Zoejke9d" to
+                Announcement("1UYvc8ji8ip4Zoejke9d",
+                    "Lomba Sekolah 2",
+                    "Kategori lomba dibagi menjadi 4 cabang",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L661" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L662" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L663" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L664" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L665" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L666" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L667" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L668" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L669" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L660" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L66a" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L66b" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L66v" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+        "5vlpa3hwTPQcfHZ2L66c" to
+                Announcement("5vlpa3hwTPQcfHZ2L66z",
+                    "Pengumuman Sekolah 2",
+                    "Pembelajaran jarak jauh dikarenakan covid 19",
+                    DateHelper.getCurrentTime()),
+    )
+
+
+    val resources = mapOf(
+        "dxXTXZcrj0yVh8PpzYk2" to
+                Resource("dxXTXZcrj0yVh8PpzYk2",
+                    "Pertemuan 1",
+                    12,
+                    "recording",
+                    "<<url>>",
+                    "Biologi",
+                    listOf("b1Ty3EisH2bkMlnBWGmp"),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "feiaZB0ds1rbaWT1g8hJ" to
+                Resource("feiaZB0ds1rbaWT1g8hJ",
+                    "Bab 1 Reproduksi",
+                    12,
+                    "slide",
+                    "<<url>>",
+                    "Biologi",
+                    listOf(),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+    )
+
+
+    private val taskFroms = mutableMapOf(
+        "HaWuFgmvLAuZYeG5JuVw" to
+                TaskForm("HaWuFgmvLAuZYeG5JuVw",
+                    "Ujian Tengah Semester",
+                    12,
+                    "ujian_tengah_semester",
+                    DateHelper.getCurrentTime(),
+                    DateHelper.getCurrentTime(),
+                    "Online",
+                    "Biologi",
+                    listOf(
+                        Question("Essai ini",
+                            "essai",
+                            100,
+                            emptyList(),
+                            ""
+                        )
+                    ),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+        "ripyBsBZObBfarZpd085" to
+                TaskForm("ripyBsBZObBfarZpd085",
+                    "Tugas tentang minyak hewani",
+                    12,
+                    "tugas",
+                    DateHelper.getCurrentTime(),
+                    DateHelper.getCurrentTime(),
+                    "Online",
+                    "Biologi",
+                    listOf(
+                        Question("Jelaskan maksud minyak hewan ",
+                            "essai",
+                            50,
+                            emptyList(),
+                            ""
+                        ),
+                        Question("Pililah jawaban yang benar. Apakah ikan hiu menghasilkan minyak?",
+                            "pilihan berganda",
+                            50,
+                            listOf("ya",
+                                "tidak",
+                                "kadang-kadang",
+                                "sesekali",
+                                "tidak ada jawaban yang benar"),
+                            "1"
+                        )
+                    ),
+                    listOf("eMsulnik6kEpW0ESKI9V")),
+    )
+
+
+
+    private val studyClasses = mapOf(
+        "eMsulnik6kEpW0ESKI9V" to
+                StudyClass("eMsulnik6kEpW0ESKI9V",
+                    "XII-IPA-3",
+                    12,
+                    "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
+                    "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+                    mutableListOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2"),
+                    mutableListOf(
+                        Subject("Biologi",
+                            "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
+                            mutableListOf(
+                                ClassMeeting("MEET001",
+                                    "Biologi",
+                                    DateHelper.getCurrentTime(),
+                                    DateHelper.getCurrentTime(),
+                                    "online",
+                                    "berlangsung",
+                                    "feiaZB0ds1rbaWT1g8hJ",
+                                    "123",
+                                )
+                            ),
+                            mutableListOf("HaWuFgmvLAuZYeG5JuVw"), // exam
+                            mutableListOf("ripyBsBZObBfarZpd085"), // asg
+                            mutableListOf("dxXTXZcrj0yVh8PpzYk2",
+                                "feiaZB0ds1rbaWT1g8hJ"
+                            )
+                        ),
+                    ),
+                )
+    )
+
+    private val schools = mapOf(
+        "ksalsoodapp110Kkqllp" to
+                School("ksalsoodapp110Kkqllp",
+                    "SMA Methodist - 3",
+                    "0811123123",
+                    "Jalan Jati",
+                )
+    )
 
 }

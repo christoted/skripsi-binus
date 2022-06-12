@@ -44,9 +44,11 @@ data class TaskForm(
     @set: PropertyName("prerequisite_task_forms")
     var prerequisiteTaskForms: List<String>? = null,
 
-    val finalized: Boolean? = null,
+    @get: PropertyName("is_finalized")
+    @set: PropertyName("is_finalized")
+    var isFinalized: Boolean? = null,
 
-): HomeSectionData()
+    ): HomeSectionData()
 
 @IgnoreExtraProperties
 data class Question(

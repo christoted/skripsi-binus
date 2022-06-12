@@ -39,7 +39,8 @@ class DateHelper {
         }
 
         @SuppressLint("SimpleDateFormat")
-        fun getFormattedDateTimeWithWeekDay(date: Date): String {
+        fun getFormattedDateTimeWithWeekDay(date: Date?): String {
+            if (date == null) return "null date"
             val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
             return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }
@@ -88,10 +89,11 @@ class DateHelper {
             return Pair(days, "hari")
         }
 
-
-
+        fun getMinute(startTime : Date?, endTime : Date?) : Long {
+            if (startTime == null || endTime == null) return 0
+            return (endTime.time - startTime.time) / (1000 * 60)
+        }
 
     }
-
 
 }
