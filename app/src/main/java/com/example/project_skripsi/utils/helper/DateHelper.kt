@@ -33,6 +33,11 @@ class DateHelper {
             return CalendarDay.from(date)
         }
 
+//        fun convertCalendarDayToDate(date: CalendarDay?): Date {
+//            if (date == null) return getCurrentDate()
+//            return CalendarDay.from(date)
+//        }
+
         @SuppressLint("SimpleDateFormat")
         fun getFormattedDateTime(format: String?, date: Date?): String? {
             return date?.let { SimpleDateFormat(format).format(it) }

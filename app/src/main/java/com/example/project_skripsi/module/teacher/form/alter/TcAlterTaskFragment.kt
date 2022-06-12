@@ -288,6 +288,7 @@ class TcAlterTaskFragment : Fragment() {
             rvItem.adapter = adapter
             btnConfirm.setOnClickListener {
                 var isOK = true
+                var totalScore = 0
                 adapter.questions.mapIndexed { index, question ->
                     val childView = rvItem.getChildAt(index)
                     when (question.type) {
@@ -299,10 +300,16 @@ class TcAlterTaskFragment : Fragment() {
                             isOK = false
                             return@mapIndexed
                         } else {
+                            totalScore += childView.findViewById<EditText>(R.id.edt_score_weight).text.toString().toInt()
                             adapter.questions[index] = newQuestion
                         }
                     }
                 }
+                if (isOK && totalScore != 100) {
+                    Toast.makeText(context, "Bobot total harus 100, total saat ini $totalScore", Toast.LENGTH_SHORT).show()
+                    isOK = false
+                }
+
                 if (isOK) {
                     viewModel.updateQuestions(adapter.questions)
                     binding.tvQuestionCount.text = ("jumlah soal ${adapter.questions.size}")
@@ -373,13 +380,13 @@ class TcAlterTaskFragment : Fragment() {
                 return false
             }
 
-            if ((viewModel.questionList.value?.size ?: 0) == 0) {
-                Toast.makeText(context, "Jumlah soal harus minimal 1",Toast.LENGTH_SHORT).show()
+            if (DateHelper.getMinute(viewModel.startDate.value, viewModel.endDate.value) < 5) {
+                Toast.makeText(context, "Durasi minimal 5 menit",Toast.LENGTH_SHORT).show()
                 return false
             }
 
-            if (DateHelper.getMinute(viewModel.startDate.value, viewModel.endDate.value) < 5) {
-                Toast.makeText(context, "Durasi minimal 5 menit",Toast.LENGTH_SHORT).show()
+            if ((viewModel.questionList.value?.size ?: 0) == 0) {
+                Toast.makeText(context, "Jumlah soal harus minimal 1",Toast.LENGTH_SHORT).show()
                 return false
             }
         }

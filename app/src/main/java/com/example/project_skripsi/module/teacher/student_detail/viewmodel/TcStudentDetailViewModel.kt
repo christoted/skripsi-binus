@@ -11,8 +11,11 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
+import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 
 class TcStudentDetailViewModel: ViewModel() {
 
@@ -86,10 +89,10 @@ class TcStudentDetailViewModel: ViewModel() {
                 paymentSection.add(TcStudentDetailPaymentSection(title = "Telat", payments = emptyList()))
                 paymentSection.add(TcStudentDetailPaymentSection(title = "Mendatang", payments = emptyList()))
                 paymentSection[0].payments = it.filter { payment ->
-                    payment.paymentDeadline!! < DateHelper.getCurrentTime() && payment.paymentDate == null
+                    convertDateToCalendarDay(payment.paymentDeadline) < getCurrentDate() && payment.paymentDate == null
                 }.sortedBy { payment -> payment.paymentDeadline }
                 paymentSection[1].payments = it.filter { payment ->
-                    payment.paymentDeadline!! > DateHelper.getCurrentTime() && payment.paymentDate == null
+                    convertDateToCalendarDay(payment.paymentDeadline) >= getCurrentDate() && payment.paymentDate == null
                 }.sortedBy { payment -> payment.paymentDeadline }
                 _sectionPayment.postValue(paymentSection)
             }

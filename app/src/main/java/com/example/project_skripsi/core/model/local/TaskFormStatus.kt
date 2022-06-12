@@ -48,22 +48,21 @@ data class TaskFormStatus(
     companion object {
 
         fun getDuration(taskForm: TaskForm) : Long =
-            if (taskForm.startTime == null || taskForm.endTime == null) 0
-            else (taskForm.endTime.time - taskForm.startTime.time) / (1000 * 60)
+            DateHelper.getMinute(taskForm.startTime, taskForm.endTime)
 
 
         fun getStatus(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm) : String =
             when {
                 taskForm.endTime!! < DateHelper.getCurrentTime() -> "selesai"
                 taskForm.startTime!! > DateHelper.getCurrentTime() -> "belum dimulai"
-                assignedTaskForm.answers!!.isEmpty() -> "belum terkumpul"
+                !assignedTaskForm.isSubmitted!! -> "belum terkumpul"
                 else -> "terkumpul"
             }
 
         fun getStatusColor(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm): Int =
             when {
-                assignedTaskForm.answers!!.isNotEmpty() -> R.color.task_submit
-                assignedTaskForm.answers.isEmpty() &&
+                assignedTaskForm.isSubmitted!! -> R.color.task_submit
+                !assignedTaskForm.isSubmitted!! &&
                         taskForm.endTime!! < DateHelper.getCurrentTime() -> R.color.task_not_submit
                 else -> R.color.task_ongoing
             }

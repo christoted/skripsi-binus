@@ -115,6 +115,7 @@ class TcAlterTaskFinalizationViewModel : ViewModel() {
                                 title = taskForm.title,
                                 type = taskForm.type,
                                 startTime = taskForm.startTime,
+                                endTime = taskForm.endTime,
                                 isSubmitted = false,
                                 subjectName = taskForm.subjectName,
                                 isChecked = false,

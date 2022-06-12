@@ -120,7 +120,7 @@ class PrAssignmentFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, false).getAdapter()
                     })
                 }
                 StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
@@ -131,7 +131,7 @@ class PrAssignmentFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, false).getAdapter()
                     })
                 }
             }

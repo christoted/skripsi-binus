@@ -8,6 +8,7 @@ import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStProgressScoreChildBinding
 import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
+import com.example.project_skripsi.utils.Constant
 
 class StScoreContentChildAdapter(private val viewModel: StScoreViewModel, private val scoreMainData: ScoreMainSection): RecyclerView.Adapter<StScoreContentChildAdapter.StScoreContentChildViewHolder>() {
 
@@ -31,8 +32,15 @@ class StScoreContentChildAdapter(private val viewModel: StScoreViewModel, privat
 
     inner class StScoreContentChildViewHolder(private val binding: ItemStProgressScoreChildBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(sectionData: ScoreSectionData) {
-            binding.subject.text = (sectionData as AssignedTaskForm).title
-            binding.score.text = (sectionData as AssignedTaskForm).score.toString()
+            val item = sectionData as AssignedTaskForm
+            with(binding) {
+                tvTitle.text = item.title
+                when (item.type) {
+                    Constant.TASK_TYPE_MID_EXAM -> tvMid
+                    Constant.TASK_TYPE_FINAL_EXAM -> tvFinal
+                    else -> tvAssignment
+                }.text = item.score.toString()
+            }
         }
     }
 }

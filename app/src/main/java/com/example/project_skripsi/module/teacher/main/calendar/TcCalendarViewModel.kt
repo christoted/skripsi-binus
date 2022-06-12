@@ -31,12 +31,6 @@ class TcCalendarViewModel : ViewModel() {
     private val currentList : MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
     val currentDataList : MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
 
-//    private val _meetingList = MutableLiveData<List<TeacherAgendaMeeting>>()
-//    private val _examList = MutableLiveData<List<TeacherAgendaTaskForm>>()
-//    private val _assignmentList = MutableLiveData<List<TeacherAgendaTaskForm>>()
-//    private val _paymentList = MutableLiveData<List<Payment>>()
-//    private val _announcementList = MutableLiveData<List<Announcement>>()
-
     init {
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()

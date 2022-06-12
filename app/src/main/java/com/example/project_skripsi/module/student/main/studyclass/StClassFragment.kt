@@ -51,7 +51,6 @@ class StClassFragment : Fragment() {
                 .navigate(StClassFragmentDirections.actionNavigationClassFragmentToStTaskAssignmentFragment())
         }
 
-
         viewModel.studyClass.observe(viewLifecycleOwner, {
             with(binding) {
                 tvClassName.text = it.name
@@ -81,11 +80,6 @@ class StClassFragment : Fragment() {
                 it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
             }
         })
-
-        binding.imvAnnouncement.setOnClickListener {
-            view?.findNavController()?.navigate(StClassFragmentDirections
-                .actionNavigationClassFragmentToStAnnouncementFragment())
-        }
 
         return binding.root
     }

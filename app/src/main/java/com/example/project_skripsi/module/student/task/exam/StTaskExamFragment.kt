@@ -109,7 +109,7 @@ class StTaskExamFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, list).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, list, true).getAdapter()
                     })
                 }
                 StTaskExamViewModel.EXAM_PAST -> {
@@ -120,7 +120,7 @@ class StTaskExamFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, list).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, list, true).getAdapter()
                     })
                 }
             }

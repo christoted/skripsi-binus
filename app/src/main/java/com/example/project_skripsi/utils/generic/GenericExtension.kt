@@ -1,5 +1,7 @@
 package com.example.project_skripsi.utils.generic
 
+import com.prolificinteractive.materialcalendarview.CalendarDay
+
 class GenericExtension {
 
     companion object {
@@ -13,6 +15,19 @@ class GenericExtension {
             return sum / count
         }
 
+        operator fun CalendarDay.compareTo(currentDate: CalendarDay): Int {
+            with(this) {
+                if (year < currentDate.year) return -1
+                else if (year > currentDate.year) return 1
+
+                if (month < currentDate.month) return -1
+                else if (month > currentDate.month) return 1
+
+                if (day < currentDate.day) return -1
+                else if (day > currentDate.day) return 1
+            }
+            return 0
+        }
     }
 
 }

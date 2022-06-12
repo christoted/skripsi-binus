@@ -79,6 +79,7 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
                 title = it.title,
                 type = it.type,
                 startTime = it.startTime,
+                endTime = it.endTime,
                 isSubmitted = it.isSubmitted,
                 isChecked = true,
                 subjectName = it.subjectName,

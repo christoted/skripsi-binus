@@ -12,7 +12,7 @@ import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class TaskViewHolder(private val taskType : Int, private val dataSet : List<TaskFormStatus>) {
+class TaskViewHolder(private val taskType : Int, private val dataSet : List<TaskFormStatus>, private val isStudent: Boolean) {
 
     companion object{
         const val TYPE_EXAM = 1
@@ -50,16 +50,18 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Task
                 }
 
                 tvDuration.text = ("${item.duration} menit")
-                item.id?.let { id ->
-                    root.setOnClickListener {
-                        it.findNavController().navigate(
-                            when (taskType) {
-                                TYPE_EXAM -> StTaskExamFragmentDirections
-                                    .actionStTaskExamFragmentToStTaskFormFragment(id)
-                                else -> StTaskAssignmentFragmentDirections
-                                    .actionStTaskAssignmentFragmentToStTaskFormFragment(id)
-                            }
-                        )
+                if (isStudent) {
+                    item.id?.let { id ->
+                        root.setOnClickListener {
+                            it.findNavController().navigate(
+                                when (taskType) {
+                                    TYPE_EXAM -> StTaskExamFragmentDirections
+                                        .actionStTaskExamFragmentToStTaskFormFragment(id)
+                                    else -> StTaskAssignmentFragmentDirections
+                                        .actionStTaskAssignmentFragmentToStTaskFormFragment(id)
+                                }
+                            )
+                        }
                     }
                 }
             }

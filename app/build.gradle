@@ -79,4 +79,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.20"
+    implementation 'com.google.firebase:firebase-storage-ktx'
 }
