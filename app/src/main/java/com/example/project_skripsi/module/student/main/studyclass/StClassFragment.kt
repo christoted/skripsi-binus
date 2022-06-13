@@ -1,9 +1,12 @@
 package com.example.project_skripsi.module.student.main.studyclass
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -67,21 +70,38 @@ class StClassFragment : Fragment() {
             }
         })
 
-        viewModel.teacher.observe(this, {
+        viewModel.teacher.observe(viewLifecycleOwner) { teacher ->
             with(binding) {
-                tvTeacherName.text = it.name
-                it.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                tvTeacherName.text = teacher.name
+                teacher.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                imvTeacherPhone.setOnClickListener {
+                    goToWhatsApp(phoneNumber = teacher.phoneNumber ?: "")
+                }
             }
-        })
+        }
 
-        viewModel.classChief.observe(this, {
+        viewModel.classChief.observe(viewLifecycleOwner) {
             with(binding) {
                 tvChiefName.text = it.name
                 it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
             }
-        })
+        }
 
         return binding.root
+    }
+
+    // TODO: Implement the WebView
+    private fun goToWhatsApp(phoneNumber: String) {
+        val url = "https://api.whatsapp.com/send/?phone=${phoneNumber}"
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+//        binding.appBar.visibility = View.GONE
+//        binding.nestedScrollView.visibility = View.GONE
+//        binding.webview.let {
+//            it.loadUrl("https://api.whatsapp.com/send/?phone=${phoneNumber}")
+//            it.webViewClient = WebViewClient()
+//        }
     }
 
     override fun onDestroyView() {
