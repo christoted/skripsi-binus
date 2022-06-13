@@ -15,6 +15,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.firestore.AttendedMeeting
+import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.alarm.AlarmReceiver
@@ -41,24 +43,30 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 set(Calendar.HOUR_OF_DAY, 8)
                 set(Calendar.MINUTE, 0)
             }
-            intent.putExtra("timeinmillis", calendar.timeInMillis)
-            intent.putExtra("title", title)
-            intent.putExtra("body", body)
-            val notificationId = createNotificationId(calendar.timeInMillis)
-            val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-            alarmManager.setInexactRepeating(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                AlarmManager.INTERVAL_DAY,
-                pendingIntent
-            )
+            if (DateHelper.convertDateToCalendar(calendar.time).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentTime()).timeInMillis)  {
+                cancelEveryDayNotification(context)
+            } else {
+                intent.putExtra("timeinmillis", calendar.timeInMillis)
+                intent.putExtra("title", title)
+                intent.putExtra("body", body)
+                val notificationId = createNotificationId(calendar.timeInMillis)
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context, notificationId, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+                alarmManager.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.timeInMillis,
+                    AlarmManager.INTERVAL_DAY,
+                    pendingIntent
+                )
+            }
         }
         fun scheduleSingleNotification(context: Context, date: Date, title: String, body: String, ) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, AlarmReceiver::class.java)
             var timeInMillis: Long = 0
-            if (DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentDate()).timeInMillis) {
+            if (DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentTime()).timeInMillis) {
                 Log.d("987", "already passed current day $date")
                 cancelNotification(context, date)
             } else {
@@ -107,6 +115,23 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
             manager.cancel(pending)
         }
+
+        fun cancelAllMeetingNotification(context: Context, meetings: List<AttendedMeeting>) {
+            meetings.forEach {
+                it.startTime?.let {
+                    cancelNotification(context, date = it)
+                }
+            }
+        }
+
+        fun cancelAllExamAndAssignmentNotification(context: Context, exams: List<TaskForm>) {
+            exams.forEach {
+                it.startTime?.let {
+                    cancelNotification(context, date = it)
+                }
+            }
+        }
+
         fun createNotificationId(timeMillis: Long): Int {
             return (timeMillis % 2000000000).toInt()
         }

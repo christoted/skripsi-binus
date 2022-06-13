@@ -149,18 +149,11 @@ class StHomeFragment : Fragment(), ItemListener {
 
     private fun triggerEveryDayNotification(totalMeeting: Int, totalAssignment: Int, totalExam: Int) {
         NotificationUtil.cancelEveryDayNotification(requireActivity())
-        if (totalMeeting == 0) {
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya," +
-                    "${totalAssignment} tugas , ${totalExam} ujian")
-        } else if (totalAssignment == 0) {
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalMeeting} Pertemuan," +
-                    " ${totalExam} ujian")
-        } else if (totalExam == 0) {
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalMeeting} Pertemuan," +
-                    "${totalAssignment} tugas")
+        if (totalAssignment == 0 && totalMeeting == 0 && totalExam == 0){
+            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Hai", body = "Tidak ada agenda hari ini")
         } else {
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalMeeting} Pertemuan," +
-                    "${totalAssignment} tugas, ${totalExam} ujian")
+            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalMeeting} Pertemuan, " +
+                    "${totalAssignment} tugas , ${totalExam} ujian")
         }
     }
 
