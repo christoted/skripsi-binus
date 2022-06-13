@@ -69,10 +69,7 @@ class PrStudentDetailViewModel : ViewModel() {
                     subject.classExams?.map { classExam ->
                         countExamTotal++
                         student.value?.assignedExams?.firstOrNull {
-                            it.id == classExam
-                                    && (it.isSubmitted == true
-//                                    || it.endTime!! <= DateHelper.getCurrentTime()
-                                    )
+                            it.id == classExam && (it.isSubmitted == true || it.endTime!! <= DateHelper.getCurrentTime())
                         }?.let { countSubmittedExam++ }
                     }
 
@@ -81,10 +78,7 @@ class PrStudentDetailViewModel : ViewModel() {
                     subject.classAssignments?.map { classAssignment ->
                         countAssignmentTotal++
                         student.value?.assignedAssignments?.firstOrNull {
-                            it.id == classAssignment
-                                    && (it.isSubmitted == true
-//                                    || it.endTime!! <= DateHelper.getCurrentTime()
-                                    )
+                            it.id == classAssignment && (it.isSubmitted == true || it.endTime!! <= DateHelper.getCurrentTime())
                         }?.let { countSubmittedAssignment++ }
                     }
 
