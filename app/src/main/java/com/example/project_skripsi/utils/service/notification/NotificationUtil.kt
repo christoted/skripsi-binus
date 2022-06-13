@@ -38,8 +38,8 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, 22)
-                set(Calendar.MINUTE, 36)
+                set(Calendar.HOUR_OF_DAY, 8)
+                set(Calendar.MINUTE, 0)
             }
             intent.putExtra("timeinmillis", calendar.timeInMillis)
             intent.putExtra("title", title)
@@ -93,8 +93,8 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             val intent = Intent(context, AlarmReceiver::class.java)
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, 22)
-                set(Calendar.MINUTE, 36)
+                set(Calendar.HOUR_OF_DAY, 8)
+                set(Calendar.MINUTE, 0)
             }
             val notificationId = createNotificationId(calendar.timeInMillis)
             val pending = PendingIntent.getBroadcast(
