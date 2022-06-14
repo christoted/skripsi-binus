@@ -1,11 +1,12 @@
 package com.example.project_skripsi.module.student.main.home.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +26,7 @@ import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
+
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -234,11 +236,21 @@ class StHomeFragment : Fragment(), ItemListener {
             StHomeFragmentDirections.actionNavigationHomeFragmentToStTaskFormFragment(taskFormId)
     }
 
-    override fun onClassItemClicked(Position: Int) {
-       
+    override fun onClassItemClicked(Position: Int, classMeeting: ClassMeeting) {
+       goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
     override fun onMaterialItemClicked(Position: Int) {
-
+        goToGoogleDrive("https://drive.google.com/drive/folders/1DIFexFEdlRVILpxZt8Qcdgr842Eo0FcY?usp=sharing")
+    }
+    private fun goToGoogleDrive(driveLink: String) {
+        val uri = Uri.parse(driveLink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+    private fun goToClassMeeting(classLink: String) {
+        val uri = Uri.parse(classLink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 }
