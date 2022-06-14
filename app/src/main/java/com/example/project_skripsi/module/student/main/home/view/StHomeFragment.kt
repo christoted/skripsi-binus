@@ -1,10 +1,11 @@
 package com.example.project_skripsi.module.student.main.home.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -12,11 +13,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -34,16 +35,16 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel = ViewModelProvider(this)[StHomeViewModel::class.java]
         _binding = FragmentStHomeBinding.inflate(inflater, container, false)
 
-        viewModel.currentStudent.observe(viewLifecycleOwner, {
+        viewModel.currentStudent.observe(viewLifecycleOwner) {
             binding.tvProfileName.text = ("${it.name} (${it.attendanceNumber})")
             it.profile?.let { imageUrl ->
                 Glide
-                    .with(context!!)
+                    .with(requireActivity())
                     .load(imageUrl)
                     .placeholder(R.drawable.profile_empty)
                     .into(binding.ivProfilePicture)
             }
-        })
+        }
 
         viewModel.profileClass.observe(viewLifecycleOwner, { binding.tvProfileClass.text = it })
 
@@ -78,11 +79,21 @@ class StHomeFragment : Fragment(), ItemListener {
         )
     }
 
-    override fun onClassItemClicked(Position: Int) {
-       
+    override fun onClassItemClicked(Position: Int, classMeeting: ClassMeeting) {
+       goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
     override fun onMaterialItemClicked(Position: Int) {
-
+        goToGoogleDrive("https://drive.google.com/drive/folders/1DIFexFEdlRVILpxZt8Qcdgr842Eo0FcY?usp=sharing")
+    }
+    private fun goToGoogleDrive(driveLink: String) {
+        val uri = Uri.parse(driveLink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+    private fun goToClassMeeting(classLink: String) {
+        val uri = Uri.parse(classLink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 }

@@ -26,7 +26,7 @@ class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding,
                 listener.onMaterialItemClicked(absoluteAdapterPosition)
             }
             btnClass.setOnClickListener {
-                listener.onClassItemClicked(absoluteAdapterPosition)
+                listener.onClassItemClicked(absoluteAdapterPosition, data)
             }
         }
     }

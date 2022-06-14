@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.teacher.study_class.teaching
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,12 +38,17 @@ class TcStudyClassTeachingFragment : Fragment() {
             binding.tvClassName.text = it.name
         })
 
-        viewModel.classChief.observe(viewLifecycleOwner, {
+        viewModel.classChief.observe(viewLifecycleOwner) { student ->
             with(binding) {
-                tvChiefName.text = it.name
-                it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
+                tvChiefName.text = student.name
+                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
+                imvChiefPhone.setOnClickListener {
+                    student.phoneNumber?.let {
+                        goToWhatsApp(it)
+                    }
+                }
             }
-        })
+        }
 
         binding.rvItem.layoutManager = LinearLayoutManager(context)
         viewModel.studentList.observe(viewLifecycleOwner, {
@@ -79,6 +86,14 @@ class TcStudyClassTeachingFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun goToWhatsApp(phoneNumber: String) {
+        val url = "https://api.whatsapp.com/send/?phone=${phoneNumber}"
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
 
     private fun retrieveArgs() {
         val args : TcStudyClassTeachingFragmentArgs by navArgs()

@@ -1,6 +1,9 @@
 package com.example.project_skripsi.module.parent.student_detail.viewholder
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Payment
@@ -13,8 +16,11 @@ import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.CurrencyHelper
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class PrSubjectViewHolder(private val dataSet : List<ParentSubject>) {
+interface ItemPrSubjectProtocol {
+    fun onWhatsAppTapped(phoneNumber: String)
+}
 
+class PrSubjectViewHolder(private val dataSet : List<ParentSubject>) {
 
     fun getAdapter(): GenericAdapter<ParentSubject> {
         val adapter = GenericAdapter(dataSet)
@@ -27,6 +33,14 @@ class PrSubjectViewHolder(private val dataSet : List<ParentSubject>) {
                 view.tvSubjectName.text = item.subjectName
                 view.tvTeacherName.text = item.teacherName
                 item.teacherPhoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                imvTeacherPhone.setOnClickListener { view ->
+                        item.teacherPhoneNumber?.let {
+                            val url = "https://api.whatsapp.com/send/?phone=${it}"
+                            val uri = Uri.parse(url)
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            view.context.startActivity(intent)
+                        }
+                }
 
                 view.tvSummaryAttendance.text = ("${item.attendance} / ${item.meetingTotal}")
                 view.tvSummaryExam.text = ("${item.exam} / ${item.examTotal}")
@@ -35,5 +49,4 @@ class PrSubjectViewHolder(private val dataSet : List<ParentSubject>) {
         }
         return adapter
     }
-
 }

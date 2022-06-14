@@ -27,7 +27,7 @@ class TcAgendaMeetingViewHolder(private val binding: ItemTcAgendaGeneralBinding,
             tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.classMeeting.startTime!!)} - " +
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.classMeeting.endTime!!)}")
             btnResource.setOnClickListener { listener.onMaterialItemClicked(absoluteAdapterPosition) }
-            btnClass.setOnClickListener { listener.onClassItemClicked(absoluteAdapterPosition) }
+            btnClass.setOnClickListener { listener.onClassItemClicked(absoluteAdapterPosition, data) }
         }
     }
 }
