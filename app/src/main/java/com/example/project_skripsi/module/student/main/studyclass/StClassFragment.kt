@@ -1,9 +1,12 @@
 package com.example.project_skripsi.module.student.main.studyclass
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -51,7 +54,7 @@ class StClassFragment : Fragment() {
                 .navigate(StClassFragmentDirections.actionNavigationClassFragmentToStTaskAssignmentFragment())
         }
 
-        viewModel.studyClass.observe(viewLifecycleOwner, {
+        viewModel.studyClass.observe(viewLifecycleOwner) {
             with(binding) {
                 tvClassName.text = it.name
                 viewpagerSubject.adapter = ScreenSlidePagerAdapter()
@@ -60,28 +63,45 @@ class StClassFragment : Fragment() {
 
                 it.id?.let { studyClassId ->
                     fabStudentList.setOnClickListener { _ ->
-                        view?.findNavController()?.navigate(StClassFragmentDirections
-                            .actionNavigationClassFragmentToStStudentListFragment(studyClassId,it.name!!))
+                        view?.findNavController()?.navigate(
+                            StClassFragmentDirections
+                                .actionNavigationClassFragmentToStStudentListFragment(
+                                    studyClassId,
+                                    it.name!!
+                                )
+                        )
                     }
                 }
             }
-        })
+        }
 
-        viewModel.teacher.observe(this, {
+        viewModel.teacher.observe(viewLifecycleOwner) { teacher ->
             with(binding) {
-                tvTeacherName.text = it.name
-                it.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                tvTeacherName.text = teacher.name
+                teacher.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                imvTeacherPhone.setOnClickListener {
+                    goToWhatsApp(phoneNumber = teacher.phoneNumber ?: "")
+                }
             }
-        })
+        }
 
-        viewModel.classChief.observe(this, {
+        viewModel.classChief.observe(viewLifecycleOwner) { student ->
             with(binding) {
-                tvChiefName.text = it.name
-                it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
+                tvChiefName.text = student.name
+                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
+                imvChiefPhone.setOnClickListener {
+                    goToWhatsApp(phoneNumber = student.phoneNumber ?: "")
+                }
             }
-        })
-
+        }
         return binding.root
+    }
+
+    private fun goToWhatsApp(phoneNumber: String) {
+        val url = "https://api.whatsapp.com/send/?phone=${phoneNumber}"
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

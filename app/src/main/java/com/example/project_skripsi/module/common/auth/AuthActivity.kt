@@ -92,13 +92,12 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
-
         // delaying 0.5s
         Handler(Looper.getMainLooper()).postDelayed({
             initEvent()
         }, 500)
 
-        FirestoreDummy()
+      //  FirestoreDummy()
     }
 
     private fun initEvent() {

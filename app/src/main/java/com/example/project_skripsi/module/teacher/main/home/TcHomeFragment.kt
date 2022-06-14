@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.teacher.main.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
 import com.example.project_skripsi.databinding.FragmentTcHomeBinding
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.module.teacher.main.home.adapter.TcHomeMainAdapter
@@ -86,12 +89,19 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
         view?.findNavController()?.navigate(toTaskActivity)
     }
 
-    override fun onClassItemClicked(Position: Int) {
-        // TODO: Link
+    override fun onClassItemClicked(Position: Int, data: TeacherAgendaMeeting) {
+        val meetingLink = data.classMeeting.meetingLink
+        goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
     override fun onMaterialItemClicked(Position: Int) {
         // TODO: Link
+    }
+
+    private fun goToClassMeeting(classLink: String) {
+        val uri = Uri.parse(classLink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
 }

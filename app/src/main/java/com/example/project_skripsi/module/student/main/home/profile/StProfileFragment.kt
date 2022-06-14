@@ -13,14 +13,17 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.project_skripsi.databinding.FragmentStProfileBinding
 import com.example.project_skripsi.module.common.auth.AuthActivity
+import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import com.example.project_skripsi.service.StorageSP
 import com.example.project_skripsi.service.StorageSP.Companion.SP_EMAIL
 import com.example.project_skripsi.service.StorageSP.Companion.SP_LOGIN_AS
 import com.example.project_skripsi.service.StorageSP.Companion.SP_PASSWORD
+import com.example.project_skripsi.utils.service.notification.NotificationUtil
 
 class StProfileFragment : Fragment() {
 
     private lateinit var viewModel: StProfileViewModel
+    private lateinit var homeViewModel: StHomeViewModel
     private var _binding: FragmentStProfileBinding? = null
     private val binding get() = _binding!!
 
@@ -31,6 +34,7 @@ class StProfileFragment : Fragment() {
     ): View {
 
         viewModel = ViewModelProvider(this)[StProfileViewModel::class.java]
+        homeViewModel = ViewModelProvider(this)[StHomeViewModel::class.java]
         _binding = FragmentStProfileBinding.inflate(inflater, container, false)
 
         viewModel.student.observe(viewLifecycleOwner, {
@@ -60,6 +64,21 @@ class StProfileFragment : Fragment() {
             StorageSP.set(requireActivity(), SP_EMAIL, "")
             StorageSP.set(requireActivity(), SP_PASSWORD, "")
             StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
+
+            // Cancel everyday notification
+            NotificationUtil.cancelEveryDayNotification(requireActivity())
+
+            // Cancel Notification Exam, Assignment and Meeting
+            homeViewModel.attendedMeeting.observe(viewLifecycleOwner) {
+                NotificationUtil.cancelAllMeetingNotification(requireActivity(), it)
+            }
+            homeViewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) {
+                NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), it)
+            }
+            homeViewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
+                NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), it)
+            }
+
             val intent = Intent(binding.root.context, AuthActivity::class.java)
             startActivity(intent)
             activity?.finish()
