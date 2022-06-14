@@ -80,18 +80,18 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     override fun onClassItemClicked(Position: Int, classMeeting: ClassMeeting) {
-       goToClassMeeting("")
+       goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
     override fun onMaterialItemClicked(Position: Int) {
-        goToGoogleDrive("")
+        goToGoogleDrive("https://drive.google.com/drive/folders/1DIFexFEdlRVILpxZt8Qcdgr842Eo0FcY?usp=sharing")
     }
-    private fun goToGoogleDrive(driveLink: String = "https://drive.google.com/drive/folders/1DIFexFEdlRVILpxZt8Qcdgr842Eo0FcY?usp=sharing") {
+    private fun goToGoogleDrive(driveLink: String) {
         val uri = Uri.parse(driveLink)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
-    private fun goToClassMeeting(classLink: String = "https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09") {
+    private fun goToClassMeeting(classLink: String) {
         val uri = Uri.parse(classLink)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
