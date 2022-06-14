@@ -63,14 +63,21 @@ class TcAssessmentTaskFormFragment : Fragment() {
                                 ).show()
                                 return@mapIndexed
                             }
-                            adapter.questionList[index].answer = Answer(assignedQuestion.answer?.answerText, scoreInt)
+                            adapter.questionList[index].answer = Answer(
+                                assignedQuestion.answer?.answerText,
+                                scoreInt,
+                                adapter.questionList[index].answer?.images
+                            )
                         }
                     } else {
                         with(binding.rvQuestion.getChildAt(index)) {
                             val score = findViewById<TextView>(R.id.tv_score).text.toString().toInt()
-                            adapter.questionList[index].answer = Answer(assignedQuestion.answer?.answerText, score)
+                            adapter.questionList[index].answer = Answer(
+                                assignedQuestion.answer?.answerText,
+                                score,
+                                adapter.questionList[index].answer?.images
+                            )
                         }
-
                     }
                 }
                 if (isOK) {

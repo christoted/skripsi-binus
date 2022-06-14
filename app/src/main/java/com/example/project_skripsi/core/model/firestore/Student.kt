@@ -155,4 +155,6 @@ data class Answer (
 
     val score: Int? = null,
 
+    var images: List<String>? = null
+
 )

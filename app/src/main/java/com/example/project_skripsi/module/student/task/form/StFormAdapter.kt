@@ -1,17 +1,53 @@
 package com.example.project_skripsi.module.student.task.form
 
+import android.app.Dialog
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.core.model.local.AssignedQuestion
+import com.example.project_skripsi.core.repository.FireStorage
+import com.example.project_skripsi.databinding.DialogStViewImageBinding
+import com.example.project_skripsi.databinding.DialogTcTaskTypeBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
+import com.example.project_skripsi.module.common.view_image.ViewImageViewHolder
+import com.example.project_skripsi.module.student.StMainActivity
+import com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskViewModel
+import com.example.project_skripsi.module.teacher.main.task.TcTaskFragmentDirections
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_ESSAY
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
+import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
-class StFormAdapter(val questionList: List<AssignedQuestion>) :
+class StFormAdapter(
+    val questionList: List<AssignedQuestion>,
+    val studentId: String?,
+    val taskFormId: String,
+    var activity: StMainActivity
+    ) :
     Adapter<ViewHolder>() {
+
+    val imageList : List<MutableList<String>> = List(questionList.size) { mutableListOf() }
+
+    init {
+        questionList.mapIndexed { index, assignedQuestion ->
+            assignedQuestion.answer?.images?.let { imageList[index].addAll(it) }
+        }
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
@@ -36,7 +72,7 @@ class StFormAdapter(val questionList: List<AssignedQuestion>) :
 
     override fun getItemCount() = questionList.size
 
-    class MultipleChoiceViewHolder ( private val binding : ItemStTaskFormMcBinding) : ViewHolder(binding.root) {
+    inner class MultipleChoiceViewHolder ( private val binding : ItemStTaskFormMcBinding) : ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
                 tvNumber.text = ("${position+1}.")
@@ -56,18 +92,98 @@ class StFormAdapter(val questionList: List<AssignedQuestion>) :
                     }
                 }
                 tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
+                tvImageCount.text = imageList[position].size.toString()
+
+                btnViewImage.setOnClickListener {
+                    if (imageList[position].isNotEmpty()) {
+                        showImagesDialog(position, root.context)
+                    } else {
+                        Toast.makeText(root.context, "Tidak ada gambar", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                btnDeleteImage.setOnClickListener {
+                    imageList[position].clear()
+                    tvImageCount.text = imageList[position].size.toString()
+                }
+                btnAddImage.setOnClickListener { takeImage(position, root.context, tvImageCount) }
             }
         }
     }
 
-    class EssayViewHolder ( private val binding : ItemStTaskFormEssayBinding) : ViewHolder(binding.root) {
+    inner class EssayViewHolder ( private val binding : ItemStTaskFormEssayBinding) : ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
                 tvNumber.text = ("${position+1}.")
                 tvTitle.text = item.title
                 item.answer?.answerText?.let { edtAnswer.setText(it) }
                 tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
+                tvImageCount.text = imageList[position].size.toString()
+
+                btnViewImage.setOnClickListener {
+                    if (imageList[position].isNotEmpty()) {
+                        showImagesDialog(position, root.context)
+                    } else {
+                        Toast.makeText(root.context, "Tidak ada gambar", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                btnDeleteImage.setOnClickListener {
+                    imageList[position].clear()
+                    tvImageCount.text = imageList[position].size.toString()
+                }
+
+                btnAddImage.setOnClickListener { takeImage(position, root.context, tvImageCount) }
             }
         }
     }
+
+    private fun takeImage(questionNumber: Int, context: Context, tvCount: TextView) {
+        val path = "$studentId/$taskFormId/${questionNumber+1}/pic${imageList[questionNumber].size}"
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val photoFile = FireStorage.inst.getPhotoFile(path, context)
+
+        val fileProvider = FileProvider.getUriForFile(context, "com.example.fileprovider", photoFile)
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
+
+        activity.mARLRequestCamera.launch(takePictureIntent)
+        activity.viewModel.isImageCaptured.observe(context as AppCompatActivity) {
+            if (it.getContentIfNotHandled() == true) {
+                val dialog = ProgressDialog.show(
+                    context, "",
+                    "Loading. Please wait...", true
+                )
+
+                FireStorage.inst.uploadImage(path, photoFile).first.observeOnce { success ->
+                    if (success) {
+                        imageList[questionNumber].add(path)
+                        tvCount.text = imageList[questionNumber].size.toString()
+                        dialog.dismiss()
+                    }
+                }
+                activity.viewModel.isImageCaptured.removeObservers(context)
+            }
+        }
+    }
+
+    private fun showImagesDialog(questionNumber: Int, context: Context) {
+        val dialog = Dialog(context)
+
+        val inflater = LayoutInflater.from(context)
+        val sBinding = DialogStViewImageBinding.inflate(inflater)
+
+        with(sBinding) {
+
+            tvTitle.text = ("Foto Soal - ${questionNumber+1}")
+
+            rvContainer.layoutManager = LinearLayoutManager(context)
+            rvContainer.adapter = ViewImageViewHolder(imageList[questionNumber]).getAdapter()
+
+            btnClose.setOnClickListener { dialog.dismiss() }
+
+            dialog.setContentView(root)
+        }
+
+        dialog.show()
+    }
+
+
 }

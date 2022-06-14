@@ -19,6 +19,7 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/drawable/ic_baseline_arrow_right.xml" value="0.14583333333333334" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.24791666666666667" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/drawable/ic_baseline_hourglass_bottom_24.xml" value="0.18958333333333333" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.15364583333333334" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.2109375" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.14583333333333334" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/drawable/ic_bottom_navigation_calendar.xml" value="0.14583333333333334" />
@@ -53,19 +54,22 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/bottom_sheet_tc_alter_task.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/bottom_sheet_tc_alter_task_form.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/bottom_sheet_tc_alter_task_general.xml" value="0.26811594202898553" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/dialog_indicator_info.xml" value="0.4" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/dialog_st_view_image.xml" value="0.2" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/dialog_tc_form_type.xml" value="0.1838768115942029" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/dialog_tc_task_type.xml" value="0.4" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_cm_view_image.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_dummy_rv.xml" value="0.175" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_announcement.xml" value="0.1609375" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_assignment.xml" value="0.4" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_calendar.xml" value="0.264" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_assignment.xml" value="0.264" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_calendar.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_exam.xml" value="0.28426395939086296" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_home.xml" value="0.2" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_payment.xml" value="0.4" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_progress.xml" value="0.2660332541567696" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_progress.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_progress_achievement.xml" value="0.2259963768115942" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_progress_attendance.xml" value="0.2" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_progress_graphic.xml" value="0.1265625" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_progress_graphic.xml" value="0.2" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_progress_score.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_pr_student_detail.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_preview_task_form.xml" value="0.23278985507246377" />
@@ -73,11 +77,11 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_calendar.xml" value="0.35268505079825835" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_class.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_class_subject.xml" value="0.1458966565349544" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_home.xml" value="0.4885786802030457" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_home.xml" value="0.6" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_payment.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_payment_variant.xml" value="0.21965579710144928" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_profile.xml" value="0.2" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_progress.xml" value="0.2259963768115942" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_progress.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_progress_achievement.xml" value="0.2259963768115942" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_progress_attendance.xml" value="0.2259963768115942" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_progress_graph.xml" value="0.1265625" />
@@ -89,41 +93,42 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_score_pencapain.xml" value="0.18958333333333333" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_score_pencapin.xml" value="0.2259963768115942" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_student_list.xml" value="0.4" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_subject.xml" value="0.536" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_subject.xml" value="0.2" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_subject_assignment.xml" value="0.21965579710144928" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_subject_attendance.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_subject_exam.xml" value="0.1458966565349544" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_subject_main.xml" value="0.15520833333333334" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_subject_resource.xml" value="0.1458966565349544" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_assignment.xml" value="0.176" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_exam.xml" value="0.20923913043478262" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_form.xml" value="0.4" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_alter_resource.xml" value="0.4" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_exam.xml" value="0.264" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_st_task_form.xml" value="0.2" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_alter_resource.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_alter_task.xml" value="0.2572944297082228" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_alter_task_finalization.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_alter_task_form.xml" value="0.14427083333333332" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_assessment_task_form.xml" value="0.264" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_calendar.xml" value="0.2" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_home.xml" value="0.1693840579710145" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_calendar.xml" value="0.4" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_home.xml" value="0.152" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_preview_task.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_preview_task_form.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_profile.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_resource.xml" value="0.176" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_student.xml" value="0.264" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_student_detail_attendance.xml" value="0.2259963768115942" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_student_detail_attendance.xml" value="0.10400000000000001" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_student_detail_payment.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_student_detail_score.xml" value="0.2259963768115942" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class.xml" value="0.2" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class_homeroom.xml" value="0.24871794871794872" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class_resourcce.xml" value="0.17481884057971014" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class_resource.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class_task.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class_task_detail.xml" value="0.176" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class_teaching.xml" value="0.4" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_task.xml" value="0.264" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_study_class_teaching.xml" value="0.264" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_task.xml" value="0.2" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_tc_task_draft.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/fragment_template.xml" value="0.1458966565349544" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/halohalobandung.xml" value="0.21965579710144928" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_cm_view_image.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_pr_announcement.xml" value="0.1609375" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_pr_calendar_general.xml" value="0.536" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_pr_home_general.xml" value="0.2" />
@@ -153,7 +158,7 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_assignment.xml" value="0.1458966565349544" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_attendance.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_exam.xml" value="0.1458966565349544" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_filter.xml" value="0.2" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_filter.xml" value="0.12" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_subject_resource.xml" value="0.4632258064516129" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_task.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_st_task_form.xml" value="0.20923913043478262" />
@@ -162,8 +167,8 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_agenda_general.xml" value="0.536" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_alter_task_form_essay.xml" value="0.4" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_alter_task_form_mc.xml" value="0.4" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_assessment_task_form_essay.xml" value="0.4" />
-        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_assessment_task_form_mc.xml" value="0.4" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_assessment_task_form_essay.xml" value="0.572347266881029" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_assessment_task_form_mc.xml" value="0.536" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_chip.xml" value="0.536" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_home_main_section.xml" value="0.2857789855072464" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/item_tc_resource.xml" value="0.4" />
@@ -194,6 +199,7 @@
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/view_chip_choice.xml" value="0.20677083333333332" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/view_empty_item.xml" value="0.536" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/view_empty_list.xml" value="0.6" />
+        <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/view_imageview.xml" value="0.264" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/view_item_list.xml" value="0.20677083333333332" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/view_recycler_view.xml" value="0.1609375" />
         <entry key="..\:/Project - Programming/Android Studio/Project/skripsi-binus/app/src/main/res/layout/view_recycler_view_bgwhite.xml" value="0.14583333333333334" />

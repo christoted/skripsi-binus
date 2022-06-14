@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.parent.student_detail.calendar
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.databinding.FragmentPrCalendarBinding
 import com.example.project_skripsi.databinding.FragmentPrHomeBinding
 import com.example.project_skripsi.databinding.ViewEmptyItemBinding
@@ -62,11 +65,19 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
             refreshList(viewModel.currentSelectedDate)
         }
 
+        binding.btnInfo.setOnClickListener { showInfoDialog(binding.root.context) }
+
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 
         return binding.root
+    }
+
+    private fun showInfoDialog(context: Context) {
+        val dialog = Dialog(context)
+        dialog.setContentView(DialogIndicatorInfoBinding.inflate(LayoutInflater.from(context)).root)
+        dialog.show()
     }
 
     override fun onDateSelected(

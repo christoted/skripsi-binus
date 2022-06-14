@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.student.main.calendar
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.databinding.FragmentStCalendarBinding
 import com.example.project_skripsi.databinding.ViewEmptyItemBinding
@@ -61,7 +64,16 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
             }
             refreshList(viewModel.currentSelectedDate)
         }
+
+        binding.btnInfo.setOnClickListener { showInfoDialog(binding.root.context) }
+
         return binding.root
+    }
+
+    private fun showInfoDialog(context: Context) {
+        val dialog = Dialog(context)
+        dialog.setContentView(DialogIndicatorInfoBinding.inflate(LayoutInflater.from(context)).root)
+        dialog.show()
     }
 
     override fun onDateSelected(
@@ -77,7 +89,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         curEmptyView?.let { binding.llRvParent.removeView(it) }
         if (viewModel.currentDataList[date].isNullOrEmpty()) {
             val emptyView = ViewEmptyItemBinding.inflate(layoutInflater, binding.llRvParent, false)
-            emptyView.tvEmpty.text = "Tidak ada kegiatan"
+            emptyView.tvEmpty.text = ("Tidak ada kegiatan")
             binding.llRvParent.addView(emptyView.root)
             curEmptyView = emptyView.root
         }

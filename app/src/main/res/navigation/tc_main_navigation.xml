@@ -210,6 +210,9 @@
         <argument
             android:name="taskFormId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_tcAssessmentTaskFormFragment_to_CMViewImageFragment"
+            app:destination="@id/CMViewImageFragment" />
     </fragment>
     <fragment
         android:id="@+id/tcProfileFragment"
@@ -272,6 +275,19 @@
         <action
             android:id="@+id/action_tcPreviewTaskFragment_to_tcPreviewTaskFormFragment"
             app:destination="@id/tcPreviewTaskFormFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CMViewImageFragment"
+        android:name="com.example.project_skripsi.module.common.view_image.CMViewImageFragment"
+        android:label="fragment_cm_view_image"
+        tools:layout="@layout/fragment_cm_view_image" >
+        <argument
+            android:name="question_number"
+            app:argType="integer" />
+        <argument
+            android:name="path_images"
+            app:argType="string[]" />
     </fragment>
 
 </navigation>

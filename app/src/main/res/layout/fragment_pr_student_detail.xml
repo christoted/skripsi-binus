@@ -168,7 +168,7 @@
                         android:id="@+id/iv_payment"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/subject_1"
+                        android:src="@drawable/ic_pr_payment"
                         android:scaleType="centerCrop"/>
 
                     <TextView
@@ -189,7 +189,7 @@
                         android:id="@+id/iv_calendar"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/subject_1"
+                        android:src="@drawable/ic_pr_calendar"
                         android:scaleType="centerCrop"/>
 
                     <TextView
@@ -210,7 +210,7 @@
                         android:id="@+id/iv_progress"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/subject_1"
+                        android:src="@drawable/ic_pr_score"
                         android:scaleType="centerCrop"/>
 
                     <TextView
@@ -236,7 +236,7 @@
                         android:id="@+id/iv_exam"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/subject_1"
+                        android:src="@drawable/ic_pr_exam"
                         android:scaleType="centerCrop"/>
 
                     <TextView
@@ -257,7 +257,7 @@
                         android:id="@+id/iv_assignment"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/subject_1"
+                        android:src="@drawable/ic_pr_assignment"
                         android:scaleType="centerCrop"/>
 
                     <TextView
@@ -278,7 +278,7 @@
                         android:id="@+id/iv_announcement"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/subject_1"
+                        android:src="@drawable/ic_pr_announcement"
                         android:scaleType="centerCrop"/>
 
                     <TextView
@@ -316,6 +316,5 @@
             tools:listitem="@layout/item_pr_subject"/>
 
     </LinearLayout>
-
 
 </androidx.core.widget.NestedScrollView>

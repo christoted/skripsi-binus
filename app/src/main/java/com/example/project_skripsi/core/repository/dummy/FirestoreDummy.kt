@@ -345,10 +345,14 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     "SMA Methodist - 3",
                     "0811123123",
                     "Jalan Jati",
+                    listOf("abc/def","def/abc")
                 )
     )
 
     init {
+
+
+
 //        addGeneratedTaskForms()
 //        upload(COLLECTION_STUDENT, students) // replace
 //        upload(COLLECTION_PARENT, parents) // replace
@@ -358,7 +362,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 //        upload(COLLECTION_ANNOUNCEMENT, announcements) // replace
 //        upload(COLLECTION_RESOURCE, resources) // replace
 //        upload(COLLECTION_TASK_FORM, taskFroms) // replace
-//        upload(COLLECTION_SCHOOL, schools) // replace
+        upload(COLLECTION_SCHOOL, schools) // replace
 
 //        checkNull()
 

@@ -30,6 +30,7 @@ data class TaskFormStatus(
 
     val score: Int? = null,
 
+    val isChecked: Boolean? = null
 ) {
     constructor(className: String, taskForm: TaskForm, assignedTaskForm: AssignedTaskForm) : this(
         id = assignedTaskForm.id,
@@ -43,6 +44,7 @@ data class TaskFormStatus(
         status = getStatus(taskForm, assignedTaskForm),
         statusColor = getStatusColor(taskForm, assignedTaskForm),
         score = getScore(assignedTaskForm),
+        isChecked = assignedTaskForm.isChecked
     )
 
     companion object {

@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:background="@color/recyclerview_background"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_st_task_form_essay" />
+            tools:listitem="@layout/item_tc_assessment_task_form_mc" />
 
         <LinearLayout
             android:layout_width="match_parent"
