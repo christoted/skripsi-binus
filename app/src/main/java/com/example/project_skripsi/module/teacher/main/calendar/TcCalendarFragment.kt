@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.teacher.main.calendar
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.databinding.FragmentTcCalendarBinding
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.utils.decorator.EventDecorator
@@ -58,7 +61,15 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
             refreshList(viewModel.currentSelectedDate)
         })
 
+        binding.btnInfo.setOnClickListener { showInfoDialog(binding.root.context) }
+
         return binding.root
+    }
+
+    private fun showInfoDialog(context: Context) {
+        val dialog = Dialog(context)
+        dialog.setContentView(DialogIndicatorInfoBinding.inflate(LayoutInflater.from(context)).root)
+        dialog.show()
     }
 
     override fun onDestroyView() {

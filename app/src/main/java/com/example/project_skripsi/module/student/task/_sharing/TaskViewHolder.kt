@@ -2,6 +2,7 @@ package com.example.project_skripsi.module.student.task._sharing
 
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import com.example.project_skripsi.core.model.local.TaskFormStatus
@@ -17,8 +18,12 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Task
     companion object{
         const val TYPE_EXAM = 1
         const val TYPE_ASSIGNMENT = 2
-    }
 
+        val mapOfTask = mapOf(
+            TYPE_EXAM to "Ujian",
+            TYPE_ASSIGNMENT to "Tugas",
+        )
+    }
 
     fun getAdapter(): GenericAdapter<TaskFormStatus> {
         val adapter = GenericAdapter(dataSet)
@@ -51,16 +56,26 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Task
 
                 tvDuration.text = ("${item.duration} menit")
                 if (isStudent) {
-                    item.id?.let { id ->
-                        root.setOnClickListener {
-                            it.findNavController().navigate(
-                                when (taskType) {
-                                    TYPE_EXAM -> StTaskExamFragmentDirections
-                                        .actionStTaskExamFragmentToStTaskFormFragment(id)
-                                    else -> StTaskAssignmentFragmentDirections
-                                        .actionStTaskAssignmentFragmentToStTaskFormFragment(id)
+                    root.setOnClickListener {
+                        when {
+                            DateHelper.getCurrentTime() < item.startTime ->
+                                Toast.makeText(root.context, "${mapOfTask[taskType]} belum dimulai", Toast.LENGTH_SHORT).show()
+                            DateHelper.getCurrentTime() > item.endTime && item.isChecked == false ->
+                                Toast.makeText(root.context, "${mapOfTask[taskType]} belum dikoreksi", Toast.LENGTH_SHORT).show()
+                            else -> {
+                                item.id?.let { id ->
+                                    it.findNavController().navigate(
+                                        when (taskType) {
+                                            TYPE_EXAM -> StTaskExamFragmentDirections
+                                                .actionStTaskExamFragmentToStTaskFormFragment(id)
+                                            else -> StTaskAssignmentFragmentDirections
+                                                .actionStTaskAssignmentFragmentToStTaskFormFragment(
+                                                    id
+                                                )
+                                        }
+                                    )
                                 }
-                            )
+                            }
                         }
                     }
                 }

@@ -4,9 +4,15 @@ package com.example.project_skripsi.module.student.subject_detail._sharing
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.findNavController
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.databinding.ItemStTaskBinding
+import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
+import com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentFragmentDirections
+import com.example.project_skripsi.module.student.task.exam.StTaskExamFragmentDirections
+import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_ASSIGNMENT
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.DateHelper
@@ -25,7 +31,7 @@ class TaskViewHolder(
             val view = viewBinding as ItemStTaskBinding
             with(view) {
                 tvTitle.text = item.title
-                tvScore.text = if (item.score == null) "-" else item.score.toString()
+                tvScore.text = item.score?.toString() ?: "-"
                 tvSubjectName.text = ("nilai")
                 tvClassName.visibility = View.GONE
                 tvStatus.text = item.status
@@ -45,7 +51,19 @@ class TaskViewHolder(
                 }
 
                 tvDuration.text = ("${item.duration} menit")
-                item.id?.let { id -> root.setOnClickListener { listener.onItemClick(id) } }
+
+                root.setOnClickListener {
+                    val taskType = if (item.type == TASK_TYPE_ASSIGNMENT) "Tugas" else "Ujian"
+                    when {
+                        DateHelper.getCurrentTime() < item.startTime ->
+                            Toast.makeText(root.context, "$taskType belum dimulai", Toast.LENGTH_SHORT).show()
+                        DateHelper.getCurrentTime() > item.endTime && item.isChecked == false ->
+                            Toast.makeText(root.context, "$taskType belum dikoreksi", Toast.LENGTH_SHORT).show()
+                        else -> {
+                            item.id?.let { id -> root.setOnClickListener { listener.onItemClick(id) } }
+                        }
+                    }
+                }
             }
         }
         return adapter

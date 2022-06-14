@@ -25,12 +25,13 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="16dp"/>
 
-        <Button
+        <ImageView
             android:id="@+id/btn_graphic"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginEnd="8dp"
-            android:text="Grafik" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_insert_chart_outlined_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginEnd="16dp" />
 
     </LinearLayout>
 

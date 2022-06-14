@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.task.form
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,10 +48,11 @@ class StTaskFormViewModel : ViewModel() {
     private val _isSubmitted = MutableLiveData<Boolean>()
     val isSubmitted: LiveData<Boolean> = _isSubmitted
 
-    private var taskFormId = ""
-    private lateinit var curStudent: Student
+    var taskFormId = ""
+    lateinit var curStudent: Student
 
     fun setTaskForm(taskFormId : String) {
+        Log.d("12345-", "reloadtask")
         this.taskFormId = taskFormId
         loadTaskForm(taskFormId)
     }
@@ -117,12 +119,18 @@ class StTaskFormViewModel : ViewModel() {
     private fun loadStudyClass(uid: String) =
         FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { _studyClass.postValue(it) }
 
-    fun submitAnswer(newAnswer: List<String>) {
+    fun submitAnswer(newAnswer: List<Pair<String, List<String>>>) {
         curStudent.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
-            it.answers?.mapIndexed { index, answer -> answer.answerText = newAnswer[index] }
+            it.answers?.mapIndexed { index, answer ->
+                answer.answerText = newAnswer[index].first
+                answer.images = newAnswer[index].second
+            }
         }
         curStudent.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
-            it.answers?.mapIndexed { index, answer -> answer.answerText = newAnswer[index] }
+            it.answers?.mapIndexed { index, answer ->
+                answer.answerText = newAnswer[index].first
+                answer.images = newAnswer[index].second
+            }
         }
         FireRepository.inst.alterItems(listOf(curStudent)).first.observeOnce {
             _isSubmitted.postValue(it)

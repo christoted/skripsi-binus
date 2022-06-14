@@ -1,6 +1,7 @@
 package com.example.project_skripsi.module.student.main._sharing.agenda
 
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
@@ -26,7 +27,15 @@ class StHomeAssignmentViewHolder(private val binding: ItemStHomeSectionItemBindi
             btnResource.visibility = View.INVISIBLE
             btnClass.text = ("Tugas")
             btnClass.setOnClickListener {
-                data.id?.let { id -> listener.onTaskFormItemClicked(id, data.subjectName ?: "") }
+                when {
+                    DateHelper.getCurrentTime() < item.startTime ->
+                        Toast.makeText(root.context, "Tugas belum dimulai", Toast.LENGTH_SHORT).show()
+                    DateHelper.getCurrentTime() > item.endTime ->
+                        Toast.makeText(root.context, "Tugas sudah berlalu, silahkan akses dari kelas", Toast.LENGTH_SHORT).show()
+                    else -> {
+                        data.id?.let { id -> listener.onTaskFormItemClicked(id, data.subjectName ?: "") }
+                    }
+                }
             }
         }
     }

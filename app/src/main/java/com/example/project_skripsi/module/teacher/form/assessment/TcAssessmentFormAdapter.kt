@@ -1,8 +1,10 @@
 package com.example.project_skripsi.module.teacher.form.assessment
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.local.AssignedQuestion
@@ -73,6 +75,21 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
                 tvScoreWeight.text = ("Nilai (0/${item.scoreWeight}): ")
                 tvScore.text = if (item.answerKey == item.answer?.answerText) item.scoreWeight.toString() else "0"
+
+                item.answer?.images?.let { list ->
+                    tvImageCount.text = list.size.toString()
+                    btnViewImage.setOnClickListener {
+                        root.findNavController().navigate(
+                            TcAssessmentTaskFormFragmentDirections.actionTcAssessmentTaskFormFragmentToCMViewImageFragment(
+                                position+1,
+                                list.toTypedArray()
+                            )
+                        )
+                    }
+                } ?: kotlin.run{
+                    llImages.visibility = GONE
+                }
+
             }
         }
     }
@@ -89,6 +106,20 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
                 btnSetZero.setOnClickListener { edtScore.setText("0") }
                 btnSetMax.text = ("SET ${item.scoreWeight}")
                 btnSetMax.setOnClickListener { edtScore.setText(item.scoreWeight.toString()) }
+
+                item.answer?.images?.let { list ->
+                    tvImageCount.text = list.size.toString()
+                    btnViewImage.setOnClickListener {
+                        root.findNavController().navigate(
+                            TcAssessmentTaskFormFragmentDirections.actionTcAssessmentTaskFormFragmentToCMViewImageFragment(
+                                position+1,
+                                list.toTypedArray()
+                            )
+                        )
+                    }
+                } ?: kotlin.run{
+                    llImages.visibility = GONE
+                }
             }
         }
     }

@@ -61,9 +61,6 @@ class TcStudyClassFragment : Fragment(), ClassClickListener {
         })
 
         binding.rvClass.layoutManager = LinearLayoutManager(context)
-        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-        binding.rvClass.addItemDecoration(dividerItemDecoration)
-
         viewModel.teachingClasses.observe(viewLifecycleOwner, { pairData ->
             binding.rvClass.adapter = TcStudyClassViewHolder(pairData.second, pairData.first, this@TcStudyClassFragment).getAdapter()
         })
