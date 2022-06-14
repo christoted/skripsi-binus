@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.parent.student_detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +38,7 @@ class PrStudentDetailFragment : Fragment() {
 
             student.profile?.let { imageUrl ->
                 Glide
-                    .with(context!!)
+                    .with(requireContext())
                     .load(imageUrl)
                     .into(binding.ivProfilePicture)
             }
@@ -72,12 +74,17 @@ class PrStudentDetailFragment : Fragment() {
 
         viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
         viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
-        viewModel.homeroomTeacher.observe(viewLifecycleOwner, {
+        viewModel.homeroomTeacher.observe(viewLifecycleOwner) { teacher ->
             with(binding) {
-                tvTeacherName.text = it.name
-                it.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                tvTeacherName.text = teacher.name
+                teacher.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                imvTeacherPhone.setOnClickListener {
+                    teacher.phoneNumber?.let {
+                        goToWhatsApp(it)
+                    }
+                }
             }
-        })
+        }
 
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         viewModel.subjectList.observe(viewLifecycleOwner, {
@@ -98,6 +105,13 @@ class PrStudentDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun goToWhatsApp(phoneNumber: String) {
+        val url = "https://api.whatsapp.com/send/?phone=${phoneNumber}"
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     private fun retrieveArgs() {

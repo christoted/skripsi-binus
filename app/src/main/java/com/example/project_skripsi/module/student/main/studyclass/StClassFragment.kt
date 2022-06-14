@@ -54,7 +54,7 @@ class StClassFragment : Fragment() {
                 .navigate(StClassFragmentDirections.actionNavigationClassFragmentToStTaskAssignmentFragment())
         }
 
-        viewModel.studyClass.observe(viewLifecycleOwner, {
+        viewModel.studyClass.observe(viewLifecycleOwner) {
             with(binding) {
                 tvClassName.text = it.name
                 viewpagerSubject.adapter = ScreenSlidePagerAdapter()
@@ -63,12 +63,17 @@ class StClassFragment : Fragment() {
 
                 it.id?.let { studyClassId ->
                     fabStudentList.setOnClickListener { _ ->
-                        view?.findNavController()?.navigate(StClassFragmentDirections
-                            .actionNavigationClassFragmentToStStudentListFragment(studyClassId,it.name!!))
+                        view?.findNavController()?.navigate(
+                            StClassFragmentDirections
+                                .actionNavigationClassFragmentToStStudentListFragment(
+                                    studyClassId,
+                                    it.name!!
+                                )
+                        )
                     }
                 }
             }
-        })
+        }
 
         viewModel.teacher.observe(viewLifecycleOwner) { teacher ->
             with(binding) {
@@ -80,28 +85,23 @@ class StClassFragment : Fragment() {
             }
         }
 
-        viewModel.classChief.observe(viewLifecycleOwner) {
+        viewModel.classChief.observe(viewLifecycleOwner) { student ->
             with(binding) {
-                tvChiefName.text = it.name
-                it.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
+                tvChiefName.text = student.name
+                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
+                imvChiefPhone.setOnClickListener {
+                    goToWhatsApp(phoneNumber = student.phoneNumber ?: "")
+                }
             }
         }
-
         return binding.root
     }
 
-    // TODO: Implement the WebView
     private fun goToWhatsApp(phoneNumber: String) {
         val url = "https://api.whatsapp.com/send/?phone=${phoneNumber}"
         val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
-//        binding.appBar.visibility = View.GONE
-//        binding.nestedScrollView.visibility = View.GONE
-//        binding.webview.let {
-//            it.loadUrl("https://api.whatsapp.com/send/?phone=${phoneNumber}")
-//            it.webViewClient = WebViewClient()
-//        }
     }
 
     override fun onDestroyView() {

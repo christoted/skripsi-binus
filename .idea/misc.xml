@@ -219,8 +219,10 @@
         <entry key="app/src/main/res/layout/fragment_tc_home.xml" value="0.15729166666666666" />
         <entry key="app/src/main/res/layout/fragment_tc_resource.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_tc_study_class.xml" value="0.33489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_tc_study_class_homeroom.xml" value="0.18478260869565216" />
         <entry key="app/src/main/res/layout/fragment_tc_study_class_resource.xml" value="0.11503623188405797" />
         <entry key="app/src/main/res/layout/fragment_tc_study_class_task_detail.xml" value="0.20052083333333334" />
+        <entry key="app/src/main/res/layout/fragment_tc_study_class_teaching.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/fragment_tc_task.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/item_st_class_subject.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/item_st_home_main_section.xml" value="0.15260416666666668" />

@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.student.main.calendar
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.databinding.FragmentStCalendarBinding
 import com.example.project_skripsi.databinding.ViewEmptyItemBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
@@ -96,12 +99,23 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         )
     }
 
-    override fun onClassItemClicked(Position: Int) {
-        TODO("Not yet implemented")
+    override fun onClassItemClicked(Position: Int, classMeeting: ClassMeeting) {
+        goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
     override fun onMaterialItemClicked(Position: Int) {
-        TODO("Not yet implemented")
+        goToGoogleDrive("https://drive.google.com/drive/folders/1DIFexFEdlRVILpxZt8Qcdgr842Eo0FcY?usp=sharing")
+    }
+
+    private fun goToGoogleDrive(driveLink: String) {
+        val uri = Uri.parse(driveLink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+    private fun goToClassMeeting(classLink: String) {
+        val uri = Uri.parse(classLink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
 }
