@@ -70,12 +70,15 @@ class StProfileFragment : Fragment() {
 
             // Cancel Notification Exam, Assignment and Meeting
             homeViewModel.attendedMeeting.observe(viewLifecycleOwner) {
+                Log.d("777", "onCreateView: attended meeting ${it}")
                 NotificationUtil.cancelAllMeetingNotification(requireActivity(), it)
             }
             homeViewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) {
+                Log.d("777", "onCreateView: data exam ${it}")
                 NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), it)
             }
             homeViewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
+                Log.d("777", "onCreateView: assignment ${it}")
                 NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), it)
             }
 
