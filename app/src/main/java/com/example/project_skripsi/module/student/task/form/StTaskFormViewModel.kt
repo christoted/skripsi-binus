@@ -48,6 +48,7 @@ class StTaskFormViewModel : ViewModel() {
     private val _isSubmitted = MutableLiveData<Boolean>()
     val isSubmitted: LiveData<Boolean> = _isSubmitted
 
+    var isViewOnly = false
     var taskFormId = ""
     lateinit var curStudent: Student
 

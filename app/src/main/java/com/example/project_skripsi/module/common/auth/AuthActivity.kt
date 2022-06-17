@@ -62,18 +62,18 @@ class AuthActivity : AppCompatActivity() {
 
         with(binding) {
             btnAutoStudent.setOnClickListener{
-                edtEmail.setText(("luis2@gmail.com"))
-                edtPassword.setText(("123456"))
+                edtEmail.setText(("luisdummy@gmail.com"))
+                edtPassword.setText(("luis123"))
                 cgLoginAs.check(R.id.chip_student)
             }
             btnAutoTeacher.setOnClickListener{
-                edtEmail.setText(("devita@gmail.com"))
-                edtPassword.setText(("devita"))
+                edtEmail.setText(("devitadummy@gmail.com"))
+                edtPassword.setText(("devita123"))
                 cgLoginAs.check(R.id.chip_teacher)
             }
             btnAutoParent.setOnClickListener{
-                edtEmail.setText(("arum@gmail.com"))
-                edtPassword.setText(("arum123"))
+                edtEmail.setText(("teddydummy@gmail.com"))
+                edtPassword.setText(("teddy123"))
                 cgLoginAs.check(R.id.chip_parent)
             }
             btnLogin.setOnClickListener {
@@ -97,7 +97,7 @@ class AuthActivity : AppCompatActivity() {
             initEvent()
         }, 500)
 
-      //  FirestoreDummy()
+        FirestoreDummy()
     }
 
     private fun initEvent() {

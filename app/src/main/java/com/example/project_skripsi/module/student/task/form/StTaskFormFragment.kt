@@ -1,14 +1,11 @@
 package com.example.project_skripsi.module.student.task.form
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RadioGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -52,6 +49,12 @@ class StTaskFormFragment : Fragment() {
                 taskForm.endTime?.let {
                     tvEndDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
                     tvEndTime.text = DateHelper.getFormattedDateTime(DateHelper.hm, it)
+
+                    viewModel.isViewOnly = it < DateHelper.getCurrentTime()
+                    if (!viewModel.isViewOnly) {
+                        btnTime.visibility = View.VISIBLE
+                        btnSubmit.visibility = View.VISIBLE
+                    }
                 }
                 val durationDis = DateHelper.getDuration(taskForm.startTime, taskForm.endTime)
                 tvDuration.text = DisplayHelper.getDurationDisplay(durationDis.first, durationDis.second)
@@ -67,11 +70,11 @@ class StTaskFormFragment : Fragment() {
         })
 
         viewModel.questionList.observe(viewLifecycleOwner, {
-            Log.d("12345-", "reloadlivedata")
             val adapter = StFormAdapter(it,
                 viewModel.curStudent.id,
                 viewModel.taskFormId,
-                (activity as StMainActivity)
+                (activity as StMainActivity),
+                viewModel.isViewOnly
             )
             binding.rvQuestion.adapter = adapter
             binding.btnSubmit.setOnClickListener {

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -175,6 +176,7 @@ class StHomeFragment : Fragment(), ItemListener {
             }
         }
     }
+
     private fun examNotification() {
         // Exam
         viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) {
@@ -204,6 +206,7 @@ class StHomeFragment : Fragment(), ItemListener {
             }
         }
     }
+
     private fun assignmentNotification() {
         // Task
         viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
@@ -233,7 +236,9 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
+        view?.findNavController()?.navigate(
             StHomeFragmentDirections.actionNavigationHomeFragmentToStTaskFormFragment(taskFormId)
+        )
     }
 
     override fun onClassItemClicked(Position: Int, classMeeting: ClassMeeting) {

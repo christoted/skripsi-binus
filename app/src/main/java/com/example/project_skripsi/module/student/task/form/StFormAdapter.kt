@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -37,7 +38,8 @@ class StFormAdapter(
     val questionList: List<AssignedQuestion>,
     val studentId: String?,
     val taskFormId: String,
-    var activity: StMainActivity
+    var activity: StMainActivity,
+    var isViewOnly: Boolean
     ) :
     Adapter<ViewHolder>() {
 
@@ -94,6 +96,11 @@ class StFormAdapter(
                 tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
                 tvImageCount.text = imageList[position].size.toString()
 
+                if (isViewOnly) {
+                    btnDeleteImage.visibility = View.GONE
+                    btnAddImage.visibility = View.GONE
+                }
+
                 btnViewImage.setOnClickListener {
                     if (imageList[position].isNotEmpty()) {
                         showImagesDialog(position, root.context)
@@ -118,6 +125,11 @@ class StFormAdapter(
                 item.answer?.answerText?.let { edtAnswer.setText(it) }
                 tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
                 tvImageCount.text = imageList[position].size.toString()
+
+                if (isViewOnly) {
+                    btnDeleteImage.visibility = View.GONE
+                    btnAddImage.visibility = View.GONE
+                }
 
                 btnViewImage.setOnClickListener {
                     if (imageList[position].isNotEmpty()) {
