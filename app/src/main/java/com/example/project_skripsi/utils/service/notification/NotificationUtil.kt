@@ -121,12 +121,18 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 it.startTime?.let {
                     cancelNotification(context, date = it)
                 }
+                it.endTime?.let {
+                    cancelNotification(context, date = it)
+                }
             }
         }
 
         fun cancelAllExamAndAssignmentNotification(context: Context, exams: List<TaskForm>) {
             exams.forEach {
                 it.startTime?.let {
+                    cancelNotification(context, date = it)
+                }
+                it.endTime?.let {
                     cancelNotification(context, date = it)
                 }
             }
