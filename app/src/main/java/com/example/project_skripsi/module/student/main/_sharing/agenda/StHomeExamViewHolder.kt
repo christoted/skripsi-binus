@@ -30,6 +30,7 @@ class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, pr
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
             btnResource.visibility = View.INVISIBLE
             btnClass.text = ("Ujian")
+
             btnClass.setOnClickListener {
                 when {
                     DateHelper.getCurrentTime() < item.startTime ->

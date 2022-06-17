@@ -47,7 +47,6 @@ class StHomeViewModel : ViewModel() {
         loadCurrentStudent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
         initData()
-
     }
 
     private fun initData() {

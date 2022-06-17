@@ -18,8 +18,8 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val students = mapOf(
-        "P4T9d2CagYdNmhc7xFiGYh3l2oH2" to
-                Student("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
+        "KmMDuXr945X8eGnCkFLFe1sP8TH3" to
+                Student("KmMDuXr945X8eGnCkFLFe1sP8TH3",
                     "123456789",
                     "Luis B",
                     "https://media-exp1.licdn.com/dms/image/C5603AQErx4vpP4mHkA/profile-displayphoto-shrink_200_200/0/1625740341499?e=1657756800&v=beta&t=KQxAFRTMH4sLuPbY0yN3-xE08u4MPokPWygzMtPRY1I",
@@ -102,21 +102,21 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     )
 
     private val parents = mapOf(
-        "Zslqzb1vN1cehlD7TYaQBWHERo72" to
-                Parent("Zslqzb1vN1cehlD7TYaQBWHERo72",
+        "0JGXQLl7R9eryNGbzptA3923JKT2" to
+                Parent("0JGXQLl7R9eryNGbzptA3923JKT2",
                     "Arum",
                     "0821123123",
-                    listOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                        "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                        "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                        "P4T9d2CagYdNmhc7xFiGYh3l2oH2")
+                    listOf("KmMDuXr945X8eGnCkFLFe1sP8TH3",
+                        "KmMDuXr945X8eGnCkFLFe1sP8TH3",
+                        "KmMDuXr945X8eGnCkFLFe1sP8TH3",
+                        "KmMDuXr945X8eGnCkFLFe1sP8TH3")
                 )
     )
 
 
     private val teachers = mapOf(
-        "EAwxIDeIQfRWuNHW4P92B6Ko5G53" to
-                Teacher("EAwxIDeIQfRWuNHW4P92B6Ko5G53",
+        "fUepYcW4j8Z2M8lX3L78ddEprIX2" to
+                Teacher("fUepYcW4j8Z2M8lX3L78ddEprIX2",
                     "Devita",
                     "https://www.google.com/search?q=devita+setyaningrum&sxsrf=ALiCzsZvO6qPVHPXAV21dASGyM69ZfwLxA:1654423545740&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjqwYH-h5b4AhVD7XMBHcCRC-cQ_AUoAXoECAEQAw&biw=1536&bih=784&dpr=1.25#imgrc=cWTYUVfkb5WQRM",
                     "0821123123",
@@ -274,7 +274,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             ""
                         )
                     ),
-                    listOf("eMsulnik6kEpW0ESKI9V")),
+                    listOf("eMsulnik6kEpW0ESKI9V"),
+                    emptyList(),
+                    emptyList(),
+                    true
+                ),
         "ripyBsBZObBfarZpd085" to
                 TaskForm("ripyBsBZObBfarZpd085",
                     "Tugas tentang minyak hewani",
@@ -302,7 +306,11 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                             "1"
                         )
                     ),
-                    listOf("eMsulnik6kEpW0ESKI9V")),
+                    listOf("eMsulnik6kEpW0ESKI9V"),
+                    emptyList(),
+                    emptyList(),
+                    true
+                ),
     )
 
 
@@ -312,12 +320,12 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 StudyClass("eMsulnik6kEpW0ESKI9V",
                     "XII-IPA-3",
                     12,
-                    "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
-                    "P4T9d2CagYdNmhc7xFiGYh3l2oH2",
-                    mutableListOf("P4T9d2CagYdNmhc7xFiGYh3l2oH2"),
+                    "fUepYcW4j8Z2M8lX3L78ddEprIX2",
+                    "KmMDuXr945X8eGnCkFLFe1sP8TH3",
+                    mutableListOf("KmMDuXr945X8eGnCkFLFe1sP8TH3"),
                     mutableListOf(
                         Subject("Biologi",
-                            "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
+                            "fUepYcW4j8Z2M8lX3L78ddEprIX2",
                             mutableListOf(
                                 ClassMeeting("MEET001",
                                     "Biologi",
@@ -350,9 +358,6 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     )
 
     init {
-
-
-
 //        addGeneratedTaskForms()
 //        upload(COLLECTION_STUDENT, students) // replace
 //        upload(COLLECTION_PARENT, parents) // replace
@@ -362,7 +367,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
 //        upload(COLLECTION_ANNOUNCEMENT, announcements) // replace
 //        upload(COLLECTION_RESOURCE, resources) // replace
 //        upload(COLLECTION_TASK_FORM, taskFroms) // replace
-        upload(COLLECTION_SCHOOL, schools) // replace
+//        upload(COLLECTION_SCHOOL, schools) // replace
 
 //        checkNull()
 
@@ -447,7 +452,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 studyClasses["eMsulnik6kEpW0ESKI9V"]!!.subjects!!.add(
                     Subject(
                         subjects[idx],
-                        "EAwxIDeIQfRWuNHW4P92B6Ko5G53",
+                        "fUepYcW4j8Z2M8lX3L78ddEprIX2",
                         mutableListOf(),
                         mutableListOf(),
                         mutableListOf(),
@@ -456,10 +461,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 )
             }
 
-            if (teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+            if (teachers["fUepYcW4j8Z2M8lX3L78ddEprIX2"]!!
                     .teachingGroups!!.none { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }
             ) {
-                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!.teachingGroups!!.add(
+                teachers["fUepYcW4j8Z2M8lX3L78ddEprIX2"]!!.teachingGroups!!.add(
                     TeachingGroup(
                         subjects[idx],
                         gradeLevel,
@@ -486,7 +491,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     if (rnd50to50()) "Online" else "Offline",
                     subjects[idx],
                     listOf(),
-                    listOf("eMsulnik6kEpW0ESKI9V")
+                    listOf("eMsulnik6kEpW0ESKI9V"),
+                    emptyList(),
+                    emptyList(),
+                    true
                 )
 
                 studyClasses["eMsulnik6kEpW0ESKI9V"]!!
@@ -494,13 +502,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .filter { it.subjectName == subjects[idx] }[0]
                     .classExams!!.add(taskId)
 
-                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                teachers["fUepYcW4j8Z2M8lX3L78ddEprIX2"]!!
                     .teachingGroups!!
                     .filter { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }[0]
                     .createdExams!!.add(taskId)
 
                 val isChecked = rnd50to50()
-                students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
+                students["KmMDuXr945X8eGnCkFLFe1sP8TH3"]!!
                     .assignedExams!!
                     .add(AssignedTaskForm(taskId,
                         title,
@@ -530,7 +538,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     if (rnd50to50()) "Online" else "Offline",
                     subjects[idx],
                     listOf(),
-                    listOf("eMsulnik6kEpW0ESKI9V")
+                    listOf("eMsulnik6kEpW0ESKI9V"),
+                    emptyList(),
+                    emptyList(),
+                    true
                 )
 
                 studyClasses["eMsulnik6kEpW0ESKI9V"]!!
@@ -538,13 +549,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .filter { it.subjectName == subjects[idx] }[0]
                     .classExams!!.add(taskId)
 
-                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                teachers["fUepYcW4j8Z2M8lX3L78ddEprIX2"]!!
                     .teachingGroups!!
                     .filter { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }[0]
                     .createdExams!!.add(taskId)
 
                 val isChecked = rnd50to50()
-                students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
+                students["KmMDuXr945X8eGnCkFLFe1sP8TH3"]!!
                     .assignedExams!!
                     .add(AssignedTaskForm(taskId,
                         title,
@@ -555,7 +566,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                         isChecked,
                         subjects[idx],
                         if (isChecked) rnd(0,100) else 0,
-                        listOf()
+                        listOf(),
                     ))
             }
 
@@ -575,7 +586,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     if (rnd50to50()) "Online" else "Offline",
                     subjects[idx],
                     listOf(),
-                    listOf("eMsulnik6kEpW0ESKI9V")
+                    listOf("eMsulnik6kEpW0ESKI9V"),
+                    emptyList(),
+                    emptyList(),
+                    true
                 )
 
                 studyClasses["eMsulnik6kEpW0ESKI9V"]!!
@@ -583,13 +597,13 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     .filter { it.subjectName == subjects[idx] }[0]
                     .classAssignments!!.add(taskId)
 
-                teachers["EAwxIDeIQfRWuNHW4P92B6Ko5G53"]!!
+                teachers["fUepYcW4j8Z2M8lX3L78ddEprIX2"]!!
                     .teachingGroups!!
                     .filter { it.gradeLevel == gradeLevel && it.subjectName == subjects[idx] }[0]
                     .createdAssignments!!.add(taskId)
 
                 val isChecked = rnd50to50()
-                students["P4T9d2CagYdNmhc7xFiGYh3l2oH2"]!!
+                students["KmMDuXr945X8eGnCkFLFe1sP8TH3"]!!
                     .assignedAssignments!!
                     .add(AssignedTaskForm(taskId,
                         title,
