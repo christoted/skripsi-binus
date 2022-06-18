@@ -15,6 +15,7 @@ import com.example.project_skripsi.module.student.task.assignment.StTaskAssignme
 import com.example.project_skripsi.module.student.task.exam.StTaskExamFragmentDirections
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
+import java.util.*
 
 class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, private val listener: ItemListener):
     RecyclerView.ViewHolder(binding.root) {
@@ -31,14 +32,16 @@ class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, pr
             btnResource.visibility = View.INVISIBLE
             btnClass.text = ("Ujian")
 
-            btnClass.setOnClickListener {
-                when {
-                    DateHelper.getCurrentTime() < item.startTime ->
-                        Toast.makeText(root.context, "Ujian belum dimulai", Toast.LENGTH_SHORT).show()
-                    DateHelper.getCurrentTime() > item.endTime ->
-                        Toast.makeText(root.context, "Ujian sudah berlalu, silahkan akses dari kelas", Toast.LENGTH_SHORT).show()
-                    else -> {
-                        data.id?.let { id -> listener.onTaskFormItemClicked(id, subjectName = data.subjectName ?: "") }
+            if (DateHelper.getCurrentTime() > item.endTime) {
+                btnClass.isEnabled = false
+            } else {
+                btnClass.setOnClickListener {
+                    when {
+                        DateHelper.getCurrentTime() < item.startTime ->
+                            Toast.makeText(root.context, "Ujian belum dimulai", Toast.LENGTH_SHORT).show()
+                        else -> {
+                            data.id?.let { id -> listener.onTaskFormItemClicked(id, subjectName = data.subjectName ?: "") }
+                        }
                     }
                 }
             }

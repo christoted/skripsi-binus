@@ -41,6 +41,13 @@ class TcStudentFragment : Fragment() {
             }
         })
 
+        viewModel.parent.observe(viewLifecycleOwner, {
+            with(binding) {
+                tvParentName.text = it.name
+                it.phoneNumber?.let { imvParentPhone.setImageResource(R.drawable.whatsapp) }
+            }
+        })
+
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
@@ -59,9 +66,7 @@ class TcStudentFragment : Fragment() {
 
     private fun retrieveArgs() {
         val args: TcStudentFragmentArgs by navArgs()
-        Log.d("12345-Student", "retrieveArgs: ${args.studentId}")
         viewModel.setStudent(args.studentId)
-//        viewModel.studentUID = args.studentId
     }
 }
 

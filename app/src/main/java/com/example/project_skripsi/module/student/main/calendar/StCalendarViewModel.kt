@@ -9,8 +9,11 @@ import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
+import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
 import kotlin.collections.ArrayList
@@ -26,7 +29,7 @@ class StCalendarViewModel : ViewModel() {
         const val TYPE_MORE = 10
     }
 
-    var currentSelectedDate: CalendarDay = DateHelper.getCurrentDate()
+    var currentSelectedDate: CalendarDay = getCurrentDate()
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
     val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
@@ -72,7 +75,12 @@ class StCalendarViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { propagateEvent(it, TYPE_ANNOUNCEMENT) }
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
+            propagateEvent(
+                list.filter { convertDateToCalendarDay(it.date) <= getCurrentDate() },
+                TYPE_ANNOUNCEMENT
+            )
+        }
     }
 
     private fun propagateEvent(item : List<HomeSectionData>, type: Int) {

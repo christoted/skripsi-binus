@@ -50,7 +50,7 @@ class AuthRepository {
                 .addOnCompleteListener { task: Task<AuthResult> ->
                     if(task.isSuccessful){
                         Log.d("12345-AuthRepository", "Auth Login Successful")
-
+                        Log.d("12345-AuthRepository", firebaseAuth.currentUser?.uid ?: "NULL")
                         firebaseAuth.currentUser?.let { user ->
                             currentUser = firebaseAuth.currentUser
                             FireRepository.inst
@@ -63,11 +63,12 @@ class AuthRepository {
                                         else -> null
                                     }
                                 }?.let { response ->
-                                    response.first.observeOnce{ data.postValue(user) }
-                                    response.second.observeOnce{ failure.postValue(true) }
+                                    response.first.observeOnce { data.postValue(user) }
+                                    response.second.observeOnce { failure.postValue(true) }
                                 }
-                        } ?: failure.postValue(true)
-
+                        } ?: kotlin.run {
+                            failure.postValue(true)
+                        }
                     } else {
                         Log.d("12345-AuthRepository","Error Login")
                         failure.postValue(true)

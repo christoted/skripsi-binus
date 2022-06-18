@@ -28,6 +28,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     "082363007520",
                     18,
                     "laki-laki",
+                    "0JGXQLl7R9eryNGbzptA3923JKT2",
                     "eMsulnik6kEpW0ESKI9V",
                     "ksalsoodapp110Kkqllp",
                     listOf(
@@ -239,7 +240,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 Resource("dxXTXZcrj0yVh8PpzYk2",
                     "Pertemuan 1",
                     12,
-                    "recording",
+                    1,
                     "<<url>>",
                     "Biologi",
                     listOf("b1Ty3EisH2bkMlnBWGmp"),
@@ -248,7 +249,7 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                 Resource("feiaZB0ds1rbaWT1g8hJ",
                     "Bab 1 Reproduksi",
                     12,
-                    "slide",
+                    2,
                     "<<url>>",
                     "Biologi",
                     listOf(),
@@ -353,7 +354,6 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     "SMA Methodist - 3",
                     "0811123123",
                     "Jalan Jati",
-                    listOf("abc/def","def/abc")
                 )
     )
 
@@ -374,18 +374,18 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
     }
 
     private fun checkNull() {
-        FireRepository.inst.getAllItems<Administrator>().first.observeOnce{ ls ->
-            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyAdministrator", it.toString()) }
-        }
+//        FireRepository.inst.getAllItems<Administrator>().first.observeOnce{ ls ->
+//            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyAdministrator", it.toString()) }
+//        }
         FireRepository.inst.getAllItems<Announcement>().first.observeOnce{ ls ->
             ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyAnnouncement", it.toString()) }
         }
         FireRepository.inst.getAllItems<Parent>().first.observeOnce{ ls ->
             ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyParent", it.toString()) }
         }
-        FireRepository.inst.getAllItems<Resource>().first.observeOnce{ ls ->
-            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyResource", it.toString()) }
-        }
+//        FireRepository.inst.getAllItems<Resource>().first.observeOnce{ ls ->
+//            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyResource", it.toString()) }
+//        }
         FireRepository.inst.getAllItems<School>().first.observeOnce{ ls ->
             ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummySchool", it.toString()) }
         }
@@ -395,9 +395,9 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
         FireRepository.inst.getAllItems<StudyClass>().first.observeOnce{ ls ->
             ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyStudyClass", it.toString()) }
         }
-        FireRepository.inst.getAllItems<TaskForm>().first.observeOnce{ ls ->
-            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyTaskForm", it.toString()) }
-        }
+//        FireRepository.inst.getAllItems<TaskForm>().first.observeOnce{ ls ->
+//            ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyTaskForm", it.toString()) }
+//        }
         FireRepository.inst.getAllItems<Teacher>().first.observeOnce{ ls ->
             ls.map { if (it.toString().contains("null")) Log.d("12345-FirestoreDummyTeacher", it.toString()) }
         }

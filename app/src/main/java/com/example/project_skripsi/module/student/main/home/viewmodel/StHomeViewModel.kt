@@ -23,10 +23,10 @@ import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentD
 class StHomeViewModel : ViewModel() {
 
     private val _currentStudent = MutableLiveData<Student>()
-    val currentStudent : LiveData<Student> = _currentStudent
+    val currentStudent: LiveData<Student> = _currentStudent
 
     private val _profileClass = MutableLiveData<String>()
-    val profileClass : LiveData<String> = _profileClass
+    val profileClass: LiveData<String> = _profileClass
 
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
@@ -73,7 +73,7 @@ class StHomeViewModel : ViewModel() {
         }
 
         _listPaymentSectionDataPayment.observeOnce {
-            listData[3] =  HomeMainSection(SECTION_PAYMENT, sectionItem = it)
+            listData[3] = HomeMainSection(SECTION_PAYMENT, sectionItem = it)
             _sectionData.postValue(listData)
         }
 
@@ -103,56 +103,56 @@ class StHomeViewModel : ViewModel() {
         }
     }
 
-        private fun loadStudyClass(uid: String) {
-            FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
-                studyClass.name?.let { _profileClass.postValue(it) }
-                val meetingList = mutableListOf<ClassMeeting>()
-                val examList = mutableListOf<String>()
-                val assignmentList = mutableListOf<String>()
+    private fun loadStudyClass(uid: String) {
+        FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
+            studyClass.name?.let { _profileClass.postValue(it) }
+            val meetingList = mutableListOf<ClassMeeting>()
+            val examList = mutableListOf<String>()
+            val assignmentList = mutableListOf<String>()
 
-                studyClass.subjects?.map { subject ->
-                    with(subject) {
-                        subject.classMeetings
-                            ?.filter {
-                                it.startTime?.let { date ->
-                                    convertDateToCalendarDay(date)
-                                } == getCurrentDate()
-                            }
-                            ?.map {
-                                meetingList.add(it)
-                            }
-                        classExams?.let { exams -> examList.addAll(exams) }
-                        classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
-                    }
+            studyClass.subjects?.map { subject ->
+                with(subject) {
+                    subject.classMeetings
+                        ?.filter {
+                            it.startTime?.let { date ->
+                                convertDateToCalendarDay(date)
+                            } == getCurrentDate()
+                        }
+                        ?.map {
+                            meetingList.add(it)
+                        }
+                    classExams?.let { exams -> examList.addAll(exams) }
+                    classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                 }
-                _listHomeSectionDataClassSchedule.postValue(
-                    meetingList.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
-                        .sortedBy { it.startTime }
-                )
-                loadTaskForms(examList, _listHomeSectionDataExam)
-                loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
             }
-        }
-
-        private fun loadAnnouncements() {
-            FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
-                _listPaymentSectionDataAnnouncement.postValue(
-                    list.filter { convertDateToCalendarDay(it.date) == getCurrentDate() }
-                        .sortedBy { it.date }
-                )
-            }
-        }
-
-        private fun loadTaskForms(
-            uids: List<String>,
-            _taskFormList: MutableLiveData<List<TaskForm>>
-        ) {
-            FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
-                _taskFormList.postValue(
-                    list.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
-                        .sortedBy { it.startTime }
-                )
-            }
+            _listHomeSectionDataClassSchedule.postValue(
+                meetingList.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
+                    .sortedBy { it.startTime }
+            )
+            loadTaskForms(examList, _listHomeSectionDataExam)
+            loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
         }
     }
+
+    private fun loadAnnouncements() {
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
+            _listPaymentSectionDataAnnouncement.postValue(
+                list.filter { convertDateToCalendarDay(it.date) == getCurrentDate() }
+                    .sortedBy { it.date }
+            )
+        }
+    }
+
+    private fun loadTaskForms(
+        uids: List<String>,
+        _taskFormList: MutableLiveData<List<TaskForm>>
+    ) {
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
+            _taskFormList.postValue(
+                list.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
+                    .sortedBy { it.startTime }
+            )
+        }
+    }
+}
 

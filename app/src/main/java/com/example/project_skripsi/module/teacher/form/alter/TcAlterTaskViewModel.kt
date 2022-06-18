@@ -144,7 +144,6 @@ class TcAlterTaskViewModel : ViewModel() {
         )
         items.add(taskForm)
 
-
         FireRepository.inst.alterItems(items).first.observeOnce{
             savedTaskFormId = taskForm.id ?: ""
             _draftSaved.postValue(HandledEvent(Pair(it, continueToFinalize)))

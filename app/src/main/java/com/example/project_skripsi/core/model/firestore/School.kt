@@ -17,6 +17,4 @@ data class School(
     var phoneNumber: String? = null,
 
     val address: String? = null,
-
-    val tmp: List<String>? = null,
 )

@@ -22,7 +22,8 @@ class PrHomeExamViewHolder(private val binding: ItemPrHomeGeneralBinding):
             tvStudentName.text = data.studentName
             tvSubjectName.text = data.assignedTaskForm?.subjectName
             tvLocation.text = ("Online")
-            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.assignedTaskForm?.startTime)}")
+            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.assignedTaskForm?.startTime)} - " +
+                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.assignedTaskForm?.endTime)}")
             viewIndicator.setBackgroundColor(
                 ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null))
         }

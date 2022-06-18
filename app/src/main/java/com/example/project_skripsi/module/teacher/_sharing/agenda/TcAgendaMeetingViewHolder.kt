@@ -26,8 +26,18 @@ class TcAgendaMeetingViewHolder(private val binding: ItemTcAgendaGeneralBinding,
             tvLocation.text = data.classMeeting.location
             tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.classMeeting.startTime!!)} - " +
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.classMeeting.endTime!!)}")
-            btnResource.setOnClickListener { listener.onMaterialItemClicked(absoluteAdapterPosition) }
-            btnClass.setOnClickListener { listener.onClassItemClicked(absoluteAdapterPosition, data) }
+
+            if (data.classMeeting.meetingResource == null) {
+                btnResource.isEnabled = false
+            } else {
+                btnResource.setOnClickListener { listener.onMaterialItemClicked(absoluteAdapterPosition) }
+            }
+
+            if (DateHelper.getCurrentTime() > data.classMeeting.endTime) {
+                btnClass.isEnabled = false
+            } else {
+                btnClass.setOnClickListener { listener.onClassItemClicked(absoluteAdapterPosition, data) }
+            }
         }
     }
 }

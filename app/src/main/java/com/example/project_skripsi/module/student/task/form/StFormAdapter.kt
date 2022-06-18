@@ -4,32 +4,23 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.core.repository.FireStorage
 import com.example.project_skripsi.databinding.DialogStViewImageBinding
-import com.example.project_skripsi.databinding.DialogTcTaskTypeBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
 import com.example.project_skripsi.module.common.view_image.ViewImageViewHolder
 import com.example.project_skripsi.module.student.StMainActivity
-import com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskViewModel
-import com.example.project_skripsi.module.teacher.main.task.TcTaskFragmentDirections
-import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_ESSAY
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -179,8 +170,7 @@ class StFormAdapter(
     private fun showImagesDialog(questionNumber: Int, context: Context) {
         val dialog = Dialog(context)
 
-        val inflater = LayoutInflater.from(context)
-        val sBinding = DialogStViewImageBinding.inflate(inflater)
+        val sBinding = DialogStViewImageBinding.inflate(LayoutInflater.from(context))
 
         with(sBinding) {
 
@@ -196,6 +186,4 @@ class StFormAdapter(
 
         dialog.show()
     }
-
-
 }

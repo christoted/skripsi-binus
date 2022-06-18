@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.main._sharing.agenda
 
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
@@ -22,11 +23,21 @@ class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding,
             tvLocation.text = data.location
             tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
-            btnResource.setOnClickListener {
-                listener.onMaterialItemClicked(absoluteAdapterPosition)
+
+            if (item.meetingResource == null) {
+                btnResource.isEnabled = false
+            } else {
+                btnResource.setOnClickListener {
+                    listener.onMaterialItemClicked(absoluteAdapterPosition)
+                }
             }
-            btnClass.setOnClickListener {
-                listener.onClassItemClicked(absoluteAdapterPosition, data)
+
+            if (DateHelper.getCurrentTime() > item.endTime) {
+                btnClass.isEnabled = false
+            } else {
+                btnClass.setOnClickListener {
+                    listener.onClassItemClicked(absoluteAdapterPosition, data)
+                }
             }
         }
     }

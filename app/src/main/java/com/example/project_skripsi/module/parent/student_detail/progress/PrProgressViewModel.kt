@@ -8,25 +8,25 @@ import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.Constant.Companion.ASSIGNMENT_WEIGHT
 import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ALPHA
 import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ATTEND
 import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_LEAVE
 import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_SICK
+import com.example.project_skripsi.utils.Constant.Companion.FINAL_EXAM_WEIGHT
+import com.example.project_skripsi.utils.Constant.Companion.MID_EXAM_WEIGHT
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_FINAL_EXAM
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_MID_EXAM
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import kotlin.math.ceil
 
 class PrProgressViewModel : ViewModel() {
 
     companion object {
         const val tabCount = 3
         val tabHeader = listOf("Nilai", "Absensi", "Pencapaian")
-
-        const val MID_EXAM_WEIGHT = 40
-        const val FINAL_EXAM_WEIGHT = 40
-        const val ASSIGNMENT_WEIGHT = 20
 
         const val VIEW_TYPE_SCORE = 0
         const val VIEW_TYPE_ATTENDANCE = 1
@@ -129,16 +129,18 @@ class PrProgressViewModel : ViewModel() {
                 FINAL_EXAM_WEIGHT * (finalExam ?: 0) +
                 ASSIGNMENT_WEIGHT * (totalAssignment ?: 0)
 
-        val scoreWeight = MID_EXAM_WEIGHT * (midExam?.let { 1 } ?: 0) +
-                FINAL_EXAM_WEIGHT * (finalExam?.let { 1 } ?: 0) +
-                ASSIGNMENT_WEIGHT * (totalAssignment?.let { 1 } ?: 0)
+//        val scoreWeight = MID_EXAM_WEIGHT * (midExam?.let { 1 } ?: 0) +
+//                FINAL_EXAM_WEIGHT * (finalExam?.let { 1 } ?: 0) +
+//                ASSIGNMENT_WEIGHT * (totalAssignment?.let { 1 } ?: 0)
+
+        val scoreWeight = 100
 
         return ScoreMainSection(
             subjectName = subjectName,
             mid_exam = midExam,
             final_exam = finalExam,
             total_assignment = totalAssignment,
-            total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
+            total_score = if (scoreWeight == 0) null else ceil(totalScore.toDouble() / scoreWeight).toInt(),
             sectionItem = itemList
         )
 

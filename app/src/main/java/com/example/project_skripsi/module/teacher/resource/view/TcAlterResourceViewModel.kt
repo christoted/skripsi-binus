@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.resource.view
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +14,12 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 import com.example.project_skripsi.utils.helper.UUIDHelper
 
 class TcAlterResourceViewModel: ViewModel() {
+
+    companion object {
+        const val QUERY_CLASS = 0
+        const val QUERY_RESOURCE = 1
+        val meetingNumbers = List(65) { it+1 }
+    }
 
     private lateinit var subjectGroup: SubjectGroup
     private lateinit var currentTeacher: Teacher
@@ -32,7 +37,6 @@ class TcAlterResourceViewModel: ViewModel() {
     var classList: LiveData<List<StudyClass>> = _classList
     var selectedClass = listOf<String>()
     var selectedResource = listOf<String>()
-    var selectedAssignment = listOf<String>()
 
     // Update Resource
     private val _singleResource = MutableLiveData<Resource>()
@@ -42,14 +46,8 @@ class TcAlterResourceViewModel: ViewModel() {
     val status: LiveData<Boolean> = _status
 
     var isValid = true
-    var materialType = ""
     var resourceDocumentId = ""
     private var isFirstTimeCreated = true
-
-    companion object {
-        const val QUERY_CLASS = 0
-        const val QUERY_RESOURCE = 1
-    }
 
     init {
        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
@@ -99,49 +97,63 @@ class TcAlterResourceViewModel: ViewModel() {
         FireRepository.inst.getItems<Resource>(resourceIds).first.observeOnce { _resourceList.postValue(it) }
     }
 
-    fun loadAssignment() {
-        FireRepository.inst.getItems<TaskForm>(assignmentIds).first.observeOnce { _assignmentList.postValue(it) }
-    }
 
-    fun submitResource(title: String, type: String, link: String) {
-        // TODO: Handle Update Resource
+    fun submitResource(title: String, meetingNumber: Int, link: String) {
+        val items = mutableListOf<Any>()
+        val resourceId = if (isFirstTimeCreated) UUIDHelper.getUUID() else resourceDocumentId
         if (isFirstTimeCreated) {
-            val id = UUIDHelper.getUUID()
             currentTeacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
                 ?.let {
-                    it.createdResources?.add(id)
+                    it.createdResources?.add(resourceId)
                 }
-            val resource = Resource(
-                id = id,
-                title = title,
-                gradeLevel = subjectGroup.gradeLevel,
-                type = type,
-                link = link,
-                subjectName = subjectGroup.subjectName,
-                // MARK -
-                prerequisites = selectedResource,
-                assignedClasses = selectedClass
-            )
-            FireRepository.inst.addResource(resource, currentTeacher).let { response ->
-                response.first.observeOnce {
-                    _status.postValue(it)
+            items.add(currentTeacher)
+        }
+
+        val resource = Resource(
+            id = resourceId,
+            title = title,
+            gradeLevel = subjectGroup.gradeLevel,
+            meetingNumber = meetingNumber,
+            link = link,
+            subjectName = subjectGroup.subjectName,
+            prerequisites = selectedResource,
+            assignedClasses = selectedClass
+        )
+        items.add(resource)
+
+        FireRepository.inst.getAllItems<StudyClass>().first.observeOnce { list ->
+            list.filter {
+                it.gradeLevel == subjectGroup.gradeLevel
+            }.map { studyClass ->
+                var needUpdate = false
+
+                studyClass.subjects?.filter {
+                    it.subjectName == subjectGroup.subjectName
+                }?.map { subject ->
+                    subject.classMeetings?.filter {
+                        it.meetingResource == resourceId
+                    }?.map {
+                        needUpdate = true
+                        it.meetingResource = null
+                    }
                 }
+
+                studyClass.subjects?.filter {
+                    it.subjectName == subjectGroup.subjectName
+                }?.map { subject ->
+                    subject.classMeetings?.sortedBy {
+                        it.startTime
+                    }?.getOrNull(meetingNumber)?.let {
+                        needUpdate = true
+                        it.meetingResource = resourceId
+                    }
+                }
+
+                if (needUpdate) items.add(studyClass)
             }
-        } else {
-            val resource = Resource(
-                id = resourceDocumentId,
-                title = title,
-                gradeLevel = subjectGroup.gradeLevel,
-                type = type,
-                link = link,
-                subjectName = subjectGroup.subjectName,
-                prerequisites = selectedResource,
-                assignedClasses = selectedClass
-            )
-            FireRepository.inst.addResource(resource, null).let { response ->
-                response.first.observeOnce {
-                    _status.postValue(it)
-                }
+
+            FireRepository.inst.alterItems(items).first.observeOnce{
+                _status.postValue(it)
             }
         }
     }

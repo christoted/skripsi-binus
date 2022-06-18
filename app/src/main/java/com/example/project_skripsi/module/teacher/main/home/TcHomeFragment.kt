@@ -67,6 +67,12 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
             }
         }
 
+        binding.imvAnnouncement.setOnClickListener {
+            view.findNavController().navigate(
+                TcHomeFragmentDirections.actionTcHomeFragmentToTcAnnouncementFragment()
+            )
+        }
+
         binding.imvSettings.setOnClickListener {
             view.findNavController().navigate(
                 TcHomeFragmentDirections.actionTcHomeFragmentToTcProfileFragment()
