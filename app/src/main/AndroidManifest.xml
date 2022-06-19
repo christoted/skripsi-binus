@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:extractNativeLibs="false"
         android:theme="@style/Theme.Projectskripsi">
+
         <activity
             android:name=".module.common.zoom.MyMeetingActivity"
             android:theme="@style/ZMTheme.SubWindow"
@@ -52,13 +53,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="com.example.app" />
             </intent-filter>
         </activity>
         <activity
