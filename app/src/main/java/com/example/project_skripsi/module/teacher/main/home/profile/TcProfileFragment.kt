@@ -11,11 +11,14 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.project_skripsi.databinding.FragmentTcProfileBinding
 import com.example.project_skripsi.module.common.auth.AuthActivity
-import com.example.project_skripsi.utils.service.storage.StorageSP
+import com.example.project_skripsi.module.teacher.main.home.viewmodel.TcHomeViewModel
+import com.example.project_skripsi.service.StorageSP
+import com.example.project_skripsi.utils.service.notification.NotificationUtil
 
 class TcProfileFragment : Fragment() {
 
     private lateinit var viewModel: TcProfileViewModel
+    private lateinit var homeViewModel: TcHomeViewModel
     private var _binding: FragmentTcProfileBinding? = null
     private val binding get() = _binding!!
 
@@ -26,6 +29,7 @@ class TcProfileFragment : Fragment() {
     ): View {
 
         viewModel = ViewModelProvider(this)[TcProfileViewModel::class.java]
+        homeViewModel = ViewModelProvider(this)[TcHomeViewModel::class.java]
         _binding = FragmentTcProfileBinding.inflate(inflater, container, false)
 
         viewModel.teacher.observe(viewLifecycleOwner, {
@@ -48,6 +52,7 @@ class TcProfileFragment : Fragment() {
             StorageSP.set(requireActivity(), StorageSP.SP_EMAIL, "")
             StorageSP.set(requireActivity(), StorageSP.SP_PASSWORD, "")
             StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
+            cancelNotification()
             val intent = Intent(binding.root.context, AuthActivity::class.java)
             startActivity(intent)
             activity?.finish()
@@ -56,6 +61,23 @@ class TcProfileFragment : Fragment() {
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
+    }
+
+    private fun cancelNotification() {
+        // Everyday
+        NotificationUtil.cancelEveryDayNotification(requireActivity())
+        // Exam
+        homeViewModel.examList.observe(viewLifecycleOwner) {
+            NotificationUtil.cancelAllExamAndAssignmentNotificationTeacher(requireActivity(), it)
+        }
+        // Assignment
+        homeViewModel.assignmentList.observe(viewLifecycleOwner) {
+            NotificationUtil.cancelAllExamAndAssignmentNotificationTeacher(requireActivity(), it)
+        }
+        // Meeting
+        homeViewModel.listMeeting.observe(viewLifecycleOwner) {
+            NotificationUtil.cancelAllMeetingNotificationTeacher(requireActivity(), it)
+        }
     }
 
     override fun onDestroyView() {
