@@ -49,7 +49,7 @@ data class Student(
 
     @get: PropertyName("completed_resources")
     @set: PropertyName("completed_resources")
-    var completedResources: List<String>? = null,
+    var completedResources: MutableList<String>? = null,
 
     @get: PropertyName("assigned_exams")
     @set: PropertyName("assigned_exams")

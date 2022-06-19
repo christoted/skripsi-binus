@@ -5,10 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="8dp"
     app:cardCornerRadius="6dp"
     app:cardElevation="4dp">
 
@@ -19,39 +17,25 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/tv_number"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:text="Link Meeting #20"
             android:textColor="@color/black"
-            tools:text="1."
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginEnd="4dp"/>
+            android:textStyle="bold"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.legacy.widget.Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Link Meeting #20"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tv_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="italic"
-                tools:text="recording"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_meeting_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="recording"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 

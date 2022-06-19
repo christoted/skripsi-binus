@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.main.calendar
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +11,9 @@ import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
+import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.generic.HandledEvent
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
@@ -33,8 +36,13 @@ class StCalendarViewModel : ViewModel() {
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
     val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
+    private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
+    val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
+
     private var currentList : MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
     val currentDataList : MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
+
+    lateinit var curStudent: Student
 
     init {
         loadStudent(AuthRepository.inst.getCurrentUser().uid)
@@ -44,6 +52,7 @@ class StCalendarViewModel : ViewModel() {
     private fun loadStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).let { response ->
             response.first.observeOnce { student ->
+                curStudent = student
                 student.studyClass?.let { loadStudyClass(it) }
                 student.payments?.let { propagateEvent(it, TYPE_PAYMENT) }
             }
@@ -105,6 +114,33 @@ class StCalendarViewModel : ViewModel() {
         _eventList.postValue(currentList)
     }
 
+    fun openResource(context: Context, uid: String) {
+        FireRepository.inst.getItem<Resource>(uid).first.observeOnce { resource ->
 
+            var incompleteId: String? = null
+            resource.prerequisites?.map {
+                curStudent.completedResources?.let { list ->
+                    if (!list.contains(it)) {
+                        incompleteId = it
+                        return@map
+                    }
+                }
+            }
+
+            incompleteId?.let { id ->
+                FireRepository.inst.getItem<Resource>(id).first.observeOnce {
+                    _incompleteResource.postValue(HandledEvent(it))
+                }
+            } ?: kotlin.run {
+                resource.link?.let { GenericLinkHandler.goToLink(context, it) }
+                resource.id?.let {
+                    if (curStudent.completedResources?.contains(it) == false) {
+                        curStudent.completedResources?.add(it)
+                        FireRepository.inst.alterItems(listOf(curStudent))
+                    }
+                }
+            }
+        }
+    }
 
 }

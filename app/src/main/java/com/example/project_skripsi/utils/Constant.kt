@@ -13,6 +13,7 @@ class Constant {
         const val TASK_TYPE_MID_EXAM = "ujian_tengah_semester"
         const val TASK_TYPE_FINAL_EXAM = "ujian_akhir_semester"
         const val TASK_TYPE_ASSIGNMENT = "tugas"
+        fun isExam(type: String?) = (type == TASK_TYPE_MID_EXAM || type == TASK_TYPE_FINAL_EXAM)
 
         const val TASK_FORM_ESSAY = "essai"
         const val TASK_FORM_MC = "pilihan berganda"

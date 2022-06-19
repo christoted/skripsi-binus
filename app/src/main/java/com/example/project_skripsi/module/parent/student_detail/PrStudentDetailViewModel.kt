@@ -7,6 +7,7 @@ import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.ParentSubject
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ATTEND
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 
@@ -60,7 +61,7 @@ class PrStudentDetailViewModel : ViewModel() {
                     subject.classMeetings?.map { classMeeting ->
                         countMeetingTotal++
                         student.value?.attendedMeetings?.firstOrNull {
-                            it.id == classMeeting.id && it.status == Constant.ATTENDANCE_ATTEND
+                            it.id == classMeeting.id && it.status == ATTENDANCE_ATTEND
                         }.let { countAttendance++ }
                     }
 
@@ -101,13 +102,17 @@ class PrStudentDetailViewModel : ViewModel() {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { _homeroomTeacher.postValue(it) }
     }
 
-    private fun loadTeachers(uid: List<TeacherSubjectId>) {
-        FireRepository.inst.getItems<Teacher>(uid.map { it.teacherId }).first.observeOnce {
-            it.mapIndexed { index, teacher ->
-                mapSubjectToParentSubject[uid[index].subjectName]?.teacherName = teacher.name
-                mapSubjectToParentSubject[uid[index].subjectName]?.teacherPhoneNumber = teacher.phoneNumber
+    private fun loadTeachers(uids: List<TeacherSubjectId>) {
+        FireRepository.inst.getItems<Teacher>(uids.map { it.teacherId }).first.observeOnce { list ->
+
+            uids.map { teacherSubjectId ->
+                list.firstOrNull { it.id == teacherSubjectId.teacherId }?.let { teacher ->
+                    mapSubjectToParentSubject[teacherSubjectId.subjectName]?.teacherName =
+                        teacher.name
+                    mapSubjectToParentSubject[teacherSubjectId.subjectName]?.teacherPhoneNumber =
+                        teacher.phoneNumber
+                }
             }
-            _subjectList.postValue(mapSubjectToParentSubject.map { item -> item.value })
         }
     }
 

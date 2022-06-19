@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.home.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
+import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
@@ -102,27 +104,20 @@ class TcHomeViewModel: ViewModel() {
             val exams = mutableListOf<ClassTaskFormId>()
             val assignments = mutableListOf<ClassTaskFormId>()
 
-            list.mapIndexed { index, studyClass ->
-
-                studyClass.subjects?.firstOrNull { item ->
-                    item.subjectName == uids[index].subjectName
-                }.let { subject ->
-                    subject?.classMeetings
-                        ?.map { meeting ->
-                            meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
+            uids.map {  classIdSubject ->
+                list.firstOrNull { it.id == classIdSubject.studyClassId}?.let { studyClass ->
+                    studyClass.subjects?.firstOrNull { item -> item.subjectName == classIdSubject.subjectName }
+                        .let { subject ->
+                            subject?.classMeetings?.map { meeting ->
+                                meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
+                            }
+                            subject?.classAssignments?.map { asgId ->
+                                assignments.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", asgId))
+                            }
+                            subject?.classExams?.map { examId ->
+                                exams.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", examId))
+                            }
                         }
-
-                    subject?.classAssignments?.map { asgId ->
-                        assignments.add(
-                            ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", asgId)
-                        )
-                    }
-
-                    subject?.classExams?.map { examId ->
-                        exams.add(
-                            ClassTaskFormId(studyClass.id!!, studyClass.name ?: "", examId)
-                        )
-                    }
                 }
             }
             _listMeeting.postValue(
@@ -137,10 +132,13 @@ class TcHomeViewModel: ViewModel() {
 
     private fun loadTaskForm(uids: List<ClassTaskFormId>, mutableLiveData: MutableLiveData<List<TeacherAgendaTaskForm>>) {
         FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce { list ->
-            val taskFormList = ArrayList<TeacherAgendaTaskForm>()
-            list.mapIndexed { index, taskForm ->
-                taskFormList.add(TeacherAgendaTaskForm(uids[index].studyClassId, uids[index].studyClassName, taskForm))
-            }
+            val taskFormList =
+                uids.mapNotNull { classTaskFormId ->
+                    list.firstOrNull {it.id == classTaskFormId.taskFormId}?.let { taskForm ->
+                        TeacherAgendaTaskForm(classTaskFormId.studyClassId, classTaskFormId.studyClassName, taskForm)
+                    }
+                }
+
             mutableLiveData.postValue(
                 taskFormList
                     .filter { convertDateToCalendarDay(it.taskForm.startTime) == getCurrentDate() }
@@ -159,4 +157,9 @@ class TcHomeViewModel: ViewModel() {
         }
     }
 
+    fun openLink(context: Context, uid: String) {
+        FireRepository.inst.getItem<Resource>(uid).first.observeOnce { resource ->
+            resource.link?.let { GenericLinkHandler.goToLink(context, it) }
+        }
+    }
 }

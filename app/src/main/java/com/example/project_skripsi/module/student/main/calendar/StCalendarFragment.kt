@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -65,7 +66,19 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
             refreshList(viewModel.currentSelectedDate)
         }
 
+        viewModel.incompleteResource.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Materi \"${it.title}\" (${it.subjectName}) harus dibaca terlebih dahulu",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
         binding.btnInfo.setOnClickListener { showInfoDialog(binding.root.context) }
+
+
 
         return binding.root
     }
@@ -115,15 +128,10 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
-    override fun onMaterialItemClicked(Position: Int) {
-        goToGoogleDrive("https://drive.google.com/drive/folders/1DIFexFEdlRVILpxZt8Qcdgr842Eo0FcY?usp=sharing")
+    override fun onResourceItemClicked(resourceId: String) {
+        viewModel.openResource(requireContext(), resourceId)
     }
 
-    private fun goToGoogleDrive(driveLink: String) {
-        val uri = Uri.parse(driveLink)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
     private fun goToClassMeeting(classLink: String) {
         val uri = Uri.parse(classLink)
         val intent = Intent(Intent.ACTION_VIEW, uri)

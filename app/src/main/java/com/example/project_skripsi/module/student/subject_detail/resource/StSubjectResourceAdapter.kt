@@ -2,30 +2,43 @@ package com.example.project_skripsi.module.student.subject_detail.resource
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.Resource
 import com.example.project_skripsi.databinding.ItemStSubjectResourceBinding
+import com.example.project_skripsi.utils.generic.LinkClickListener
 
-class StSubjectResourceAdapter(private val examList: List<Resource>) :
-    RecyclerView.Adapter<StSubjectResourceAdapter.AttendanceViewHolder>() {
+class StSubjectResourceAdapter(
+    private val examList: List<Resource>,
+    private val listener: LinkClickListener,
+) : RecyclerView.Adapter<StSubjectResourceAdapter.ResourceViewHolder>() {
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AttendanceViewHolder =
-        AttendanceViewHolder(
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ResourceViewHolder =
+        ResourceViewHolder(
             ItemStSubjectResourceBinding.inflate(
-            LayoutInflater.from(viewGroup.context), viewGroup, false))
+                LayoutInflater.from(viewGroup.context), viewGroup, false
+            )
+        )
 
-    override fun onBindViewHolder(holder: AttendanceViewHolder, position: Int) {
-        holder.bind(examList[position], position)
+    override fun onBindViewHolder(holder: ResourceViewHolder, position: Int) {
+        holder.bind(examList[position])
     }
 
     override fun getItemCount() = examList.size
 
-    class AttendanceViewHolder (private val binding : ItemStSubjectResourceBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Resource, position: Int) {
+    inner class ResourceViewHolder(private val binding: ItemStSubjectResourceBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Resource) {
             with(binding) {
-                tvNumber.text = ("${position+1}.")
                 tvName.text = item.title
-//                tvType.text = item.type
+                tvMeetingNumber.text = ("Pert. ${item.meetingNumber}")
+                root.setOnClickListener {
+                    if (item.link.isNullOrEmpty()) {
+                        Toast.makeText(root.context, "Tidak ada link materi", Toast.LENGTH_SHORT).show()
+                    } else {
+                        listener.onResourceItemClicked(item)
+                    }
+                }
             }
         }
     }

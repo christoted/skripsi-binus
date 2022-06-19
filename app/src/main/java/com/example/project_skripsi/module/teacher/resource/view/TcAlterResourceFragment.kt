@@ -24,6 +24,7 @@ import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
 import com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceViewModel.Companion.QUERY_CLASS
 import com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceViewModel.Companion.QUERY_RESOURCE
+import com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceViewModel.Companion.mapOfMeetingLink
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -71,10 +72,18 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
         }
         viewModel.status.observe(viewLifecycleOwner) {
             if (it) {
-                Toast.makeText(context, "Materi baru berhasil dibuat", Toast.LENGTH_SHORT).show()
+                if (viewModel.isFirstTimeCreated) {
+                    Toast.makeText(context, "Materi baru berhasil dibuat", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Materi berhasil diubah", Toast.LENGTH_SHORT).show()
+                }
                 view?.findNavController()?.popBackStack()
             } else {
-                Toast.makeText(context, "Materi berhasil diubah", Toast.LENGTH_SHORT).show()
+                if (viewModel.isFirstTimeCreated) {
+                    Toast.makeText(context, "Materi gagal dibuat", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Materi gagal diubah", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -186,5 +195,6 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
     override fun onItemClick(itemId: String) {
         dialog?.dismiss()
         binding.btnMeetingNumber.text = itemId
+        mapOfMeetingLink[itemId]?.let { binding.edtLink.setText(it) }
     }
 }

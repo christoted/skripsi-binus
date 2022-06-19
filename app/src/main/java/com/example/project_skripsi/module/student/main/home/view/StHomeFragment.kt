@@ -17,17 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
-import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.NotificationModel
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import com.example.project_skripsi.utils.Constant
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
-import com.example.project_skripsi.module.student.main.studyclass.StClassFragmentDirections
-
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -64,6 +59,15 @@ class StHomeFragment : Fragment(), ItemListener {
             viewModel.sectionData.observe(viewLifecycleOwner, { adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment) })
         }
 
+        viewModel.incompleteResource.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Materi \"${it.title}\" (${it.subjectName}) harus dibaca terlebih dahulu",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
 
         binding.imvAnnouncement.setOnClickListener {
             view?.findNavController()?.navigate(
@@ -107,8 +111,8 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) { listExamTaskForms ->
             listExamTaskForms.map {
                 val date = it.startTime
-                date?.let {
-                    val notificationModel = NotificationModel(body = "Exam", date = it)
+                date?.let { dt ->
+                    val notificationModel = NotificationModel(body = "Exam", date = dt)
                     totalExam+=1
                     listEveryDayNotification.add(notificationModel)
                 }
@@ -120,8 +124,8 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) { listAssignmentTaskForms ->
             listAssignmentTaskForms.map {
                 val date = it.startTime
-                date?.let {
-                    val notificationModel = NotificationModel(body = "Assignment", date = it)
+                date?.let { dt ->
+                    val notificationModel = NotificationModel(body = "Assignment", date = dt)
                     totalAssignment+=1
                     listEveryDayNotification.add(notificationModel)
                 }
@@ -133,8 +137,8 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel.listHomeSectionDataClassSchedule.observe(viewLifecycleOwner) { listClassSchedule ->
             listClassSchedule.map {
                 val date = it.startTime
-                date?.let {
-                    val notificationModel = NotificationModel(body = "Meeting", date = it)
+                date?.let { dt ->
+                    val notificationModel = NotificationModel(body = "Meeting", date = dt)
                     totalClassMeeting+=1
                     listEveryDayNotification.add(notificationModel)
                 }
@@ -155,8 +159,8 @@ class StHomeFragment : Fragment(), ItemListener {
         if (totalAssignment == 0 && totalMeeting == 0 && totalExam == 0){
             NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Hai", body = "Tidak ada agenda hari ini")
         } else {
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya ${totalMeeting} Pertemuan, " +
-                    "${totalAssignment} tugas , ${totalExam} ujian")
+            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya $totalMeeting Pertemuan, " +
+                    "$totalAssignment tugas , $totalExam ujian")
         }
     }
 
@@ -183,22 +187,22 @@ class StHomeFragment : Fragment(), ItemListener {
             it.map { taskForm ->
                 Log.d("987", "triggerNotification Exam start Time: $taskForm")
                 // Start time
-                taskForm.startTime?.let {
-                    NotificationUtil.cancelNotification(requireActivity(), it)
+                taskForm.startTime?.let { dt ->
+                    NotificationUtil.cancelNotification(requireActivity(), dt)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
-                        it,
+                        dt,
                         "Hai, 10 menit lagi, ujian kamu",
                         "${taskForm.subjectName} dimulai"
                     )
                 }
                 // End time
-                taskForm.endTime?.let {
+                taskForm.endTime?.let { dt ->
                     Log.d("987", "triggerNotification Exam end Time: $taskForm")
-                    NotificationUtil.cancelNotification(requireActivity(), it)
+                    NotificationUtil.cancelNotification(requireActivity(), dt)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
-                        it,
+                        dt,
                         "Hai, kurang 10 menit lagi, ujian kamu",
                         "${taskForm.subjectName} selesai"
                     )
@@ -212,21 +216,21 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
             it.map { taskForm ->
                 // Start time
-                taskForm.startTime?.let {
-                    NotificationUtil.cancelNotification(requireActivity(), it)
+                taskForm.startTime?.let { dt ->
+                    NotificationUtil.cancelNotification(requireActivity(), dt)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
-                        it,
+                        dt,
                         "Hai, 10 menit lagi, tugas kamu",
                         "${taskForm.subjectName} dimulai"
                     )
                 }
                 // End time
-                taskForm.endTime?.let {
-                    NotificationUtil.cancelNotification(requireActivity(), it)
+                taskForm.endTime?.let { dt ->
+                    NotificationUtil.cancelNotification(requireActivity(), dt)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
-                        it,
+                        dt,
                         "Hai, kurang 10 menit lagi, tugas kamu",
                         "${taskForm.subjectName} selesai"
                     )
@@ -245,14 +249,10 @@ class StHomeFragment : Fragment(), ItemListener {
        goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
-    override fun onMaterialItemClicked(Position: Int) {
-        goToGoogleDrive("https://drive.google.com/drive/folders/1DIFexFEdlRVILpxZt8Qcdgr842Eo0FcY?usp=sharing")
+    override fun onResourceItemClicked(resourceId: String) {
+        viewModel.openResource(requireContext(), resourceId)
     }
-    private fun goToGoogleDrive(driveLink: String) {
-        val uri = Uri.parse(driveLink)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
+
     private fun goToClassMeeting(classLink: String) {
         val uri = Uri.parse(classLink)
         val intent = Intent(Intent.ACTION_VIEW, uri)

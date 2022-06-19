@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.teacher.main.calendar
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +12,7 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel
 import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
+import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -53,24 +56,27 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudyClasses(uids: List<ClassIdSubject>) {
-        FireRepository.inst.getItems<StudyClass>(uids.map { it.studyClassId }).first.observeOnce{
+        FireRepository.inst.getItems<StudyClass>(uids.map { it.studyClassId }).first.observeOnce{ list ->
+
             val meetings = mutableListOf<TeacherAgendaMeeting>()
             val exams = mutableListOf<ClassTaskFormId>()
             val assignments = mutableListOf<ClassTaskFormId>()
 
-            it.mapIndexed { index, studyClass ->
-                studyClass.subjects?.firstOrNull { item -> item.subjectName == uids[index].subjectName }
-                    .let { subject ->
-                        subject?.classMeetings?.map { meeting ->
-                            meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
+            uids.map {  classIdSubject ->
+                list.firstOrNull { it.id == classIdSubject.studyClassId}?.let { studyClass ->
+                    studyClass.subjects?.firstOrNull { item -> item.subjectName == classIdSubject.subjectName }
+                        .let { subject ->
+                            subject?.classMeetings?.map { meeting ->
+                                meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
+                            }
+                            subject?.classAssignments?.map { asgId ->
+                                assignments.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", asgId))
+                            }
+                            subject?.classExams?.map { examId ->
+                                exams.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", examId))
+                            }
                         }
-                        subject?.classAssignments?.map { asgId ->
-                            assignments.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", asgId))
-                        }
-                        subject?.classExams?.map { examId ->
-                            exams.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", examId))
-                        }
-                    }
+                }
             }
             propagateEvent(meetings, TYPE_MEETING)
             loadTaskForms(exams, TYPE_EXAM)
@@ -79,9 +85,15 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadTaskForms(uids: List<ClassTaskFormId>, type: Int) {
-        FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce {
-            propagateEvent(it.mapIndexed { index, taskForm ->
-                TeacherAgendaTaskForm(uids[index].studyClassId, uids[index].studyClassName, taskForm)
+        FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce { list ->
+            propagateEvent(uids.mapNotNull { classTaskFormId ->
+                list.firstOrNull { it.id == classTaskFormId.taskFormId }?.let {
+                    TeacherAgendaTaskForm(
+                        classTaskFormId.studyClassId,
+                        classTaskFormId.studyClassName,
+                        it
+                    )
+                }
             }, type)
         }
     }
@@ -114,6 +126,12 @@ class TcCalendarViewModel : ViewModel() {
         currentDataList.map { it.value.sortWith(CalendarComparator.compData) }
 
         _eventList.postValue(currentList)
+    }
+
+    fun openLink(context: Context, uid: String) {
+        FireRepository.inst.getItem<Resource>(uid).first.observeOnce { resource ->
+            resource.link?.let { GenericLinkHandler.goToLink(context, it) }
+        }
     }
 
 }

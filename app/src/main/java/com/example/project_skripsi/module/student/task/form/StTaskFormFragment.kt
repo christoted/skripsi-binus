@@ -82,7 +82,7 @@ class StTaskFormFragment : Fragment() {
                 binding.btnSubmit.isEnabled = false
             }
 
-            viewModel.timerLeft.observe(viewLifecycleOwner, { timer ->
+            viewModel.timeLeft.observe(viewLifecycleOwner, { timer ->
                 if (timer.forceSubmit) {
                     submitAnswer(adapter)
                     binding.btnSubmit.isEnabled = false

@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.student.main.home.profile
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,10 +13,10 @@ import com.bumptech.glide.Glide
 import com.example.project_skripsi.databinding.FragmentStProfileBinding
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import com.example.project_skripsi.service.StorageSP
-import com.example.project_skripsi.service.StorageSP.Companion.SP_EMAIL
-import com.example.project_skripsi.service.StorageSP.Companion.SP_LOGIN_AS
-import com.example.project_skripsi.service.StorageSP.Companion.SP_PASSWORD
+import com.example.project_skripsi.utils.service.storage.StorageSP
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_EMAIL
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_PASSWORD
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
 
 class StProfileFragment : Fragment() {

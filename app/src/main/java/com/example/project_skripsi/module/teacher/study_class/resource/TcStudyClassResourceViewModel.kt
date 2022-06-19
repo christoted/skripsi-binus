@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.study_class.resource
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,14 +24,21 @@ class TcStudyClassResourceViewModel : ViewModel() {
     private fun loadStudyClass(uid: String, subjectName: String) {
         FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { studyClass ->
             _studyClass.postValue(studyClass)
-            studyClass.subjects?.firstOrNull { it.subjectName == subjectName }?.classResources?.let {
-                loadResources(it)
-            }
+            loadResources(
+                studyClass.subjects
+                    ?.firstOrNull { it.subjectName == subjectName }?.classMeetings?.mapNotNull {
+                        if (it.meetingResource.isNullOrEmpty()) null else it.meetingResource
+                    } ?: emptyList()
+            )
         }
     }
 
     private fun loadResources(uids: List<String>) {
-        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { _resourceList.postValue(it) }
+        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { list ->
+            _resourceList.postValue(
+                list.sortedBy { it.meetingNumber }
+            )
+        }
     }
 
 }

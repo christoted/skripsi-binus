@@ -2,19 +2,16 @@ package com.example.project_skripsi.module.teacher.study_class.resource
 
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
-import androidx.core.content.res.ResourcesCompat
-import com.example.project_skripsi.core.model.firestore.Student
-import com.example.project_skripsi.utils.app.App
-import androidx.core.graphics.drawable.DrawableCompat
 
-import android.graphics.drawable.Drawable
+import android.widget.Toast
 import com.example.project_skripsi.core.model.firestore.Resource
 import com.example.project_skripsi.databinding.ItemStSubjectResourceBinding
-import com.example.project_skripsi.databinding.ItemTcStudyClassStudentBinding
+import com.example.project_skripsi.utils.generic.LinkClickListener
 
 
 class ResourceViewHolder(
     private val dataSet : List<Resource>,
+    private val listener : LinkClickListener
 ) {
 
     fun getAdapter(): GenericAdapter<Resource> {
@@ -25,9 +22,15 @@ class ResourceViewHolder(
         adapter.expressionViewHolderBinding = { item, viewBinding,_ ->
             val view = viewBinding as ItemStSubjectResourceBinding
             with(view) {
-                tvNumber.text = ("${dataSet.indexOf(item) + 1}.")
                 tvName.text = item.title
-//                tvType.text = item.type
+                tvMeetingNumber.text = ("Pert. ${item.meetingNumber}")
+                root.setOnClickListener {
+                    if (item.link.isNullOrEmpty()) {
+                        Toast.makeText(root.context, "Tidak ada link materi", Toast.LENGTH_SHORT).show()
+                    } else {
+                        listener.onResourceItemClicked(item)
+                    }
+                }
             }
         }
         return adapter

@@ -7,6 +7,7 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_ASSIGNMENT
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 
@@ -49,7 +50,11 @@ class TcStudyClassTeachingViewModel : ViewModel() {
     }
 
     fun getAttendanceAbsent(student: Student): Int =
-        student.attendedMeetings?.filter { it.status != "hadir" && it.subjectName == subjectName }?.size ?: 0
+        student.attendedMeetings?.filter { listOf(
+            Constant.ATTENDANCE_ALPHA,
+            Constant.ATTENDANCE_LEAVE,
+            Constant.ATTENDANCE_SICK
+        ).contains(it.status) && it.subjectName == subjectName }?.size ?: 0
 
     fun getLastAssignmentStatus(student: Student): Pair<String, Int> {
         val asg = student.assignedAssignments?.lastOrNull { it.subjectName == subjectName && it.type == TASK_TYPE_ASSIGNMENT }

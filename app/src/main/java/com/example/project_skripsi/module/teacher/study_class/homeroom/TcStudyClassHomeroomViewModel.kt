@@ -7,6 +7,10 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ALPHA
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_LEAVE
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_SICK
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 
@@ -44,7 +48,7 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     }
 
     fun getAttendanceAbsent(student: Student): Int =
-        student.attendedMeetings?.filter { it.status != "hadir" }?.size ?: 0
+        student.attendedMeetings?.filter { listOf(ATTENDANCE_ALPHA, ATTENDANCE_LEAVE, ATTENDANCE_SICK).contains(it.status) }?.size ?: 0
 
     fun getPaymentStatus(student: Student): Pair<String, Int> {
         if ((student.payments?.filter { it.paymentDate == null && it.paymentDeadline!! < DateHelper.getCurrentTime() }?.size ?: 0) > 0)

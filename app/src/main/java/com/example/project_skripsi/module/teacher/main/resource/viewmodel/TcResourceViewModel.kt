@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.resource.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,8 +50,8 @@ class TcResourceViewModel: ViewModel() {
     }
 
     private fun loadResourceForm(uids: List<String>, mutableLiveData: MutableLiveData<List<Resource>>) {
-        FireRepository.inst.getItems<Resource>(uids).first.observeOnce {
-            mutableLiveData.postValue(it)
+        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { list ->
+            mutableLiveData.postValue(list.sortedBy { it.meetingNumber })
         }
     }
 

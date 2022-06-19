@@ -53,10 +53,6 @@ data class Subject (
     @set: PropertyName("class_assignments")
     var classAssignments: MutableList<String>? = null,
 
-    @get: PropertyName("class_resources")
-    @set: PropertyName("class_resources")
-    var classResources: MutableList<String>? = null,
-
 ) : HomeSectionData()
 
 @IgnoreExtraProperties
@@ -83,10 +79,6 @@ data class ClassMeeting (
     @get: PropertyName("meeting_resource")
     @set: PropertyName("meeting_resource")
     var meetingResource: String? = null,
-
-    @get: PropertyName("meeting_link")
-    @set: PropertyName("meeting_link")
-    var meetingLink: String? = null,
 
 ) : HomeSectionData()
 
