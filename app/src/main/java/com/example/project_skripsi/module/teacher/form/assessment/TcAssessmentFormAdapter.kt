@@ -1,20 +1,34 @@
 package com.example.project_skripsi.module.teacher.form.assessment
 
+import android.app.Dialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.local.AssignedQuestion
+import com.example.project_skripsi.databinding.DialogStViewImageBinding
 import com.example.project_skripsi.databinding.ItemTcAssessmentTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemTcAssessmentTaskFormMcBinding
+import com.example.project_skripsi.module.common.view_image.ViewImageViewHolder
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.app.App
 
 class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
     Adapter<ViewHolder>() {
+
+    val imageList : List<MutableList<String>> = List(questionList.size) { mutableListOf() }
+
+    init {
+        questionList.mapIndexed { index, assignedQuestion ->
+            assignedQuestion.answer?.images?.let { imageList[index].addAll(it) }
+        }
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
@@ -39,7 +53,7 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
     override fun getItemCount() = questionList.size
 
-    class MultipleChoiceViewHolder ( private val binding : ItemTcAssessmentTaskFormMcBinding) : ViewHolder(binding.root) {
+    inner class MultipleChoiceViewHolder ( private val binding : ItemTcAssessmentTaskFormMcBinding) : ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
                 tvNumber.text = ("${position+1}.")
@@ -78,14 +92,7 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
                 item.answer?.images?.let { list ->
                     tvImageCount.text = list.size.toString()
-                    btnViewImage.setOnClickListener {
-                        root.findNavController().navigate(
-                            TcAssessmentTaskFormFragmentDirections.actionTcAssessmentTaskFormFragmentToCMViewImageFragment(
-                                position+1,
-                                list.toTypedArray()
-                            )
-                        )
-                    }
+                    btnViewImage.setOnClickListener { showImagesDialog(position, root.context) }
                 } ?: kotlin.run{
                     llImages.visibility = GONE
                 }
@@ -94,7 +101,7 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
         }
     }
 
-    class EssayViewHolder ( private val binding : ItemTcAssessmentTaskFormEssayBinding) : ViewHolder(binding.root) {
+    inner class EssayViewHolder ( private val binding : ItemTcAssessmentTaskFormEssayBinding) : ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
                 tvNumber.text = ("${position+1}.")
@@ -109,18 +116,32 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
                 item.answer?.images?.let { list ->
                     tvImageCount.text = list.size.toString()
-                    btnViewImage.setOnClickListener {
-                        root.findNavController().navigate(
-                            TcAssessmentTaskFormFragmentDirections.actionTcAssessmentTaskFormFragmentToCMViewImageFragment(
-                                position+1,
-                                list.toTypedArray()
-                            )
-                        )
-                    }
+                    btnViewImage.setOnClickListener { showImagesDialog(position, root.context) }
                 } ?: kotlin.run{
                     llImages.visibility = GONE
                 }
             }
         }
+    }
+
+    private fun showImagesDialog(questionNumber: Int, context: Context) {
+        val dialog = Dialog(context)
+
+        val inflater = LayoutInflater.from(context)
+        val sBinding = DialogStViewImageBinding.inflate(inflater)
+
+        with(sBinding) {
+
+            tvTitle.text = ("Foto Soal - ${questionNumber+1}")
+
+            rvContainer.layoutManager = LinearLayoutManager(context)
+            rvContainer.adapter = ViewImageViewHolder(imageList[questionNumber]).getAdapter()
+
+            btnClose.setOnClickListener { dialog.dismiss() }
+
+            dialog.setContentView(root)
+        }
+
+        dialog.show()
     }
 }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.common.view_image.CMViewImageFragment">
+    tools:context=".module.teacher.main.home.announcement.TcAnnouncementFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,13 +25,12 @@
             android:focusable="true"/>
 
         <TextView
-            android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:text="Foto Soal"
+            android:text="Pengumuman"
             android:textColor="@color/black"
             android:paddingHorizontal="8dp"
             android:paddingVertical="16dp"/>
@@ -43,7 +44,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_pr_student_announcement"/>
+
 
 </LinearLayout>
 

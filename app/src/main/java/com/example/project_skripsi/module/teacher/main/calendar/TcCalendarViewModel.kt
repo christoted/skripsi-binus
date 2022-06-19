@@ -7,7 +7,9 @@ import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel
 import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
+import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -85,7 +87,12 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadAnnouncements() {
-        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { propagateEvent(it, TYPE_ANNOUNCEMENT) }
+        FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
+            propagateEvent(
+                list.filter { DateHelper.convertDateToCalendarDay(it.date) <= DateHelper.getCurrentDate() },
+                TYPE_ANNOUNCEMENT
+            )
+        }
     }
 
     private fun propagateEvent(item : List<HomeSectionData>, type: Int) {

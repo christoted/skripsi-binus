@@ -70,9 +70,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 Log.d("987", "already passed current day $date")
                 cancelNotification(context, date)
             } else {
-                timeInMillis =  DateHelper.convertToCalendarDayBeforeStart(
-                    date
-                ).timeInMillis
+                timeInMillis =  DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
                 intent.putExtra("timeinmillis", timeInMillis)
                 intent.putExtra("title", title)
                 intent.putExtra("body", body)
@@ -84,19 +82,19 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             }
         }
         fun cancelNotification(context: Context, date: Date) {
-                val intent = Intent(context, AlarmReceiver::class.java)
-                val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
-                val notificationId = createNotificationId(timeMillis)
-                val pending = PendingIntent.getBroadcast(
-                    context,
-                    notificationId,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-            Log.d("123455", "cancelNotification: on ${date} timeonMillis $timeMillis")
-                // Cancel notification
-                val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-                manager.cancel(pending)
+              val intent = Intent(context, AlarmReceiver::class.java)
+              val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
+              val notificationId = createNotificationId(timeMillis)
+              val pending = PendingIntent.getBroadcast(
+                  context,
+                  notificationId,
+                  intent,
+                  PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+              )
+              Log.d("123455", "cancelNotification: on ${date} timeonMillis $timeMillis")
+              // Cancel notification
+              val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+              manager.cancel(pending)
         }
         fun cancelEveryDayNotification(context: Context) {
             val intent = Intent(context, AlarmReceiver::class.java)
@@ -140,7 +138,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         }
 
         fun createNotificationId(timeMillis: Long): Int {
-            return (timeMillis % 2000000000).toInt()
+            return (timeMillis % 2000000000L).toInt()
         }
     }
     // Create channel for Android version 26+

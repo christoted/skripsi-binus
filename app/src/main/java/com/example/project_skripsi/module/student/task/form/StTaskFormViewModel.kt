@@ -122,17 +122,20 @@ class StTaskFormViewModel : ViewModel() {
 
     fun submitAnswer(newAnswer: List<Pair<String, List<String>>>) {
         curStudent.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
+            it.isSubmitted = true
             it.answers?.mapIndexed { index, answer ->
                 answer.answerText = newAnswer[index].first
                 answer.images = newAnswer[index].second
             }
         }
         curStudent.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
+            it.isSubmitted = true
             it.answers?.mapIndexed { index, answer ->
                 answer.answerText = newAnswer[index].first
                 answer.images = newAnswer[index].second
             }
         }
+
         FireRepository.inst.alterItems(listOf(curStudent)).first.observeOnce {
             _isSubmitted.postValue(it)
         }

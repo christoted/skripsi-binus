@@ -62,18 +62,24 @@ class AuthActivity : AppCompatActivity() {
 
         with(binding) {
             btnAutoStudent.setOnClickListener{
-                edtEmail.setText(("luisdummy@gmail.com"))
+//                edtEmail.setText(("luisdummy@gmail.com"))
+//                edtPassword.setText(("luis123"))
+                edtEmail.setText(("luis@gmail.com"))
                 edtPassword.setText(("luis123"))
                 cgLoginAs.check(R.id.chip_student)
             }
             btnAutoTeacher.setOnClickListener{
-                edtEmail.setText(("devitadummy@gmail.com"))
-                edtPassword.setText(("devita123"))
+//                edtEmail.setText(("devitadummy@gmail.com"))
+//                edtPassword.setText(("devita123@gmail.com"))
+                edtEmail.setText(("jessica@gmail.com"))
+                edtPassword.setText(("jessica123"))
                 cgLoginAs.check(R.id.chip_teacher)
             }
             btnAutoParent.setOnClickListener{
-                edtEmail.setText(("teddydummy@gmail.com"))
-                edtPassword.setText(("teddy123"))
+//                edtEmail.setText(("teddydummy@gmail.com"))
+//                edtPassword.setText(("teddy123"))
+                edtEmail.setText(("luisp@gmail.com"))
+                edtPassword.setText(("luisp123"))
                 cgLoginAs.check(R.id.chip_parent)
             }
             btnLogin.setOnClickListener {

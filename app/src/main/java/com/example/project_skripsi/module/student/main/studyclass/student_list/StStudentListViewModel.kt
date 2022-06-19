@@ -15,7 +15,9 @@ class StStudentListViewModel : ViewModel() {
 
     fun setStudyClass(studyClassId: String) {
         FireRepository.inst.getAllItems<Student>().first.observeOnce { studentList ->
-            _studentList.postValue(studentList.filter { it.studyClass == studyClassId })
+            _studentList.postValue(
+                studentList.filter { it.studyClass == studyClassId }.sortedBy { it.attendanceNumber }
+            )
         }
     }
 }

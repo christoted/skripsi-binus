@@ -83,6 +83,7 @@ class DateHelper {
 
             currentDate.set(Calendar.HOUR_OF_DAY, hour)
             currentDate.set(Calendar.MINUTE, minute)
+            currentDate.set(Calendar.SECOND, 0)
 
             return currentDate.time
         }

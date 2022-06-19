@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.student.main.studyclass.announcement.StAnnouncementFragment">
+    tools:context=".module.student.main.home.announcement.StAnnouncementFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -25,7 +25,7 @@ class StSubjectResourceAdapter(private val examList: List<Resource>) :
             with(binding) {
                 tvNumber.text = ("${position+1}.")
                 tvName.text = item.title
-                tvType.text = item.type
+//                tvType.text = item.type
             }
         }
     }

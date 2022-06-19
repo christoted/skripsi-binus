@@ -8,20 +8,23 @@ import com.example.project_skripsi.core.model.local.AttendanceMainSection
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSection
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
 import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.Constant.Companion.ASSIGNMENT_WEIGHT
+import com.example.project_skripsi.utils.Constant.Companion.FINAL_EXAM_WEIGHT
+import com.example.project_skripsi.utils.Constant.Companion.MID_EXAM_WEIGHT
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
+import kotlin.math.ceil
 
 class TcStudentDetailViewModel: ViewModel() {
 
     companion object {
         const val tabCount = 3
         val tabHeader = arrayOf("Nilai", "Absensi", "Pembayaran")
+        val paymentType = listOf("Telat", "Mendatang")
     }
 
     private var studentId = ""
@@ -74,7 +77,7 @@ class TcStudentDetailViewModel: ViewModel() {
     private fun loadCurrentStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             _student.postValue(student)
-//            loadParent(student.parent)
+            student.parent?.let { loadParent(it) }
 
             student.assignedExams?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
             student.assignedAssignments?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
@@ -86,8 +89,8 @@ class TcStudentDetailViewModel: ViewModel() {
 
             student.payments?.let {
                 val paymentSection: MutableList<TcStudentDetailPaymentSection> = mutableListOf()
-                paymentSection.add(TcStudentDetailPaymentSection(title = "Telat", payments = emptyList()))
-                paymentSection.add(TcStudentDetailPaymentSection(title = "Mendatang", payments = emptyList()))
+                paymentSection.add(TcStudentDetailPaymentSection(title = paymentType[0], payments = emptyList()))
+                paymentSection.add(TcStudentDetailPaymentSection(title = paymentType[1], payments = emptyList()))
                 paymentSection[0].payments = it.filter { payment ->
                     convertDateToCalendarDay(payment.paymentDeadline) < getCurrentDate() && payment.paymentDate == null
                 }.sortedBy { payment -> payment.paymentDeadline }
@@ -125,20 +128,22 @@ class TcStudentDetailViewModel: ViewModel() {
             if (it.isEmpty()) null else it.averageOf { task -> task.score ?: 0 }
         }
 
-        val totalScore = PrProgressViewModel.MID_EXAM_WEIGHT * (midExam ?: 0) +
-                PrProgressViewModel.FINAL_EXAM_WEIGHT * (finalExam ?: 0) +
-                PrProgressViewModel.ASSIGNMENT_WEIGHT * (totalAssignment ?: 0)
+        val totalScore = MID_EXAM_WEIGHT * (midExam ?: 0) +
+                FINAL_EXAM_WEIGHT * (finalExam ?: 0) +
+                ASSIGNMENT_WEIGHT * (totalAssignment ?: 0)
 
-        val scoreWeight = PrProgressViewModel.MID_EXAM_WEIGHT * (midExam?.let { 1 } ?: 0) +
-                PrProgressViewModel.FINAL_EXAM_WEIGHT * (finalExam?.let { 1 } ?: 0) +
-                PrProgressViewModel.ASSIGNMENT_WEIGHT * (totalAssignment?.let { 1 } ?: 0)
+//        val scoreWeight = MID_EXAM_WEIGHT * (midExam?.let { 1 } ?: 0) +
+//                FINAL_EXAM_WEIGHT * (finalExam?.let { 1 } ?: 0) +
+//                ASSIGNMENT_WEIGHT * (totalAssignment?.let { 1 } ?: 0)
+
+        val scoreWeight = 100
 
         return ScoreMainSection(
             subjectName = subjectName,
             mid_exam = midExam,
             final_exam = finalExam,
             total_assignment = totalAssignment,
-            total_score = if (scoreWeight == 0) null else totalScore / scoreWeight,
+            total_score = if (scoreWeight == 0) null else ceil(totalScore.toDouble() / scoreWeight).toInt(),
             sectionItem = itemList
         )
 

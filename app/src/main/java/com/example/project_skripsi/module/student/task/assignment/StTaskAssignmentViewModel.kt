@@ -37,7 +37,7 @@ class StTaskAssignmentViewModel : ViewModel() {
     private val ongoingTaskForms = ArrayList<TaskFormStatus>()
     private val pastTaskForms = ArrayList<TaskFormStatus>()
 
-    init {
+    fun reInit() {
         loadStudent(AuthRepository.inst.getCurrentUser().uid)
     }
 

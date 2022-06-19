@@ -33,6 +33,8 @@ data class Student(
 
     val gender: String? = null,
 
+    val parent: String? = null,
+
     @get: PropertyName("study_class")
     @set: PropertyName("study_class")
     var studyClass: String? = null,

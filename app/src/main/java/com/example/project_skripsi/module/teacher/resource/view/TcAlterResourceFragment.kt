@@ -2,8 +2,6 @@ package com.example.project_skripsi.module.teacher.resource.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,21 +13,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
+import com.example.project_skripsi.databinding.BottomSheetTcChooseMeetingBinding
+import com.example.project_skripsi.databinding.DialogStViewImageBinding
 import com.example.project_skripsi.databinding.FragmentTcAlterResourceBinding
 import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
+import com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceViewModel.Companion.QUERY_CLASS
+import com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceViewModel.Companion.QUERY_RESOURCE
+import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class TcAlterResourceFragment : Fragment() {
+class TcAlterResourceFragment : Fragment(), ItemClickListener {
 
     private var _binding: FragmentTcAlterResourceBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: TcAlterResourceViewModel
-
-    private var materialType = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,25 +51,6 @@ class TcAlterResourceFragment : Fragment() {
     }
 
     private fun submit() {
-        binding.toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                when(checkedId) {
-                    binding.btnSlide.id -> {
-                        viewModel.materialType = "Slide"
-
-                    }
-                    binding.btnRecording.id -> {
-                        viewModel.materialType = "Recording"
-                    }
-                }
-            }
-        }
-        binding.btnSlide.setOnClickListener {
-            materialType = "Slide"
-        }
-        binding.btnRecording.setOnClickListener {
-            materialType = "Recording"
-        }
         binding.btnUpload.setOnClickListener {
             with(binding) {
                 if (edtTitle.text!!.isEmpty()) {
@@ -79,11 +62,11 @@ class TcAlterResourceFragment : Fragment() {
                     Toast.makeText(context, "Link materi harus diisi", Toast.LENGTH_SHORT).show()
                     viewModel.isValid = false
                 }
-                toggleButton.isSelectionRequired = true
             }
 
             if (viewModel.isValid) {
-                viewModel.submitResource(binding.edtTitle.text.toString(), viewModel.materialType, binding.edtLink.text.toString())
+                val meetingNumber = binding.btnMeetingNumber.text.toString().toInt()
+                viewModel.submitResource(binding.edtTitle.text.toString(), meetingNumber, binding.edtLink.text.toString())
             }
         }
         viewModel.status.observe(viewLifecycleOwner) {
@@ -97,12 +80,9 @@ class TcAlterResourceFragment : Fragment() {
 
         // Button
         with(binding) {
-            btnClass.setOnClickListener {
-                showBottomSheet(TcAlterResourceViewModel.QUERY_CLASS)
-            }
-            btnRequirementResource.setOnClickListener {
-                showBottomSheet(TcAlterResourceViewModel.QUERY_RESOURCE)
-            }
+            btnMeetingNumber.setOnClickListener { showBottomSheetMeeting() }
+            btnClass.setOnClickListener { showBottomSheet(QUERY_CLASS) }
+            btnRequirementResource.setOnClickListener { showBottomSheet(QUERY_RESOURCE) }
             imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
         }
     }
@@ -120,7 +100,6 @@ class TcAlterResourceFragment : Fragment() {
         args.documentId?.let {
             viewModel.resourceDocumentId = it
             viewModel.getAlterResourceData()
-            binding.btnUpload.text = ("Update Resource")
         }
         viewModel.initData(args.subjectName, args.gradeLevel)
         setData()
@@ -128,14 +107,9 @@ class TcAlterResourceFragment : Fragment() {
 
     private fun setData() {
         viewModel.singleResource.observe(viewLifecycleOwner) {
-            Log.d("333", "setData: $it")
             with(binding) {
                 edtTitle.setText(it.title)
-                when(it.type) {
-                    "slide", "Slide" -> toggleButton.check(R.id.btn_slide)
-                    "recording", "Recording" -> toggleButton.check(R.id.btn_recording)
-                    else -> Log.d("333", "setData: masuk bawah")
-                }
+                btnMeetingNumber.text = it.meetingNumber?.toString() ?: "0"
                 edtLink.setText(it.link)
                 tvClassChoosen.text = ("${it.assignedClasses?.size} Terpilih")
                 tvRequirementResource.text = ("${it.prerequisites?.size} Terpilih")
@@ -160,7 +134,7 @@ class TcAlterResourceFragment : Fragment() {
         dialog.show()
 
         when(queryType) {
-            TcAlterResourceViewModel.QUERY_CLASS -> {
+            QUERY_CLASS -> {
                 viewModel.classList.observe(viewLifecycleOwner) {
                     val viewHolder = ClassViewHolder(it, viewModel.selectedClass)
                     tvTitle.text = ("Daftar Kelas")
@@ -168,13 +142,13 @@ class TcAlterResourceFragment : Fragment() {
                     btnClose.setOnClickListener {
                         viewModel.selectedClass = viewHolder.getResult()
                         binding.tvClassChoosen.text =
-                            "Terpilih " + viewHolder.getResult().size + " Kelas"
+                            ("Terpilih " + viewHolder.getResult().size + " Kelas")
                         dialog.dismiss()
                     }
                 }
                 viewModel.loadClass()
             }
-            TcAlterResourceViewModel.QUERY_RESOURCE -> {
+            QUERY_RESOURCE -> {
                 viewModel.resourceList.observe(viewLifecycleOwner) {
                     val viewHolder = ResourceViewHolder(it, viewModel.selectedResource)
                     tvTitle.text = ("Daftar Materi")
@@ -182,16 +156,35 @@ class TcAlterResourceFragment : Fragment() {
                     btnClose.setOnClickListener {
                         viewModel.selectedResource = viewHolder.getResult()
                         binding.tvRequirementResource.text =
-                            "Terpilih " + viewHolder.getResult().size + " Materi"
-
+                            ("Terpilih " + viewHolder.getResult().size + " Materi")
                         dialog.dismiss()
                     }
                 }
-
                 viewModel.loadResource()
             }
         }
+    }
 
+    var dialog : BottomSheetDialog? = null
 
+    @SuppressLint("InflateParams")
+    private fun showBottomSheetMeeting() {
+        dialog = BottomSheetDialog(requireContext())
+        val sBinding = BottomSheetTcChooseMeetingBinding.inflate(LayoutInflater.from(context))
+
+        dialog?.let {
+            with(sBinding) {
+                rvItem.layoutManager = GridLayoutManager(context, 4)
+                rvItem.adapter = TcMeetingNumberViewHolder(TcAlterResourceViewModel.meetingNumbers, this@TcAlterResourceFragment).getAdapter()
+                it.setContentView(sBinding.root)
+            }
+            it.show()
+        }
+
+    }
+
+    override fun onItemClick(itemId: String) {
+        dialog?.dismiss()
+        binding.btnMeetingNumber.text = itemId
     }
 }

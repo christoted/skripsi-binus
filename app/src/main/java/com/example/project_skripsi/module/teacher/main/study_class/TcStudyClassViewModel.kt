@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,10 +51,16 @@ class TcStudyClassViewModel : ViewModel() {
 
     fun loadClasses(subjectName: String) {
         subjectClasses[subjectName]?.let { uids ->
-            FireRepository.inst.getItems<StudyClass>(uids).first.observeOnce {
-                _teachingClasses.postValue(Pair(subjectName, it))
+            FireRepository.inst.getItems<StudyClass>(uids).first.observeOnce { list ->
+                _teachingClasses.postValue(Pair(subjectName, list.sortedBy {
+                    customSortConstant(it.gradeLevel, it.name)
+                }))
             }
         }
+    }
+
+    private fun customSortConstant(gradeLevel: Int?, name: String?) : String {
+        return "${12-(gradeLevel?:0)}${name}"
     }
 
 }

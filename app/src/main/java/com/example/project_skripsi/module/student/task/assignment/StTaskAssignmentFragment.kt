@@ -75,6 +75,11 @@ class StTaskAssignmentFragment : Fragment(), ItemClickListener {
         binding.tvTitle.text = ("Tugas ${if (itemId == "Semua") "" else itemId}")
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.reInit()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -8,6 +8,7 @@ import androidx.transition.TransitionManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSection
 import com.example.project_skripsi.databinding.ItemTcStudentDetailPaymentBinding
+import com.example.project_skripsi.module.teacher.student_detail.viewmodel.TcStudentDetailViewModel.Companion.paymentType
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.UIHelper
 
@@ -30,7 +31,7 @@ class TcStudentDetailPaymentAdapter(private val dataset: List<TcStudentDetailPay
                 with(sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
                     sectionItemsRecyclerView.adapter = TcStudentDetailPaymentContentViewHolder(item.payments,
-                        if (item.title == "Jatuh Tempo") R.color.payment_late
+                        if (item.title == paymentType[0]) R.color.payment_late
                         else R.color.payment_incoming
                     ).getAdapter()
 

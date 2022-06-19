@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
@@ -16,8 +15,8 @@ class FireStorage {
         var inst = FireStorage()
     }
 
-    fun getImage(pathFile: String, context: Context): Pair<MutableLiveData<Bitmap>, MutableLiveData<Exception>> {
-        val data = MutableLiveData<Bitmap>()
+    fun getImage(pathFile: String, context: Context): Pair<MutableLiveData<File>, MutableLiveData<Exception>> {
+        val data = MutableLiveData<File>()
         val exception = MutableLiveData<Exception>()
 
         val tempFile = getPhotoFile(pathFile, context)
@@ -25,7 +24,7 @@ class FireStorage {
         FirebaseStorage.getInstance().reference.child(pathFile)
             .getFile(tempFile)
             .addOnSuccessListener {
-                data.postValue(BitmapFactory.decodeFile(tempFile.absolutePath))
+                data.postValue(tempFile)
             }.addOnFailureListener {
                 exception.postValue(it)
             }
@@ -38,8 +37,6 @@ class FireStorage {
         val exception = MutableLiveData<Exception>()
 
         val baos = ByteArrayOutputStream()
-        if (localFile == null) Log.d("12345-", "null cok")
-        Log.d("12345-", localFile.absolutePath)
         BitmapFactory
             .decodeFile(localFile.absolutePath)
             ?.compress(Bitmap.CompressFormat.JPEG, 15, baos)

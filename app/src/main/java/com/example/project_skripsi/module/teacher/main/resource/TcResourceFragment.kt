@@ -37,7 +37,7 @@ class TcResourceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getData()
-        binding.btnAdd.setOnClickListener{
+        binding.imvAdd.setOnClickListener{
             viewModel.currentSubjectGroup?.let { resource ->
                 resource.subjectName.let { subjectName ->
                     val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel, null)

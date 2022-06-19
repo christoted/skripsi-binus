@@ -16,7 +16,9 @@ data class Resource(
     @set: PropertyName("grade_level")
     var gradeLevel: Int? = null,
 
-    val type: String? = null,
+    @get: PropertyName("meeting_number")
+    @set: PropertyName("meeting_number")
+    var meetingNumber: Int? = null,
 
     val link: String? = null,
 

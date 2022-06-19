@@ -56,6 +56,7 @@ class TcAssessmentTaskFormFragment : Fragment() {
                             }
                             val scoreInt = score.toInt()
                             if (scoreInt < 0 || scoreInt > (assignedQuestion.scoreWeight ?: 0)) {
+                                isOK = false
                                 Toast.makeText(
                                     context,
                                     "Nilai harus 0 - ${assignedQuestion.scoreWeight}",

@@ -20,19 +20,19 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         private const val COLLECTION_ADMINISTRATOR = "administrators"
         private const val COLLECTION_TASK_FORM = "task_forms"
         private const val COLLECTION_RESOURCE = "resources"
-        private const val COLLECTION_STUDENT = "students"
-        private const val COLLECTION_TEACHER = "teachers"
-        private const val COLLECTION_PARENT = "parents"
-        private const val COLLECTION_STUDY_CLASS = "study_classes"
-        private const val COLLECTION_ANNOUNCEMENT = "announcements"
-        private const val COLLECTION_SCHOOL = "schools"
+//        private const val COLLECTION_STUDENT = "students"
+//        private const val COLLECTION_TEACHER = "teachers"
+//        private const val COLLECTION_PARENT = "parents"
+//        private const val COLLECTION_STUDY_CLASS = "study_classes"
+//        private const val COLLECTION_ANNOUNCEMENT = "announcements"
+//        private const val COLLECTION_SCHOOL = "schools"
 
-//        const val COLLECTION_STUDY_CLASS = "admin-study-class"
-//        const val COLLECTION_STUDENT = "admin-student"
-//        const val COLLECTION_SCHOOL = "admin-school"
-//        const val COLLECTION_PARENT = "admin-parent"
-//        const val COLLECTION_TEACHER = "admin-lecture"
-//        const val COLLECTION_ANNOUNCEMENT = "admin-announcement"
+        private const val COLLECTION_STUDY_CLASS = "admin-study-class"
+        private const val COLLECTION_STUDENT = "admin-student"
+        private const val COLLECTION_SCHOOL = "admin-school"
+        private const val COLLECTION_PARENT = "admin-parent"
+        private const val COLLECTION_TEACHER = "admin-lecture"
+        private const val COLLECTION_ANNOUNCEMENT = "admin-announcement"
 
         val mapCollection = mapOf(
             Student::class to COLLECTION_STUDENT,
@@ -47,44 +47,17 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         )
     }
 
-    fun addResource(resource: Resource, teacher: Teacher?): Pair<LiveData<Boolean>, LiveData<Exception>> {
-        val isSuccess = MutableLiveData<Boolean>()
-        val exception = MutableLiveData<Exception>()
-        db.collection(COLLECTION_RESOURCE)
-            .document(resource.id!!)
-            .set(resource)
-            .addOnSuccessListener {
-                isSuccess.value = true
-            }
-            .addOnFailureListener {
-                exception.value = it
-            }
-
-        teacher?.let {
-            db.collection(COLLECTION_TEACHER)
-                .document(teacher.id!!)
-                .set(teacher)
-                .addOnSuccessListener {
-                    isSuccess.value = true
-                }
-                .addOnFailureListener {
-                    exception.value = it
-                }
-        }
-
-        return Pair(isSuccess, exception)
-    }
-
     inline fun <reified T> getItem(uid : String) : Pair<LiveData<T>, LiveData<Exception>> {
         val data = MutableLiveData<T>()
         val exception = MutableLiveData<Exception>()
         val db = FirebaseFirestore.getInstance()
-
+        Log.d("12345-", uid)
         mapCollection[T::class]?.let { collection ->
             db.collection(collection)
                 .document(uid)
                 .get()
                 .addOnSuccessListener { result ->
+                    Log.d("12345-", result.id)
                     if (result.data != null) data.postValue(result.toObject(T::class.java))
                     else exception.postValue(java.lang.Exception("$collection uid not found"))
                 }
@@ -122,6 +95,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
                 .get()
                 .addOnSuccessListener { result ->
                     result.map { document ->
+                        Log.d("12345-", document.id + " " + T::class.java.toString())
                         list.add(document.toObject(T::class.java))
                     }
                     data.postValue(list)

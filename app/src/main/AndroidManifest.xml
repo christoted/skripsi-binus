@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project_skripsi">
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".utils.app.App"
@@ -13,34 +13,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectskripsi">
+        <activity
+            android:name=".module.common.view_image.ViewImageActivity"
+            android:exported="false" />
 
         <provider
-            android:authorities="com.example.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/fileprovide"/>
-
+                android:resource="@xml/fileprovider" />
         </provider>
 
         <activity
             android:name=".CameraActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".module.parent.PrMainActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".module.teacher.TcMainActivity"
             android:exported="false" />
+
         <receiver
             android:name=".utils.service.alarm.AlarmReceiver"
             android:enabled="true"
             android:exported="false" />
+
         <activity
             android:name=".module.common.auth.AuthActivity"
             android:exported="true">

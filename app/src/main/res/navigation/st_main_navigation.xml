@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/stAnnouncementFragment"
-        android:name="com.example.project_skripsi.module.student.main.studyclass.announcement.StAnnouncementFragment"
+        android:name="com.example.project_skripsi.module.student.main.home.announcement.StAnnouncementFragment"
         android:label="fragment_st_announcement"
         tools:layout="@layout/fragment_st_announcement" />
     <fragment

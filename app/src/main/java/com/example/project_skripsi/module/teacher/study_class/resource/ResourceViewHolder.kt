@@ -27,7 +27,7 @@ class ResourceViewHolder(
             with(view) {
                 tvNumber.text = ("${dataSet.indexOf(item) + 1}.")
                 tvName.text = item.title
-                tvType.text = item.type
+//                tvType.text = item.type
             }
         }
         return adapter
