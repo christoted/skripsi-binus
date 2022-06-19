@@ -108,6 +108,18 @@ class StTaskFormFragment : Fragment() {
             }
         }
 
+        viewModel.incompleteTask.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Tugas \"${it.title}\" (${it.subjectName}) harus dikerjakan terlebih dahulu",
+                    Toast.LENGTH_LONG
+                ).show()
+                view?.findNavController()?.popBackStack()
+            }
+        }
+
+
         return binding.root
     }
 

@@ -51,6 +51,9 @@ class StTaskFormViewModel : ViewModel() {
     private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
     val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
 
+    private val _incompleteTask = MutableLiveData<HandledEvent<AssignedTaskForm>>()
+    val incompleteTask : LiveData<HandledEvent<AssignedTaskForm>> = _incompleteTask
+
     var isViewOnly = false
     var taskFormId = ""
     lateinit var curStudent: Student
@@ -89,6 +92,7 @@ class StTaskFormViewModel : ViewModel() {
 
 
             var incompleteId: String? = null
+            var incompleteTask: AssignedTaskForm? = null
             taskForm.value?.let { task ->
                 task.prerequisiteResources?.map {
                     curStudent.completedResources?.let { list ->
@@ -104,9 +108,18 @@ class StTaskFormViewModel : ViewModel() {
                         _incompleteResource.postValue(HandledEvent(it))
                     }
                 }
+
+                task.prerequisiteTaskForms?.map { id ->
+                    curStudent.assignedAssignments?.firstOrNull { it.id == id }?.let {
+                        if (it.isSubmitted == false) {
+                            incompleteTask = it
+                            _incompleteTask.postValue(HandledEvent(it))
+                            return@map
+                        }
+                    }
+                }
             }
-            Log.d("1234567-", "$incompleteId!")
-            if (incompleteId != null) return@observeOnce
+            if (incompleteId != null || incompleteTask != null) return@observeOnce
 
             student.studyClass?.let { loadStudyClass(it) }
 
@@ -119,14 +132,8 @@ class StTaskFormViewModel : ViewModel() {
 
             _formStatus.postValue(
                 Pair(
-                    TaskFormStatus.getStatus(
-                        taskForm.value!!,
-                        assignedTaskForm!!
-                    ),
-                    TaskFormStatus.getStatusColor(
-                        taskForm.value!!,
-                        assignedTaskForm!!
-                    )
+                    TaskFormStatus.getStatus(taskForm.value!!, assignedTaskForm!!),
+                    TaskFormStatus.getStatusColor(taskForm.value!!, assignedTaskForm)
                 )
             )
 
@@ -135,7 +142,7 @@ class StTaskFormViewModel : ViewModel() {
                 questionList.add(
                     AssignedQuestion(
                         question,
-                        assignedTaskForm?.answers?.getOrNull(index)
+                        assignedTaskForm.answers?.getOrNull(index)
                     )
                 )
             }
@@ -150,8 +157,8 @@ class StTaskFormViewModel : ViewModel() {
     fun submitAnswer(newAnswer: List<Pair<String, List<String>>>) {
         taskForm.value?.let { task ->
             when {
-                isExam(task.type) -> curStudent.assignedAssignments
-                else -> curStudent.assignedExams
+                isExam(task.type) -> curStudent.assignedExams
+                else -> curStudent.assignedAssignments
             }?.firstOrNull { it.id == taskFormId }?.let {
                 it.isSubmitted = true
                 it.answers?.mapIndexed { index, answer ->
