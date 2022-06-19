@@ -60,8 +60,8 @@ class StProfileFragment : Fragment() {
         viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
 
         binding.imvLogout.setOnClickListener {
-            StorageSP.set(requireActivity(), SP_EMAIL, "")
-            StorageSP.set(requireActivity(), SP_PASSWORD, "")
+            StorageSP.setString(requireActivity(), SP_EMAIL, "")
+            StorageSP.setString(requireActivity(), SP_PASSWORD, "")
             StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
 
             // Cancel everyday notification

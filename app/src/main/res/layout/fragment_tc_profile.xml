@@ -97,7 +97,7 @@
                         android:text=":"/>
                     <TextView
                         android:id="@+id/tv_school_name"
-                        android:text="SMA METHODIST-3"/>
+                        tools:text="SMA METHODIST-3"/>
                 </TableRow>
 
                 <TableRow>
@@ -109,7 +109,7 @@
                         android:layout_marginEnd="8dp"/>
                     <TextView
                         android:id="@+id/tv_class_name"
-                        android:text="XII-IPA-2"/>
+                        tools:text="XII-IPA-2"/>
                 </TableRow>
             </TableLayout>
 
@@ -131,7 +131,7 @@
                         android:layout_marginEnd="8dp"/>
                     <TextView
                         android:id="@+id/tv_phone_number"
-                        android:text="0823677772"/>
+                        tools:text="0823677772"/>
                 </TableRow>
             </TableLayout>
 
@@ -153,7 +153,7 @@
                         android:layout_marginEnd="8dp"/>
                     <TextView
                         android:id="@+id/tv_gender"
-                        android:text="laki-laki"/>
+                        tools:text="laki-laki"/>
                 </TableRow>
             </TableLayout>
 

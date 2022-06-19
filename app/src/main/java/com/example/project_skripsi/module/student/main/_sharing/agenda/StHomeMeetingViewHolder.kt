@@ -36,7 +36,13 @@ class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding,
                 btnClass.isEnabled = false
             } else {
                 btnClass.setOnClickListener {
-                    listener.onClassItemClicked(absoluteAdapterPosition, data)
+                    when {
+                        DateHelper.getCurrentTime() < DateHelper.getCalendarWithMinuteOffset(item.startTime, -5).time ->
+                            Toast.makeText(root.context, "Kelas dapat diakses 5 menit sebelum jam mulai", Toast.LENGTH_SHORT).show()
+                        else -> {
+                            listener.onClassItemClicked(data)
+                        }
+                    }
                 }
             }
         }

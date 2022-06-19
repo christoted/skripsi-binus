@@ -19,10 +19,12 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.core.model.local.NotificationModel
 import com.example.project_skripsi.databinding.FragmentStHomeBinding
+import com.example.project_skripsi.module.common.zoom.MeetingHandler
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
+import com.example.project_skripsi.utils.service.zoom.ZoomService
 
 
 class StHomeFragment : Fragment(), ItemListener {
@@ -245,17 +247,12 @@ class StHomeFragment : Fragment(), ItemListener {
         )
     }
 
-    override fun onClassItemClicked(Position: Int, classMeeting: ClassMeeting) {
-       goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
+    override fun onClassItemClicked(classMeeting: ClassMeeting) {
+        MeetingHandler.inst.startMeetingAsStudent(viewModel.currentStudent.value, classMeeting.id)
+        ZoomService.inst.joinMeeting(requireContext(), viewModel.currentStudent.value?.name)
     }
 
     override fun onResourceItemClicked(resourceId: String) {
         viewModel.openResource(requireContext(), resourceId)
-    }
-
-    private fun goToClassMeeting(classLink: String) {
-        val uri = Uri.parse(classLink)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
     }
 }

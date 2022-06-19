@@ -49,8 +49,8 @@ class TcProfileFragment : Fragment() {
         viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
 
         binding.imvLogout.setOnClickListener {
-            StorageSP.set(requireActivity(), StorageSP.SP_EMAIL, "")
-            StorageSP.set(requireActivity(), StorageSP.SP_PASSWORD, "")
+            StorageSP.setString(requireActivity(), StorageSP.SP_EMAIL, "")
+            StorageSP.setString(requireActivity(), StorageSP.SP_PASSWORD, "")
             StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
             cancelNotification()
             val intent = Intent(binding.root.context, AuthActivity::class.java)

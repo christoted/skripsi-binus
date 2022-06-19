@@ -18,10 +18,12 @@ import com.example.project_skripsi.core.model.local.NotificationModel
 import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
 import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
 import com.example.project_skripsi.databinding.FragmentTcHomeBinding
+import com.example.project_skripsi.module.common.zoom.MeetingHandler
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.module.teacher.main.home.adapter.TcHomeMainAdapter
 import com.example.project_skripsi.module.teacher.main.home.viewmodel.TcHomeViewModel
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
+import com.example.project_skripsi.utils.service.zoom.ZoomService
 
 class TcHomeFragment : Fragment(), TcAgendaItemListener {
 
@@ -231,19 +233,12 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
         view?.findNavController()?.navigate(toTaskActivity)
     }
 
-    override fun onClassItemClicked(Position: Int, data: TeacherAgendaMeeting) {
-//        val meetingLink = data.classMeeting.meetingLink
-        goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
+    override fun onClassItemClicked(agendaMeeting: TeacherAgendaMeeting) {
+        MeetingHandler.inst.startMeetingAsTeacher()
+        ZoomService.inst.joinMeeting(requireContext(), viewModel.teacherData.value?.name)
     }
 
     override fun onResourceItemClicked(resourceId: String) {
         viewModel.openLink(requireContext(), resourceId)
     }
-
-    private fun goToClassMeeting(classLink: String) {
-        val uri = Uri.parse(classLink)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
-
 }

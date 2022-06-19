@@ -22,8 +22,11 @@ import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_PASSWORD
 import com.example.project_skripsi.utils.helper.ValidationHelper
+import com.example.project_skripsi.utils.service.zoom.ZoomService
+import us.zoom.sdk.ZoomError
+import us.zoom.sdk.ZoomSDKInitializeListener
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
 
     private lateinit var binding: ActivityAuthBinding
     private lateinit var viewModel: AuthViewModel
@@ -40,9 +43,9 @@ class AuthActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
         viewModel.successLoginAs.observe(this, { loginAs ->
-            StorageSP.set(this, SP_EMAIL, binding.edtEmail.text.toString())
-            StorageSP.set(this, SP_PASSWORD, binding.edtPassword.text.toString())
-            StorageSP.setInt(this, SP_LOGIN_AS, loginAs)
+            StorageSP.setString(applicationContext, SP_EMAIL, binding.edtEmail.text.toString())
+            StorageSP.setString(applicationContext, SP_PASSWORD, binding.edtPassword.text.toString())
+            StorageSP.setInt(applicationContext, SP_LOGIN_AS, loginAs)
             when(loginAs) {
                 LOGIN_STUDENT -> redirectToStudent()
                 LOGIN_TEACHER -> redirectToTeacher()
@@ -97,18 +100,16 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
-        // delaying 0.5s
-        Handler(Looper.getMainLooper()).postDelayed({
-            initEvent()
-        }, 500)
-
         FirestoreDummy()
+
+        // initialize zoom sdk, if successful run initEvent()
+        ZoomService.inst.initializeSdk(applicationContext, this@AuthActivity)
     }
 
     private fun initEvent() {
-        val email = StorageSP.get(this, SP_EMAIL) ?: ""
-        val password = StorageSP.get(this, SP_PASSWORD) ?: ""
-        val loginAs = StorageSP.getInt(this, SP_LOGIN_AS, -1)
+        val email = StorageSP.getString(applicationContext, SP_EMAIL) ?: ""
+        val password = StorageSP.getString(applicationContext, SP_PASSWORD) ?: ""
+        val loginAs = StorageSP.getInt(applicationContext, SP_LOGIN_AS, -1)
         if (loginAs != -1 && email.isNotEmpty() && password.isNotEmpty()) {
             binding.edtEmail.setText(email)
             binding.edtPassword.setText(password)
@@ -144,4 +145,16 @@ class AuthActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+    override fun onZoomSDKInitializeResult(errorCode: Int, internalErrorCode: Int) {
+        if (errorCode == ZoomError.ZOOM_ERROR_SUCCESS) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                initEvent()
+            }, 200)
+        } else {
+            Toast.makeText(applicationContext, "Zoom SDK initialization failed", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onZoomAuthIdentityExpired() = Unit
 }

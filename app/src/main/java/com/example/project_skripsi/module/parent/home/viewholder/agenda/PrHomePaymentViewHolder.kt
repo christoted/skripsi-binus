@@ -20,7 +20,7 @@ class PrHomePaymentViewHolder(private val binding: ItemPrHomePaymentBinding):
             tvStudentName.text = data.studentName
             tvTitle.text = data.payment?.title
             tvNominal.text = CurrencyHelper.toRupiah(data.payment?.nominal!!)
-            tvAccountNumber.text = ("BCA / ${data.payment?.accountNumber}")
+            tvAccountNumber.text = ("BCA / ${data.payment.accountNumber}")
             viewIndicator.setBackgroundColor(
                 ResourcesCompat.getColor(App.resourses!!, R.color.indicator_payment, null))
         }

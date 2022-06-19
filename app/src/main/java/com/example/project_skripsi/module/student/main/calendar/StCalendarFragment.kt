@@ -17,9 +17,11 @@ import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.databinding.FragmentStCalendarBinding
 import com.example.project_skripsi.databinding.ViewEmptyItemBinding
+import com.example.project_skripsi.module.common.zoom.MeetingHandler
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.service.zoom.ZoomService
 import com.google.android.material.appbar.AppBarLayout
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -124,19 +126,13 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         )
     }
 
-    override fun onClassItemClicked(Position: Int, classMeeting: ClassMeeting) {
-        goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
+    override fun onClassItemClicked(classMeeting: ClassMeeting) {
+        MeetingHandler.inst.startMeetingAsStudent(viewModel.curStudent, classMeeting.id)
+        ZoomService.inst.joinMeeting(requireContext(), viewModel.curStudent.name)
     }
 
     override fun onResourceItemClicked(resourceId: String) {
         viewModel.openResource(requireContext(), resourceId)
     }
-
-    private fun goToClassMeeting(classLink: String) {
-        val uri = Uri.parse(classLink)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
-
 }
 

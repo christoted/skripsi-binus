@@ -4,6 +4,6 @@ import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
 
 interface TcAgendaItemListener {
     fun onTaskFormItemClicked(taskFormId: String, studyClassId: String, subjectName: String)
-    fun onClassItemClicked(Position: Int, agendaMeeting: TeacherAgendaMeeting)
+    fun onClassItemClicked(agendaMeeting: TeacherAgendaMeeting)
     fun onResourceItemClicked(resourceId : String)
 }

@@ -32,7 +32,7 @@ class TcAgendaMeetingViewHolder(private val binding: ItemTcAgendaGeneralBinding,
             if (DateHelper.getCurrentTime() > data.classMeeting.endTime) {
                 btnClass.isEnabled = false
             } else {
-                btnClass.setOnClickListener { listener.onClassItemClicked(absoluteAdapterPosition, data) }
+                btnClass.setOnClickListener { listener.onClassItemClicked(data) }
             }
         }
     }

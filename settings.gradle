@@ -9,3 +9,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "project-skripsi"
 include ':app'
+include ':commonlib'
+include ':mobilertc'

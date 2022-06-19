@@ -63,8 +63,8 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         }
 
         binding.imvLogout.setOnClickListener {
-            StorageSP.set(requireActivity(), StorageSP.SP_EMAIL, "")
-            StorageSP.set(requireActivity(), StorageSP.SP_PASSWORD, "")
+            StorageSP.setString(requireActivity(), StorageSP.SP_EMAIL, "")
+            StorageSP.setString(requireActivity(), StorageSP.SP_PASSWORD, "")
             StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
             val intent = Intent(binding.root.context, AuthActivity::class.java)
             startActivity(intent)
