@@ -103,11 +103,15 @@ class TcAlterTaskViewModel : ViewModel() {
     }
 
     fun loadResource() {
-        FireRepository.inst.getItems<Resource>(resourceIds).first.observeOnce { _resourceList.postValue(it) }
+        FireRepository.inst.getItems<Resource>(resourceIds).first.observeOnce { list ->
+            _resourceList.postValue(list.sortedBy { it.meetingNumber })
+        }
     }
 
     fun loadAssignment() {
-        FireRepository.inst.getItems<TaskForm>(assignmentIds).first.observeOnce { _assignmentList.postValue(it) }
+        FireRepository.inst.getItems<TaskForm>(assignmentIds).first.observeOnce { list ->
+            _assignmentList.postValue(list.sortedBy { it.startTime })
+        }
     }
 
     fun updateStartDate(date : Date) = _startDate.postValue(date)

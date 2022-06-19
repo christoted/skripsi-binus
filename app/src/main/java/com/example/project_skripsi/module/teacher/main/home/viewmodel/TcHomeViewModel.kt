@@ -28,9 +28,16 @@ class TcHomeViewModel: ViewModel() {
     val studyClass: LiveData<StudyClass> = _studyClass
 
     private val _listMeeting: MutableLiveData<List<TeacherAgendaMeeting>> = MutableLiveData()
+    val listMeeting: LiveData<List<TeacherAgendaMeeting>> = _listMeeting
+
     private val _announcements: MutableLiveData<List<Announcement>> = MutableLiveData()
+
     private val _examList: MutableLiveData<List<TeacherAgendaTaskForm>> = MutableLiveData()
+    val examList: LiveData<List<TeacherAgendaTaskForm>> = _examList
+
     private val _assignmentList: MutableLiveData<List<TeacherAgendaTaskForm>> = MutableLiveData()
+    val assignmentList: LiveData<List<TeacherAgendaTaskForm>> = _assignmentList
+
     private val _paymentList = MutableLiveData<List<Payment>>()
 
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()

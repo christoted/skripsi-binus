@@ -32,15 +32,18 @@ class PrSubjectViewHolder(private val dataSet : List<ParentSubject>) {
             with(view) {
                 view.tvSubjectName.text = item.subjectName
                 view.tvTeacherName.text = item.teacherName
-                item.teacherPhoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
-                imvTeacherPhone.setOnClickListener { view ->
+                item.teacherPhoneNumber?.let {
+                    imvTeacherPhone.setImageResource(R.drawable.whatsapp)
+                    imvTeacherPhone.setOnClickListener { view ->
                         item.teacherPhoneNumber?.let {
                             val url = "https://api.whatsapp.com/send/?phone=${it}"
                             val uri = Uri.parse(url)
                             val intent = Intent(Intent.ACTION_VIEW, uri)
                             view.context.startActivity(intent)
                         }
+                    }
                 }
+
 
                 view.tvSummaryAttendance.text = ("${item.attendance} / ${item.meetingTotal}")
                 view.tvSummaryExam.text = ("${item.exam} / ${item.examTotal}")

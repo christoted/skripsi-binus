@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -95,6 +96,17 @@ class StTaskFormFragment : Fragment() {
             if (it) view?.findNavController()?.popBackStack()
             binding.btnSubmit.isEnabled = true
         })
+
+        viewModel.incompleteResource.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Materi \"${it.title}\" (${it.subjectName}) harus dibaca terlebih dahulu",
+                    Toast.LENGTH_LONG
+                ).show()
+                view?.findNavController()?.popBackStack()
+            }
+        }
 
         return binding.root
     }

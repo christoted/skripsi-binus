@@ -17,6 +17,8 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.AttendedMeeting
 import com.example.project_skripsi.core.model.firestore.TaskForm
+import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
+import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
 import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.alarm.AlarmReceiver
@@ -126,12 +128,34 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             }
         }
 
+        fun cancelAllMeetingNotificationTeacher(context: Context, meetings: List<TeacherAgendaMeeting>) {
+            meetings.forEach {
+                it.classMeeting.startTime?.let {
+                    cancelNotification(context, date = it)
+                }
+                it.classMeeting.endTime?.let {
+                    cancelNotification(context, date = it)
+                }
+            }
+        }
+
         fun cancelAllExamAndAssignmentNotification(context: Context, exams: List<TaskForm>) {
             exams.forEach {
                 it.startTime?.let {
                     cancelNotification(context, date = it)
                 }
                 it.endTime?.let {
+                    cancelNotification(context, date = it)
+                }
+            }
+        }
+
+        fun cancelAllExamAndAssignmentNotificationTeacher(context: Context, exams: List<TeacherAgendaTaskForm>) {
+            exams.forEach {
+                it.taskForm.startTime?.let {
+                    cancelNotification(context, date = it)
+                }
+                it.taskForm.endTime?.let {
                     cancelNotification(context, date = it)
                 }
             }

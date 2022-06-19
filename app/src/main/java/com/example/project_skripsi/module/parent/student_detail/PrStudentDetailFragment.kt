@@ -77,12 +77,15 @@ class PrStudentDetailFragment : Fragment() {
         viewModel.homeroomTeacher.observe(viewLifecycleOwner) { teacher ->
             with(binding) {
                 tvTeacherName.text = teacher.name
-                teacher.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
-                imvTeacherPhone.setOnClickListener {
-                    teacher.phoneNumber?.let {
-                        goToWhatsApp(it)
+                teacher.phoneNumber?.let {
+                    imvTeacherPhone.setImageResource(R.drawable.whatsapp)
+                    imvTeacherPhone.setOnClickListener {
+                        teacher.phoneNumber?.let {
+                            goToWhatsApp(it)
+                        }
                     }
                 }
+
             }
         }
 
