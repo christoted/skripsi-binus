@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.example.project_skripsi.databinding.FragmentTcProfileBinding
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.teacher.main.home.viewmodel.TcHomeViewModel
-import com.example.project_skripsi.service.StorageSP
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
+import com.example.project_skripsi.utils.service.storage.StorageSP
 
 class TcProfileFragment : Fragment() {
 
