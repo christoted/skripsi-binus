@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.student.subject_detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,18 +42,30 @@ class StSubjectFragment : Fragment(), ItemClickListener {
             tab.text = StSubjectViewModel.tabHeader[position]
         }.attach()
 
-        viewModel.teacher.observe(this, {
+        viewModel.teacher.observe(this) { teacher ->
             with(binding) {
-                tvTeacherName.text = it.name
-                it.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
+                tvTeacherName.text = teacher.name
+                teacher.phoneNumber?.let {
+                    imvTeacherPhone.setImageResource(R.drawable.whatsapp)
+                    imvTeacherPhone.setOnClickListener {
+                        goToWhatsApp(teacher.phoneNumber ?: "")
+                    }
+                }
             }
-        })
+        }
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         retrieveArgs()
 
         return binding.root
+    }
+
+    private fun goToWhatsApp(phoneNumber: String) {
+        val url = "https://api.whatsapp.com/send/?phone=${phoneNumber}"
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     private fun retrieveArgs() {

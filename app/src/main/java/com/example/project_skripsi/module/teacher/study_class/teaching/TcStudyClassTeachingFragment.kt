@@ -41,12 +41,13 @@ class TcStudyClassTeachingFragment : Fragment() {
         viewModel.classChief.observe(viewLifecycleOwner) { student ->
             with(binding) {
                 tvChiefName.text = student.name
-                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
-                imvChiefPhone.setOnClickListener {
-                    student.phoneNumber?.let {
-                        goToWhatsApp(it)
-                    }
-                }
+                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp)
+                    imvChiefPhone.setOnClickListener {
+                        student.phoneNumber?.let {
+                            goToWhatsApp(it)
+                        }
+                    }}
+
             }
         }
 
