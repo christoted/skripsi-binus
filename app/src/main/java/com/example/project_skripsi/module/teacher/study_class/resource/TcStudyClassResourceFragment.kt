@@ -10,11 +10,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_skripsi.core.model.firestore.Resource
 import com.example.project_skripsi.databinding.FragmentTcStudyClassResourceBinding
+import com.example.project_skripsi.utils.generic.GenericLinkHandler
+import com.example.project_skripsi.utils.generic.GenericLinkHandler.Companion.goToLink
+import com.example.project_skripsi.utils.generic.ItemClickListener
+import com.example.project_skripsi.utils.generic.LinkClickListener
 import com.example.project_skripsi.utils.helper.UIHelper
 
 
-class TcStudyClassResourceFragment : Fragment() {
+class TcStudyClassResourceFragment : Fragment(), LinkClickListener {
 
     private lateinit var viewModel : TcStudyClassResourceViewModel
     private var _binding: FragmentTcStudyClassResourceBinding? = null
@@ -41,7 +46,7 @@ class TcStudyClassResourceFragment : Fragment() {
                     UIHelper.getEmptyList("Tidak ada materi", inflater, binding.llParent)
                 )
             } else {
-                binding.rvItem.adapter = ResourceViewHolder(it).getAdapter()
+                binding.rvItem.adapter = ResourceViewHolder(it, this@TcStudyClassResourceFragment).getAdapter()
             }
         })
 
@@ -59,5 +64,9 @@ class TcStudyClassResourceFragment : Fragment() {
     private fun retrieveArgs() {
         val args : TcStudyClassResourceFragmentArgs by navArgs()
         viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
+    }
+
+    override fun onResourceItemClicked(resource: Resource) {
+        resource.link?.let { goToLink(requireContext(), it) }
     }
 }

@@ -3,13 +3,9 @@ package com.example.project_skripsi.module.teacher._sharing.agenda
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
-import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
-import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
-import com.example.project_skripsi.databinding.ItemStHomeSectionItemBinding
 import com.example.project_skripsi.databinding.ItemTcAgendaGeneralBinding
-import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 
@@ -27,10 +23,10 @@ class TcAgendaMeetingViewHolder(private val binding: ItemTcAgendaGeneralBinding,
             tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.classMeeting.startTime!!)} - " +
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.classMeeting.endTime!!)}")
 
-            if (data.classMeeting.meetingResource == null) {
+            if (data.classMeeting.meetingResource.isNullOrEmpty()) {
                 btnResource.isEnabled = false
             } else {
-                btnResource.setOnClickListener { listener.onMaterialItemClicked(absoluteAdapterPosition) }
+                btnResource.setOnClickListener { listener.onResourceItemClicked(data.classMeeting.meetingResource!!) }
             }
 
             if (DateHelper.getCurrentTime() > data.classMeeting.endTime) {

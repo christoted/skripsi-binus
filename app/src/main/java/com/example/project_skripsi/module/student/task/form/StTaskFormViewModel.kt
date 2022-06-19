@@ -16,6 +16,7 @@ import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_ESSAY
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
+import com.example.project_skripsi.utils.Constant.Companion.isExam
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import kotlinx.coroutines.delay
@@ -43,7 +44,7 @@ class StTaskFormViewModel : ViewModel() {
     val questionList: LiveData<List<AssignedQuestion>> = _questionList
 
     private val _timeLeft = MutableLiveData<TaskFormTimer>()
-    val timerLeft: LiveData<TaskFormTimer> = _timeLeft
+    val timeLeft: LiveData<TaskFormTimer> = _timeLeft
 
     private val _isSubmitted = MutableLiveData<Boolean>()
     val isSubmitted: LiveData<Boolean> = _isSubmitted
@@ -53,7 +54,6 @@ class StTaskFormViewModel : ViewModel() {
     lateinit var curStudent: Student
 
     fun setTaskForm(taskFormId : String) {
-        Log.d("12345-", "reloadtask")
         this.taskFormId = taskFormId
         loadTaskForm(taskFormId)
     }
@@ -70,8 +70,8 @@ class StTaskFormViewModel : ViewModel() {
                         val s = difTime / 1000
                         val m = s / 60
                         val h = m / 60
-                        val forceSubmit = false
-//                        val forceSubmit = difTime <= 0
+//                        val forceSubmit = false
+                        val forceSubmit = difTime <= 0
                         _timeLeft.postValue(TaskFormTimer(forceSubmit, h, m%60, s%60))
                         delay(1000)
                     }
@@ -84,11 +84,21 @@ class StTaskFormViewModel : ViewModel() {
     private fun loadStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             curStudent = student
-            student.studyClass?.let { loadStudyClass(it) }
 
             var assignedTaskForm: AssignedTaskForm? = null
-            student.assignedExams?.firstOrNull { it.id == taskFormId }?.let { assignedTaskForm = it }
-            student.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let { assignedTaskForm = it }
+            taskForm.value?.let { task ->
+                task.prerequisiteResources?.map {
+
+                }
+
+
+                when {
+                    isExam(task.type) -> student.assignedExams
+                    else -> student.assignedAssignments
+                }?.firstOrNull { it.id == taskFormId }?.let { assignedTaskForm = it }
+            }
+
+            student.studyClass?.let { loadStudyClass(it) }
 
             _formStatus.postValue(
                 Pair(
@@ -121,18 +131,16 @@ class StTaskFormViewModel : ViewModel() {
         FireRepository.inst.getItem<StudyClass>(uid).first.observeOnce { _studyClass.postValue(it) }
 
     fun submitAnswer(newAnswer: List<Pair<String, List<String>>>) {
-        curStudent.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let {
-            it.isSubmitted = true
-            it.answers?.mapIndexed { index, answer ->
-                answer.answerText = newAnswer[index].first
-                answer.images = newAnswer[index].second
-            }
-        }
-        curStudent.assignedExams?.firstOrNull { it.id == taskFormId }?.let {
-            it.isSubmitted = true
-            it.answers?.mapIndexed { index, answer ->
-                answer.answerText = newAnswer[index].first
-                answer.images = newAnswer[index].second
+        taskForm.value?.let { task ->
+            when {
+                isExam(task.type) -> curStudent.assignedAssignments
+                else -> curStudent.assignedExams
+            }?.firstOrNull { it.id == taskFormId }?.let {
+                it.isSubmitted = true
+                it.answers?.mapIndexed { index, answer ->
+                    answer.answerText = newAnswer[index].first
+                    answer.images = newAnswer[index].second
+                }
             }
         }
 

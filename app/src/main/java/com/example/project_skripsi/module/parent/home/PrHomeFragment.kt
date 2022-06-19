@@ -1,9 +1,7 @@
 package com.example.project_skripsi.module.parent.home
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +17,7 @@ import com.example.project_skripsi.databinding.*
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.parent.home.viewholder.agenda.PrHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.parent.home.viewholder.student.StudentViewHolder
-import com.example.project_skripsi.module.teacher.TcMainActivity
-import com.example.project_skripsi.service.StorageSP
+import com.example.project_skripsi.utils.service.storage.StorageSP
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
 class PrHomeFragment : Fragment(), ItemClickListener {

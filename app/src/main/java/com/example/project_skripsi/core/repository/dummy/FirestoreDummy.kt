@@ -3,6 +3,8 @@ package com.example.project_skripsi.core.repository.dummy
 import android.util.Log
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ATTEND
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.google.android.gms.tasks.OnFailureListener
@@ -54,14 +56,14 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     listOf(
                         AttendedMeeting(
                             "MEET001",
-                            "hadir",
+                            ATTENDANCE_ATTEND,
                             DateHelper.getCurrentTime(),
                             DateHelper.getCurrentTime(),
                             "Biologi",
 
                             )
                     ),
-                    emptyList(),
+                    mutableListOf(),
                     mutableListOf(
                         AssignedTaskForm("HaWuFgmvLAuZYeG5JuVw",
                             "Ujian Tengah Semester",
@@ -335,14 +337,10 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                                     "online",
                                     "berlangsung",
                                     "feiaZB0ds1rbaWT1g8hJ",
-                                    "123",
                                 )
                             ),
                             mutableListOf("HaWuFgmvLAuZYeG5JuVw"), // exam
                             mutableListOf("ripyBsBZObBfarZpd085"), // asg
-                            mutableListOf("dxXTXZcrj0yVh8PpzYk2",
-                                "feiaZB0ds1rbaWT1g8hJ"
-                            )
                         ),
                     ),
                 )
@@ -453,7 +451,6 @@ class FirestoreDummy : OnSuccessListener<Any>, OnFailureListener {
                     Subject(
                         subjects[idx],
                         "fUepYcW4j8Z2M8lX3L78ddEprIX2",
-                        mutableListOf(),
                         mutableListOf(),
                         mutableListOf(),
                         mutableListOf(),

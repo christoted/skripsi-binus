@@ -3,7 +3,6 @@ package com.example.project_skripsi.module.teacher.main.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +81,6 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("12345-","destroy")
         _binding = null
     }
 
@@ -96,12 +94,12 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
     }
 
     override fun onClassItemClicked(Position: Int, data: TeacherAgendaMeeting) {
-        val meetingLink = data.classMeeting.meetingLink
+//        val meetingLink = data.classMeeting.meetingLink
         goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
-    override fun onMaterialItemClicked(Position: Int) {
-        // TODO: Link
+    override fun onResourceItemClicked(resourceId: String) {
+        viewModel.openLink(requireContext(), resourceId)
     }
 
     private fun goToClassMeeting(classLink: String) {

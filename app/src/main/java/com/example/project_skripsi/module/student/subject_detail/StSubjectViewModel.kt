@@ -1,12 +1,17 @@
 package com.example.project_skripsi.module.student.subject_detail
 
+import android.content.Context
 import androidx.lifecycle.*
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.Attendance
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
+import com.example.project_skripsi.utils.Constant
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ATTEND
+import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.generic.HandledEvent
 
 class StSubjectViewModel : ViewModel() {
 
@@ -30,6 +35,10 @@ class StSubjectViewModel : ViewModel() {
     private val _assignmentList = MutableLiveData<List<TaskFormStatus>>()
     val assignmentList : LiveData<List<TaskFormStatus>> = _assignmentList
 
+    private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
+    val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
+
+    private lateinit var curStudent: Student
     private var className = ""
     private var subjectName = ""
     private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
@@ -43,19 +52,22 @@ class StSubjectViewModel : ViewModel() {
 
     private fun loadStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
-                with(student) {
-                    attendedMeetings?.map { meeting -> meeting.id?.let { mAttendedMeetings.add(it) } }
-                    assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) } }
-                    assignedAssignments?.map { asg ->
-                        asg.id?.let {
-                            mAssignedTaskForms.put(
-                                it,
-                                asg
-                            )
-                        }
-                    }
-                    studyClass?.let { loadStudyClass(it) }
+            with(student) {
+                curStudent = student
+                attendedMeetings?.filter { it.status == ATTENDANCE_ATTEND }?.map { meeting ->
+                    meeting.id?.let { mAttendedMeetings.add(it) }
                 }
+                assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) } }
+                assignedAssignments?.map { asg ->
+                    asg.id?.let {
+                        mAssignedTaskForms.put(
+                            it,
+                            asg
+                        )
+                    }
+                }
+                studyClass?.let { loadStudyClass(it) }
+            }
         }
     }
 
@@ -66,8 +78,12 @@ class StSubjectViewModel : ViewModel() {
                 with(subject) {
                     classAssignments?.let { loadTaskForms(it, _assignmentList) }
                     classExams?.let { loadTaskForms(it, _examList) }
-                    classMeetings?.let { loadAttendances(it) }
-                    classResources?.let { loadResources(it) }
+                    classMeetings?.let { list ->
+                        loadAttendances(list)
+                        loadResources(list.mapNotNull {
+                            if (it.meetingResource.isNullOrEmpty()) null else it.meetingResource
+                        })
+                    }
                     teacher?.let { loadTeacher(it) }
                 }
             }
@@ -85,7 +101,9 @@ class StSubjectViewModel : ViewModel() {
     }
 
     private fun loadResources(uids: List<String>) {
-        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { _resourceList.postValue(it) }
+        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { list ->
+            _resourceList.postValue(list.sortedBy { it.meetingNumber })
+        }
     }
 
     private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskFormStatus>>) {
@@ -97,6 +115,32 @@ class StSubjectViewModel : ViewModel() {
                 }
             }
             _taskFormList.postValue(taskFormList.sortedByDescending { it.endTime })
+        }
+    }
+
+    fun openResource(context: Context, resource: Resource) {
+        var incompleteId: String? = null
+        resource.prerequisites?.map {
+            curStudent.completedResources?.let { list ->
+                if (!list.contains(it)) {
+                    incompleteId = it
+                    return@map
+                }
+            }
+        }
+
+        incompleteId?.let { id ->
+            FireRepository.inst.getItem<Resource>(id).first.observeOnce {
+                _incompleteResource.postValue(HandledEvent(it))
+            }
+        } ?: kotlin.run {
+            resource.link?.let { GenericLinkHandler.goToLink(context, it) }
+            resource.id?.let {
+                if (curStudent.completedResources?.contains(it) == false) {
+                    curStudent.completedResources?.add(it)
+                    FireRepository.inst.alterItems(listOf(curStudent))
+                }
+            }
         }
     }
 }

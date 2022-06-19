@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.student.main.home.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,9 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
+import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.generic.HandledEvent
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
@@ -42,6 +45,9 @@ class StHomeViewModel : ViewModel() {
     var listHomeSectionDataAssignment = _listHomeSectionDataAssignment
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
+
+    private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
+    val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
 
     init {
         loadCurrentStudent(AuthRepository.inst.getCurrentUser().uid)
@@ -152,6 +158,36 @@ class StHomeViewModel : ViewModel() {
                 list.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
                     .sortedBy { it.startTime }
             )
+        }
+    }
+
+    fun openResource(context: Context, uid: String) {
+        FireRepository.inst.getItem<Resource>(uid).first.observeOnce { resource ->
+
+            var incompleteId: String? = null
+            resource.prerequisites?.map {
+                currentStudent.value?.completedResources?.let { list ->
+                    if (!list.contains(it)) {
+                        incompleteId = it
+                        return@map
+                    }
+                }
+            }
+
+            incompleteId?.let { id ->
+                FireRepository.inst.getItem<Resource>(id).first.observeOnce {
+                    _incompleteResource.postValue(HandledEvent(it))
+                }
+            } ?: kotlin.run {
+                resource.link?.let { GenericLinkHandler.goToLink(context, it) }
+                resource.id?.let {
+                    val curStudent = currentStudent.value
+                    if (curStudent?.completedResources?.contains(it) == false) {
+                        curStudent.completedResources?.add(it)
+                        FireRepository.inst.alterItems(listOf(curStudent))
+                    }
+                }
+            }
         }
     }
 }

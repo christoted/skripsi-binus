@@ -23,7 +23,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
-import java.util.*
 import kotlin.math.abs
 
 class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListener {
@@ -111,12 +110,12 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
     }
 
     override fun onClassItemClicked(Position: Int, data: TeacherAgendaMeeting) {
-        val meetingLink = data.classMeeting.meetingLink
+//        val meetingLink = data.classMeeting.meetingLink
         goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
     }
 
-    override fun onMaterialItemClicked(Position: Int) {
-//        TODO("Not yet implemented")
+    override fun onResourceItemClicked(resourceId: String) {
+        viewModel.openLink(requireContext(), resourceId)
     }
 
     private fun goToClassMeeting(classLink: String) {

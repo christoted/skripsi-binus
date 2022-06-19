@@ -17,12 +17,11 @@ import com.example.project_skripsi.databinding.ActivityAuthBinding
 import com.example.project_skripsi.module.parent.PrMainActivity
 import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.module.teacher.TcMainActivity
-import com.example.project_skripsi.service.StorageSP
-import com.example.project_skripsi.service.StorageSP.Companion.SP_EMAIL
-import com.example.project_skripsi.service.StorageSP.Companion.SP_LOGIN_AS
-import com.example.project_skripsi.service.StorageSP.Companion.SP_PASSWORD
+import com.example.project_skripsi.utils.service.storage.StorageSP
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_EMAIL
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_PASSWORD
 import com.example.project_skripsi.utils.helper.ValidationHelper
-import kotlin.math.log
 
 class AuthActivity : AppCompatActivity() {
 

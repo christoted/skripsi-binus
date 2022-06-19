@@ -24,11 +24,11 @@ class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding,
             tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
                     "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
 
-            if (item.meetingResource == null) {
+            if (item.meetingResource.isNullOrEmpty()) {
                 btnResource.isEnabled = false
             } else {
                 btnResource.setOnClickListener {
-                    listener.onMaterialItemClicked(absoluteAdapterPosition)
+                    listener.onResourceItemClicked(data.meetingResource!!)
                 }
             }
 

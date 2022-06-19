@@ -1,4 +1,4 @@
-package com.example.project_skripsi.service
+package com.example.project_skripsi.utils.service.storage
 
 import android.app.Activity
 import android.content.Context
@@ -7,7 +7,7 @@ class StorageSP {
 
     companion object {
 
-        const val SP_KEY = "halohalo"
+        private const val SP_KEY = "halohalo"
         const val SP_EMAIL = "sp_email"
         const val SP_PASSWORD = "sp_password"
         const val SP_LOGIN_AS = "sp_login_as"
