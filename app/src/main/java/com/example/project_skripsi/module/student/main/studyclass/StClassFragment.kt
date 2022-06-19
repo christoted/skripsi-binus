@@ -78,20 +78,25 @@ class StClassFragment : Fragment() {
         viewModel.teacher.observe(viewLifecycleOwner) { teacher ->
             with(binding) {
                 tvTeacherName.text = teacher.name
-                teacher.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp) }
-                imvTeacherPhone.setOnClickListener {
-                    goToWhatsApp(phoneNumber = teacher.phoneNumber ?: "")
+                teacher.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp)
+                    imvTeacherPhone.setOnClickListener {
+                        goToWhatsApp(phoneNumber = teacher.phoneNumber ?: "")
+                    }
                 }
+
             }
         }
 
         viewModel.classChief.observe(viewLifecycleOwner) { student ->
             with(binding) {
                 tvChiefName.text = student.name
-                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp) }
-                imvChiefPhone.setOnClickListener {
-                    goToWhatsApp(phoneNumber = student.phoneNumber ?: "")
+                student.phoneNumber?.let {
+                    imvChiefPhone.setImageResource(R.drawable.whatsapp)
+                    imvChiefPhone.setOnClickListener {
+                        goToWhatsApp(phoneNumber = student.phoneNumber ?: "")
+                    }
                 }
+
             }
         }
         return binding.root

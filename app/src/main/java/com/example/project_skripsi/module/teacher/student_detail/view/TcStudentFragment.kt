@@ -1,5 +1,7 @@
 package com.example.project_skripsi.module.teacher.student_detail.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -34,23 +36,39 @@ class TcStudentFragment : Fragment() {
             tab.text = TcStudentDetailViewModel.tabHeader[position]
         }.attach()
 
-        viewModel.student.observe(viewLifecycleOwner, {
+        viewModel.student.observe(viewLifecycleOwner) { student ->
             with(binding) {
-                tvStudentName.text = it.name
-                it.phoneNumber?.let { imvStudentPhone.setImageResource(R.drawable.whatsapp) }
+                tvStudentName.text = student.name
+                student.phoneNumber?.let { imvStudentPhone.setImageResource(R.drawable.whatsapp)
+                    imvStudentPhone.setOnClickListener {
+                        goToWhatsApp(phoneNumber = student.phoneNumber ?: "")
+                    }
+                }
             }
-        })
+        }
 
-        viewModel.parent.observe(viewLifecycleOwner, {
+        viewModel.parent.observe(viewLifecycleOwner) { parent ->
             with(binding) {
-                tvParentName.text = it.name
-                it.phoneNumber?.let { imvParentPhone.setImageResource(R.drawable.whatsapp) }
+                tvParentName.text = parent.name
+                parent.phoneNumber?.let {
+                    imvParentPhone.setImageResource(R.drawable.whatsapp)
+                    imvParentPhone.setOnClickListener {
+                        goToWhatsApp(phoneNumber = parent.phoneNumber ?: "")
+                    }
+                }
             }
-        })
+        }
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
+    }
+
+    private fun goToWhatsApp(phoneNumber: String) {
+        val url = "https://api.whatsapp.com/send/?phone=${phoneNumber}"
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
