@@ -23,6 +23,10 @@ import com.example.project_skripsi.module.common.zoom.MeetingHandler
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithMinuteOffset
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithSecondOffset
+import com.example.project_skripsi.utils.service.alarm.AlarmService
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.service.zoom.ZoomService
 
@@ -151,7 +155,7 @@ class StHomeFragment : Fragment(), ItemListener {
 
         listEveryDayNotificationObservable.observe(viewLifecycleOwner) {
             if (count == 3) {
-                triggerEveryDayNotification(totalMeeting = totalClassMeeting, totalAssignment, totalExam)
+                triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
             }
         }
     }
@@ -170,13 +174,20 @@ class StHomeFragment : Fragment(), ItemListener {
         // Class Meeting
         viewModel.attendedMeeting.observe(viewLifecycleOwner) {
             it.map { attendedMeeting ->
-                attendedMeeting.startTime?.let { it ->
-                    NotificationUtil.cancelNotification(requireActivity(), it)
+                attendedMeeting.startTime?.let { dt ->
+                    NotificationUtil.cancelNotification(requireActivity(), dt)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
-                        it,
+                        dt,
                         "Hai, jangan lupa",
                         "Pertemuan kelas ${attendedMeeting.subjectName}"
+                    )
+
+                    AlarmService.inst.createAlarm(
+                        requireContext(),
+                        "Kelas ${attendedMeeting.subjectName} sudah mulai 2 menit",
+                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-5),
+                        attendedMeeting.id
                     )
                 }
             }
@@ -196,6 +207,13 @@ class StHomeFragment : Fragment(), ItemListener {
                         dt,
                         "Hai, 10 menit lagi, ujian kamu",
                         "${taskForm.subjectName} dimulai"
+                    )
+
+                    AlarmService.inst.createAlarm(
+                        requireContext(),
+                        "Ujian ${taskForm.subjectName} sudah mulai 2 menit",
+                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-5),
+                        taskForm.id
                     )
                 }
                 // End time
@@ -225,6 +243,13 @@ class StHomeFragment : Fragment(), ItemListener {
                         dt,
                         "Hai, 10 menit lagi, tugas kamu",
                         "${taskForm.subjectName} dimulai"
+                    )
+
+                    AlarmService.inst.createAlarm(
+                        requireContext(),
+                        "Tugas ${taskForm.subjectName} sudah mulai 2 menit",
+                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-5),
+                        taskForm.id
                     )
                 }
                 // End time

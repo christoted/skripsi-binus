@@ -29,6 +29,7 @@ class StSubjectAttendanceAdapter(private val assignmentList: List<Attendance>) :
             with(binding) {
 
                 with(item) {
+                    tvNumber.text = ("${absoluteAdapterPosition+1}.")
                     startTime?.let { tvDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it) }
                     statusColor?.let {
                         tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it, null))

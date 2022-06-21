@@ -51,13 +51,11 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         val data = MutableLiveData<T>()
         val exception = MutableLiveData<Exception>()
         val db = FirebaseFirestore.getInstance()
-        Log.d("12345-", uid)
         mapCollection[T::class]?.let { collection ->
             db.collection(collection)
                 .document(uid)
                 .get()
                 .addOnSuccessListener { result ->
-                    Log.d("12345-", result.id)
                     if (result.data != null) data.postValue(result.toObject(T::class.java))
                     else exception.postValue(java.lang.Exception("$collection uid not found"))
                 }
@@ -95,7 +93,6 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
                 .get()
                 .addOnSuccessListener { result ->
                     result.map { document ->
-                        Log.d("12345-", document.id + " " + T::class.java.toString())
                         list.add(document.toObject(T::class.java))
                     }
                     data.postValue(list)

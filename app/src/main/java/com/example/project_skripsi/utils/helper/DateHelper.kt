@@ -34,11 +34,18 @@ class DateHelper {
             return CalendarDay.from(date)
         }
 
-        fun getCalendarWithMinuteOffset(date: Date?, minute: Int) : Calendar {
+        fun Date?.getDateWithMinuteOffset(minute: Int) : Date {
             val calendar = Calendar.getInstance()
-            date?.let { calendar.time = it }
+            this?.let { calendar.time = it }
             calendar.add(Calendar.MINUTE, minute)
-            return calendar
+            return calendar.time
+        }
+
+        fun Date?.getDateWithSecondOffset(second: Int) : Date {
+            val calendar = Calendar.getInstance()
+            this?.let { calendar.time = it }
+            calendar.add(Calendar.SECOND, second)
+            return calendar.time
         }
 
         // MARK: 10 min before start
@@ -93,6 +100,13 @@ class DateHelper {
             currentDate.set(Calendar.MINUTE, minute)
             currentDate.set(Calendar.SECOND, 0)
 
+            return currentDate.time
+        }
+
+        fun Date?.getDateWithZeroSecond() : Date {
+            val currentDate = Calendar.getInstance()
+            this?.let { currentDate.time = it }
+            currentDate.set(Calendar.SECOND, 0)
             return currentDate.time
         }
 

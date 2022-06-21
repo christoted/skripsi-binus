@@ -20,6 +20,8 @@ import com.example.project_skripsi.utils.Constant.Companion.FINAL_EXAM_WEIGHT
 import com.example.project_skripsi.utils.Constant.Companion.MID_EXAM_WEIGHT
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentTime
 import kotlin.math.ceil
 
 
@@ -139,10 +141,10 @@ class StScoreViewModel : ViewModel() {
     private fun getAttendance(subjectName: String, itemList : List<AttendedMeeting>) : AttendanceMainSection {
         return AttendanceMainSection(
             subjectName = subjectName,
-            totalPresence = itemList.count { it.status == ATTENDANCE_ATTEND },
-            totalSick = itemList.count { it.status == ATTENDANCE_SICK },
-            totalLeave = itemList.count { it.status == ATTENDANCE_LEAVE },
-            totalAlpha = itemList.count { it.status == ATTENDANCE_ALPHA },
+            totalPresence = itemList.count { it.status == ATTENDANCE_ATTEND && it.endTime!! < getCurrentTime() },
+            totalSick = itemList.count { it.status == ATTENDANCE_SICK && it.endTime!! < getCurrentTime() },
+            totalLeave = itemList.count { it.status == ATTENDANCE_LEAVE && it.endTime!! < getCurrentTime() },
+            totalAlpha = itemList.count { it.status == ATTENDANCE_ALPHA && it.endTime!! < getCurrentTime() },
             sectionItem = itemList
         )
     }

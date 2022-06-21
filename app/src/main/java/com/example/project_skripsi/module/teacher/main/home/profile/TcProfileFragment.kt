@@ -42,21 +42,21 @@ class TcProfileFragment : Fragment() {
                     .with(root.context)
                     .load(it.profile)
                     .into(ivProfilePicture)
+
+                imvLogout.setOnClickListener {
+                    StorageSP.setString(requireActivity(), StorageSP.SP_EMAIL, "")
+                    StorageSP.setString(requireActivity(), StorageSP.SP_PASSWORD, "")
+                    StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
+                    cancelNotification()
+                    val intent = Intent(binding.root.context, AuthActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }
             }
         })
 
         viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
         viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
-
-        binding.imvLogout.setOnClickListener {
-            StorageSP.setString(requireActivity(), StorageSP.SP_EMAIL, "")
-            StorageSP.setString(requireActivity(), StorageSP.SP_PASSWORD, "")
-            StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
-            cancelNotification()
-            val intent = Intent(binding.root.context, AuthActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 

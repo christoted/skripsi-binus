@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.project_skripsi.R
+import com.example.project_skripsi.utils.service.alarm.AlarmService
 import us.zoom.sdk.MeetingActivity
 
 class MyMeetingActivity : MeetingActivity() {
@@ -19,7 +20,7 @@ class MyMeetingActivity : MeetingActivity() {
 
         viewModel = ViewModelProvider(this)[MyMeetingViewModel::class.java]
 
-//        Toast.makeText(applicationContext, "MeetingActivity onCreate", Toast.LENGTH_SHORT).show()
+        AlarmService.inst.cancelAlarm(applicationContext, MeetingHandler.inst.meetingId)
 
         viewModel.timeLeft.observe(this) {
             if (it == MyMeetingViewModel.readinessDelay) {
@@ -40,6 +41,7 @@ class MyMeetingActivity : MeetingActivity() {
         }
 
 //        viewModel.dummyInit(applicationContext)
+//        Toast.makeText(applicationContext, "MeetingActivity onCreate", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

@@ -10,11 +10,16 @@ import com.example.project_skripsi.core.model.local.TcStudentDetailPaymentSectio
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.ASSIGNMENT_WEIGHT
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ALPHA
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ATTEND
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_LEAVE
+import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_SICK
 import com.example.project_skripsi.utils.Constant.Companion.FINAL_EXAM_WEIGHT
 import com.example.project_skripsi.utils.Constant.Companion.MID_EXAM_WEIGHT
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import kotlin.math.ceil
@@ -152,10 +157,10 @@ class TcStudentDetailViewModel: ViewModel() {
     private fun getAttendance(subjectName: String, itemList : List<AttendedMeeting>) : AttendanceMainSection {
         return AttendanceMainSection(
             subjectName = subjectName,
-            totalPresence = itemList.count { it.status == Constant.ATTENDANCE_ATTEND },
-            totalSick = itemList.count { it.status == Constant.ATTENDANCE_SICK },
-            totalLeave = itemList.count { it.status == Constant.ATTENDANCE_LEAVE },
-            totalAlpha = itemList.count { it.status == Constant.ATTENDANCE_ALPHA },
+            totalPresence = itemList.count { it.status == ATTENDANCE_ATTEND && it.endTime!! < DateHelper.getCurrentTime() },
+            totalSick = itemList.count { it.status == ATTENDANCE_SICK && it.endTime!! < DateHelper.getCurrentTime() },
+            totalLeave = itemList.count { it.status == ATTENDANCE_LEAVE && it.endTime!! < DateHelper.getCurrentTime() },
+            totalAlpha = itemList.count { it.status == ATTENDANCE_ALPHA && it.endTime!! < DateHelper.getCurrentTime() },
             sectionItem = itemList
         )
     }

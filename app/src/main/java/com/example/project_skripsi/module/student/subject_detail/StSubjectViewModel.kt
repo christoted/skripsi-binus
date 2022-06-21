@@ -57,15 +57,12 @@ class StSubjectViewModel : ViewModel() {
                 attendedMeetings?.filter { it.status == ATTENDANCE_ATTEND }?.map { meeting ->
                     meeting.id?.let { mAttendedMeetings.add(it) }
                 }
-                assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) } }
-                assignedAssignments?.map { asg ->
-                    asg.id?.let {
-                        mAssignedTaskForms.put(
-                            it,
-                            asg
-                        )
-                    }
+                attendedMeetings?.let { list ->
+                    _attendanceList.postValue(list.filter { it.subjectName == subjectName }
+                        .map { Attendance(it) }.sortedBy { it.startTime })
                 }
+                assignedExams?.map { exam -> exam.id?.let { mAssignedTaskForms.put(it, exam) } }
+                assignedAssignments?.map { asg -> asg.id?.let { mAssignedTaskForms.put(it, asg) } }
                 studyClass?.let { loadStudyClass(it) }
             }
         }
@@ -79,7 +76,6 @@ class StSubjectViewModel : ViewModel() {
                     classAssignments?.let { loadTaskForms(it, _assignmentList) }
                     classExams?.let { loadTaskForms(it, _examList) }
                     classMeetings?.let { list ->
-                        loadAttendances(list)
                         loadResources(list.mapNotNull {
                             if (it.meetingResource.isNullOrEmpty()) null else it.meetingResource
                         })
@@ -94,11 +90,7 @@ class StSubjectViewModel : ViewModel() {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { _teacher.postValue(it) }
     }
 
-    private fun loadAttendances(meetings: List<ClassMeeting>) {
-        _attendanceList.postValue(meetings.map { meeting ->
-            Attendance(meeting, mAttendedMeetings.contains(meeting.id))
-        }.sortedBy { it.startTime })
-    }
+
 
     private fun loadResources(uids: List<String>) {
         FireRepository.inst.getItems<Resource>(uids).first.observeOnce { list ->

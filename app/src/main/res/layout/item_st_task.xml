@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="8dp"
-            android:paddingEnd="8dp">
+            android:paddingEnd="8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -35,14 +36,12 @@
                 tools:text="Ujian Tersusah"
                 android:textSize="16sp" />
 
-
-
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="belum terkumpul"
-                android:textAlignment="center"
+                android:textAlignment="textEnd"
                 android:textStyle="bold"/>
 
         </LinearLayout>

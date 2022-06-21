@@ -34,7 +34,8 @@ class ResourceAdapter(private val listResource: List<Resource>): RecyclerView.Ad
     inner class ResourceViewHolder(private val binding: ItemTcResourceBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(resource: Resource) {
             with(binding) {
-                tvResourceTitle.text = resource.title
+                tvName.text = resource.title
+                tvMeetingNumber.text = ("Pert. ${resource.meetingNumber}")
                 root.setOnClickListener {
                     val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(resource.subjectName ?: "", resource.gradeLevel ?: 0, resource.id)
                     it.findNavController().navigate(action)

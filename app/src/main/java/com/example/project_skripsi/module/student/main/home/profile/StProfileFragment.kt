@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.project_skripsi.databinding.FragmentStProfileBinding
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
+import com.example.project_skripsi.utils.service.alarm.AlarmService
 import com.example.project_skripsi.utils.service.storage.StorageSP
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_EMAIL
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
@@ -53,38 +54,38 @@ class StProfileFragment : Fragment() {
                     .with(root.context)
                     .load(it.profile)
                     .into(ivProfilePicture)
+
+                imvLogout.setOnClickListener {
+                    StorageSP.setString(requireActivity(), SP_EMAIL, "")
+                    StorageSP.setString(requireActivity(), SP_PASSWORD, "")
+                    StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
+
+                    // Cancel everyday notification
+                    NotificationUtil.cancelEveryDayNotification(requireActivity())
+
+                    // Cancel Notification Exam, Assignment and Meeting
+                    homeViewModel.attendedMeeting.observe(viewLifecycleOwner) { list ->
+                        NotificationUtil.cancelAllMeetingNotification(requireActivity(), list)
+                        list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    }
+                    homeViewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) { list ->
+                        NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
+                        list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    }
+                    homeViewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) { list ->
+                        NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
+                        list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    }
+
+                    val intent = Intent(binding.root.context, AuthActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }
             }
         })
 
         viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
         viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
-
-        binding.imvLogout.setOnClickListener {
-            StorageSP.setString(requireActivity(), SP_EMAIL, "")
-            StorageSP.setString(requireActivity(), SP_PASSWORD, "")
-            StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
-
-            // Cancel everyday notification
-            NotificationUtil.cancelEveryDayNotification(requireActivity())
-
-            // Cancel Notification Exam, Assignment and Meeting
-            homeViewModel.attendedMeeting.observe(viewLifecycleOwner) {
-                Log.d("777", "onCreateView: attended meeting ${it}")
-                NotificationUtil.cancelAllMeetingNotification(requireActivity(), it)
-            }
-            homeViewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) {
-                Log.d("777", "onCreateView: data exam ${it}")
-                NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), it)
-            }
-            homeViewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
-                Log.d("777", "onCreateView: assignment ${it}")
-                NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), it)
-            }
-
-            val intent = Intent(binding.root.context, AuthActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
 
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 

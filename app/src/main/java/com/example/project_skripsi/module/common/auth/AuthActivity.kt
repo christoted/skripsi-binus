@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.AlarmClock
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -17,11 +18,16 @@ import com.example.project_skripsi.databinding.ActivityAuthBinding
 import com.example.project_skripsi.module.parent.PrMainActivity
 import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.module.teacher.TcMainActivity
+import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithMinuteOffset
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithSecondOffset
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithZeroSecond
 import com.example.project_skripsi.utils.service.storage.StorageSP
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_EMAIL
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_PASSWORD
 import com.example.project_skripsi.utils.helper.ValidationHelper
+import com.example.project_skripsi.utils.service.alarm.AlarmService
 import com.example.project_skripsi.utils.service.zoom.ZoomService
 import us.zoom.sdk.ZoomError
 import us.zoom.sdk.ZoomSDKInitializeListener
@@ -44,9 +50,13 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
 
         viewModel.successLoginAs.observe(this, { loginAs ->
             StorageSP.setString(applicationContext, SP_EMAIL, binding.edtEmail.text.toString())
-            StorageSP.setString(applicationContext, SP_PASSWORD, binding.edtPassword.text.toString())
+            StorageSP.setString(
+                applicationContext,
+                SP_PASSWORD,
+                binding.edtPassword.text.toString()
+            )
             StorageSP.setInt(applicationContext, SP_LOGIN_AS, loginAs)
-            when(loginAs) {
+            when (loginAs) {
                 LOGIN_STUDENT -> redirectToStudent()
                 LOGIN_TEACHER -> redirectToTeacher()
                 LOGIN_PARENT -> redirectToParent()
@@ -63,21 +73,21 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
         })
 
         with(binding) {
-            btnAutoStudent.setOnClickListener{
+            btnAutoStudent.setOnClickListener {
 //                edtEmail.setText(("luisdummy@gmail.com"))
 //                edtPassword.setText(("luis123"))
                 edtEmail.setText(("luis@gmail.com"))
                 edtPassword.setText(("luis123"))
                 cgLoginAs.check(R.id.chip_student)
             }
-            btnAutoTeacher.setOnClickListener{
+            btnAutoTeacher.setOnClickListener {
 //                edtEmail.setText(("devitadummy@gmail.com"))
 //                edtPassword.setText(("devita123@gmail.com"))
                 edtEmail.setText(("jessica@gmail.com"))
                 edtPassword.setText(("jessica123"))
                 cgLoginAs.check(R.id.chip_teacher)
             }
-            btnAutoParent.setOnClickListener{
+            btnAutoParent.setOnClickListener {
 //                edtEmail.setText(("teddydummy@gmail.com"))
 //                edtPassword.setText(("teddy123"))
                 edtEmail.setText(("luisp@gmail.com"))
@@ -86,7 +96,8 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
             }
             btnLogin.setOnClickListener {
                 if (validateInput()) {
-                    viewModel.login(edtEmail.text.toString(), edtPassword.text.toString(),
+                    viewModel.login(
+                        edtEmail.text.toString(), edtPassword.text.toString(),
                         when (cgLoginAs.checkedChipId) {
                             R.id.chip_student -> LOGIN_STUDENT
                             R.id.chip_teacher -> LOGIN_TEACHER
@@ -101,7 +112,6 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
         }
 
         FirestoreDummy()
-
         // initialize zoom sdk, if successful run initEvent()
         ZoomService.inst.initializeSdk(applicationContext, this@AuthActivity)
     }

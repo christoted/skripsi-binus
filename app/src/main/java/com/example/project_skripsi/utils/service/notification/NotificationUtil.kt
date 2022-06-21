@@ -21,8 +21,6 @@ import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
 import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
 import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.service.alarm.AlarmReceiver
-import java.time.LocalDateTime
 import java.util.*
 
 class NotificationUtil(base: Context) : ContextWrapper(base) {
@@ -38,7 +36,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
     }
     companion object {
         fun scheduleEveryDayNotification(context: Context, title: String, body: String) {
-            val intent = Intent(context, AlarmReceiver::class.java)
+            val intent = Intent(context, NotificationReceiver::class.java)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
@@ -66,7 +64,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         }
         fun scheduleSingleNotification(context: Context, date: Date, title: String, body: String, ) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, AlarmReceiver::class.java)
+            val intent = Intent(context, NotificationReceiver::class.java)
             var timeInMillis: Long = 0
             if (DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentTime()).timeInMillis) {
                 Log.d("987", "already passed current day $date")
@@ -84,7 +82,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             }
         }
         fun cancelNotification(context: Context, date: Date) {
-              val intent = Intent(context, AlarmReceiver::class.java)
+              val intent = Intent(context, NotificationReceiver::class.java)
               val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
               val notificationId = createNotificationId(timeMillis)
               val pending = PendingIntent.getBroadcast(
@@ -99,7 +97,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
               manager.cancel(pending)
         }
         fun cancelEveryDayNotification(context: Context) {
-            val intent = Intent(context, AlarmReceiver::class.java)
+            val intent = Intent(context, NotificationReceiver::class.java)
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
                 set(Calendar.HOUR_OF_DAY, 6)

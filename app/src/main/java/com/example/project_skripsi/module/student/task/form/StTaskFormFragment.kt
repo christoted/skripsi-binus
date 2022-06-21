@@ -20,6 +20,7 @@ import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DisplayHelper
+import com.example.project_skripsi.utils.service.alarm.AlarmService
 
 class StTaskFormFragment : Fragment() {
 
@@ -150,5 +151,6 @@ class StTaskFormFragment : Fragment() {
     private fun retrieveArgs(){
         val args: StTaskFormFragmentArgs by navArgs()
         viewModel.setTaskForm(args.taskFormId)
+        AlarmService.inst.cancelAlarm(requireContext(), args.taskFormId)
     }
 }
