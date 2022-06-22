@@ -155,12 +155,13 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel.listHomeSectionDataClassScheduleOneWeek.observe(viewLifecycleOwner) {
             it.map { attendedMeeting ->
                 attendedMeeting.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt, attendedMeeting.id!!)
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai, jangan lupa",
-                        "Pertemuan kelas ${attendedMeeting.subjectName}"
+                        "Pertemuan kelas ${attendedMeeting.subjectName}",
+                        attendedMeeting.id
                     )
 
                     AlarmService.inst.createAlarm(
@@ -181,12 +182,13 @@ class StHomeFragment : Fragment(), ItemListener {
                 Log.d("987", "triggerNotification Exam start Time: $taskForm")
                 // Start time
                 taskForm.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "start")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai, 10 menit lagi, ujian kamu",
-                        "${taskForm.subjectName} dimulai"
+                        "${taskForm.subjectName} dimulai",
+                        taskForm.id + "start"
                     )
 
                     AlarmService.inst.createAlarm(
@@ -199,12 +201,13 @@ class StHomeFragment : Fragment(), ItemListener {
                 // End time
                 taskForm.endTime?.let { dt ->
                     Log.d("987", "triggerNotification Exam end Time: $taskForm")
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "end")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai, kurang 10 menit lagi, ujian kamu",
-                        "${taskForm.subjectName} selesai"
+                        "${taskForm.subjectName} selesai",
+                        taskForm.id + "end"
                     )
                 }
             }
@@ -217,12 +220,13 @@ class StHomeFragment : Fragment(), ItemListener {
             it.map { taskForm ->
                 // Start time
                 taskForm.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "start")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai, 10 menit lagi, tugas kamu",
-                        "${taskForm.subjectName} dimulai"
+                        "${taskForm.subjectName} dimulai",
+                        taskForm.id + "start"
                     )
 
                     AlarmService.inst.createAlarm(
@@ -234,12 +238,13 @@ class StHomeFragment : Fragment(), ItemListener {
                 }
                 // End time
                 taskForm.endTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "end")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai, kurang 10 menit lagi, tugas kamu",
-                        "${taskForm.subjectName} selesai"
+                        "${taskForm.subjectName} selesai",
+                        taskForm.id + "end"
                     )
                 }
             }

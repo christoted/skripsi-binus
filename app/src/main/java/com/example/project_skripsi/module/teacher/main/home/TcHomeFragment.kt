@@ -100,9 +100,9 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
         viewModel.listMeeting.observe(viewLifecycleOwner) {
             it.map { classMeeting ->
                 classMeeting.classMeeting.startTime?.let { date ->
-                    NotificationUtil.cancelNotification(requireActivity(), date)
+                    NotificationUtil.cancelNotification(requireActivity(), date, classMeeting.classMeeting.id!!)
                     NotificationUtil.scheduleSingleNotification(requireActivity()
-                    ,date, "Hai bapak/ibu guru", "10 menit lagi, pertemuan ${classMeeting.studyClassName} dimulai, semangat!" )
+                    ,date, "Hai bapak/ibu guru", "10 menit lagi, pertemuan ${classMeeting.studyClassName} dimulai, semangat!", classMeeting.classMeeting.id )
                 }
             }
         }
@@ -114,21 +114,23 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
             it.map { teacherAgendaTaskForm ->
                 val taskForm = teacherAgendaTaskForm.taskForm
                 taskForm.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt,    teacherAgendaTaskForm.taskForm.id!! + "start")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai bapak/ibu guru, 10 menit lagi",
-                        "ujian ${taskForm.subjectName} dimulai"
+                        "ujian ${taskForm.subjectName} dimulai",
+                        teacherAgendaTaskForm.taskForm.id + "start"
                     )
                 }
                 taskForm.endTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt,    teacherAgendaTaskForm.taskForm.id!! + "end")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai bapak/ibu guru, 10 menit lagi",
-                        "ujian ${taskForm.subjectName} selesai"
+                        "ujian ${taskForm.subjectName} selesai",
+                        teacherAgendaTaskForm.taskForm.id + "end"
                     )
                 }
             }
@@ -138,21 +140,23 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
             it.map { teacherAgendaTaskForm ->
                 val taskForm = teacherAgendaTaskForm.taskForm
                 taskForm.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt, teacherAgendaTaskForm.taskForm.id!! + "start")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai bapak/ibu guru, 10 menit lagi",
-                        "tugas ${taskForm.subjectName} dimulai"
+                        "tugas ${taskForm.subjectName} dimulai",
+                        teacherAgendaTaskForm.taskForm.id + "start"
                     )
                 }
                 taskForm.endTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt)
+                    NotificationUtil.cancelNotification(requireActivity(), dt,    teacherAgendaTaskForm.taskForm.id!! + "end")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai bapak/ibu guru, 10 menit lagi",
-                        "tugas ${taskForm.subjectName} selesai"
+                        "tugas ${taskForm.subjectName} selesai",
+                        teacherAgendaTaskForm.taskForm.id + "end"
                     )
                 }
             }

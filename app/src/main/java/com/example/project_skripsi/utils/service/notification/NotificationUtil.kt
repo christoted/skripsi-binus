@@ -35,7 +35,11 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             createChannel()
         }
     }
+
+
+
     companion object {
+        private fun getHashAlarmId(id: String?) = id.hashCode()
         fun scheduleEveryDayNotification(context: Context, title: String, body: String) {
             val intent = Intent(context, NotificationReceiver::class.java)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -64,29 +68,31 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 )
             }
         }
-        fun scheduleSingleNotification(context: Context, date: Date, title: String, body: String, ) {
+        fun scheduleSingleNotification(context: Context, date: Date, title: String, body: String, id: String) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, NotificationReceiver::class.java)
             var timeInMillis: Long = 0
             if (DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentTime()).timeInMillis) {
                 Log.d("987", "already passed current day $date")
-                cancelNotification(context, date)
+                cancelNotification(context, date, id)
             } else {
                 timeInMillis =  DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
                 intent.putExtra("timeinmillis", timeInMillis)
                 intent.putExtra("title", title)
                 intent.putExtra("body", body)
                 Log.d("987", "date $date")
-                val notificationId = createNotificationId(timeInMillis)
+                val notificationId = getHashAlarmId(id)
+                intent.putExtra("id", notificationId)
                 val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                Log.d("5555", "scheduleSingleNotification: ${notificationId} ${date}")
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis, pendingIntent)
             }
         }
-        fun cancelNotification(context: Context, date: Date) {
+        fun cancelNotification(context: Context, date: Date, id: String) {
               val intent = Intent(context, NotificationReceiver::class.java)
               val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
-              val notificationId = createNotificationId(timeMillis)
+              val notificationId = getHashAlarmId(id)
               val pending = PendingIntent.getBroadcast(
                   context,
                   notificationId,
@@ -119,49 +125,47 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         }
 
         fun cancelAllMeetingNotification(context: Context, meetings: List<ClassMeeting>) {
-            meetings.forEach {
-                it.startTime?.let {
-                    cancelNotification(context, date = it)
+            meetings.forEach { classMeeting ->
+                classMeeting.startTime?.let {
+                    cancelNotification(context, date = it, id = classMeeting.id!!)
                 }
-                it.endTime?.let {
-                    cancelNotification(context, date = it)
+                classMeeting.endTime?.let {
+                    cancelNotification(context, date = it, id = classMeeting.id!!)
                 }
             }
         }
 
         fun cancelAllMeetingNotificationTeacher(context: Context, meetings: List<TeacherAgendaMeeting>) {
-            meetings.forEach {
-                it.classMeeting.startTime?.let {
-                    cancelNotification(context, date = it)
+            meetings.forEach { teacherAgenda ->
+                teacherAgenda.classMeeting.startTime?.let {
+                    cancelNotification(context, date = it, id = teacherAgenda.classMeeting.id!!)
                 }
-                it.classMeeting.endTime?.let {
-                    cancelNotification(context, date = it)
+                teacherAgenda.classMeeting.endTime?.let {
+                    cancelNotification(context, date = it, id = teacherAgenda.classMeeting.id!!)
                 }
             }
         }
 
         fun cancelAllExamAndAssignmentNotification(context: Context, exams: List<TaskForm>) {
-            exams.forEach {
-                it.startTime?.let {
-                    cancelNotification(context, date = it)
+            exams.forEach { taskForm ->
+                taskForm.startTime?.let {
+                    cancelNotification(context, date = it, id = taskForm.id!!)
                 }
-                it.endTime?.let {
-                    cancelNotification(context, date = it)
+                taskForm.endTime?.let {
+                    cancelNotification(context, date = it, id = taskForm.id!!)
                 }
             }
         }
-
         fun cancelAllExamAndAssignmentNotificationTeacher(context: Context, exams: List<TeacherAgendaTaskForm>) {
-            exams.forEach {
-                it.taskForm.startTime?.let {
-                    cancelNotification(context, date = it)
+            exams.forEach { taskForm ->
+                taskForm.taskForm.startTime?.let {
+                    cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
                 }
-                it.taskForm.endTime?.let {
-                    cancelNotification(context, date = it)
+                taskForm.taskForm.endTime?.let {
+                    cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
                 }
             }
         }
-
         fun createNotificationId(timeMillis: Long): Int {
             return (timeMillis % 2000000000L).toInt()
         }
@@ -195,4 +199,6 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setAutoCancel(true)
     }
+
+
 }

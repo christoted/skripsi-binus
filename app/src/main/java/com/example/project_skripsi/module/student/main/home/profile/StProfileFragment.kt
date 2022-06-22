@@ -77,6 +77,8 @@ class StProfileFragment : Fragment() {
         _binding = null
     }
 
+    private fun getHashAlarmId(id: String?) = id.hashCode()
+
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(context!!)
         builder.setTitle("Konfirmasi")
@@ -96,11 +98,17 @@ class StProfileFragment : Fragment() {
                 }
                 homeViewModel.listHomeSectionDataExamOneWeek.observe(viewLifecycleOwner) { list ->
                     NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    list.map {
+                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "start")
+                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "end")
+                    }
                 }
                 homeViewModel.listHomeSectionDataAssignmentOneWeek.observe(viewLifecycleOwner) { list ->
                     NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    list.map {
+                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "start")
+                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "end")
+                    }
                 }
                 AuthRepository.inst.logOut()
                 val intent = Intent(binding.root.context, AuthActivity::class.java)

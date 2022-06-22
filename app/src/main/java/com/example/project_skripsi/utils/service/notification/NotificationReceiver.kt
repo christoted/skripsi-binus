@@ -13,8 +13,8 @@ class NotificationReceiver : BroadcastReceiver() {
         val timeInMillis = bundle?.getLong("timeinmillis") ?: 0
         val title = bundle?.getString("title") ?: ""
         val body = bundle?.getString("body") ?: ""
-        Log.d("987", "onReceive: is Triggered ${timeInMillis}")
-        val notificationId = NotificationUtil.createNotificationId(timeInMillis)
+        var notificationId = bundle?.getInt("id") ?: 0
+        Log.d("98765", "onReceive: is Triggered ${timeInMillis}")
         val notificationUtil = NotificationUtil(context)
         val notification = notificationUtil.getNotificationBuilder(title, body).build()
         notificationUtil.getManager().notify(notificationId, notification)
