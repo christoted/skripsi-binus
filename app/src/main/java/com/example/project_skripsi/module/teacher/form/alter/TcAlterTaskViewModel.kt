@@ -10,6 +10,7 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.generic.HandledEvent
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithZeroSecond
 import com.example.project_skripsi.utils.helper.UUIDHelper
 import java.util.*
 
@@ -65,8 +66,8 @@ class TcAlterTaskViewModel : ViewModel() {
 
 
     fun initData(subjectName: String, gradeLevel: Int, formType : Int, taskFormId : String?) {
-        _startDate.postValue(DateHelper.getCurrentTime())
-        _endDate.postValue(DateHelper.getCurrentTime())
+        _startDate.postValue(DateHelper.getCurrentTime().getDateWithZeroSecond())
+        _endDate.postValue(DateHelper.getCurrentTime().getDateWithZeroSecond())
         _questionList.postValue(emptyList())
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType

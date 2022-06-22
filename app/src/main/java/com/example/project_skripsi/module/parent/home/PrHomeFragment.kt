@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.databinding.*
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.parent.home.viewholder.agenda.PrHomeRecyclerViewMainAdapter
@@ -63,12 +65,7 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         }
 
         binding.imvLogout.setOnClickListener {
-            StorageSP.set(requireActivity(), StorageSP.SP_EMAIL, "")
-            StorageSP.set(requireActivity(), StorageSP.SP_PASSWORD, "")
-            StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
-            val intent = Intent(binding.root.context, AuthActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
+            showConfirmationDialog()
         }
 
         return binding.root
@@ -109,5 +106,23 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
             container.removeView(`object` as View)
         }
+    }
+
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(context!!)
+        builder.setTitle("Konfirmasi")
+            .setMessage("Apakah anda yakin untuk logout?")
+            .setPositiveButton("Ok") { _, _ ->
+                StorageSP.setString(requireActivity(), StorageSP.SP_EMAIL, "")
+                StorageSP.setString(requireActivity(), StorageSP.SP_PASSWORD, "")
+                StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
+                AuthRepository.inst.logOut()
+                val intent = Intent(binding.root.context, AuthActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
+            .setNegativeButton("Batal") { _, _ -> }
+            .create()
+            .show()
     }
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 class DateHelper {
 
@@ -31,6 +32,27 @@ class DateHelper {
         fun convertDateToCalendarDay(date: Date?): CalendarDay {
             if (date == null) return getCurrentDate()
             return CalendarDay.from(date)
+        }
+
+        fun Date?.getDateWithMinuteOffset(minute: Int) : Date {
+            val calendar = Calendar.getInstance()
+            this?.let { calendar.time = it }
+            calendar.add(Calendar.MINUTE, minute)
+            return calendar.time
+        }
+
+        fun Date?.getDateWithSecondOffset(second: Int) : Date {
+            val calendar = Calendar.getInstance()
+            this?.let { calendar.time = it }
+            calendar.add(Calendar.SECOND, second)
+            return calendar.time
+        }
+
+        fun Date?.getDateWithDayOffset(date: Int) : Date {
+            val calendar = Calendar.getInstance()
+            this?.let { calendar.time = it }
+            calendar.add(Calendar.DATE, date)
+            return calendar.time
         }
 
         // MARK: 10 min before start
@@ -85,6 +107,13 @@ class DateHelper {
             currentDate.set(Calendar.MINUTE, minute)
             currentDate.set(Calendar.SECOND, 0)
 
+            return currentDate.time
+        }
+
+        fun Date?.getDateWithZeroSecond() : Date {
+            val currentDate = Calendar.getInstance()
+            this?.let { currentDate.time = it }
+            currentDate.set(Calendar.SECOND, 0)
             return currentDate.time
         }
 

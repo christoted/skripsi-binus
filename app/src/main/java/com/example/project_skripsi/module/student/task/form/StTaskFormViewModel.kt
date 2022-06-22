@@ -18,6 +18,7 @@ import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.generic.HandledEvent
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.service.alarm.AlarmService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -81,10 +82,8 @@ class StTaskFormViewModel : ViewModel() {
                         delay(1000)
                     }
                 }
-
             }
         }
-
 
     private fun loadStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->

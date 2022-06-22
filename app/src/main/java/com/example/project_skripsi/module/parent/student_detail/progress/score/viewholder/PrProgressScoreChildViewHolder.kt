@@ -16,7 +16,7 @@ class PrProgressScoreChildViewHolder(private val dataSet : List<ScoreSectionData
         adapter.expressionOnCreateViewHolder = {
             ItemStProgressScoreChildBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { _item, viewBinding, holder ->
+        adapter.expressionViewHolderBinding = { _item, viewBinding, _ ->
             val view = viewBinding as ItemStProgressScoreChildBinding
             val item = _item as AssignedTaskForm
             with(view) {

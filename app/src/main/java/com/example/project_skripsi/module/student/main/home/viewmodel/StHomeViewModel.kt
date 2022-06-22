@@ -22,6 +22,8 @@ import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentTime
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithDayOffset
 
 class StHomeViewModel : ViewModel() {
 
@@ -34,65 +36,90 @@ class StHomeViewModel : ViewModel() {
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
 
-    private val _listAttendedMeeting = MutableLiveData<List<AttendedMeeting>>()
-    var attendedMeeting = _listAttendedMeeting
-
     private val _listHomeSectionDataClassSchedule = MutableLiveData<List<ClassMeeting>>()
-    var listHomeSectionDataClassSchedule = _listHomeSectionDataClassSchedule
+    val listHomeSectionDataClassSchedule : LiveData<List<ClassMeeting>> = _listHomeSectionDataClassSchedule
+
+    private val _listHomeSectionDataClassScheduleOneWeek = MutableLiveData<List<ClassMeeting>>()
+    val listHomeSectionDataClassScheduleOneWeek : LiveData<List<ClassMeeting>> = _listHomeSectionDataClassScheduleOneWeek
+
     private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
-    var listHomeSectionDataExam = _listHomeSectionDataExam
+    val listHomeSectionDataExam : LiveData<List<TaskForm>> = _listHomeSectionDataExam
+
+    private val _listHomeSectionDataExamOneWeek = MutableLiveData<List<TaskForm>>()
+    val listHomeSectionDataExamOneWeek : LiveData<List<TaskForm>> = _listHomeSectionDataExamOneWeek
+
     private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
-    var listHomeSectionDataAssignment = _listHomeSectionDataAssignment
+    var listHomeSectionDataAssignment : LiveData<List<TaskForm>> = _listHomeSectionDataAssignment
+
+    private val _listHomeSectionDataAssignmentOneWeek = MutableLiveData<List<TaskForm>>()
+    var listHomeSectionDataAssignmentOneWeek : LiveData<List<TaskForm>> = _listHomeSectionDataAssignmentOneWeek
+
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
 
     private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
     val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
 
+    private val _isDataFetchFinished = MutableLiveData<Boolean>()
+    val isFetchDataCompleted : LiveData<Boolean> = _isDataFetchFinished
+
+    private var counterData = 0
+
     init {
+        initData()
+        refreshData()
+    }
+
+    fun refreshData() {
+        counterData = 0
+        _isDataFetchFinished.postValue(false)
         loadCurrentStudent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
-        initData()
     }
 
     private fun initData() {
-        val listData = arrayListOf<HomeMainSection>()
-        listData.add(HomeMainSection(SECTION_MEETING, sectionItem = emptyList()))
-        listData.add(HomeMainSection(SECTION_EXAM, sectionItem = emptyList()))
-        listData.add(HomeMainSection(SECTION_ASSIGNMENT, sectionItem = emptyList()))
-        listData.add(HomeMainSection(SECTION_PAYMENT, sectionItem = emptyList()))
-        listData.add(HomeMainSection(SECTION_ANNOUNCEMENT, sectionItem = emptyList()))
+        val listData = mutableListOf(
+            HomeMainSection(SECTION_MEETING, sectionItem = emptyList()),
+            HomeMainSection(SECTION_EXAM, sectionItem = emptyList()),
+            HomeMainSection(SECTION_ASSIGNMENT, sectionItem = emptyList()),
+            HomeMainSection(SECTION_PAYMENT, sectionItem = emptyList()),
+            HomeMainSection(SECTION_ANNOUNCEMENT, sectionItem = emptyList())
+        )
 
-        _listHomeSectionDataClassSchedule.observeOnce {
+        _listHomeSectionDataClassSchedule.observeForever {
             listData[0] = HomeMainSection(SECTION_MEETING, sectionItem = it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
 
-        _listHomeSectionDataExam.observeOnce {
+        _listHomeSectionDataExam.observeForever {
             listData[1] = (HomeMainSection(SECTION_EXAM, sectionItem = it))
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
 
-        _listHomeSectionDataAssignment.observeOnce {
+        _listHomeSectionDataAssignment.observeForever {
             listData[2] = (HomeMainSection(SECTION_ASSIGNMENT, sectionItem = it))
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
 
-        _listPaymentSectionDataPayment.observeOnce {
+        _listPaymentSectionDataPayment.observeForever {
             listData[3] = HomeMainSection(SECTION_PAYMENT, sectionItem = it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
 
-        _listPaymentSectionDataAnnouncement.observeOnce {
+        _listPaymentSectionDataAnnouncement.observeForever {
             listData[4] = HomeMainSection(SECTION_ANNOUNCEMENT, sectionItem = it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
         _sectionData.postValue(listData)
     }
 
     private fun loadCurrentStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
-            Log.d("Data Student", "$student")
             _currentStudent.postValue(student)
             student.studyClass?.let { loadStudyClass(it) }
             // TODO: Load the Payment
@@ -101,10 +128,6 @@ class StHomeViewModel : ViewModel() {
                     list.filter { convertDateToCalendarDay(it.paymentDeadline) == getCurrentDate() }
                         .sortedBy { it.paymentDeadline }
                 )
-            }
-            student.attendedMeetings?.let {
-                Log.d("987", "loadCurrentStudent: meeting ${it}")
-                _listAttendedMeeting.postValue(it)
             }
         }
     }
@@ -118,15 +141,7 @@ class StHomeViewModel : ViewModel() {
 
             studyClass.subjects?.map { subject ->
                 with(subject) {
-                    subject.classMeetings
-                        ?.filter {
-                            it.startTime?.let { date ->
-                                convertDateToCalendarDay(date)
-                            } == getCurrentDate()
-                        }
-                        ?.map {
-                            meetingList.add(it)
-                        }
+                    subject.classMeetings?.let { meetingList.addAll(it) }
                     classExams?.let { exams -> examList.addAll(exams) }
                     classAssignments?.let { assignments -> assignmentList.addAll(assignments) }
                 }
@@ -135,8 +150,11 @@ class StHomeViewModel : ViewModel() {
                 meetingList.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
                     .sortedBy { it.startTime }
             )
-            loadTaskForms(examList, _listHomeSectionDataExam)
-            loadTaskForms(assignmentList, _listHomeSectionDataAssignment)
+            _listHomeSectionDataClassScheduleOneWeek.postValue(
+                meetingList.filter { it.startTime!! < getCurrentTime().getDateWithDayOffset(7) }
+            )
+            loadTaskForms(examList, _listHomeSectionDataExam, _listHomeSectionDataExamOneWeek)
+            loadTaskForms(assignmentList, _listHomeSectionDataAssignment, _listHomeSectionDataAssignmentOneWeek)
         }
     }
 
@@ -151,12 +169,16 @@ class StHomeViewModel : ViewModel() {
 
     private fun loadTaskForms(
         uids: List<String>,
-        _taskFormList: MutableLiveData<List<TaskForm>>
+        _taskFormList: MutableLiveData<List<TaskForm>>,
+        _taskFormListOneWeek: MutableLiveData<List<TaskForm>>
     ) {
         FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
             _taskFormList.postValue(
                 list.filter { convertDateToCalendarDay(it.startTime) == getCurrentDate() }
                     .sortedBy { it.startTime }
+            )
+            _taskFormListOneWeek.postValue(
+                list.filter { it.startTime!! < getCurrentTime().getDateWithDayOffset(7) }
             )
         }
     }

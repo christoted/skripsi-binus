@@ -36,6 +36,8 @@ class TcCalendarViewModel : ViewModel() {
     private val currentList : MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
     val currentDataList : MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
 
+    lateinit var curTeacher: Teacher
+
     init {
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
@@ -43,6 +45,7 @@ class TcCalendarViewModel : ViewModel() {
 
     private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
+            curTeacher = teacher
             teacher.payments?.let { propagateEvent(it, TYPE_PAYMENT) }
 
             val classes = mutableListOf<ClassIdSubject>()

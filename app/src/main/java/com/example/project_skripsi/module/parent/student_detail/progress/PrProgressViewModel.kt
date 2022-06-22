@@ -20,6 +20,7 @@ import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_FINAL_EXAM
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_MID_EXAM
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 import kotlin.math.ceil
 
 class PrProgressViewModel : ViewModel() {
@@ -149,10 +150,10 @@ class PrProgressViewModel : ViewModel() {
     private fun getAttendance(subjectName: String, itemList : List<AttendedMeeting>) : AttendanceMainSection {
         return AttendanceMainSection(
             subjectName = subjectName,
-            totalPresence = itemList.count { it.status == ATTENDANCE_ATTEND },
-            totalSick = itemList.count { it.status == ATTENDANCE_SICK },
-            totalLeave = itemList.count { it.status == ATTENDANCE_LEAVE },
-            totalAlpha = itemList.count { it.status == ATTENDANCE_ALPHA },
+            totalPresence = itemList.count { it.status == ATTENDANCE_ATTEND && it.endTime!! < DateHelper.getCurrentTime() },
+            totalSick = itemList.count { it.status == ATTENDANCE_SICK && it.endTime!! < DateHelper.getCurrentTime() },
+            totalLeave = itemList.count { it.status == ATTENDANCE_LEAVE && it.endTime!! < DateHelper.getCurrentTime() },
+            totalAlpha = itemList.count { it.status == ATTENDANCE_ALPHA && it.endTime!! < DateHelper.getCurrentTime() },
             sectionItem = itemList
         )
     }

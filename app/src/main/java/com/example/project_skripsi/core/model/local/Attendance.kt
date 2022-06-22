@@ -1,6 +1,7 @@
 package com.example.project_skripsi.core.model.local
 
 import com.example.project_skripsi.R
+import com.example.project_skripsi.core.model.firestore.AttendedMeeting
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.utils.helper.DateHelper
 import java.util.*
@@ -14,28 +15,25 @@ data class Attendance(
 
     val statusColor: Int? = null,
 ) {
-    constructor(classMeeting: ClassMeeting, hasAttend: Boolean) : this(
-        startTime = classMeeting.startTime,
-        endTime = classMeeting.endTime,
-        status = getStatus(classMeeting, hasAttend),
-        statusColor = getStatusColor(classMeeting, hasAttend)
+    constructor(attendedMeeting: AttendedMeeting) : this(
+        startTime = attendedMeeting.startTime,
+        endTime = attendedMeeting.endTime,
+        status = getStatus(attendedMeeting),
+        statusColor = getStatusColor(attendedMeeting)
     )
 
     companion object {
-        fun getStatus(classMeeting: ClassMeeting, hasAttend: Boolean) : String =
+        fun getStatus(attendedMeeting: AttendedMeeting) : String =
             when {
-                classMeeting.startTime!! > DateHelper.getCurrentTime() -> "-"
-                hasAttend -> "hadir"
-                classMeeting.endTime!! < DateHelper.getCurrentTime() -> "absen"
-                else -> "-"
+                attendedMeeting.startTime!! > DateHelper.getCurrentTime() -> "-"
+                else -> attendedMeeting.status  ?: "-"
             }
 
-        fun getStatusColor(classMeeting: ClassMeeting, hasAttend: Boolean) : Int =
+        fun getStatusColor(attendedMeeting: AttendedMeeting) : Int =
             when {
-                classMeeting.startTime!! > DateHelper.getCurrentTime() -> R.color.attendance_incoming
-                hasAttend -> R.color.attendance_attend
-                classMeeting.endTime!! < DateHelper.getCurrentTime() -> R.color.attendance_not_attend
-                else -> R.color.attendance_incoming
+                attendedMeeting.startTime!! > DateHelper.getCurrentTime() -> R.color.attendance_incoming
+                attendedMeeting.status == "hadir" -> R.color.attendance_attend
+                else -> R.color.attendance_not_attend
             }
     }
 }

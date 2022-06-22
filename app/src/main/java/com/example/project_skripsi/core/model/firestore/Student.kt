@@ -124,7 +124,7 @@ data class AttendedMeeting (
 
     val id: String? = null,
 
-    val status: String? = null,
+    var status: String? = null,
 
     @get: PropertyName("start_time")
     @set: PropertyName("start_time")

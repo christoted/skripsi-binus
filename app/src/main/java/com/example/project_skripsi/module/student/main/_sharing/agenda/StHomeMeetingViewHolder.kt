@@ -10,6 +10,7 @@ import com.example.project_skripsi.databinding.ItemStHomeSectionItemBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithMinuteOffset
 
 class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding, private val listener: ItemListener):
     RecyclerView.ViewHolder(binding.root) {
@@ -36,7 +37,13 @@ class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding,
                 btnClass.isEnabled = false
             } else {
                 btnClass.setOnClickListener {
-                    listener.onClassItemClicked(absoluteAdapterPosition, data)
+                    when {
+                        DateHelper.getCurrentTime() < item.startTime.getDateWithMinuteOffset(-5) ->
+                            Toast.makeText(root.context, "Kelas dapat diakses 5 menit sebelum jam mulai", Toast.LENGTH_SHORT).show()
+                        else -> {
+                            listener.onClassItemClicked(data)
+                        }
+                    }
                 }
             }
         }

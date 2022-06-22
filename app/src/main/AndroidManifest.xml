@@ -2,21 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project_skripsi">
 
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.front" android:required="false" />
 
     <application
         android:name=".utils.app.App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:extractNativeLibs="false"
         android:theme="@style/Theme.Projectskripsi">
+
+        <activity
+            android:name=".module.common.zoom.MyMeetingActivity"
+            android:theme="@style/ZMTheme.SubWindow"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".module.common.view_image.ViewImageActivity"
             android:exported="false" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.fileprovider"
@@ -26,10 +35,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
         </provider>
-
-        <activity
-            android:name=".CameraActivity"
-            android:exported="true"></activity>
         <activity
             android:name=".module.parent.PrMainActivity"
             android:exported="false" />
@@ -37,6 +42,10 @@
             android:name=".module.teacher.TcMainActivity"
             android:exported="false" />
 
+        <receiver
+            android:name=".utils.service.notification.NotificationReceiver"
+            android:enabled="true"
+            android:exported="false" />
         <receiver
             android:name=".utils.service.alarm.AlarmReceiver"
             android:enabled="true"

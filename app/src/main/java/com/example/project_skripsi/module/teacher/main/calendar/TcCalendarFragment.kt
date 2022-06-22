@@ -2,8 +2,6 @@ package com.example.project_skripsi.module.teacher.main.calendar
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
+import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.databinding.FragmentTcCalendarBinding
+import com.example.project_skripsi.module.common.zoom.MeetingHandler
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.UIHelper
+import com.example.project_skripsi.utils.service.zoom.ZoomService
 import com.google.android.material.appbar.AppBarLayout
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -109,18 +109,12 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
         )
     }
 
-    override fun onClassItemClicked(Position: Int, data: TeacherAgendaMeeting) {
-//        val meetingLink = data.classMeeting.meetingLink
-        goToClassMeeting("https://sea.zoom.us/j/3242673339?pwd=SGlVRWswNmRiRU10d0kzNHBjQmVIQT09")
+    override fun onClassItemClicked(agendaMeeting: TeacherAgendaMeeting) {
+        MeetingHandler.inst.startMeetingAsTeacher()
+        ZoomService.inst.joinMeeting(requireContext(), "Guru - ${viewModel.curTeacher.name}")
     }
 
     override fun onResourceItemClicked(resourceId: String) {
         viewModel.openLink(requireContext(), resourceId)
-    }
-
-    private fun goToClassMeeting(classLink: String) {
-        val uri = Uri.parse(classLink)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
     }
 }

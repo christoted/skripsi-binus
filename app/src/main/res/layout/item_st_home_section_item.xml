@@ -59,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="07.00 - 08.00"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginEnd="4dp"/>
 
             <Button
                 android:id="@+id/btn_resource"

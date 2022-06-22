@@ -10,6 +10,7 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_ASSIGNMENT
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 
 class TcStudyClassTeachingViewModel : ViewModel() {
 
@@ -49,18 +50,17 @@ class TcStudyClassTeachingViewModel : ViewModel() {
         }
     }
 
+
+
     fun getAttendanceAbsent(student: Student): Int =
-        student.attendedMeetings?.filter { listOf(
-            Constant.ATTENDANCE_ALPHA,
-            Constant.ATTENDANCE_LEAVE,
-            Constant.ATTENDANCE_SICK
-        ).contains(it.status) && it.subjectName == subjectName }?.size ?: 0
+        student.attendedMeetings?.filter { it.status != Constant.ATTENDANCE_ATTEND && DateHelper.getCurrentTime() > it.endTime }?.size ?: 0
 
     fun getLastAssignmentStatus(student: Student): Pair<String, Int> {
-        val asg = student.assignedAssignments?.lastOrNull { it.subjectName == subjectName && it.type == TASK_TYPE_ASSIGNMENT }
+        val asg = student.assignedAssignments?.sortedBy { it.endTime }
+            ?.lastOrNull { it.subjectName == subjectName && it.type == TASK_TYPE_ASSIGNMENT }
             ?: return Pair("tidak ada tugas", R.color.last_assignment_null)
 
-        if ((asg.answers?.size ?: 0) == 0 ) return Pair("tidak kumpul", R.color.last_assignment_not_submit)
-        return Pair("terkumpul", R.color.last_assignment_submit)
+        if (asg.isSubmitted == true) return Pair("terkumpul", R.color.last_assignment_submit)
+        return Pair("tidak kumpul", R.color.last_assignment_not_submit)
     }
 }

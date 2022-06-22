@@ -66,6 +66,7 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
             }
 
             if (viewModel.isValid) {
+                binding.btnUpload.isEnabled = false
                 val meetingNumber = binding.btnMeetingNumber.text.toString().toInt()
                 viewModel.submitResource(binding.edtTitle.text.toString(), meetingNumber, binding.edtLink.text.toString())
             }
@@ -85,6 +86,7 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
                     Toast.makeText(context, "Materi gagal diubah", Toast.LENGTH_SHORT).show()
                 }
             }
+            binding.btnUpload.isEnabled = true
         }
 
         // Button

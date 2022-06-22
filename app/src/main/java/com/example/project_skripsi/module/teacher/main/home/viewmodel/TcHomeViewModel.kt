@@ -43,39 +43,57 @@ class TcHomeViewModel: ViewModel() {
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
 
+    private val _isDataFetchFinished = MutableLiveData<Boolean>()
+    val isFetchDataCompleted : LiveData<Boolean> = _isDataFetchFinished
+
+    var counterData = 0
+
     init {
         initData()
+        refreshData()
+    }
+
+    fun refreshData() {
+        counterData = 0
+        _isDataFetchFinished.postValue(false)
+
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncement()
     }
 
     private fun initData() {
-        val listData: MutableList<HomeMainSection> = mutableListOf()
-        listData.add(HomeMainSection(SECTION_MEETING, emptyList()))
-        listData.add(HomeMainSection(SECTION_EXAM, emptyList()))
-        listData.add(HomeMainSection(SECTION_ASSIGNMENT, emptyList()))
-        listData.add(HomeMainSection(SECTION_PAYMENT, emptyList()))
-        listData.add(HomeMainSection(SECTION_ANNOUNCEMENT, emptyList()))
+        val listData = mutableListOf(
+            HomeMainSection(SECTION_MEETING, emptyList()),
+            HomeMainSection(SECTION_EXAM, emptyList()),
+            HomeMainSection(SECTION_ASSIGNMENT, emptyList()),
+            HomeMainSection(SECTION_PAYMENT, emptyList()),
+            HomeMainSection(SECTION_ANNOUNCEMENT, emptyList())
+        )
 
-        _listMeeting.observeOnce {
+        _listMeeting.observeForever {
             listData[0] = HomeMainSection(SECTION_MEETING, it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
-        _examList.observeOnce {
+        _examList.observeForever {
             listData[1] = HomeMainSection(SECTION_EXAM, it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
-        _assignmentList.observeOnce {
+        _assignmentList.observeForever {
             listData[2] = HomeMainSection(SECTION_ASSIGNMENT, it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
-        _paymentList.observeOnce {
+        _paymentList.observeForever {
             listData[3] = HomeMainSection(SECTION_PAYMENT, it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
-        _announcements.observeOnce {
+        _announcements.observeForever {
             listData[4] = HomeMainSection(SECTION_ANNOUNCEMENT, it)
             _sectionData.postValue(listData)
+            if (++counterData == 5) _isDataFetchFinished.postValue(true)
         }
         _sectionData.postValue(listData)
     }
