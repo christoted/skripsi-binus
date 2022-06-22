@@ -34,6 +34,13 @@ class DateHelper {
             return CalendarDay.from(date)
         }
 
+        fun Date?.getDateWithHourOffset(hour: Int) : Date {
+            val calendar = Calendar.getInstance()
+            this?.let { calendar.time = it }
+            calendar.add(Calendar.HOUR, hour)
+            return calendar.time
+        }
+
         fun Date?.getDateWithMinuteOffset(minute: Int) : Date {
             val calendar = Calendar.getInstance()
             this?.let { calendar.time = it }

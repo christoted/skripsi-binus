@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher._sharing.agenda
 
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
@@ -8,6 +9,7 @@ import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
 import com.example.project_skripsi.databinding.ItemTcAgendaGeneralBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithHourOffset
 
 class TcAgendaMeetingViewHolder(private val binding: ItemTcAgendaGeneralBinding, private val listener: TcAgendaItemListener):
     RecyclerView.ViewHolder(binding.root) {
@@ -29,7 +31,7 @@ class TcAgendaMeetingViewHolder(private val binding: ItemTcAgendaGeneralBinding,
                 btnResource.setOnClickListener { listener.onResourceItemClicked(data.classMeeting.meetingResource!!) }
             }
 
-            if (DateHelper.getCurrentTime() > data.classMeeting.endTime) {
+            if (DateHelper.getCurrentTime() > data.classMeeting.endTime.getDateWithHourOffset(1)) {
                 btnClass.isEnabled = false
             } else {
                 btnClass.setOnClickListener { listener.onClassItemClicked(data) }
