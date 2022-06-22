@@ -48,6 +48,13 @@ class DateHelper {
             return calendar.time
         }
 
+        fun Date?.getDateWithDayOffset(date: Int) : Date {
+            val calendar = Calendar.getInstance()
+            this?.let { calendar.time = it }
+            calendar.add(Calendar.DATE, date)
+            return calendar.time
+        }
+
         // MARK: 10 min before start
         fun convertToCalendarDayBeforeStart(date: Date) : Calendar {
             val calendar = Calendar.getInstance()

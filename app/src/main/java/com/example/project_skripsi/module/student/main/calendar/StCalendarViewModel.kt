@@ -39,8 +39,8 @@ class StCalendarViewModel : ViewModel() {
     private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
     val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
 
-    private var currentList : MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
-    val currentDataList : MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
+    private var currentList = mutableMapOf<CalendarDay, MutableList<DayEvent>>()
+    val currentDataList = mutableMapOf<CalendarDay, MutableList<CalendarItem>>()
 
     lateinit var curStudent: Student
 
@@ -142,5 +142,7 @@ class StCalendarViewModel : ViewModel() {
             }
         }
     }
+
+
 
 }

@@ -6,10 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.databinding.FragmentStProfileBinding
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
@@ -56,30 +58,8 @@ class StProfileFragment : Fragment() {
                     .into(ivProfilePicture)
 
                 imvLogout.setOnClickListener {
-                    StorageSP.setString(requireActivity(), SP_EMAIL, "")
-                    StorageSP.setString(requireActivity(), SP_PASSWORD, "")
-                    StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
+                    showConfirmationDialog()
 
-                    // Cancel everyday notification
-                    NotificationUtil.cancelEveryDayNotification(requireActivity())
-
-                    // Cancel Notification Exam, Assignment and Meeting
-                    homeViewModel.attendedMeeting.observe(viewLifecycleOwner) { list ->
-                        NotificationUtil.cancelAllMeetingNotification(requireActivity(), list)
-                        list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
-                    }
-                    homeViewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) { list ->
-                        NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                        list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
-                    }
-                    homeViewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) { list ->
-                        NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                        list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
-                    }
-
-                    val intent = Intent(binding.root.context, AuthActivity::class.java)
-                    startActivity(intent)
-                    activity?.finish()
                 }
             }
         })
@@ -95,5 +75,40 @@ class StProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(context!!)
+        builder.setTitle("Konfirmasi")
+            .setMessage("Apakah anda yakin untuk logout?")
+            .setPositiveButton("Ok") { _, _ ->
+                StorageSP.setString(requireActivity(), SP_EMAIL, "")
+                StorageSP.setString(requireActivity(), SP_PASSWORD, "")
+                StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
+
+                // Cancel everyday notification
+                NotificationUtil.cancelEveryDayNotification(requireActivity())
+
+                // Cancel Notification Exam, Assignment and Meeting
+                homeViewModel.listHomeSectionDataClassScheduleOneWeek.observe(viewLifecycleOwner) { list ->
+                    NotificationUtil.cancelAllMeetingNotification(requireActivity(), list)
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                }
+                homeViewModel.listHomeSectionDataExamOneWeek.observe(viewLifecycleOwner) { list ->
+                    NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                }
+                homeViewModel.listHomeSectionDataAssignmentOneWeek.observe(viewLifecycleOwner) { list ->
+                    NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                }
+                AuthRepository.inst.logOut()
+                val intent = Intent(binding.root.context, AuthActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
+            .setNegativeButton("Batal") { _, _ -> }
+            .create()
+            .show()
     }
 }

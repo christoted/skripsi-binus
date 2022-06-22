@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.form.alter.finalization
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -63,7 +62,11 @@ class TcAlterTaskFinalizationViewModel : ViewModel() {
     }
 
     fun loadClass() {
-        FireRepository.inst.getItems<StudyClass>(classIds).first.observeOnce { _classList.postValue(it) }
+        FireRepository.inst.getItems<StudyClass>(classIds).first.observeOnce { list ->
+            _classList.postValue(
+                list.sortedBy { it.name }
+            )
+        }
     }
 
     fun submitForm() {
@@ -134,9 +137,5 @@ class TcAlterTaskFinalizationViewModel : ViewModel() {
                 }
             }
         }
-
-
-
     }
-
 }

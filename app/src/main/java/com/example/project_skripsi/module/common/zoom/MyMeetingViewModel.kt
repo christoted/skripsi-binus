@@ -108,13 +108,12 @@ class MyMeetingViewModel : ViewModel()  {
         )
 
         // verdict result
-        // 3 checks with 60% time
-        // 2 checks with 75% time
-        // 1 checks with 100% time
+        // 3 checks with 60% time 24 menit
+        // 2 checks with 75% time 30 menit
+        // 1 checks with 100% time 40 menit
         val verdict = ((readinessCheck == 3 && verdictTimePassed(time, 60)) ||
                 (readinessCheck == 2 && verdictTimePassed(time, 75))  ||
-                (readinessCheck == 1 && verdictTimePassed(time, 100))
-                )
+                (readinessCheck == 1 && verdictTimePassed(time, 100)))
 
 //        Toast.makeText(context, "Verdict :$verdict",Toast.LENGTH_SHORT).show()
         MeetingHandler.inst.studentEntity?.let { student ->

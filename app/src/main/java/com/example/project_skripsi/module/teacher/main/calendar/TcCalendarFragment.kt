@@ -2,8 +2,6 @@ package com.example.project_skripsi.module.teacher.main.calendar
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
+import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.databinding.FragmentTcCalendarBinding
 import com.example.project_skripsi.module.common.zoom.MeetingHandler
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
@@ -113,7 +111,7 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
 
     override fun onClassItemClicked(agendaMeeting: TeacherAgendaMeeting) {
         MeetingHandler.inst.startMeetingAsTeacher()
-        ZoomService.inst.joinMeeting(requireContext(), viewModel.curTeacher.name)
+        ZoomService.inst.joinMeeting(requireContext(), "Guru - ${viewModel.curTeacher.name}")
     }
 
     override fun onResourceItemClicked(resourceId: String) {

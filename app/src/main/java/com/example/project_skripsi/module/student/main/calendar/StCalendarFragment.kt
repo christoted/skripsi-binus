@@ -80,8 +80,6 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
 
         binding.btnInfo.setOnClickListener { showInfoDialog(binding.root.context) }
 
-
-
         return binding.root
     }
 
@@ -128,7 +126,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
 
     override fun onClassItemClicked(classMeeting: ClassMeeting) {
         MeetingHandler.inst.startMeetingAsStudent(viewModel.curStudent, classMeeting.id)
-        ZoomService.inst.joinMeeting(requireContext(), viewModel.curStudent.name)
+        ZoomService.inst.joinMeeting(requireContext(), "Siswa - ${viewModel.curStudent.name}")
     }
 
     override fun onResourceItemClicked(resourceId: String) {

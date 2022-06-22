@@ -86,4 +86,6 @@ class StClassViewModel : ViewModel() {
         return (subjects + 8 - 1) / 8
     }
 
+
+
 }

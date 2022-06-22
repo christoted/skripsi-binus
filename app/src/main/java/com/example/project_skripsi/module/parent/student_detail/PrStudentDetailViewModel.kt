@@ -3,10 +3,12 @@ package com.example.project_skripsi.module.parent.student_detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.firestore.School
+import com.example.project_skripsi.core.model.firestore.Student
+import com.example.project_skripsi.core.model.firestore.StudyClass
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.model.local.ParentSubject
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ATTEND
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper

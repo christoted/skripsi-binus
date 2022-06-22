@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.AttendedMeeting
+import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
 import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
@@ -42,6 +43,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 timeInMillis = System.currentTimeMillis()
                 set(Calendar.HOUR_OF_DAY, 6)
                 set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
             }
             if (DateHelper.convertDateToCalendar(calendar.time).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentTime()).timeInMillis)  {
                 cancelEveryDayNotification(context)
@@ -102,6 +104,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 timeInMillis = System.currentTimeMillis()
                 set(Calendar.HOUR_OF_DAY, 6)
                 set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
             }
             val notificationId = createNotificationId(calendar.timeInMillis)
             val pending = PendingIntent.getBroadcast(
@@ -115,7 +118,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             manager.cancel(pending)
         }
 
-        fun cancelAllMeetingNotification(context: Context, meetings: List<AttendedMeeting>) {
+        fun cancelAllMeetingNotification(context: Context, meetings: List<ClassMeeting>) {
             meetings.forEach {
                 it.startTime?.let {
                     cancelNotification(context, date = it)

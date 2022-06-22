@@ -9,7 +9,6 @@ import com.example.project_skripsi.core.model.local.Score
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.ASSIGNMENT_WEIGHT
 import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ALPHA
@@ -20,7 +19,6 @@ import com.example.project_skripsi.utils.Constant.Companion.FINAL_EXAM_WEIGHT
 import com.example.project_skripsi.utils.Constant.Companion.MID_EXAM_WEIGHT
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.averageOf
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentTime
 import kotlin.math.ceil
 
@@ -35,15 +33,15 @@ class StScoreViewModel : ViewModel() {
     private val _sectionScore = MutableLiveData<List<ScoreMainSection>>()
     val sectionScore: LiveData<List<ScoreMainSection>> = _sectionScore
     private val _subjects = MutableLiveData<List<Subject>>()
-    private val mutableListOfTask: MutableList<AssignedTaskForm> = mutableListOf()
-    private val listDataScore = arrayListOf<ScoreMainSection>()
+    private val mutableListOfTask = mutableListOf<AssignedTaskForm>()
+    private val listDataScore = mutableListOf<ScoreMainSection>()
 
     // Attendance
     private val _sectionAttendance = MutableLiveData<List<AttendanceMainSection>>()
     val sectionAttendance: LiveData<List<AttendanceMainSection>> = _sectionAttendance
     private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
-    private val mutableListOfAttendance: MutableList<AttendedMeeting> = mutableListOf()
-    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
+    private val mutableListOfAttendance = mutableListOf<AttendedMeeting>()
+    private val listDataAttendance = mutableListOf<AttendanceMainSection>()
 
     // Achievement
     private val _achievements = MutableLiveData<List<Achievement>>()
@@ -55,6 +53,7 @@ class StScoreViewModel : ViewModel() {
     }
 
     init {
+
         _subjects.observeOnce { subjects ->
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
@@ -78,8 +77,6 @@ class StScoreViewModel : ViewModel() {
 
     private fun loadCurrentStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
-
-
             student.assignedExams?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
             student.assignedAssignments?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
             student.studyClass?.let { loadStudyClass(it) }

@@ -1,7 +1,5 @@
 package com.example.project_skripsi.module.student.main.home.view
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,7 +21,6 @@ import com.example.project_skripsi.module.common.zoom.MeetingHandler
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 import com.example.project_skripsi.module.student.main.home.view.adapter.StHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithMinuteOffset
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithSecondOffset
 import com.example.project_skripsi.utils.service.alarm.AlarmService
@@ -36,6 +33,7 @@ class StHomeFragment : Fragment(), ItemListener {
     private lateinit var viewModel: StHomeViewModel
     private var _binding: FragmentStHomeBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +60,10 @@ class StHomeFragment : Fragment(), ItemListener {
         with(binding.recyclerviewClass) {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-            viewModel.sectionData.observe(viewLifecycleOwner, { adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment) })
+
+            viewModel.sectionData.observe(viewLifecycleOwner, {
+                adapter = StHomeRecyclerViewMainAdapter(it, this@StHomeFragment)
+            })
         }
 
         viewModel.incompleteResource.observe(viewLifecycleOwner) { event ->
@@ -86,12 +87,19 @@ class StHomeFragment : Fragment(), ItemListener {
                 StHomeFragmentDirections.actionNavigationHomeFragmentToStProfileFragment()
             )
         }
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = true
+            viewModel.refreshData()
+        }
+
+        viewModel.isFetchDataCompleted.observe(viewLifecycleOwner) {
+            if (it) binding.swipeRefreshLayout.isRefreshing = false
+        }
+
         triggerNotification()
+
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -107,56 +115,24 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     private fun everyDayNotification() {
-        val listEveryDayNotificationObservable = MutableLiveData<List<NotificationModel>>()
-        val listEveryDayNotification = mutableListOf<NotificationModel>()
         var totalClassMeeting = 0
         var totalAssignment = 0
         var totalExam = 0
         var count = 0
 
         viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) { listExamTaskForms ->
-            listExamTaskForms.map {
-                val date = it.startTime
-                date?.let { dt ->
-                    val notificationModel = NotificationModel(body = "Exam", date = dt)
-                    totalExam+=1
-                    listEveryDayNotification.add(notificationModel)
-                }
-            }
-            count++
-            listEveryDayNotificationObservable.postValue(listEveryDayNotification)
+            totalExam = listExamTaskForms.size
+            if (++count == 3) triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
         }
 
         viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) { listAssignmentTaskForms ->
-            listAssignmentTaskForms.map {
-                val date = it.startTime
-                date?.let { dt ->
-                    val notificationModel = NotificationModel(body = "Assignment", date = dt)
-                    totalAssignment+=1
-                    listEveryDayNotification.add(notificationModel)
-                }
-            }
-            count++
-            listEveryDayNotificationObservable.postValue(listEveryDayNotification)
+            totalAssignment = listAssignmentTaskForms.size
+            if (++count == 3) triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
         }
 
         viewModel.listHomeSectionDataClassSchedule.observe(viewLifecycleOwner) { listClassSchedule ->
-            listClassSchedule.map {
-                val date = it.startTime
-                date?.let { dt ->
-                    val notificationModel = NotificationModel(body = "Meeting", date = dt)
-                    totalClassMeeting+=1
-                    listEveryDayNotification.add(notificationModel)
-                }
-            }
-            count++
-            listEveryDayNotificationObservable.postValue(listEveryDayNotification)
-        }
-
-        listEveryDayNotificationObservable.observe(viewLifecycleOwner) {
-            if (count == 3) {
-                triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
-            }
+            totalClassMeeting = listClassSchedule.size
+            if (++count == 3) triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
         }
     }
 
@@ -165,14 +141,18 @@ class StHomeFragment : Fragment(), ItemListener {
         if (totalAssignment == 0 && totalMeeting == 0 && totalExam == 0){
             NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Hai", body = "Tidak ada agenda hari ini")
         } else {
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Siap untuk belajar hari ini", body = "Kamu punya $totalMeeting Pertemuan, " +
-                    "$totalAssignment tugas , $totalExam ujian")
+            NotificationUtil.scheduleEveryDayNotification(
+                requireActivity(),
+                title = "Siap untuk belajar hari ini",
+                body = "Kamu punya $totalMeeting Pertemuan, " +
+                        "$totalAssignment tugas , $totalExam ujian"
+            )
         }
     }
 
     private fun classMeetingNotification() {
         // Class Meeting
-        viewModel.attendedMeeting.observe(viewLifecycleOwner) {
+        viewModel.listHomeSectionDataClassScheduleOneWeek.observe(viewLifecycleOwner) {
             it.map { attendedMeeting ->
                 attendedMeeting.startTime?.let { dt ->
                     NotificationUtil.cancelNotification(requireActivity(), dt)
@@ -196,7 +176,7 @@ class StHomeFragment : Fragment(), ItemListener {
 
     private fun examNotification() {
         // Exam
-        viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) {
+        viewModel.listHomeSectionDataExamOneWeek.observe(viewLifecycleOwner) {
             it.map { taskForm ->
                 Log.d("987", "triggerNotification Exam start Time: $taskForm")
                 // Start time
@@ -233,7 +213,7 @@ class StHomeFragment : Fragment(), ItemListener {
 
     private fun assignmentNotification() {
         // Task
-        viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) {
+        viewModel.listHomeSectionDataAssignmentOneWeek.observe(viewLifecycleOwner) {
             it.map { taskForm ->
                 // Start time
                 taskForm.startTime?.let { dt ->
@@ -274,7 +254,7 @@ class StHomeFragment : Fragment(), ItemListener {
 
     override fun onClassItemClicked(classMeeting: ClassMeeting) {
         MeetingHandler.inst.startMeetingAsStudent(viewModel.currentStudent.value, classMeeting.id)
-        ZoomService.inst.joinMeeting(requireContext(), viewModel.currentStudent.value?.name)
+        ZoomService.inst.joinMeeting(requireContext(), "Siswa - ${viewModel.currentStudent.value?.name}")
     }
 
     override fun onResourceItemClicked(resourceId: String) {
