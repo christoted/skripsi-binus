@@ -2,9 +2,12 @@ package com.example.project_skripsi.module.parent.student_detail.calendar
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.*
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.project_skripsi.core.model.local.CalendarItem
-import com.example.project_skripsi.databinding.*
+import com.example.project_skripsi.databinding.ItemPrCalendarGeneralBinding
+import com.example.project_skripsi.databinding.ItemStHomeSectionAnnouncementBinding
+import com.example.project_skripsi.databinding.ItemStHomeSectionPaymentBinding
 import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarViewModel.Companion.TYPE_ASSIGNMENT
 import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarViewModel.Companion.TYPE_EXAM
 import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarViewModel.Companion.TYPE_MEETING
@@ -12,7 +15,8 @@ import com.example.project_skripsi.module.parent.student_detail.calendar.PrCalen
 import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrCalendarAssignmentViewHolder
 import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrCalendarExamViewHolder
 import com.example.project_skripsi.module.parent.student_detail.calendar.viewholder.PrCalendarMeetingViewHolder
-import com.example.project_skripsi.module.student.main._sharing.agenda.*
+import com.example.project_skripsi.module.student.main._sharing.agenda.StHomeAnnouncementViewHolder
+import com.example.project_skripsi.module.student.main._sharing.agenda.StHomePaymentViewHolder
 
 class PrCalendarAdapter(private val dataList: List<CalendarItem>) :
     Adapter<ViewHolder>() {
@@ -21,19 +25,29 @@ class PrCalendarAdapter(private val dataList: List<CalendarItem>) :
         when (viewType) {
             TYPE_MEETING -> PrCalendarMeetingViewHolder(
                 ItemPrCalendarGeneralBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
             TYPE_EXAM -> PrCalendarExamViewHolder(
                 ItemPrCalendarGeneralBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
             TYPE_ASSIGNMENT -> PrCalendarAssignmentViewHolder(
                 ItemPrCalendarGeneralBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
             TYPE_PAYMENT -> StHomePaymentViewHolder(
                 ItemStHomeSectionPaymentBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
             else -> StHomeAnnouncementViewHolder(
                 ItemStHomeSectionAnnouncementBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
         }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

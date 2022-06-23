@@ -3,11 +3,8 @@ package com.example.project_skripsi.module.teacher.form.assessment
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.R
@@ -22,7 +19,7 @@ import com.example.project_skripsi.utils.app.App
 class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
     Adapter<ViewHolder>() {
 
-    val imageList : List<MutableList<String>> = List(questionList.size) { mutableListOf() }
+    private val imageList: List<MutableList<String>> = List(questionList.size) { mutableListOf() }
 
     init {
         questionList.mapIndexed { index, assignedQuestion ->
@@ -32,10 +29,16 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
-            0 -> MultipleChoiceViewHolder(ItemTcAssessmentTaskFormMcBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false))
-            else -> EssayViewHolder(ItemTcAssessmentTaskFormEssayBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false))
+            0 -> MultipleChoiceViewHolder(
+                ItemTcAssessmentTaskFormMcBinding.inflate(
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
+            else -> EssayViewHolder(
+                ItemTcAssessmentTaskFormEssayBinding.inflate(
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
         }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -53,17 +56,18 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
     override fun getItemCount() = questionList.size
 
-    inner class MultipleChoiceViewHolder ( private val binding : ItemTcAssessmentTaskFormMcBinding) : ViewHolder(binding.root) {
+    inner class MultipleChoiceViewHolder(private val binding: ItemTcAssessmentTaskFormMcBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
-                tvNumber.text = ("${position+1}.")
+                tvNumber.text = ("${position + 1}.")
                 tvChoice1.text = item.choices?.getOrNull(0)
                 tvChoice2.text = item.choices?.getOrNull(1)
                 tvChoice3.text = item.choices?.getOrNull(2)
                 tvChoice4.text = item.choices?.getOrNull(3)
                 tvChoice5.text = item.choices?.getOrNull(4)
 
-                when(item.answerKey){
+                when (item.answerKey) {
                     "1" -> imvChoice1
                     "2" -> imvChoice2
                     "3" -> imvChoice3
@@ -74,26 +78,30 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
                 tvTitle.text = item.title
 
-                when(item.answer?.answerText) {
+                when (item.answer?.answerText) {
                     "1" -> llChoice1
                     "2" -> llChoice2
                     "3" -> llChoice3
                     "4" -> llChoice4
                     "5" -> llChoice5
                     else -> null
-                }?.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!,
-                    if (item.answerKey == item.answer?.answerText) R.color.answer_correct
-                    else R.color.answer_incorrect,
-                    null
-                ))
+                }?.setBackgroundColor(
+                    ResourcesCompat.getColor(
+                        App.resourses!!,
+                        if (item.answerKey == item.answer?.answerText) R.color.answer_correct
+                        else R.color.answer_incorrect,
+                        null
+                    )
+                )
 
                 tvScoreWeight.text = ("Nilai (0/${item.scoreWeight}): ")
-                tvScore.text = if (item.answerKey == item.answer?.answerText) item.scoreWeight.toString() else "0"
+                tvScore.text =
+                    if (item.answerKey == item.answer?.answerText) item.scoreWeight.toString() else "0"
 
                 item.answer?.images?.let { list ->
                     tvImageCount.text = list.size.toString()
                     btnViewImage.setOnClickListener { showImagesDialog(position, root.context) }
-                } ?: kotlin.run{
+                } ?: kotlin.run {
                     llImages.visibility = GONE
                 }
 
@@ -101,10 +109,11 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
         }
     }
 
-    inner class EssayViewHolder ( private val binding : ItemTcAssessmentTaskFormEssayBinding) : ViewHolder(binding.root) {
+    inner class EssayViewHolder(private val binding: ItemTcAssessmentTaskFormEssayBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
-                tvNumber.text = ("${position+1}.")
+                tvNumber.text = ("${position + 1}.")
                 tvTitle.text = item.title
                 item.answer?.answerText?.let { tvAnswer.text = it }
                 tvScoreWeight.text = ("Nilai (0 - ${item.scoreWeight}): ")
@@ -117,7 +126,7 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
                 item.answer?.images?.let { list ->
                     tvImageCount.text = list.size.toString()
                     btnViewImage.setOnClickListener { showImagesDialog(position, root.context) }
-                } ?: kotlin.run{
+                } ?: kotlin.run {
                     llImages.visibility = GONE
                 }
             }
@@ -132,7 +141,7 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
 
         with(sBinding) {
 
-            tvTitle.text = ("Foto Soal - ${questionNumber+1}")
+            tvTitle.text = ("Foto Soal - ${questionNumber + 1}")
 
             rvContainer.layoutManager = LinearLayoutManager(context)
             rvContainer.adapter = ViewImageViewHolder(imageList[questionNumber]).getAdapter()

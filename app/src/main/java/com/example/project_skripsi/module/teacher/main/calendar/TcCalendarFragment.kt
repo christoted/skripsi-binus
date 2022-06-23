@@ -31,7 +31,7 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
     private var _binding: FragmentTcCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private var curEmptyView : View? = null
+    private var curEmptyView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,14 +88,16 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
         refreshList(date)
     }
 
-    private fun refreshList(date : CalendarDay){
+    private fun refreshList(date: CalendarDay) {
         curEmptyView?.let { binding.llRvParent.removeView(it) }
         if (viewModel.currentDataList[date].isNullOrEmpty()) {
-            val emptyView = UIHelper.getEmptyItem("Tidak ada kegiatan", layoutInflater, binding.llRvParent)
+            val emptyView =
+                UIHelper.getEmptyItem("Tidak ada kegiatan", layoutInflater, binding.llRvParent)
             binding.llRvParent.addView(emptyView)
             curEmptyView = emptyView
         }
-        binding.rvEvent.adapter = TcCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
+        binding.rvEvent.adapter =
+            TcCalendarAdapter(viewModel.currentDataList[date] ?: emptyList(), this)
     }
 
     override fun onTaskFormItemClicked(
@@ -105,7 +107,11 @@ class TcCalendarFragment : Fragment(), OnDateSelectedListener, TcAgendaItemListe
     ) {
         view?.findNavController()?.navigate(
             TcCalendarFragmentDirections
-                .actionTcCalendarFragmentToTcStudyClassTaskDetailFragment(studyClassId, subjectName, taskFormId)
+                .actionTcCalendarFragmentToTcStudyClassTaskDetailFragment(
+                    studyClassId,
+                    subjectName,
+                    taskFormId
+                )
         )
     }
 

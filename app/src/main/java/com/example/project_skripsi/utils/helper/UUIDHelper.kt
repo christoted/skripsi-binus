@@ -5,7 +5,7 @@ import java.util.*
 class UUIDHelper {
 
     companion object {
-        fun getUUID() = UUID.randomUUID().toString();
+        fun getUUID() = UUID.randomUUID().toString()
     }
 
 }

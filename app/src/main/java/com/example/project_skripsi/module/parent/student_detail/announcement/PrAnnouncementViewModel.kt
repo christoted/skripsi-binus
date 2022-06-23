@@ -12,7 +12,7 @@ import com.example.project_skripsi.utils.helper.DateHelper
 class PrAnnouncementViewModel : ViewModel() {
 
     private val _announcementList = MutableLiveData<List<Announcement>>()
-    val announcementList : LiveData<List<Announcement>> = _announcementList
+    val announcementList: LiveData<List<Announcement>> = _announcementList
 
     init {
         loadAnnouncement()
@@ -21,7 +21,7 @@ class PrAnnouncementViewModel : ViewModel() {
     private fun loadAnnouncement() {
         FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
             _announcementList.postValue(
-                list.filter{ DateHelper.convertDateToCalendarDay(it.date) <= DateHelper.getCurrentDate() }
+                list.filter { DateHelper.convertDateToCalendarDay(it.date) <= DateHelper.getCurrentDate() }
                     .sortedByDescending { it.date }
             )
         }

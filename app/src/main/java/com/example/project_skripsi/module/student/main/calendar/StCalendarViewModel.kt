@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.student.main.calendar
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +13,6 @@ import com.example.project_skripsi.utils.generic.GenericExtension.Companion.comp
 import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.generic.HandledEvent
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -34,10 +32,10 @@ class StCalendarViewModel : ViewModel() {
 
     var currentSelectedDate: CalendarDay = getCurrentDate()
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
-    val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
+    val eventList: LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
     private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
-    val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
+    val incompleteResource: LiveData<HandledEvent<Resource>> = _incompleteResource
 
     private var currentList = mutableMapOf<CalendarDay, MutableList<DayEvent>>()
     val currentDataList = mutableMapOf<CalendarDay, MutableList<CalendarItem>>()
@@ -92,7 +90,7 @@ class StCalendarViewModel : ViewModel() {
         }
     }
 
-    private fun propagateEvent(item : List<HomeSectionData>, type: Int) {
+    private fun propagateEvent(item: List<HomeSectionData>, type: Int) {
         item.map {
             when (it) {
                 is ClassMeeting -> it.startTime
@@ -101,7 +99,8 @@ class StCalendarViewModel : ViewModel() {
                 is Announcement -> it.date
                 else -> null
             }?.let { date ->
-                currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(DayEvent(date, type))
+                currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }
+                    .add(DayEvent(date, type))
                 currentDataList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(
                     CalendarItem(it, date, type)
                 )
@@ -142,7 +141,6 @@ class StCalendarViewModel : ViewModel() {
             }
         }
     }
-
 
 
 }

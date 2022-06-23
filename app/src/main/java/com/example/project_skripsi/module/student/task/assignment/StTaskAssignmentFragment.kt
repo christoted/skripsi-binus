@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
-import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.student.main.progress.graphic.StSubjectFilterViewHolder
 import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
@@ -28,7 +27,7 @@ class StTaskAssignmentFragment : Fragment(), ItemClickListener {
     private var _binding: FragmentStTaskAssignmentBinding? = null
     private val binding get() = _binding!!
 
-    private var dialog : BottomSheetDialog? = null
+    private var dialog: BottomSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,11 +84,11 @@ class StTaskAssignmentFragment : Fragment(), ItemClickListener {
         _binding = null
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        private var ongoingEmptyView : View? = null
-        private var pastEmptyView : View? = null
+        private var ongoingEmptyView: View? = null
+        private var pastEmptyView: View? = null
 
         override fun getCount(): Int =
             StTaskAssignmentViewModel.tabCount
@@ -106,27 +105,41 @@ class StTaskAssignmentFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 StTaskAssignmentViewModel.ASSIGNMENT_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, { list ->
                         ongoingEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas yang sedang berlangsung", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada tugas yang sedang berlangsung",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, true).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(
+                            TaskViewHolder.TYPE_ASSIGNMENT,
+                            list
+                        ).getAdapter()
                     })
                 }
                 StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
                     viewModel.pastList.observe(viewLifecycleOwner, { list ->
                         pastEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas yang sudah selesai", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada tugas yang sudah selesai",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, true).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(
+                            TaskViewHolder.TYPE_ASSIGNMENT,
+                            list
+                        ).getAdapter()
                     })
                 }
             }

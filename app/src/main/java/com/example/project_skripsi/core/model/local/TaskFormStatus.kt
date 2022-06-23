@@ -8,7 +8,7 @@ import java.util.*
 
 data class TaskFormStatus(
 
-    val id : String? = null,
+    val id: String? = null,
 
     val title: String? = null,
 
@@ -49,11 +49,11 @@ data class TaskFormStatus(
 
     companion object {
 
-        fun getDuration(taskForm: TaskForm) : Long =
+        fun getDuration(taskForm: TaskForm): Long =
             DateHelper.getMinute(taskForm.startTime, taskForm.endTime)
 
 
-        fun getStatus(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm) : String =
+        fun getStatus(taskForm: TaskForm, assignedTaskForm: AssignedTaskForm): String =
             when {
                 taskForm.endTime!! < DateHelper.getCurrentTime() -> "selesai"
                 taskForm.startTime!! > DateHelper.getCurrentTime() -> "belum dimulai"
@@ -69,7 +69,7 @@ data class TaskFormStatus(
                 else -> R.color.task_ongoing
             }
 
-        private fun getScore(assignedTaskForm: AssignedTaskForm) : Int? =
+        private fun getScore(assignedTaskForm: AssignedTaskForm): Int? =
             if (assignedTaskForm.isChecked!!) assignedTaskForm.score
             else null
     }

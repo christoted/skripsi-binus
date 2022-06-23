@@ -1,25 +1,21 @@
 package com.example.project_skripsi.module.student.main.home.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.HomeMainSection
-import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
-import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.generic.HandledEvent
-import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentTime
@@ -36,32 +32,29 @@ class StHomeViewModel : ViewModel() {
     private val _sectionData = MutableLiveData<List<HomeMainSection>>()
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
 
-    private val _listHomeSectionDataClassSchedule = MutableLiveData<List<ClassMeeting>>()
-    val listHomeSectionDataClassSchedule : LiveData<List<ClassMeeting>> = _listHomeSectionDataClassSchedule
 
     private val _listHomeSectionDataClassScheduleOneWeek = MutableLiveData<List<ClassMeeting>>()
-    val listHomeSectionDataClassScheduleOneWeek : LiveData<List<ClassMeeting>> = _listHomeSectionDataClassScheduleOneWeek
-
-    private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
-    val listHomeSectionDataExam : LiveData<List<TaskForm>> = _listHomeSectionDataExam
+    val listHomeSectionDataClassScheduleOneWeek: LiveData<List<ClassMeeting>> =
+        _listHomeSectionDataClassScheduleOneWeek
 
     private val _listHomeSectionDataExamOneWeek = MutableLiveData<List<TaskForm>>()
-    val listHomeSectionDataExamOneWeek : LiveData<List<TaskForm>> = _listHomeSectionDataExamOneWeek
-
-    private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
-    var listHomeSectionDataAssignment : LiveData<List<TaskForm>> = _listHomeSectionDataAssignment
+    val listHomeSectionDataExamOneWeek: LiveData<List<TaskForm>> = _listHomeSectionDataExamOneWeek
 
     private val _listHomeSectionDataAssignmentOneWeek = MutableLiveData<List<TaskForm>>()
-    var listHomeSectionDataAssignmentOneWeek : LiveData<List<TaskForm>> = _listHomeSectionDataAssignmentOneWeek
+    var listHomeSectionDataAssignmentOneWeek: LiveData<List<TaskForm>> =
+        _listHomeSectionDataAssignmentOneWeek
 
+    private val _listHomeSectionDataClassSchedule = MutableLiveData<List<ClassMeeting>>()
+    private val _listHomeSectionDataExam = MutableLiveData<List<TaskForm>>()
+    private val _listHomeSectionDataAssignment = MutableLiveData<List<TaskForm>>()
     private val _listPaymentSectionDataPayment = MutableLiveData<List<Payment>>()
     private val _listPaymentSectionDataAnnouncement = MutableLiveData<List<Announcement>>()
 
     private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
-    val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
+    val incompleteResource: LiveData<HandledEvent<Resource>> = _incompleteResource
 
     private val _isDataFetchFinished = MutableLiveData<Boolean>()
-    val isFetchDataCompleted : LiveData<Boolean> = _isDataFetchFinished
+    val isFetchDataCompleted: LiveData<Boolean> = _isDataFetchFinished
 
     private var counterData = 0
 
@@ -154,7 +147,11 @@ class StHomeViewModel : ViewModel() {
                 meetingList.filter { it.startTime!! < getCurrentTime().getDateWithDayOffset(7) }
             )
             loadTaskForms(examList, _listHomeSectionDataExam, _listHomeSectionDataExamOneWeek)
-            loadTaskForms(assignmentList, _listHomeSectionDataAssignment, _listHomeSectionDataAssignmentOneWeek)
+            loadTaskForms(
+                assignmentList,
+                _listHomeSectionDataAssignment,
+                _listHomeSectionDataAssignmentOneWeek
+            )
         }
     }
 

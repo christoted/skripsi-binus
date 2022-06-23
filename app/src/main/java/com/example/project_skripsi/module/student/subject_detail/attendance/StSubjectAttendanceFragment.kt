@@ -10,7 +10,7 @@ import com.example.project_skripsi.databinding.FragmentStSubjectAttendanceBindin
 import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.module.student.subject_detail.StSubjectViewModel
 
-class StSubjectAttendanceFragment(private val viewModel : StSubjectViewModel) : Fragment() {
+class StSubjectAttendanceFragment(private val viewModel: StSubjectViewModel) : Fragment() {
 
     private var _binding: FragmentStSubjectAttendanceBinding? = null
     private val binding get() = _binding!!
@@ -25,7 +25,8 @@ class StSubjectAttendanceFragment(private val viewModel : StSubjectViewModel) : 
         binding.rvAttendance.layoutManager = LinearLayoutManager(context)
         viewModel.attendanceList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada jadwal kelas")
                 binding.llParent.addView(emptyView.root)
             } else {

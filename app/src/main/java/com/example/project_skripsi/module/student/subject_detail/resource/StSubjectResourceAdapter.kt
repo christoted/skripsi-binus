@@ -34,7 +34,8 @@ class StSubjectResourceAdapter(
                 tvMeetingNumber.text = ("Pert. ${item.meetingNumber}")
                 root.setOnClickListener {
                     if (item.link.isNullOrEmpty()) {
-                        Toast.makeText(root.context, "Tidak ada link materi", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(root.context, "Tidak ada link materi", Toast.LENGTH_SHORT)
+                            .show()
                     } else {
                         listener.onResourceItemClicked(item)
                     }

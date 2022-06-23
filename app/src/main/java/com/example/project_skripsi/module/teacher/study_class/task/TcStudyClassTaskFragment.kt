@@ -18,7 +18,7 @@ import com.example.project_skripsi.utils.helper.UIHelper
 
 class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel : TcStudyClassTaskViewModel
+    private lateinit var viewModel: TcStudyClassTaskViewModel
     private var _binding: FragmentTcStudyClassTaskBinding? = null
     private val binding get() = _binding!!
 
@@ -51,19 +51,20 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
     }
 
     private fun retrieveArgs() {
-        val args : TcStudyClassTaskFragmentArgs by navArgs()
+        val args: TcStudyClassTaskFragmentArgs by navArgs()
         viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
     }
 
     override fun onItemClick(itemId: String) {
-        view?.findNavController()?.navigate(TcStudyClassTaskFragmentDirections
-            .actionTcStudyClassTaskFragmentToTcStudyClassTaskDetailFragment(
-                viewModel.studyClassId, viewModel.subjectName, itemId
-            )
+        view?.findNavController()?.navigate(
+            TcStudyClassTaskFragmentDirections
+                .actionTcStudyClassTaskFragmentToTcStudyClassTaskDetailFragment(
+                    viewModel.studyClassId, viewModel.subjectName, itemId
+                )
         )
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
 
@@ -82,15 +83,20 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 TcStudyClassTaskViewModel.TAB_EXAM -> {
                     viewModel.examList.observe(viewLifecycleOwner, {
                         if (it.isEmpty()) {
                             bindingRV.llParent.addView(
-                                UIHelper.getEmptyList("Tidak ada ujian", layoutInflater, bindingRV.llParent)
+                                UIHelper.getEmptyList(
+                                    "Tidak ada ujian",
+                                    layoutInflater,
+                                    bindingRV.llParent
+                                )
                             )
                         } else {
-                            bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                            bindingRV.rvContainer.adapter =
+                                TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
                         }
                     })
                 }
@@ -98,10 +104,15 @@ class TcStudyClassTaskFragment : Fragment(), ItemClickListener {
                     viewModel.assignmentList.observe(viewLifecycleOwner, {
                         if (it.isEmpty()) {
                             bindingRV.llParent.addView(
-                                UIHelper.getEmptyList("Tidak ada tugas", layoutInflater, bindingRV.llParent)
+                                UIHelper.getEmptyList(
+                                    "Tidak ada tugas",
+                                    layoutInflater,
+                                    bindingRV.llParent
+                                )
                             )
                         } else {
-                            bindingRV.rvContainer.adapter = TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
+                            bindingRV.rvContainer.adapter =
+                                TaskViewHolder(it, this@TcStudyClassTaskFragment).getAdapter()
                         }
                     })
                 }

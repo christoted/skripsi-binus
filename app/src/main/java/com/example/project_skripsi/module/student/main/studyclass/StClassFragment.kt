@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -31,7 +30,7 @@ class StClassFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-         viewModel = ViewModelProvider(this)[StClassViewModel::class.java]
+        viewModel = ViewModelProvider(this)[StClassViewModel::class.java]
         _binding = FragmentStClassBinding.inflate(inflater, container, false)
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -78,7 +77,8 @@ class StClassFragment : Fragment() {
         viewModel.teacher.observe(viewLifecycleOwner) { teacher ->
             with(binding) {
                 tvTeacherName.text = teacher.name
-                teacher.phoneNumber?.let { imvTeacherPhone.setImageResource(R.drawable.whatsapp)
+                teacher.phoneNumber?.let {
+                    imvTeacherPhone.setImageResource(R.drawable.whatsapp)
                     imvTeacherPhone.setOnClickListener {
                         goToWhatsApp(phoneNumber = teacher.phoneNumber ?: "")
                     }
@@ -115,7 +115,7 @@ class StClassFragment : Fragment() {
         _binding = null
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
 

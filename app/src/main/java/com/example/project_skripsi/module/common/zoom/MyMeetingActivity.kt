@@ -28,7 +28,8 @@ class MyMeetingActivity : MeetingActivity() {
                     .setView(R.layout.dialog_readiness)
                     .setPositiveButton("Ya") { dialog, _ ->
                         viewModel.addReadinessCheck(applicationContext)
-                        Toast.makeText(applicationContext, "Absensi direkam", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Absensi direkam", Toast.LENGTH_SHORT)
+                            .show()
                         dialog.dismiss()
                     }
                     .setCancelable(false)

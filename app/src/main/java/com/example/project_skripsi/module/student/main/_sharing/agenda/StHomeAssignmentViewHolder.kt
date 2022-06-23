@@ -12,18 +12,23 @@ import com.example.project_skripsi.module.student.main.home.view.adapter.ItemLis
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class StHomeAssignmentViewHolder(private val binding: ItemStHomeSectionItemBinding, private val listener: ItemListener):
+class StHomeAssignmentViewHolder(
+    private val binding: ItemStHomeSectionItemBinding,
+    private val listener: ItemListener
+) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: HomeSectionData) {
         val data = item as TaskForm
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_assignment, null))
+                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_assignment, null)
+            )
             tvTitle.text = data.subjectName
             tvLocation.text = data.location
-            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
-                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
+            tvTime.text =
+                ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
+                        "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
             btnResource.visibility = View.INVISIBLE
             btnClass.text = ("Tugas")
 
@@ -33,9 +38,15 @@ class StHomeAssignmentViewHolder(private val binding: ItemStHomeSectionItemBindi
                 btnClass.setOnClickListener {
                     when {
                         DateHelper.getCurrentTime() < item.startTime ->
-                            Toast.makeText(root.context, "Tugas belum dimulai", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(root.context, "Tugas belum dimulai", Toast.LENGTH_SHORT)
+                                .show()
                         else -> {
-                            data.id?.let { id -> listener.onTaskFormItemClicked(id, data.subjectName ?: "") }
+                            data.id?.let { id ->
+                                listener.onTaskFormItemClicked(
+                                    id,
+                                    data.subjectName ?: ""
+                                )
+                            }
                         }
                     }
                 }

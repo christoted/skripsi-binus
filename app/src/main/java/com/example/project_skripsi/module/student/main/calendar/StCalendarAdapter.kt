@@ -2,36 +2,52 @@ package com.example.project_skripsi.module.student.main.calendar
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.*
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.project_skripsi.core.model.local.CalendarItem
-import com.example.project_skripsi.databinding.*
+import com.example.project_skripsi.databinding.ItemStHomeSectionAnnouncementBinding
+import com.example.project_skripsi.databinding.ItemStHomeSectionItemBinding
+import com.example.project_skripsi.databinding.ItemStHomeSectionPaymentBinding
 import com.example.project_skripsi.module.student.main._sharing.agenda.*
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_ASSIGNMENT
-import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_MEETING
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_EXAM
+import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_MEETING
 import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel.Companion.TYPE_PAYMENT
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
 
-class StCalendarAdapter(private val dataList: List<CalendarItem>, private val listener: ItemListener) :
+class StCalendarAdapter(
+    private val dataList: List<CalendarItem>,
+    private val listener: ItemListener
+) :
     Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
             TYPE_MEETING -> StHomeMeetingViewHolder(
                 ItemStHomeSectionItemBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false),listener)
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                ), listener
+            )
             TYPE_EXAM -> StHomeExamViewHolder(
                 ItemStHomeSectionItemBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false),listener)
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                ), listener
+            )
             TYPE_ASSIGNMENT -> StHomeAssignmentViewHolder(
                 ItemStHomeSectionItemBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false),listener)
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                ), listener
+            )
             TYPE_PAYMENT -> StHomePaymentViewHolder(
                 ItemStHomeSectionPaymentBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
             else -> StHomeAnnouncementViewHolder(
                 ItemStHomeSectionAnnouncementBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
         }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

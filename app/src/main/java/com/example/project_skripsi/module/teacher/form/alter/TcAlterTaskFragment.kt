@@ -3,13 +3,11 @@ package com.example.project_skripsi.module.teacher.form.alter
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,21 +49,23 @@ class TcAlterTaskFragment : Fragment() {
             btnFinalExam.setOnClickListener { viewModel.taskType = Constant.TASK_TYPE_FINAL_EXAM }
             btnAssignment.setOnClickListener { viewModel.taskType = Constant.TASK_TYPE_ASSIGNMENT }
 
-            btnStartDate.setOnClickListener{
+            btnStartDate.setOnClickListener {
                 activity?.supportFragmentManager?.let { sfm ->
                     val datePicker = MaterialDatePicker.Builder.datePicker()
                         .setTitleText("Pilih tanggal mulai")
                         .build()
                     datePicker.addOnPositiveButtonClickListener {
-                        viewModel.updateStartDate(DateHelper.updateDate(
-                            viewModel.startDate.value ?: DateHelper.getCurrentTime(), it
-                        ))
+                        viewModel.updateStartDate(
+                            DateHelper.updateDate(
+                                viewModel.startDate.value ?: DateHelper.getCurrentTime(), it
+                            )
+                        )
                     }
                     datePicker.show(sfm, "Tag")
                 }
             }
 
-            btnStartTime.setOnClickListener{
+            btnStartTime.setOnClickListener {
                 activity?.supportFragmentManager?.let { sfm ->
                     val timePicker = MaterialTimePicker.Builder()
                         .setTimeFormat(TimeFormat.CLOCK_24H)
@@ -74,15 +74,19 @@ class TcAlterTaskFragment : Fragment() {
                     timePicker.addOnPositiveButtonClickListener {
                         val newHour: Int = timePicker.hour
                         val newMinute: Int = timePicker.minute
-                        viewModel.updateStartDate(DateHelper.updateTime(
-                            viewModel.startDate.value ?: DateHelper.getCurrentTime(), newHour, newMinute
-                        ))
+                        viewModel.updateStartDate(
+                            DateHelper.updateTime(
+                                viewModel.startDate.value ?: DateHelper.getCurrentTime(),
+                                newHour,
+                                newMinute
+                            )
+                        )
                     }
                     timePicker.show(sfm, "Tag")
                 }
             }
 
-            btnEndDate.setOnClickListener{
+            btnEndDate.setOnClickListener {
                 activity?.supportFragmentManager?.let { sfm ->
                     val datePicker = MaterialDatePicker.Builder.datePicker()
                         .setTitleText("Pilih tanggal selesai")
@@ -98,7 +102,7 @@ class TcAlterTaskFragment : Fragment() {
                 }
             }
 
-            btnEndTime.setOnClickListener{
+            btnEndTime.setOnClickListener {
                 activity?.supportFragmentManager?.let { sfm ->
                     val timePicker = MaterialTimePicker.Builder()
                         .setTimeFormat(TimeFormat.CLOCK_24H)
@@ -109,7 +113,9 @@ class TcAlterTaskFragment : Fragment() {
                         val newMinute: Int = timePicker.minute
                         viewModel.updateEndDate(
                             DateHelper.updateTime(
-                                viewModel.endDate.value ?: DateHelper.getCurrentTime(), newHour, newMinute
+                                viewModel.endDate.value ?: DateHelper.getCurrentTime(),
+                                newHour,
+                                newMinute
                             )
                         )
                     }
@@ -117,8 +123,8 @@ class TcAlterTaskFragment : Fragment() {
                 }
             }
 
-            btnPreqResource.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_RESOURCE) }
-            btnPreqAssignment.setOnClickListener{ showBottomSheet(TcAlterTaskViewModel.QUERY_ASSIGNMENT) }
+            btnPreqResource.setOnClickListener { showBottomSheet(TcAlterTaskViewModel.QUERY_RESOURCE) }
+            btnPreqAssignment.setOnClickListener { showBottomSheet(TcAlterTaskViewModel.QUERY_ASSIGNMENT) }
             btnQuestion.setOnClickListener { showBottomSheetForm() }
 
             viewModel.oldTaskForm.observe(viewLifecycleOwner, {
@@ -158,7 +164,8 @@ class TcAlterTaskFragment : Fragment() {
                                 )
                             )
                         } else {
-                            Toast.makeText(context, "Draf berhasil disimpan", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Draf berhasil disimpan", Toast.LENGTH_SHORT)
+                                .show()
                             view?.findNavController()?.popBackStack()
                         }
                     }
@@ -221,7 +228,7 @@ class TcAlterTaskFragment : Fragment() {
     }
 
     @SuppressLint("InflateParams")
-    private fun showBottomSheet(queryType : Int) {
+    private fun showBottomSheet(queryType: Int) {
         val dialog = BottomSheetDialog(context!!)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task_general, null)
 
@@ -234,7 +241,7 @@ class TcAlterTaskFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         rvItem.addItemDecoration(dividerItemDecoration)
 
-        when(queryType) {
+        when (queryType) {
             TcAlterTaskViewModel.QUERY_RESOURCE -> {
                 viewModel.resourceList.observe(viewLifecycleOwner, {
                     val adapter = ResourceViewHolder(it, viewModel.selectedResource)
@@ -300,13 +307,18 @@ class TcAlterTaskFragment : Fragment() {
                             isOK = false
                             return@mapIndexed
                         } else {
-                            totalScore += childView.findViewById<EditText>(R.id.edt_score_weight).text.toString().toInt()
+                            totalScore += childView.findViewById<EditText>(R.id.edt_score_weight).text.toString()
+                                .toInt()
                             adapter.questions[index] = newQuestion
                         }
                     }
                 }
                 if (isOK && totalScore != 100) {
-                    Toast.makeText(context, "Bobot total harus 100, total saat ini $totalScore", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Bobot total harus 100, total saat ini $totalScore",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     isOK = false
                 }
 
@@ -327,7 +339,8 @@ class TcAlterTaskFragment : Fragment() {
         dialog.setContentView(view)
         dialog.setOnShowListener {
             val bottomSheetDialog = it as BottomSheetDialog
-            val parentLayout = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            val parentLayout =
+                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             parentLayout?.let { bottomSheet ->
                 val behaviour = BottomSheetBehavior.from(bottomSheet)
                 val layoutParams = bottomSheet.layoutParams
@@ -341,7 +354,7 @@ class TcAlterTaskFragment : Fragment() {
     }
 
     @SuppressLint("InflateParams")
-    private fun showChoiceDialog(adapter : TcFormAdapter) {
+    private fun showChoiceDialog(adapter: TcFormAdapter) {
         val dialog = Dialog(context!!)
         val view = layoutInflater.inflate(R.layout.dialog_tc_form_type, null)
 
@@ -364,36 +377,44 @@ class TcAlterTaskFragment : Fragment() {
         dialog.show()
     }
 
-    private fun validateInput(continueToFinalization: Boolean) : Boolean {
+    private fun validateInput(continueToFinalization: Boolean): Boolean {
         with(binding) {
             if (isStringEmpty(context!!, edtTitle.text.toString(), "Judul")) return false
         }
 
         if (continueToFinalization) {
             if (viewModel.startDate.value!! > viewModel.endDate.value!!) {
-                Toast.makeText(context, "Waktu mulai harus mendahului waktu selesai",Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Waktu mulai harus mendahului waktu selesai",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return false
             }
 
             if (viewModel.startDate.value!! < DateHelper.getCurrentTime()) {
-                Toast.makeText(context, "Waktu sekarang harus mendahului waktu selesai",Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Waktu sekarang harus mendahului waktu selesai",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return false
             }
 
             if (DateHelper.getMinute(viewModel.startDate.value, viewModel.endDate.value) < 5) {
-                Toast.makeText(context, "Durasi minimal 5 menit",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Durasi minimal 5 menit", Toast.LENGTH_SHORT).show()
                 return false
             }
 
             if ((viewModel.questionList.value?.size ?: 0) == 0) {
-                Toast.makeText(context, "Jumlah soal harus minimal 1",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Jumlah soal harus minimal 1", Toast.LENGTH_SHORT).show()
                 return false
             }
         }
         return true
     }
 
-    private fun validateQuestionEssay(view : View) : Question?{
+    private fun validateQuestionEssay(view: View): Question? {
         val title = view.findViewById<EditText>(R.id.edt_title).text.toString()
         if (isStringEmpty(context!!, title, "Judul soal")) return null
 
@@ -411,7 +432,7 @@ class TcAlterTaskFragment : Fragment() {
         )
     }
 
-    private fun validateQuestionMC(view : View) : Question?{
+    private fun validateQuestionMC(view: View): Question? {
         val title = view.findViewById<EditText>(R.id.edt_title).text.toString()
         if (isStringEmpty(context!!, title, "Judul soal")) return null
 

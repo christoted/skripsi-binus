@@ -30,7 +30,8 @@ class StAnnouncementFragment : Fragment() {
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         viewModel.announcementList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada pengumuman")
                 binding.llParent.addView(emptyView.root)
             } else {

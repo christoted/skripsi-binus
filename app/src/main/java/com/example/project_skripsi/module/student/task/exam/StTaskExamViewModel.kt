@@ -3,7 +3,10 @@ package com.example.project_skripsi.module.student.task.exam
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.firestore.Student
+import com.example.project_skripsi.core.model.firestore.StudyClass
+import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -20,13 +23,13 @@ class StTaskExamViewModel : ViewModel() {
     }
 
     private val _subjects = MutableLiveData<List<String>>()
-    val subjects : LiveData<List<String>> = _subjects
+    val subjects: LiveData<List<String>> = _subjects
 
     private val _ongoingList = MutableLiveData<List<TaskFormStatus>>()
-    val ongoingList : LiveData<List<TaskFormStatus>> = _ongoingList
+    val ongoingList: LiveData<List<TaskFormStatus>> = _ongoingList
 
     private val _pastList = MutableLiveData<List<TaskFormStatus>>()
-    val pastList : LiveData<List<TaskFormStatus>> = _pastList
+    val pastList: LiveData<List<TaskFormStatus>> = _pastList
 
     private var className = ""
     private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
@@ -86,8 +89,10 @@ class StTaskExamViewModel : ViewModel() {
             _ongoingList.postValue(ongoingTaskForms.sortedBy { it.endTime })
             _pastList.postValue(pastTaskForms.sortedByDescending { it.endTime })
         } else {
-            _ongoingList.postValue(ongoingTaskForms.filter { it.subjectName == subjectName }.sortedBy { it.endTime })
-            _pastList.postValue(pastTaskForms.filter { it.subjectName == subjectName }.sortedByDescending { it.endTime })
+            _ongoingList.postValue(ongoingTaskForms.filter { it.subjectName == subjectName }
+                .sortedBy { it.endTime })
+            _pastList.postValue(pastTaskForms.filter { it.subjectName == subjectName }
+                .sortedByDescending { it.endTime })
         }
     }
 

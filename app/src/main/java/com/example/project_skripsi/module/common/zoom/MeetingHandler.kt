@@ -10,7 +10,7 @@ class MeetingHandler {
 
     var isStudent = false
     var meetingId: String? = null
-    var studentEntity : Student? = null
+    var studentEntity: Student? = null
 
     fun startMeetingAsStudent(student: Student?, id: String?) {
         isStudent = true

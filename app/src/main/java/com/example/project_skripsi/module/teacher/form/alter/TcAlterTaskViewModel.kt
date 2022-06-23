@@ -3,7 +3,10 @@ package com.example.project_skripsi.module.teacher.form.alter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.firestore.Question
+import com.example.project_skripsi.core.model.firestore.Resource
+import com.example.project_skripsi.core.model.firestore.TaskForm
+import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.model.local.SubjectGroup
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
@@ -30,32 +33,32 @@ class TcAlterTaskViewModel : ViewModel() {
     }
 
     private val _startDate = MutableLiveData<Date>()
-    val startDate : LiveData<Date> = _startDate
+    val startDate: LiveData<Date> = _startDate
 
     private val _endDate = MutableLiveData<Date>()
-    val endDate : LiveData<Date> = _endDate
+    val endDate: LiveData<Date> = _endDate
 
     private val _oldTaskForm = MutableLiveData<TaskForm>()
-    val oldTaskForm : LiveData<TaskForm> = _oldTaskForm
+    val oldTaskForm: LiveData<TaskForm> = _oldTaskForm
 
     private val _resourceList = MutableLiveData<List<Resource>>()
-    val resourceList : LiveData<List<Resource>> = _resourceList
+    val resourceList: LiveData<List<Resource>> = _resourceList
 
     private val _assignmentList = MutableLiveData<List<TaskForm>>()
-    val assignmentList : LiveData<List<TaskForm>> = _assignmentList
+    val assignmentList: LiveData<List<TaskForm>> = _assignmentList
 
     private val _questionList = MutableLiveData<List<Question>>()
-    val questionList : LiveData<List<Question>> = _questionList
+    val questionList: LiveData<List<Question>> = _questionList
 
     // isSuccess, continueToFinalize
     private val _draftSaved = MutableLiveData<HandledEvent<Pair<Boolean, Boolean>>>()
-    val draftSaved : LiveData<HandledEvent<Pair<Boolean, Boolean>>> = _draftSaved
+    val draftSaved: LiveData<HandledEvent<Pair<Boolean, Boolean>>> = _draftSaved
 
     var taskType = ""
     var selectedResource = listOf<String>()
     var selectedAssignment = listOf<String>()
 
-    lateinit var subjectGroup : SubjectGroup
+    lateinit var subjectGroup: SubjectGroup
     private lateinit var currentTeacher: Teacher
 
     private var isNewForm = true
@@ -65,19 +68,21 @@ class TcAlterTaskViewModel : ViewModel() {
     lateinit var savedTaskFormId: String
 
 
-    fun initData(subjectName: String, gradeLevel: Int, formType : Int, taskFormId : String?) {
+    fun initData(subjectName: String, gradeLevel: Int, formType: Int, taskFormId: String?) {
         _startDate.postValue(DateHelper.getCurrentTime().getDateWithZeroSecond())
         _endDate.postValue(DateHelper.getCurrentTime().getDateWithZeroSecond())
         _questionList.postValue(emptyList())
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
-        if (taskFormId != null) { loadTaskForm(taskFormId) }
+        if (taskFormId != null) {
+            loadTaskForm(taskFormId)
+        }
     }
 
     private fun loadTaskForm(uid: String) {
         isNewForm = false
-        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce{
+        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce {
             _oldTaskForm.postValue(it)
             with(it) {
                 startTime?.let { time -> _startDate.postValue(time) }
@@ -90,7 +95,7 @@ class TcAlterTaskViewModel : ViewModel() {
         }
     }
 
-    private fun loadTeacher(uid : String) {
+    private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             currentTeacher = teacher
             teacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
@@ -115,11 +120,11 @@ class TcAlterTaskViewModel : ViewModel() {
         }
     }
 
-    fun updateStartDate(date : Date) = _startDate.postValue(date)
+    fun updateStartDate(date: Date) = _startDate.postValue(date)
 
-    fun updateEndDate(date : Date) = _endDate.postValue(date)
+    fun updateEndDate(date: Date) = _endDate.postValue(date)
 
-    fun updateQuestions(questions : List<Question>) = _questionList.postValue(questions)
+    fun updateQuestions(questions: List<Question>) = _questionList.postValue(questions)
 
 
     fun submitForm(title: String, continueToFinalize: Boolean) {
@@ -127,8 +132,8 @@ class TcAlterTaskViewModel : ViewModel() {
         val taskFormId = UUIDHelper.getUUID()
         if (isNewForm) {
             currentTeacher.teachingGroups
-                ?.firstOrNull{it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel}
-                ?.let { if(formType == TYPE_EXAM) it.createdExams else it.createdAssignments }
+                ?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
+                ?.let { if (formType == TYPE_EXAM) it.createdExams else it.createdAssignments }
                 ?.add(taskFormId)
             items.add(currentTeacher)
         }
@@ -149,7 +154,7 @@ class TcAlterTaskViewModel : ViewModel() {
         )
         items.add(taskForm)
 
-        FireRepository.inst.alterItems(items).first.observeOnce{
+        FireRepository.inst.alterItems(items).first.observeOnce {
             savedTaskFormId = taskForm.id ?: ""
             _draftSaved.postValue(HandledEvent(Pair(it, continueToFinalize)))
         }

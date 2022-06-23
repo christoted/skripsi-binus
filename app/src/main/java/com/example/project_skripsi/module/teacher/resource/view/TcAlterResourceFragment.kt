@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.BottomSheetTcChooseMeetingBinding
-import com.example.project_skripsi.databinding.DialogStViewImageBinding
 import com.example.project_skripsi.databinding.FragmentTcAlterResourceBinding
 import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder
@@ -68,13 +67,18 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
             if (viewModel.isValid) {
                 binding.btnUpload.isEnabled = false
                 val meetingNumber = binding.btnMeetingNumber.text.toString().toInt()
-                viewModel.submitResource(binding.edtTitle.text.toString(), meetingNumber, binding.edtLink.text.toString())
+                viewModel.submitResource(
+                    binding.edtTitle.text.toString(),
+                    meetingNumber,
+                    binding.edtLink.text.toString()
+                )
             }
         }
         viewModel.status.observe(viewLifecycleOwner) {
             if (it) {
                 if (viewModel.isFirstTimeCreated) {
-                    Toast.makeText(context, "Materi baru berhasil dibuat", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Materi baru berhasil dibuat", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     Toast.makeText(context, "Materi berhasil diubah", Toast.LENGTH_SHORT).show()
                 }
@@ -129,7 +133,7 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
     }
 
     @SuppressLint("InflateParams")
-    private fun showBottomSheet(queryType : Int) {
+    private fun showBottomSheet(queryType: Int) {
         val dialog = BottomSheetDialog(requireContext())
         val view = layoutInflater.inflate(R.layout.bottom_sheet_tc_alter_task_general, null)
 
@@ -144,7 +148,7 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
         dialog.setContentView(view)
         dialog.show()
 
-        when(queryType) {
+        when (queryType) {
             QUERY_CLASS -> {
                 viewModel.classList.observe(viewLifecycleOwner) {
                     val viewHolder = ClassViewHolder(it, viewModel.selectedClass)
@@ -176,7 +180,7 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
         }
     }
 
-    var dialog : BottomSheetDialog? = null
+    var dialog: BottomSheetDialog? = null
 
     @SuppressLint("InflateParams")
     private fun showBottomSheetMeeting() {
@@ -186,7 +190,10 @@ class TcAlterResourceFragment : Fragment(), ItemClickListener {
         dialog?.let {
             with(sBinding) {
                 rvItem.layoutManager = GridLayoutManager(context, 4)
-                rvItem.adapter = TcMeetingNumberViewHolder(TcAlterResourceViewModel.meetingNumbers, this@TcAlterResourceFragment).getAdapter()
+                rvItem.adapter = TcMeetingNumberViewHolder(
+                    TcAlterResourceViewModel.meetingNumbers,
+                    this@TcAlterResourceFragment
+                ).getAdapter()
                 it.setContentView(sBinding.root)
             }
             it.show()

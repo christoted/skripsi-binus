@@ -10,7 +10,7 @@ import java.util.*
 data class StudyClass(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val name: String? = null,
 
@@ -30,10 +30,10 @@ data class StudyClass(
 
     val subjects: MutableList<Subject>? = null,
 
-)
+    )
 
 @IgnoreExtraProperties
-data class Subject (
+data class Subject(
 
     @get: PropertyName("subject_name")
     @set: PropertyName("subject_name")
@@ -53,10 +53,10 @@ data class Subject (
     @set: PropertyName("class_assignments")
     var classAssignments: MutableList<String>? = null,
 
-) : HomeSectionData()
+    ) : HomeSectionData()
 
 @IgnoreExtraProperties
-data class ClassMeeting (
+data class ClassMeeting(
 
     val id: String? = null,
 
@@ -80,5 +80,5 @@ data class ClassMeeting (
     @set: PropertyName("meeting_resource")
     var meetingResource: String? = null,
 
-) : HomeSectionData()
+    ) : HomeSectionData()
 

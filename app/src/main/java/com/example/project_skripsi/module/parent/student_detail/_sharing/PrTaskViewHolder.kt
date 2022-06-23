@@ -9,22 +9,22 @@ import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class PrTaskViewHolder(private val dataSet : List<TaskFormStatus>) {
+class PrTaskViewHolder(private val dataSet: List<TaskFormStatus>) {
 
     fun getAdapter(): GenericAdapter<TaskFormStatus> {
         val adapter = GenericAdapter(dataSet)
         adapter.expressionOnCreateViewHolder = {
             ItemStTaskBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item,viewBinding,_ ->
+        adapter.expressionViewHolderBinding = { item, viewBinding, _ ->
             val view = viewBinding as ItemStTaskBinding
 
             with(view) {
                 tvTitle.text = item.title
-                tvStatus.text = item.status
-                tvSubjectName.text = item.subjectName
                 tvScore.text = if (item.score == null) "-" else item.score.toString()
+                tvSubjectName.text = item.subjectName
                 tvClassName.visibility = View.GONE
+                tvStatus.text = item.status
 
                 item.statusColor?.let {
                     tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it, null))

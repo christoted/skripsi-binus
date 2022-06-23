@@ -8,14 +8,15 @@ import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.example.project_skripsi.databinding.ItemStHomeSectionAnnouncementBinding
 import com.example.project_skripsi.utils.app.App
 
-class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionAnnouncementBinding):
+class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionAnnouncementBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: HomeSectionData) {
         val data = item as Announcement
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_announcement, null))
+                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_announcement, null)
+            )
             tvTitle.text = data.title
             tvDescription.text = data.description
         }

@@ -59,7 +59,7 @@ class TcPreviewTaskFormFragment : Fragment() {
         _binding = null
     }
 
-    private fun retrieveArgs(){
+    private fun retrieveArgs() {
         val args: TcPreviewTaskFormFragmentArgs by navArgs()
         viewModel.setTaskForm(args.taskFormId)
     }

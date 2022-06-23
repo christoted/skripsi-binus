@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.student.task.form
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,11 +13,9 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_ESSAY
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
 import com.example.project_skripsi.utils.Constant.Companion.isExam
-import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.generic.HandledEvent
 import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.service.alarm.AlarmService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -50,16 +47,16 @@ class StTaskFormViewModel : ViewModel() {
     val isSubmitted: LiveData<Boolean> = _isSubmitted
 
     private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
-    val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
+    val incompleteResource: LiveData<HandledEvent<Resource>> = _incompleteResource
 
     private val _incompleteTask = MutableLiveData<HandledEvent<AssignedTaskForm>>()
-    val incompleteTask : LiveData<HandledEvent<AssignedTaskForm>> = _incompleteTask
+    val incompleteTask: LiveData<HandledEvent<AssignedTaskForm>> = _incompleteTask
 
     var isViewOnly = false
     var taskFormId = ""
     lateinit var curStudent: Student
 
-    fun setTaskForm(taskFormId : String) {
+    fun setTaskForm(taskFormId: String) {
         this.taskFormId = taskFormId
         loadTaskForm(taskFormId)
     }
@@ -78,7 +75,7 @@ class StTaskFormViewModel : ViewModel() {
                         val h = m / 60
 //                        val forceSubmit = false
                         val forceSubmit = difTime <= 0
-                        _timeLeft.postValue(TaskFormTimer(forceSubmit, h, m%60, s%60))
+                        _timeLeft.postValue(TaskFormTimer(forceSubmit, h, m % 60, s % 60))
                         delay(1000)
                     }
                 }

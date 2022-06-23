@@ -1,17 +1,17 @@
 package com.example.project_skripsi.module.teacher.study_class.task
 
-import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import android.view.View
 import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.databinding.ItemStTaskBinding
+import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.DateHelper
 
 
 class TaskViewHolder(
-    private val dataSet : List<TaskForm>,
+    private val dataSet: List<TaskForm>,
     private val listener: ItemClickListener
 ) {
 
@@ -41,7 +41,7 @@ class TaskViewHolder(
 
                 tvDuration.text = ("${TaskFormStatus.getDuration(item)} menit")
 
-                item.id?.let { id -> root.setOnClickListener {listener.onItemClick(id)} }
+                item.id?.let { id -> root.setOnClickListener { listener.onItemClick(id) } }
 
             }
         }

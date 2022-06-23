@@ -12,18 +12,23 @@ import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithMinuteOffset
 
-class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding, private val listener: ItemListener):
+class StHomeMeetingViewHolder(
+    private val binding: ItemStHomeSectionItemBinding,
+    private val listener: ItemListener
+) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item : HomeSectionData) {
+    fun bind(item: HomeSectionData) {
         val data = item as ClassMeeting
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null))
+                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null)
+            )
             tvTitle.text = data.subjectName
             tvLocation.text = data.location
-            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
-                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
+            tvTime.text =
+                ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.startTime!!)} - " +
+                        "${DateHelper.getFormattedDateTime(DateHelper.hm, data.endTime!!)}")
 
             if (item.meetingResource.isNullOrEmpty()) {
                 btnResource.isEnabled = false
@@ -39,7 +44,11 @@ class StHomeMeetingViewHolder(private val binding: ItemStHomeSectionItemBinding,
                 btnClass.setOnClickListener {
                     when {
                         DateHelper.getCurrentTime() < item.startTime.getDateWithMinuteOffset(-5) ->
-                            Toast.makeText(root.context, "Kelas dapat diakses 5 menit sebelum jam mulai", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                root.context,
+                                "Kelas dapat diakses 5 menit sebelum jam mulai",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         else -> {
                             listener.onClassItemClicked(data)
                         }

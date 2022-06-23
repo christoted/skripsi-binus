@@ -3,7 +3,6 @@ package com.example.project_skripsi.module.teacher.form.preview.form
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
@@ -20,7 +19,7 @@ class TcPreviewTaskFormViewModel : ViewModel() {
     private val _taskForm = MutableLiveData<TaskForm>()
     val taskForm: LiveData<TaskForm> = _taskForm
 
-    fun setTaskForm(taskFormId : String) {
+    fun setTaskForm(taskFormId: String) {
         loadTaskForm(taskFormId)
     }
 

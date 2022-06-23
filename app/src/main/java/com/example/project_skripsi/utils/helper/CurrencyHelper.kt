@@ -7,7 +7,7 @@ class CurrencyHelper {
 
     companion object {
 
-        fun toRupiah(value : Int) : String {
+        fun toRupiah(value: Int): String {
             val formatRp = DecimalFormatSymbols()
             formatRp.currencySymbol = "Rp"
             formatRp.monetaryDecimalSeparator = ','

@@ -13,13 +13,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTeachingBinding
-import com.example.project_skripsi.module.teacher.study_class.homeroom.HomeroomStudentViewHolder
 import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudyClassTeachingFragment : Fragment() {
 
-    private lateinit var viewModel : TcStudyClassTeachingViewModel
+    private lateinit var viewModel: TcStudyClassTeachingViewModel
     private var _binding: FragmentTcStudyClassTeachingBinding? = null
     private val binding get() = _binding!!
 
@@ -41,12 +40,14 @@ class TcStudyClassTeachingFragment : Fragment() {
         viewModel.classChief.observe(viewLifecycleOwner) { student ->
             with(binding) {
                 tvChiefName.text = student.name
-                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp)
+                student.phoneNumber?.let {
+                    imvChiefPhone.setImageResource(R.drawable.whatsapp)
                     imvChiefPhone.setOnClickListener {
                         student.phoneNumber?.let {
                             goToWhatsApp(it)
                         }
-                    }}
+                    }
+                }
 
             }
         }
@@ -63,18 +64,20 @@ class TcStudyClassTeachingFragment : Fragment() {
         })
 
         binding.btnResource.setOnClickListener {
-            view?.findNavController()?.navigate(TcStudyClassTeachingFragmentDirections
-                .actionTcStudyClassTeachingFragmentToTcStudyClassResourceFragment(
-                    viewModel.studyClassId, viewModel.subjectName
-                )
+            view?.findNavController()?.navigate(
+                TcStudyClassTeachingFragmentDirections
+                    .actionTcStudyClassTeachingFragmentToTcStudyClassResourceFragment(
+                        viewModel.studyClassId, viewModel.subjectName
+                    )
             )
         }
 
         binding.btnTask.setOnClickListener {
-            view?.findNavController()?.navigate(TcStudyClassTeachingFragmentDirections
-                .actionTcStudyClassTeachingFragmentToTcStudyClassTaskFragment(
-                    viewModel.studyClassId, viewModel.subjectName
-                )
+            view?.findNavController()?.navigate(
+                TcStudyClassTeachingFragmentDirections
+                    .actionTcStudyClassTeachingFragmentToTcStudyClassTaskFragment(
+                        viewModel.studyClassId, viewModel.subjectName
+                    )
             )
         }
 
@@ -97,7 +100,7 @@ class TcStudyClassTeachingFragment : Fragment() {
 
 
     private fun retrieveArgs() {
-        val args : TcStudyClassTeachingFragmentArgs by navArgs()
+        val args: TcStudyClassTeachingFragmentArgs by navArgs()
         viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
         binding.tvRole.text = ("Guru ${args.subjectName}")
     }

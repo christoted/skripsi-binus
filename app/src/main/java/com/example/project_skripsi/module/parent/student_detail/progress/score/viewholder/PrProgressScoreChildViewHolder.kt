@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStProgressScoreChildBinding
-import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_FINAL_EXAM
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_MID_EXAM
 import com.example.project_skripsi.utils.generic.GenericAdapter
 
-class PrProgressScoreChildViewHolder(private val dataSet : List<ScoreSectionData>) {
+class PrProgressScoreChildViewHolder(private val dataSet: List<ScoreSectionData>) {
 
     fun getAdapter(): GenericAdapter<ScoreSectionData> {
         val adapter = GenericAdapter(dataSet)

@@ -1,27 +1,28 @@
 package com.example.project_skripsi.core.model.local
 
-import com.example.project_skripsi.core.model.firestore.*
+import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
+import com.example.project_skripsi.core.model.firestore.AttendedMeeting
+import com.example.project_skripsi.core.model.firestore.Payment
 
-data class ParentAgendaMeeting (
+data class ParentAgendaMeeting(
 
-    val studentName : String?,
+    val studentName: String?,
 
-    val attendedMeeting: AttendedMeeting?
-    ,
+    val attendedMeeting: AttendedMeeting?,
 ) : HomeSectionData()
 
-data class ParentAgendaTaskForm (
+data class ParentAgendaTaskForm(
 
-    val studentName : String?,
+    val studentName: String?,
 
     val assignedTaskForm: AssignedTaskForm?,
 
-) : HomeSectionData()
+    ) : HomeSectionData()
 
-data class ParentAgendaPayment (
+data class ParentAgendaPayment(
 
-    val studentName : String?,
+    val studentName: String?,
 
-    val payment : Payment?,
+    val payment: Payment?,
 
-) : HomeSectionData()
+    ) : HomeSectionData()

@@ -25,7 +25,7 @@ class StSubjectFragment : Fragment(), ItemClickListener {
 
     private var _binding: FragmentStSubjectBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : StSubjectViewModel
+    private lateinit var viewModel: StSubjectViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +79,10 @@ class StSubjectFragment : Fragment(), ItemClickListener {
         _binding = null
     }
 
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, private val taskFormListener: ItemClickListener) : FragmentStateAdapter(fa) {
+    private inner class ScreenSlidePagerAdapter(
+        fa: FragmentActivity,
+        private val taskFormListener: ItemClickListener
+    ) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = StSubjectViewModel.tabCount
 
         override fun createFragment(position: Int): Fragment =

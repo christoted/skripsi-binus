@@ -8,7 +8,7 @@ import com.google.firebase.firestore.PropertyName
 data class Parent(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val name: String? = null,
 
@@ -18,4 +18,4 @@ data class Parent(
 
     val children: List<String>? = null,
 
-)
+    )

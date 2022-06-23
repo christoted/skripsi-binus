@@ -1,16 +1,15 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
-import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
-import com.example.project_skripsi.core.model.firestore.Resource
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.databinding.ItemTcStudyClassBinding
-import com.example.project_skripsi.databinding.ViewCheckboxBinding
+import com.example.project_skripsi.utils.generic.GenericAdapter
 
 class TcStudyClassViewHolder(
-    private val dataSet : List<StudyClass>,
+    private val dataSet: List<StudyClass>,
     private val subjectName: String,
-    private val listener: ClassClickListener) {
+    private val listener: ClassClickListener
+) {
 
     fun getAdapter(): GenericAdapter<StudyClass> {
         val adapter = GenericAdapter(dataSet)
