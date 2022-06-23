@@ -30,7 +30,11 @@ class StMainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_student_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home_fragment, R.id.navigation_class_fragment, R.id.navigation_calendar_fragment, R.id.navigation_score_fragment, R.id.navigation_payment_fragment
+                R.id.navigation_home_fragment,
+                R.id.navigation_class_fragment,
+                R.id.navigation_calendar_fragment,
+                R.id.navigation_score_fragment,
+                R.id.navigation_payment_fragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -58,7 +62,7 @@ class StMainActivity : AppCompatActivity() {
 
     }
 
-    var mARLRequestCamera =  registerForActivityResult(
+    var mARLRequestCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) viewModel.captureImage()

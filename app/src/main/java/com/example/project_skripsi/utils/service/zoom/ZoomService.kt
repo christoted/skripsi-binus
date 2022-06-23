@@ -35,15 +35,15 @@ class ZoomService {
 
     /**
      * For further development use this instead
-        fun joinMeeting(context: Context, name: String?, meetingNumber: String? = null, pw: String? = null) {
-            val meetingService = ZoomSDK.getInstance().meetingService
-            val options = JoinMeetingOptions()
-            val params = JoinMeetingParams().apply {
-                displayName = name ?: "anonymous"
-                meetingNo = "89463658239"
-                password = "H3cNgS"
-            }
-            meetingService.joinMeetingWithParams(context, params, options)
-        }
+    fun joinMeeting(context: Context, name: String?, meetingNumber: String? = null, pw: String? = null) {
+    val meetingService = ZoomSDK.getInstance().meetingService
+    val options = JoinMeetingOptions()
+    val params = JoinMeetingParams().apply {
+    displayName = name ?: "anonymous"
+    meetingNo = "89463658239"
+    password = "H3cNgS"
+    }
+    meetingService.joinMeetingWithParams(context, params, options)
+    }
      */
 }

@@ -9,7 +9,7 @@ import com.example.project_skripsi.databinding.ItemPrHomeGeneralBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class PrHomeExamViewHolder(private val binding: ItemPrHomeGeneralBinding):
+class PrHomeExamViewHolder(private val binding: ItemPrHomeGeneralBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: HomeSectionData) {
@@ -18,10 +18,21 @@ class PrHomeExamViewHolder(private val binding: ItemPrHomeGeneralBinding):
             tvStudentName.text = data.studentName
             tvSubjectName.text = data.assignedTaskForm?.subjectName
             tvLocation.text = ("Online")
-            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.assignedTaskForm?.startTime)} - " +
-                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.assignedTaskForm?.endTime)}")
+            tvTime.text = ("${
+                DateHelper.getFormattedDateTime(
+                    DateHelper.hm,
+                    data.assignedTaskForm?.startTime
+                )
+            } - " +
+                    "${
+                        DateHelper.getFormattedDateTime(
+                            DateHelper.hm,
+                            data.assignedTaskForm?.endTime
+                        )
+                    }")
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null))
+                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null)
+            )
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.project_skripsi.core.model.local
 
 
-data class ParentSubject (
+data class ParentSubject(
 
     val subjectName: String? = null,
 

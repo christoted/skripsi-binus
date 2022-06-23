@@ -47,27 +47,49 @@ class PrStudentDetailFragment : Fragment() {
                 with(binding) {
                     ivPayment.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrPaymentFragment(id)) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrPaymentFragment(
+                                id
+                            )
+                        )
+                    }
 
                     ivCalendar.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrCalendarFragment(id)) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrCalendarFragment(
+                                id
+                            )
+                        )
+                    }
 
                     ivProgress.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrProgressFragment(id)) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrProgressFragment(
+                                id
+                            )
+                        )
+                    }
 
                     ivExam.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrExamFragment(id)) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrExamFragment(
+                                id
+                            )
+                        )
+                    }
 
                     ivAssignment.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAssignmentFragment(id)) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAssignmentFragment(
+                                id
+                            )
+                        )
+                    }
 
                     ivAnnouncement.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAnnouncementFragment()) }
+                            PrStudentDetailFragmentDirections.actionPrStudentDetailFragmentToPrAnnouncementFragment()
+                        )
+                    }
                 }
             }
         })

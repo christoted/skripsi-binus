@@ -11,12 +11,13 @@ class StStudentListViewModel : ViewModel() {
 
 
     private val _studentList = MutableLiveData<List<Student>>()
-    val studentList : LiveData<List<Student>> = _studentList
+    val studentList: LiveData<List<Student>> = _studentList
 
     fun setStudyClass(studyClassId: String) {
         FireRepository.inst.getAllItems<Student>().first.observeOnce { studentList ->
             _studentList.postValue(
-                studentList.filter { it.studyClass == studyClassId }.sortedBy { it.attendanceNumber }
+                studentList.filter { it.studyClass == studyClassId }
+                    .sortedBy { it.attendanceNumber }
             )
         }
     }

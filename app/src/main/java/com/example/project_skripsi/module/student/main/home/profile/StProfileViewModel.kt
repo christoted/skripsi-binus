@@ -1,4 +1,5 @@
 package com.example.project_skripsi.module.student.main.home.profile
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,13 +13,13 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 class StProfileViewModel : ViewModel() {
 
     private val _student = MutableLiveData<Student>()
-    val student : LiveData<Student> = _student
+    val student: LiveData<Student> = _student
 
     private val _studyClass = MutableLiveData<StudyClass>()
-    val studyClass : LiveData<StudyClass> = _studyClass
+    val studyClass: LiveData<StudyClass> = _studyClass
 
     private val _school = MutableLiveData<School>()
-    val school : LiveData<School> = _school
+    val school: LiveData<School> = _school
 
     init {
         loadCurrentStudent(AuthRepository.inst.getCurrentUser().uid)

@@ -18,7 +18,7 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 
-class TcHomeViewModel: ViewModel() {
+class TcHomeViewModel : ViewModel() {
 
     private val _teacherData: MutableLiveData<Teacher> = MutableLiveData()
     val teacherData: LiveData<Teacher> = _teacherData
@@ -43,7 +43,7 @@ class TcHomeViewModel: ViewModel() {
     val sectionData: LiveData<List<HomeMainSection>> = _sectionData
 
     private val _isDataFetchFinished = MutableLiveData<Boolean>()
-    val isFetchDataCompleted : LiveData<Boolean> = _isDataFetchFinished
+    val isFetchDataCompleted: LiveData<Boolean> = _isDataFetchFinished
 
     private var counterData = 0
 
@@ -119,6 +119,7 @@ class TcHomeViewModel: ViewModel() {
             loadStudyClasses(classes)
         }
     }
+
     // Load Study Classes
     private fun loadStudyClasses(uids: List<ClassIdSubject>) {
         FireRepository.inst.getItems<StudyClass>(uids.map {
@@ -128,18 +129,30 @@ class TcHomeViewModel: ViewModel() {
             val exams = mutableListOf<ClassTaskFormId>()
             val assignments = mutableListOf<ClassTaskFormId>()
 
-            uids.map {  classIdSubject ->
-                list.firstOrNull { it.id == classIdSubject.studyClassId}?.let { studyClass ->
+            uids.map { classIdSubject ->
+                list.firstOrNull { it.id == classIdSubject.studyClassId }?.let { studyClass ->
                     studyClass.subjects?.firstOrNull { item -> item.subjectName == classIdSubject.subjectName }
                         .let { subject ->
                             subject?.classMeetings?.map { meeting ->
                                 meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
                             }
                             subject?.classAssignments?.map { asgId ->
-                                assignments.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", asgId))
+                                assignments.add(
+                                    ClassTaskFormId(
+                                        studyClass.id!!,
+                                        studyClass.name ?: "",
+                                        asgId
+                                    )
+                                )
                             }
                             subject?.classExams?.map { examId ->
-                                exams.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", examId))
+                                exams.add(
+                                    ClassTaskFormId(
+                                        studyClass.id!!,
+                                        studyClass.name ?: "",
+                                        examId
+                                    )
+                                )
                             }
                         }
                 }
@@ -154,12 +167,19 @@ class TcHomeViewModel: ViewModel() {
         }
     }
 
-    private fun loadTaskForm(uids: List<ClassTaskFormId>, mutableLiveData: MutableLiveData<List<TeacherAgendaTaskForm>>) {
+    private fun loadTaskForm(
+        uids: List<ClassTaskFormId>,
+        mutableLiveData: MutableLiveData<List<TeacherAgendaTaskForm>>
+    ) {
         FireRepository.inst.getItems<TaskForm>(uids.map { it.taskFormId }).first.observeOnce { list ->
             val taskFormList =
                 uids.mapNotNull { classTaskFormId ->
-                    list.firstOrNull {it.id == classTaskFormId.taskFormId}?.let { taskForm ->
-                        TeacherAgendaTaskForm(classTaskFormId.studyClassId, classTaskFormId.studyClassName, taskForm)
+                    list.firstOrNull { it.id == classTaskFormId.taskFormId }?.let { taskForm ->
+                        TeacherAgendaTaskForm(
+                            classTaskFormId.studyClassId,
+                            classTaskFormId.studyClassName,
+                            taskForm
+                        )
                     }
                 }
 
@@ -172,7 +192,7 @@ class TcHomeViewModel: ViewModel() {
     }
 
     // Load Announcement
-    private fun loadAnnouncement(){
+    private fun loadAnnouncement() {
         FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
             _announcements.postValue(
                 list.filter { convertDateToCalendarDay(it.date) == getCurrentDate() }

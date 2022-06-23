@@ -32,19 +32,31 @@ class TcPreviewTaskFragment : Fragment() {
         viewModel.oldTaskForm.observe(viewLifecycleOwner, {
             with(binding) {
                 tvTitle.text = it.title
-                tvStartTime.text = ("${DateHelper.getFormattedDateTimeWithWeekDay(it.startTime)}, ${DateHelper.getFormattedDateTime(DateHelper.hm, it.startTime)}")
-                tvEndTime.text = ("${DateHelper.getFormattedDateTimeWithWeekDay(it.endTime)}, ${DateHelper.getFormattedDateTime(DateHelper.hm, it.endTime)}")
+                tvStartTime.text = ("${DateHelper.getFormattedDateTimeWithWeekDay(it.startTime)}, ${
+                    DateHelper.getFormattedDateTime(
+                        DateHelper.hm,
+                        it.startTime
+                    )
+                }")
+                tvEndTime.text = ("${DateHelper.getFormattedDateTimeWithWeekDay(it.endTime)}, ${
+                    DateHelper.getFormattedDateTime(
+                        DateHelper.hm,
+                        it.endTime
+                    )
+                }")
                 val duration = DateHelper.getDuration(it.startTime, it.endTime)
                 tvDuration.text = ("${duration.first} ${duration.second}")
                 tvFormType.text = mapFormType[it.type]
-                tvPreqResource.text = (it.prerequisiteResources?.size?:0).toString()
-                tvPreqAssignment.text = (it.prerequisiteTaskForms?.size?:0).toString()
-                tvQuestionCount.text = (it.questions?.size?:0).toString()
+                tvPreqResource.text = (it.prerequisiteResources?.size ?: 0).toString()
+                tvPreqAssignment.text = (it.prerequisiteTaskForms?.size ?: 0).toString()
+                tvQuestionCount.text = (it.questions?.size ?: 0).toString()
 
                 it.id?.let { id ->
                     btnPreviewForm.setOnClickListener {
                         view?.findNavController()?.navigate(
-                            TcPreviewTaskFragmentDirections.actionTcPreviewTaskFragmentToTcPreviewTaskFormFragment(id)
+                            TcPreviewTaskFragmentDirections.actionTcPreviewTaskFragmentToTcPreviewTaskFormFragment(
+                                id
+                            )
                         )
                     }
                 }

@@ -27,10 +27,10 @@ class PrCalendarViewModel : ViewModel() {
 
     var currentSelectedDate: CalendarDay = getCurrentDate()
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
-    val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
+    val eventList: LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
-    private val currentList : MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
-    val currentDataList : MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
+    private val currentList: MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
+    val currentDataList: MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
 
     fun setStudent(studentId: String) {
         loadStudent(studentId)
@@ -77,7 +77,7 @@ class PrCalendarViewModel : ViewModel() {
         }
     }
 
-    private fun propagateEvent(item : List<HomeSectionData>, type: Int) {
+    private fun propagateEvent(item: List<HomeSectionData>, type: Int) {
         item.map {
             when (it) {
                 is ClassMeeting -> it.startTime
@@ -87,7 +87,8 @@ class PrCalendarViewModel : ViewModel() {
                 else -> null
             }?.let { date ->
                 // push to calendar view
-                currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(DayEvent(date, type))
+                currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }
+                    .add(DayEvent(date, type))
                 // push to recycler view
                 currentDataList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(
                     CalendarItem(it, date, type)

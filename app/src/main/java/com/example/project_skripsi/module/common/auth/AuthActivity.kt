@@ -124,8 +124,18 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
     }
 
     private fun validateInput(): Boolean {
-        if (ValidationHelper.isStringEmpty(applicationContext, binding.edtEmail.text.toString(), "Email")) return false
-        if (ValidationHelper.isStringEmpty(applicationContext, binding.edtPassword.text.toString(), "Email")) return false
+        if (ValidationHelper.isStringEmpty(
+                applicationContext,
+                binding.edtEmail.text.toString(),
+                "Email"
+            )
+        ) return false
+        if (ValidationHelper.isStringEmpty(
+                applicationContext,
+                binding.edtPassword.text.toString(),
+                "Email"
+            )
+        ) return false
         return true
     }
 
@@ -138,14 +148,14 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
 
     private fun redirectToTeacher() {
         Toast.makeText(applicationContext, "Login Success as Teacher", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this,TcMainActivity::class.java)
+        val intent = Intent(this, TcMainActivity::class.java)
         startActivity(intent)
         finish()
     }
 
     private fun redirectToParent() {
         Toast.makeText(applicationContext, "Login Success as Parent", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this,PrMainActivity::class.java)
+        val intent = Intent(this, PrMainActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -156,7 +166,8 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
                 initEvent()
             }, 200)
         } else {
-            Toast.makeText(applicationContext, "Zoom SDK initialization failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Zoom SDK initialization failed", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

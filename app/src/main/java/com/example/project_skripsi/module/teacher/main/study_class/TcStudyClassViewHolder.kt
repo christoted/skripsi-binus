@@ -6,9 +6,10 @@ import com.example.project_skripsi.databinding.ItemTcStudyClassBinding
 import com.example.project_skripsi.utils.generic.GenericAdapter
 
 class TcStudyClassViewHolder(
-    private val dataSet : List<StudyClass>,
+    private val dataSet: List<StudyClass>,
     private val subjectName: String,
-    private val listener: ClassClickListener) {
+    private val listener: ClassClickListener
+) {
 
     fun getAdapter(): GenericAdapter<StudyClass> {
         val adapter = GenericAdapter(dataSet)

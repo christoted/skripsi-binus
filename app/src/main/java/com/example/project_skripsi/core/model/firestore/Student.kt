@@ -11,7 +11,7 @@ import java.util.*
 data class Student(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val nis: String? = null,
 
@@ -61,7 +61,7 @@ data class Student(
 
     var achievements: MutableList<Achievement>? = null,
 
-)
+    )
 
 @IgnoreExtraProperties
 data class Payment(
@@ -82,7 +82,7 @@ data class Payment(
     @set: PropertyName("payment_date")
     var paymentDate: Date? = null,
 
-): HomeSectionData()
+    ) : HomeSectionData()
 
 @IgnoreExtraProperties
 data class AssignedTaskForm(
@@ -117,10 +117,10 @@ data class AssignedTaskForm(
 
     val answers: List<Answer>? = null,
 
-) : ScoreSectionData()
+    ) : ScoreSectionData()
 
 @IgnoreExtraProperties
-data class AttendedMeeting (
+data class AttendedMeeting(
 
     val id: String? = null,
 
@@ -140,16 +140,16 @@ data class AttendedMeeting (
 )
 
 @IgnoreExtraProperties
-data class Achievement (
+data class Achievement(
 
     val title: String? = null,
 
     val description: String? = null,
 
-)
+    )
 
 @IgnoreExtraProperties
-data class Answer (
+data class Answer(
 
     @get: PropertyName("answer_text")
     @set: PropertyName("answer_text")

@@ -18,7 +18,7 @@ import com.example.project_skripsi.utils.helper.UIHelper
 
 class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel : TcStudyClassTaskDetailViewModel
+    private lateinit var viewModel: TcStudyClassTaskDetailViewModel
     private var _binding: FragmentTcStudyClassTaskDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -51,15 +51,16 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
     }
 
     private fun retrieveArgs() {
-        val args : TcStudyClassTaskDetailFragmentArgs by navArgs()
+        val args: TcStudyClassTaskDetailFragmentArgs by navArgs()
         viewModel.setData(args.studyClassId, args.subjectName, args.taskFormId)
     }
 
-    private inner class ScreenSlidePagerAdapter(private val listener: ItemClickListener) : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter(private val listener: ItemClickListener) :
+        PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        var unCheckedEmptyView : View? = null
-        var checkedEmptyView : View? = null
+        var unCheckedEmptyView: View? = null
+        var checkedEmptyView: View? = null
 
         override fun getCount(): Int =
             TcStudyClassTaskDetailViewModel.tabCount
@@ -76,7 +77,7 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 TcStudyClassTaskDetailViewModel.TASK_UNCHECKED -> {
                     viewModel.uncheckedList.observe(viewLifecycleOwner, {
                         unCheckedEmptyView?.let { bindingRV.llParent.removeView(unCheckedEmptyView) }
@@ -129,7 +130,10 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
     override fun onItemClick(itemId: String) {
         view?.findNavController()?.navigate(
             TcStudyClassTaskDetailFragmentDirections
-                .actionTcStudyClassTaskDetailFragmentToTcAssessmentTaskFormFragment(itemId, viewModel.taskFormId)
+                .actionTcStudyClassTaskDetailFragmentToTcAssessmentTaskFormFragment(
+                    itemId,
+                    viewModel.taskFormId
+                )
         )
     }
 }

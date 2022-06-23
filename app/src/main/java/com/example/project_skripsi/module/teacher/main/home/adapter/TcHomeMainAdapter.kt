@@ -14,16 +14,21 @@ import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemLi
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.helper.UIHelper
 
-class TcHomeMainAdapter(private val listHomeSectionData: List<HomeMainSection>, val listener: TcAgendaItemListener):
+class TcHomeMainAdapter(
+    private val listHomeSectionData: List<HomeMainSection>,
+    val listener: TcAgendaItemListener
+) :
     RecyclerView.Adapter<TcHomeMainAdapter.TcHomeMainSectionViewHolder>() {
 
-    val isExpanded = BooleanArray(listHomeSectionData.size){true}
-    val hasAddEmptyView = BooleanArray(listHomeSectionData.size){false}
+    val isExpanded = BooleanArray(listHomeSectionData.size) { true }
+    val hasAddEmptyView = BooleanArray(listHomeSectionData.size) { false }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TcHomeMainSectionViewHolder {
-        return  TcHomeMainSectionViewHolder(
+        return TcHomeMainSectionViewHolder(
             ItemTcHomeMainSectionBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false))
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: TcHomeMainSectionViewHolder, position: Int) {
@@ -39,7 +44,8 @@ class TcHomeMainAdapter(private val listHomeSectionData: List<HomeMainSection>, 
         return listHomeSectionData.size
     }
 
-    inner class TcHomeMainSectionViewHolder(private val binding: ItemTcHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class TcHomeMainSectionViewHolder(private val binding: ItemTcHomeMainSectionBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeMainSection, adapter: TcHomeChildAdapter) {
             with(binding) {
                 sectionTitle.text = item.sectionName

@@ -26,7 +26,8 @@ class PrProgressAttendanceFragment(private val viewModel: PrProgressViewModel) :
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.sectionAttendance.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada absensi")
                 binding.llParent.addView(emptyView.root)
             } else {

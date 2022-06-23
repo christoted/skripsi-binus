@@ -29,7 +29,7 @@ class PrExamFragment : Fragment(), ItemClickListener {
     private var _binding: FragmentPrExamBinding? = null
     private val binding get() = _binding!!
 
-    private var dialog : BottomSheetDialog? = null
+    private var dialog: BottomSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,15 +85,15 @@ class PrExamFragment : Fragment(), ItemClickListener {
     }
 
     private fun retrieveArgs() {
-        val args : PrExamFragmentArgs by navArgs()
+        val args: PrExamFragmentArgs by navArgs()
         viewModel.setStudent(args.studentId)
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        private var ongoingEmptyView : View? = null
-        private var pastEmptyView : View? = null
+        private var ongoingEmptyView: View? = null
+        private var pastEmptyView: View? = null
 
         override fun getCount(): Int =
             StTaskExamViewModel.tabCount
@@ -110,12 +110,16 @@ class PrExamFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 PrExamViewModel.EXAM_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, { list ->
                         ongoingEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian yang sedang berlangsung", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada ujian yang sedang berlangsung",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
@@ -126,7 +130,11 @@ class PrExamFragment : Fragment(), ItemClickListener {
                     viewModel.pastList.observe(viewLifecycleOwner, { list ->
                         pastEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian yang sudah selesai", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada ujian yang sudah selesai",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }

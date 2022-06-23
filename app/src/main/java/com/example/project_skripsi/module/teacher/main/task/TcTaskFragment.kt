@@ -22,7 +22,7 @@ import com.google.android.material.chip.Chip
 
 class TcTaskFragment : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel : TcTaskViewModel
+    private lateinit var viewModel: TcTaskViewModel
     private var _binding: FragmentTcTaskBinding? = null
     private val binding get() = _binding!!
 
@@ -40,7 +40,8 @@ class TcTaskFragment : Fragment(), ItemClickListener {
             var hasItem = false
             var roundRobin = 0
             it.map { subjectGroup ->
-                val chip = inflater.inflate(R.layout.item_tc_chip, binding.cgSubjectGroup, false) as Chip
+                val chip =
+                    inflater.inflate(R.layout.item_tc_chip, binding.cgSubjectGroup, false) as Chip
                 chip.id = View.generateViewId()
                 chip.text = ("${subjectGroup.gradeLevel}-${subjectGroup.subjectName}")
 
@@ -146,11 +147,11 @@ class TcTaskFragment : Fragment(), ItemClickListener {
         }
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        private var examEmptyView : View? = null
-        private var assignmentEmptyView : View? = null
+        private var examEmptyView: View? = null
+        private var assignmentEmptyView: View? = null
 
         override fun getCount(): Int =
             TcTaskViewModel.tabCount
@@ -167,27 +168,37 @@ class TcTaskFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 TcTaskViewModel.TAB_EXAM -> {
                     viewModel.examList.observe(viewLifecycleOwner, { list ->
                         examEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian yang final", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada ujian yang final",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             examEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(list, this@TcTaskFragment).getAdapter()
+                        bindingRV.rvContainer.adapter =
+                            TaskViewHolder(list, this@TcTaskFragment).getAdapter()
                     })
                 }
                 TcTaskViewModel.TAB_ASSIGNMENT -> {
                     viewModel.assignmentList.observe(viewLifecycleOwner, { list ->
                         assignmentEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas yang final", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada tugas yang final",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             assignmentEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(list, this@TcTaskFragment).getAdapter()
+                        bindingRV.rvContainer.adapter =
+                            TaskViewHolder(list, this@TcTaskFragment).getAdapter()
                     })
                 }
             }

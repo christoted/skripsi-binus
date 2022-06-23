@@ -9,14 +9,14 @@ import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class PrTaskViewHolder(private val dataSet : List<TaskFormStatus>) {
+class PrTaskViewHolder(private val dataSet: List<TaskFormStatus>) {
 
     fun getAdapter(): GenericAdapter<TaskFormStatus> {
         val adapter = GenericAdapter(dataSet)
         adapter.expressionOnCreateViewHolder = {
             ItemStTaskBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item,viewBinding,_ ->
+        adapter.expressionViewHolderBinding = { item, viewBinding, _ ->
             val view = viewBinding as ItemStTaskBinding
 
             with(view) {

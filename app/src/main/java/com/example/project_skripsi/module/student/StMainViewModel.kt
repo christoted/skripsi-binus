@@ -8,9 +8,9 @@ import com.example.project_skripsi.utils.generic.HandledEvent
 class StMainViewModel : ViewModel() {
 
     private val _isImageCaptured = MutableLiveData<HandledEvent<Boolean>>()
-    val isImageCaptured : LiveData<HandledEvent<Boolean>> = _isImageCaptured
+    val isImageCaptured: LiveData<HandledEvent<Boolean>> = _isImageCaptured
 
-    fun captureImage(){
+    fun captureImage() {
         _isImageCaptured.postValue(HandledEvent(true))
     }
 

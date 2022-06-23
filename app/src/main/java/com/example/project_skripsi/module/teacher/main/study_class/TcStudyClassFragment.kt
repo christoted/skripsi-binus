@@ -14,7 +14,7 @@ import com.google.android.material.chip.Chip
 
 class TcStudyClassFragment : Fragment(), ClassClickListener {
 
-    private lateinit var viewModel : TcStudyClassViewModel
+    private lateinit var viewModel: TcStudyClassViewModel
     private var _binding: FragmentTcStudyClassBinding? = null
     private val binding get() = _binding!!
 
@@ -34,8 +34,10 @@ class TcStudyClassFragment : Fragment(), ClassClickListener {
                 tvStudentCount.text = (studyClass.students?.size ?: 0).toString()
                 llParent.visibility = View.VISIBLE
                 llParent.setOnClickListener {
-                    view?.findNavController()?.navigate(TcStudyClassFragmentDirections
-                        .actionTcStudyClassFragmentToTcStudyClassHomeroomFragment(studyClass.id!!))
+                    view?.findNavController()?.navigate(
+                        TcStudyClassFragmentDirections
+                            .actionTcStudyClassFragmentToTcStudyClassHomeroomFragment(studyClass.id!!)
+                    )
                 }
             }
         })
@@ -44,7 +46,8 @@ class TcStudyClassFragment : Fragment(), ClassClickListener {
             binding.cgSubject.removeAllViews()
             var hasItem = false
             it.map { subjectName ->
-                val chip = inflater.inflate(R.layout.view_chip_choice, binding.cgSubject, false) as Chip
+                val chip =
+                    inflater.inflate(R.layout.view_chip_choice, binding.cgSubject, false) as Chip
                 chip.id = View.generateViewId()
                 chip.text = subjectName
                 chip.setOnCheckedChangeListener { _, isChecked ->
@@ -61,7 +64,11 @@ class TcStudyClassFragment : Fragment(), ClassClickListener {
 
         binding.rvClass.layoutManager = LinearLayoutManager(context)
         viewModel.teachingClasses.observe(viewLifecycleOwner, { pairData ->
-            binding.rvClass.adapter = TcStudyClassViewHolder(pairData.second, pairData.first, this@TcStudyClassFragment).getAdapter()
+            binding.rvClass.adapter = TcStudyClassViewHolder(
+                pairData.second,
+                pairData.first,
+                this@TcStudyClassFragment
+            ).getAdapter()
         })
 
         return binding.root
@@ -73,7 +80,9 @@ class TcStudyClassFragment : Fragment(), ClassClickListener {
     }
 
     override fun onItemClick(classId: String, subjectName: String) {
-        view?.findNavController()?.navigate(TcStudyClassFragmentDirections
-            .actionTcStudyClassFragmentToTcStudyClassTeachingFragment(classId, subjectName))
+        view?.findNavController()?.navigate(
+            TcStudyClassFragmentDirections
+                .actionTcStudyClassFragmentToTcStudyClassTeachingFragment(classId, subjectName)
+        )
     }
 }

@@ -16,7 +16,9 @@ class StSubjectAttendanceAdapter(private val assignmentList: List<Attendance>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AttendanceViewHolder =
         AttendanceViewHolder(
             ItemStSubjectAttendanceBinding.inflate(
-            LayoutInflater.from(viewGroup.context), viewGroup, false))
+                LayoutInflater.from(viewGroup.context), viewGroup, false
+            )
+        )
 
     override fun onBindViewHolder(holder: AttendanceViewHolder, position: Int) {
         holder.bind(assignmentList[position])
@@ -24,13 +26,16 @@ class StSubjectAttendanceAdapter(private val assignmentList: List<Attendance>) :
 
     override fun getItemCount() = assignmentList.size
 
-    class AttendanceViewHolder (private val binding : ItemStSubjectAttendanceBinding) : RecyclerView.ViewHolder(binding.root) {
+    class AttendanceViewHolder(private val binding: ItemStSubjectAttendanceBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Attendance) {
             with(binding) {
 
                 with(item) {
-                    tvNumber.text = ("${absoluteAdapterPosition+1}.")
-                    startTime?.let { tvDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it) }
+                    tvNumber.text = ("${absoluteAdapterPosition + 1}.")
+                    startTime?.let {
+                        tvDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
+                    }
                     statusColor?.let {
                         tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it, null))
                     }

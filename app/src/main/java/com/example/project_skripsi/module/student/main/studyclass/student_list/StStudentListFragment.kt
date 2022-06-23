@@ -30,7 +30,8 @@ class StStudentListFragment : Fragment() {
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         viewModel.studentList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada siswa")
                 binding.llParent.addView(emptyView.root)
             } else {
@@ -52,7 +53,7 @@ class StStudentListFragment : Fragment() {
     }
 
     private fun retrieveArgs() {
-        val args : StStudentListFragmentArgs by navArgs()
+        val args: StStudentListFragmentArgs by navArgs()
         viewModel.setStudyClass(args.studyClassId)
         binding.tvTitle.text = ("Siswa Kelas ${args.studyClassName}")
     }

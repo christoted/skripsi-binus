@@ -18,7 +18,7 @@ import com.example.project_skripsi.utils.helper.UIHelper
 
 class TcStudyClassResourceFragment : Fragment(), LinkClickListener {
 
-    private lateinit var viewModel : TcStudyClassResourceViewModel
+    private lateinit var viewModel: TcStudyClassResourceViewModel
     private var _binding: FragmentTcStudyClassResourceBinding? = null
     private val binding get() = _binding!!
 
@@ -43,7 +43,8 @@ class TcStudyClassResourceFragment : Fragment(), LinkClickListener {
                     UIHelper.getEmptyList("Tidak ada materi", inflater, binding.llParent)
                 )
             } else {
-                binding.rvItem.adapter = ResourceViewHolder(it, this@TcStudyClassResourceFragment).getAdapter()
+                binding.rvItem.adapter =
+                    ResourceViewHolder(it, this@TcStudyClassResourceFragment).getAdapter()
             }
         })
 
@@ -59,7 +60,7 @@ class TcStudyClassResourceFragment : Fragment(), LinkClickListener {
     }
 
     private fun retrieveArgs() {
-        val args : TcStudyClassResourceFragmentArgs by navArgs()
+        val args: TcStudyClassResourceFragmentArgs by navArgs()
         viewModel.setClassAndSubject(args.studyClassId, args.subjectName)
     }
 

@@ -14,7 +14,8 @@ import com.example.project_skripsi.module.student.main.progress.view.adapter.StS
 import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
 
 
-class StProgressScoreFragment(private val viewModel: StScoreViewModel) : Fragment(), ScoreContentListener {
+class StProgressScoreFragment(private val viewModel: StScoreViewModel) : Fragment(),
+    ScoreContentListener {
 
     private var _binding: FragmentStProgressScoreBinding? = null
     private val binding get() = _binding!!
@@ -24,17 +25,18 @@ class StProgressScoreFragment(private val viewModel: StScoreViewModel) : Fragmen
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-       _binding = FragmentStProgressScoreBinding.inflate(inflater, container, false)
+        _binding = FragmentStProgressScoreBinding.inflate(inflater, container, false)
         viewModel.sectionScore.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada nilai")
                 binding.llParent.addView(emptyView.root)
             } else {
                 with(binding.recyclerView) {
                     layoutManager = LinearLayoutManager(context)
                     setHasFixedSize(true)
-                    adapter = StScoreContentAdapter(viewModel,0, this@StProgressScoreFragment)
+                    adapter = StScoreContentAdapter(viewModel, 0, this@StProgressScoreFragment)
                 }
             }
         })

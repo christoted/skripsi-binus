@@ -62,7 +62,7 @@ class PrHomeViewModel : ViewModel() {
         }
 
         _listPaymentSectionDataPayment.observeOnce {
-            listData[3] =  HomeMainSection(Constant.SECTION_PAYMENT, sectionItem = it)
+            listData[3] = HomeMainSection(Constant.SECTION_PAYMENT, sectionItem = it)
             _sectionData.postValue(listData)
         }
 
@@ -74,7 +74,6 @@ class PrHomeViewModel : ViewModel() {
         loadParent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
     }
-
 
 
     private fun loadParent(uid: String) {
@@ -97,13 +96,16 @@ class PrHomeViewModel : ViewModel() {
                     student.payments?.map { ParentAgendaPayment(student.name, it) } ?: emptyList()
                 )
                 meetingList.addAll(
-                    student.attendedMeetings?.map { ParentAgendaMeeting(student.name, it) } ?: emptyList()
+                    student.attendedMeetings?.map { ParentAgendaMeeting(student.name, it) }
+                        ?: emptyList()
                 )
                 examList.addAll(
-                    student.assignedExams?.map { ParentAgendaTaskForm(student.name, it) } ?: emptyList()
+                    student.assignedExams?.map { ParentAgendaTaskForm(student.name, it) }
+                        ?: emptyList()
                 )
                 assignmentList.addAll(
-                    student.assignedAssignments?.map { ParentAgendaTaskForm(student.name, it) } ?: emptyList()
+                    student.assignedAssignments?.map { ParentAgendaTaskForm(student.name, it) }
+                        ?: emptyList()
                 )
             }
             _listHomeSectionDataClassMeeting.postValue(
@@ -140,11 +142,11 @@ class PrHomeViewModel : ViewModel() {
 
     fun getStudents(page: Int): List<Student> {
         val startIdx = page * contentPerPage
-        val endIdx = min(startIdx + contentPerPage, studentList.value?.size?:0)
-        return studentList.value?.subList(startIdx, endIdx)?: emptyList()
+        val endIdx = min(startIdx + contentPerPage, studentList.value?.size ?: 0)
+        return studentList.value?.subList(startIdx, endIdx) ?: emptyList()
     }
 
-    fun getStudentPageCount() : Int{
+    fun getStudentPageCount(): Int {
         val subjects = studentList.value?.size ?: 0
         return (subjects + contentPerPage - 1) / contentPerPage
     }

@@ -28,10 +28,10 @@ class TcCalendarViewModel : ViewModel() {
     var currentSelectedDate: CalendarDay = DateHelper.getCurrentDate()
 
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
-    val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
+    val eventList: LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
-    private val currentList : MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
-    val currentDataList : MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
+    private val currentList: MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
+    val currentDataList: MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
 
     lateinit var curTeacher: Teacher
 
@@ -56,24 +56,36 @@ class TcCalendarViewModel : ViewModel() {
     }
 
     private fun loadStudyClasses(uids: List<ClassIdSubject>) {
-        FireRepository.inst.getItems<StudyClass>(uids.map { it.studyClassId }).first.observeOnce{ list ->
+        FireRepository.inst.getItems<StudyClass>(uids.map { it.studyClassId }).first.observeOnce { list ->
 
             val meetings = mutableListOf<TeacherAgendaMeeting>()
             val exams = mutableListOf<ClassTaskFormId>()
             val assignments = mutableListOf<ClassTaskFormId>()
 
-            uids.map {  classIdSubject ->
-                list.firstOrNull { it.id == classIdSubject.studyClassId}?.let { studyClass ->
+            uids.map { classIdSubject ->
+                list.firstOrNull { it.id == classIdSubject.studyClassId }?.let { studyClass ->
                     studyClass.subjects?.firstOrNull { item -> item.subjectName == classIdSubject.subjectName }
                         .let { subject ->
                             subject?.classMeetings?.map { meeting ->
                                 meetings.add(TeacherAgendaMeeting(studyClass.name ?: "", meeting))
                             }
                             subject?.classAssignments?.map { asgId ->
-                                assignments.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", asgId))
+                                assignments.add(
+                                    ClassTaskFormId(
+                                        studyClass.id!!,
+                                        studyClass.name ?: "",
+                                        asgId
+                                    )
+                                )
                             }
                             subject?.classExams?.map { examId ->
-                                exams.add(ClassTaskFormId(studyClass.id!!,studyClass.name ?: "", examId))
+                                exams.add(
+                                    ClassTaskFormId(
+                                        studyClass.id!!,
+                                        studyClass.name ?: "",
+                                        examId
+                                    )
+                                )
                             }
                         }
                 }
@@ -107,7 +119,7 @@ class TcCalendarViewModel : ViewModel() {
         }
     }
 
-    private fun propagateEvent(item : List<HomeSectionData>, type: Int) {
+    private fun propagateEvent(item: List<HomeSectionData>, type: Int) {
         item.map {
             when (it) {
                 is TeacherAgendaMeeting -> it.classMeeting.startTime
@@ -116,7 +128,8 @@ class TcCalendarViewModel : ViewModel() {
                 is Announcement -> it.date
                 else -> null
             }?.let { date ->
-                currentList.getOrPut(CalendarDay.from(date)) { ArrayList() }.add(DayEvent(date, type))
+                currentList.getOrPut(CalendarDay.from(date)) { ArrayList() }
+                    .add(DayEvent(date, type))
                 currentDataList.getOrPut(CalendarDay.from(date)) { ArrayList() }
                     .add(CalendarItem(it, date, type))
             }

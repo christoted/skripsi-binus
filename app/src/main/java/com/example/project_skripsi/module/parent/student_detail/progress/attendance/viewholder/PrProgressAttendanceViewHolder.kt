@@ -11,7 +11,7 @@ import com.example.project_skripsi.databinding.ItemStProgressAttendanceBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
 
-class PrProgressAttendanceViewHolder(private val dataSet : List<AttendanceMainSection>) {
+class PrProgressAttendanceViewHolder(private val dataSet: List<AttendanceMainSection>) {
 
     private val isExpanded = BooleanArray(dataSet.size)
 
@@ -30,8 +30,14 @@ class PrProgressAttendanceViewHolder(private val dataSet : List<AttendanceMainSe
                 tvPresenceNoReason.text = item.totalAlpha.toString()
 
                 rvContainer.layoutManager = LinearLayoutManager(root.context)
-                rvContainer.adapter = PrProgressAttendanceChildViewHolder(item.sectionItem).getAdapter()
-                rvContainer.addItemDecoration(DividerItemDecoration(view.root.context, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+                rvContainer.adapter =
+                    PrProgressAttendanceChildViewHolder(item.sectionItem).getAdapter()
+                rvContainer.addItemDecoration(
+                    DividerItemDecoration(
+                        view.root.context,
+                        androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
+                    )
+                )
                 rvContainer.isVisible = isExpanded[holder.absoluteAdapterPosition]
                 root.setOnClickListener {
                     isExpanded[holder.absoluteAdapterPosition] =
@@ -39,7 +45,13 @@ class PrProgressAttendanceViewHolder(private val dataSet : List<AttendanceMainSe
                     rvContainer.isVisible = isExpanded[holder.absoluteAdapterPosition]
                 }
 
-                viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.indicator_attendance, null))
+                viewIndicator.setBackgroundColor(
+                    ResourcesCompat.getColor(
+                        App.resourses!!,
+                        R.color.indicator_attendance,
+                        null
+                    )
+                )
             }
         }
         return adapter

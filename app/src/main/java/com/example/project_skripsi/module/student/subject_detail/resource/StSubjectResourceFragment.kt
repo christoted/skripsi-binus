@@ -29,11 +29,13 @@ class StSubjectResourceFragment(private val viewModel: StSubjectViewModel) : Fra
         binding.rvResource.layoutManager = LinearLayoutManager(context)
         viewModel.resourceList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada materi")
                 binding.llParent.addView(emptyView.root)
             } else {
-                binding.rvResource.adapter = StSubjectResourceAdapter(it, this@StSubjectResourceFragment)
+                binding.rvResource.adapter =
+                    StSubjectResourceAdapter(it, this@StSubjectResourceFragment)
             }
         })
 

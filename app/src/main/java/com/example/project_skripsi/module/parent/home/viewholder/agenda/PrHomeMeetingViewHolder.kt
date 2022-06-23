@@ -9,19 +9,30 @@ import com.example.project_skripsi.databinding.ItemPrHomeGeneralBinding
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class PrHomeMeetingViewHolder(private val binding: ItemPrHomeGeneralBinding):
+class PrHomeMeetingViewHolder(private val binding: ItemPrHomeGeneralBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item : HomeSectionData) {
+    fun bind(item: HomeSectionData) {
         val data = item as ParentAgendaMeeting
         with(binding) {
             tvStudentName.text = data.studentName
             tvSubjectName.text = data.attendedMeeting?.subjectName
-            tvTime.text = ("${DateHelper.getFormattedDateTime(DateHelper.hm, data.attendedMeeting?.startTime)} - " +
-                    "${DateHelper.getFormattedDateTime(DateHelper.hm, data.attendedMeeting?.endTime)}")
+            tvTime.text = ("${
+                DateHelper.getFormattedDateTime(
+                    DateHelper.hm,
+                    data.attendedMeeting?.startTime
+                )
+            } - " +
+                    "${
+                        DateHelper.getFormattedDateTime(
+                            DateHelper.hm,
+                            data.attendedMeeting?.endTime
+                        )
+                    }")
             tvLocation.text = ("Online")
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null))
+                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null)
+            )
         }
     }
 }

@@ -12,19 +12,24 @@ import com.example.project_skripsi.utils.Constant
 class TcFormAdapter(questionList: List<Question>) : Adapter<ViewHolder>() {
 
     val questions = mutableListOf<Question>()
-    init { questions.addAll(questionList) }
+
+    init {
+        questions.addAll(questionList)
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
             0 ->
                 MultipleChoiceViewHolder(
                     ItemTcAlterTaskFormMcBinding.inflate(
-                        LayoutInflater.from(viewGroup.context), viewGroup, false)
+                        LayoutInflater.from(viewGroup.context), viewGroup, false
+                    )
                 )
             else ->
                 EssayViewHolder(
                     ItemTcAlterTaskFormEssayBinding.inflate(
-                        LayoutInflater.from(viewGroup.context), viewGroup, false)
+                        LayoutInflater.from(viewGroup.context), viewGroup, false
+                    )
                 )
         }
 
@@ -43,9 +48,9 @@ class TcFormAdapter(questionList: List<Question>) : Adapter<ViewHolder>() {
 
     override fun getItemCount() = questions.size
 
-    fun addQuestion(questionType : String) {
+    fun addQuestion(questionType: String) {
         questions.add(Question(type = questionType))
-        notifyItemInserted(questions.size-1)
+        notifyItemInserted(questions.size - 1)
     }
 
     fun deleteQuestion(position: Int) {
@@ -53,33 +58,35 @@ class TcFormAdapter(questionList: List<Question>) : Adapter<ViewHolder>() {
         notifyItemRemoved(position)
     }
 
-    inner class MultipleChoiceViewHolder ( private val binding : ItemTcAlterTaskFormMcBinding) : ViewHolder(binding.root) {
+    inner class MultipleChoiceViewHolder(private val binding: ItemTcAlterTaskFormMcBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: Question, position: Int) {
             with(binding) {
-                tvNumber.text = ("Soal ${position+1}")
+                tvNumber.text = ("Soal ${position + 1}")
                 item.title?.let { edtTitle.setText(it) }
-                edtScoreWeight.setText(item.scoreWeight?.toString()?:"0")
+                edtScoreWeight.setText(item.scoreWeight?.toString() ?: "0")
 
-                item.choices?.getOrNull(0)?.let { edtChoice1.setText(it)}
-                item.choices?.getOrNull(1)?.let { edtChoice2.setText(it)}
-                item.choices?.getOrNull(2)?.let { edtChoice3.setText(it)}
-                item.choices?.getOrNull(3)?.let { edtChoice4.setText(it)}
-                item.choices?.getOrNull(4)?.let { edtChoice5.setText(it)}
-                edtAnswerKey.setText(item.answerKey ?:"1")
+                item.choices?.getOrNull(0)?.let { edtChoice1.setText(it) }
+                item.choices?.getOrNull(1)?.let { edtChoice2.setText(it) }
+                item.choices?.getOrNull(2)?.let { edtChoice3.setText(it) }
+                item.choices?.getOrNull(3)?.let { edtChoice4.setText(it) }
+                item.choices?.getOrNull(4)?.let { edtChoice5.setText(it) }
+                edtAnswerKey.setText(item.answerKey ?: "1")
 
-                imvDelete.setOnClickListener{ deleteQuestion(position) }
+                imvDelete.setOnClickListener { deleteQuestion(position) }
             }
         }
     }
 
-    inner class EssayViewHolder ( private val binding : ItemTcAlterTaskFormEssayBinding) : ViewHolder(binding.root) {
+    inner class EssayViewHolder(private val binding: ItemTcAlterTaskFormEssayBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: Question, position: Int) {
             with(binding) {
-                tvNumber.text = ("Soal ${position+1}")
+                tvNumber.text = ("Soal ${position + 1}")
                 item.title?.let { edtTitle.setText(it) }
-                edtScoreWeight.setText(item.scoreWeight?.toString()?:"0")
+                edtScoreWeight.setText(item.scoreWeight?.toString() ?: "0")
 
-                imvDelete.setOnClickListener{ deleteQuestion(position) }
+                imvDelete.setOnClickListener { deleteQuestion(position) }
             }
         }
     }

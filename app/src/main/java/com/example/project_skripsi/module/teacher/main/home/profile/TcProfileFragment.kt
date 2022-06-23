@@ -61,7 +61,7 @@ class TcProfileFragment : Fragment() {
 
     private fun cancelNotification() {
         // Everyday
-        NotificationUtil.cancelEveryDayNotification(requireActivity())
+        NotificationUtil.cancelDailyNotification(requireActivity(), false)
         // Exam
         homeViewModel.examList.observe(viewLifecycleOwner) {
             NotificationUtil.cancelAllExamAndAssignmentNotificationTeacher(requireActivity(), it)

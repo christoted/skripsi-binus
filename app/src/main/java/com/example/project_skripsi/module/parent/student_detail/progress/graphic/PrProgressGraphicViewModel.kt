@@ -12,13 +12,13 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 class PrProgressGraphicViewModel : ViewModel() {
 
     private val _subjects = MutableLiveData<List<String>>()
-    val subjects : LiveData<List<String>> = _subjects
+    val subjects: LiveData<List<String>> = _subjects
 
     private val _exams = MutableLiveData<Map<String, List<AssignedTaskForm>>>()
-    val exams : LiveData<Map<String, List<AssignedTaskForm>>> = _exams
+    val exams: LiveData<Map<String, List<AssignedTaskForm>>> = _exams
 
     private val _assignment = MutableLiveData<Map<String, List<AssignedTaskForm>>>()
-    val assignment : LiveData<Map<String, List<AssignedTaskForm>>> = _assignment
+    val assignment: LiveData<Map<String, List<AssignedTaskForm>>> = _assignment
 
     fun setStudent(studentId: String) {
         loadCurrentStudent(studentId)

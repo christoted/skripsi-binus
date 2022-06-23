@@ -6,7 +6,7 @@ import com.example.project_skripsi.databinding.ItemPrProgressAttendanceChildBind
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class PrProgressAttendanceChildViewHolder(private val dataSet : List<AttendedMeeting>) {
+class PrProgressAttendanceChildViewHolder(private val dataSet: List<AttendedMeeting>) {
 
     fun getAdapter(): GenericAdapter<AttendedMeeting> {
         val adapter = GenericAdapter(dataSet)
@@ -16,9 +16,24 @@ class PrProgressAttendanceChildViewHolder(private val dataSet : List<AttendedMee
         adapter.expressionViewHolderBinding = { item, viewBinding, _ ->
             val view = viewBinding as ItemPrProgressAttendanceChildBinding
             with(view) {
-                tvDate.text = item.startTime?.let { DateHelper.getFormattedDateTime(DateHelper.DMY, it) }
-                tvTime.text = ("${item.startTime?.let { DateHelper.getFormattedDateTime(DateHelper.hm, it) }} - " +
-                        "${item.endTime?.let { DateHelper.getFormattedDateTime(DateHelper.hm, it) }}")
+                tvDate.text =
+                    item.startTime?.let { DateHelper.getFormattedDateTime(DateHelper.DMY, it) }
+                tvTime.text = ("${
+                    item.startTime?.let {
+                        DateHelper.getFormattedDateTime(
+                            DateHelper.hm,
+                            it
+                        )
+                    }
+                } - " +
+                        "${
+                            item.endTime?.let {
+                                DateHelper.getFormattedDateTime(
+                                    DateHelper.hm,
+                                    it
+                                )
+                            }
+                        }")
 
                 tvStatus.text = item.status
             }

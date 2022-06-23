@@ -18,16 +18,21 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.helper.UIHelper
 
 
-class StHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMainSection>, val listener: ItemListener):
+class StHomeRecyclerViewMainAdapter(
+    private val listHomeSectionData: List<HomeMainSection>,
+    val listener: ItemListener
+) :
     RecyclerView.Adapter<StHomeRecyclerViewMainAdapter.StHomeMainSectionViewHolder>() {
 
-    val isExpanded = BooleanArray(listHomeSectionData.size){true}
-    val hasAddEmptyView = BooleanArray(listHomeSectionData.size){false}
+    val isExpanded = BooleanArray(listHomeSectionData.size) { true }
+    val hasAddEmptyView = BooleanArray(listHomeSectionData.size) { false }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StHomeMainSectionViewHolder =
         StHomeMainSectionViewHolder(
             ItemStHomeMainSectionBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false))
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
 
 
     override fun onBindViewHolder(holder: StHomeMainSectionViewHolder, position: Int) {
@@ -40,14 +45,16 @@ class StHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMa
     override fun getItemCount(): Int = listHomeSectionData.size
 
 
-    inner class StHomeMainSectionViewHolder(private val binding: ItemStHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StHomeMainSectionViewHolder(private val binding: ItemStHomeMainSectionBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeMainSection) {
             with(binding) {
                 sectionTitle.text = item.sectionName
                 sectionTitleCount.text = item.sectionItem.count().toString()
                 with(binding.sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
-                    sectionItemsRecyclerView.adapter = StHomeRecyclerViewChildAdapter(item, listener)
+                    sectionItemsRecyclerView.adapter =
+                        StHomeRecyclerViewChildAdapter(item, listener)
                     if (item.sectionItem.isEmpty()) {
                         if (!hasAddEmptyView[absoluteAdapterPosition]) {
                             llCollapseGroup.addView(

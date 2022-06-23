@@ -19,8 +19,8 @@ import com.example.project_skripsi.databinding.*
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.parent.home.viewholder.agenda.PrHomeRecyclerViewMainAdapter
 import com.example.project_skripsi.module.parent.home.viewholder.student.StudentViewHolder
-import com.example.project_skripsi.utils.service.storage.StorageSP
 import com.example.project_skripsi.utils.generic.ItemClickListener
+import com.example.project_skripsi.utils.service.storage.StorageSP
 
 class PrHomeFragment : Fragment(), ItemClickListener {
 
@@ -43,11 +43,17 @@ class PrHomeFragment : Fragment(), ItemClickListener {
                 val pageCount = viewModel.getStudentPageCount()
                 vpStudent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                     override fun onPageScrollStateChanged(state: Int) {}
-                    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+                    override fun onPageScrolled(
+                        position: Int,
+                        positionOffset: Float,
+                        positionOffsetPixels: Int
+                    ) {
+                    }
 
                     override fun onPageSelected(position: Int) {
                         imvLeft.visibility = if (position == 0) View.INVISIBLE else View.VISIBLE
-                        imvRight.visibility = if (position+1 == pageCount) View.INVISIBLE else View.VISIBLE
+                        imvRight.visibility =
+                            if (position + 1 == pageCount) View.INVISIBLE else View.VISIBLE
                     }
                 })
                 if (vpStudent.hasNext()) imvRight.visibility = View.VISIBLE
@@ -61,7 +67,9 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         with(binding.recyclerviewClass) {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-            viewModel.sectionData.observe(viewLifecycleOwner, { adapter = PrHomeRecyclerViewMainAdapter(it) })
+            viewModel.sectionData.observe(
+                viewLifecycleOwner,
+                { adapter = PrHomeRecyclerViewMainAdapter(it) })
         }
 
         binding.imvLogout.setOnClickListener {
@@ -82,7 +90,7 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         )
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
 
@@ -97,7 +105,8 @@ class PrHomeFragment : Fragment(), ItemClickListener {
             val binding2 = ViewRecyclerViewBgwhiteBinding.inflate(layoutInflater, container, false)
 
             binding2.rvContainer.layoutManager = GridLayoutManager(context, 3)
-            binding2.rvContainer.adapter = StudentViewHolder(viewModel.getStudents(position), this@PrHomeFragment).getAdapter()
+            binding2.rvContainer.adapter =
+                StudentViewHolder(viewModel.getStudents(position), this@PrHomeFragment).getAdapter()
 
             container.addView(binding2.root, 0)
             return binding2.root

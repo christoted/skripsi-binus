@@ -15,7 +15,10 @@ import com.example.project_skripsi.module.student.main.payment.variant.StPayment
 import com.example.project_skripsi.module.student.main.payment.variant.StPaymentVariantViewHolder.Companion.TYPE_UNPAID
 import com.example.project_skripsi.module.student.main.payment.variant.StPaymentVariantViewHolder.Companion.TYPE_UPCOMING
 
-class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, private val viewType: Int) : Fragment() {
+class StPaymentVariantFragment(
+    private val viewModel: StPaymentViewModel,
+    private val viewType: Int
+) : Fragment() {
 
     private var _binding: ViewRecyclerViewBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +33,8 @@ class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, privat
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         getPaymentVariant().observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 when (viewType) {
                     TYPE_UPCOMING -> emptyView.tvEmpty.text = ("Tidak ada pembayaran mendatang")
                     TYPE_UNPAID -> emptyView.tvEmpty.text = ("Tidak ada pembayaran jatuh tempo")
@@ -38,14 +42,15 @@ class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, privat
                 }
                 binding.llParent.addView(emptyView.root)
             } else {
-                binding.rvContainer.adapter = StPaymentVariantViewHolder(viewType, getPaymentVariant().value!!).getAdapter()
+                binding.rvContainer.adapter =
+                    StPaymentVariantViewHolder(viewType, getPaymentVariant().value!!).getAdapter()
             }
         })
 
         return binding.root
     }
 
-    private fun getPaymentVariant() : LiveData<List<Payment>> {
+    private fun getPaymentVariant(): LiveData<List<Payment>> {
         return when (viewType) {
             TYPE_UPCOMING -> viewModel.upcomingPayment
             TYPE_UNPAID -> viewModel.unpaidPayment

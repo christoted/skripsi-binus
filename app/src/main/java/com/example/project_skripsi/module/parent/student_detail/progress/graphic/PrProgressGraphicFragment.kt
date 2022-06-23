@@ -21,13 +21,13 @@ import com.example.project_skripsi.module.student.main.progress.graphic.StSubjec
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
 class PrProgressGraphicFragment : Fragment(), ItemClickListener {
@@ -36,7 +36,7 @@ class PrProgressGraphicFragment : Fragment(), ItemClickListener {
     private var _binding: FragmentPrProgressGraphicBinding? = null
     private val binding get() = _binding!!
 
-    private var dialog : BottomSheetDialog? = null
+    private var dialog: BottomSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,7 +81,8 @@ class PrProgressGraphicFragment : Fragment(), ItemClickListener {
         val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         rvItem.addItemDecoration(dividerItemDecoration)
 
-        rvItem.adapter = StSubjectFilterViewHolder(list, this@PrProgressGraphicFragment).getAdapter()
+        rvItem.adapter =
+            StSubjectFilterViewHolder(list, this@PrProgressGraphicFragment).getAdapter()
 
         dialog?.let {
             it.setContentView(view)
@@ -105,10 +106,18 @@ class PrProgressGraphicFragment : Fragment(), ItemClickListener {
             viewModel.assignment.removeObservers(viewLifecycleOwner)
 
             viewModel.exams.observe(viewLifecycleOwner) {
-                setupBarChart(binding.barchartExam, binding.tvEmptyExam,it[subjectName] ?: emptyList())
+                setupBarChart(
+                    binding.barchartExam,
+                    binding.tvEmptyExam,
+                    it[subjectName] ?: emptyList()
+                )
             }
             viewModel.assignment.observe(viewLifecycleOwner) {
-                setupBarChart(binding.barchartAssignment, binding.tvEmptyAssignment, it[subjectName] ?: emptyList())
+                setupBarChart(
+                    binding.barchartAssignment,
+                    binding.tvEmptyAssignment,
+                    it[subjectName] ?: emptyList()
+                )
             }
         }
     }
@@ -118,7 +127,7 @@ class PrProgressGraphicFragment : Fragment(), ItemClickListener {
         val labels: MutableList<String> = ArrayList()
         val entries: MutableList<BarEntry> = ArrayList()
 
-        list.mapIndexed { idx, it  ->
+        list.mapIndexed { idx, it ->
             labels.add(it.title ?: "null")
             entries.add(BarEntry(idx.toFloat(), it.score?.toFloat() ?: 0f))
         }

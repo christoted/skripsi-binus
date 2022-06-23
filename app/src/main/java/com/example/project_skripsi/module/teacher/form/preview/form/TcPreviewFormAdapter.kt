@@ -2,7 +2,8 @@ package com.example.project_skripsi.module.teacher.form.preview.form
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.*
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.project_skripsi.core.model.firestore.Question
 import com.example.project_skripsi.databinding.ItemStTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemStTaskFormMcBinding
@@ -13,10 +14,16 @@ class TcPreviewFormAdapter(private val questionList: List<Question>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
-            0 -> MultipleChoiceViewHolder(ItemStTaskFormMcBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false))
-            else -> EssayViewHolder(ItemStTaskFormEssayBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false))
+            0 -> MultipleChoiceViewHolder(
+                ItemStTaskFormMcBinding.inflate(
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
+            else -> EssayViewHolder(
+                ItemStTaskFormEssayBinding.inflate(
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
         }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,10 +41,11 @@ class TcPreviewFormAdapter(private val questionList: List<Question>) :
 
     override fun getItemCount() = questionList.size
 
-    class MultipleChoiceViewHolder ( private val binding : ItemStTaskFormMcBinding) : ViewHolder(binding.root) {
+    class MultipleChoiceViewHolder(private val binding: ItemStTaskFormMcBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: Question, position: Int) {
             with(binding) {
-                tvNumber.text = ("${position+1}.")
+                tvNumber.text = ("${position + 1}.")
                 choice1.text = item.choices?.get(0) ?: "null"
                 choice2.text = item.choices?.get(1) ?: "null"
                 choice3.text = item.choices?.get(2) ?: "null"
@@ -49,10 +57,11 @@ class TcPreviewFormAdapter(private val questionList: List<Question>) :
         }
     }
 
-    class EssayViewHolder ( private val binding : ItemStTaskFormEssayBinding) : ViewHolder(binding.root) {
+    class EssayViewHolder(private val binding: ItemStTaskFormEssayBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: Question, position: Int) {
             with(binding) {
-                tvNumber.text = ("${position+1}.")
+                tvNumber.text = ("${position + 1}.")
                 tvTitle.text = item.title
                 tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
             }

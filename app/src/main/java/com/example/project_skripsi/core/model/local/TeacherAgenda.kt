@@ -3,14 +3,14 @@ package com.example.project_skripsi.core.model.local
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.core.model.firestore.TaskForm
 
-data class TeacherAgendaMeeting (
+data class TeacherAgendaMeeting(
 
     val studyClassName: String,
 
     val classMeeting: ClassMeeting,
 ) : HomeSectionData()
 
-data class TeacherAgendaTaskForm (
+data class TeacherAgendaTaskForm(
 
     val studyClassId: String,
 
@@ -19,14 +19,14 @@ data class TeacherAgendaTaskForm (
     val taskForm: TaskForm,
 ) : HomeSectionData()
 
-data class ClassIdSubject (
+data class ClassIdSubject(
 
     val studyClassId: String,
 
     val subjectName: String,
 )
 
-data class ClassTaskFormId (
+data class ClassTaskFormId(
 
     val studyClassId: String,
 

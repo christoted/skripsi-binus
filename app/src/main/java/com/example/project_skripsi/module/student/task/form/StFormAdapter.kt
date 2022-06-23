@@ -13,7 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.*
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.core.repository.FireStorage
 import com.example.project_skripsi.databinding.DialogStViewImageBinding
@@ -31,10 +32,10 @@ class StFormAdapter(
     val taskFormId: String,
     var activity: StMainActivity,
     var isViewOnly: Boolean
-    ) :
+) :
     Adapter<ViewHolder>() {
 
-    val imageList : List<MutableList<String>> = List(questionList.size) { mutableListOf() }
+    val imageList: List<MutableList<String>> = List(questionList.size) { mutableListOf() }
 
     init {
         questionList.mapIndexed { index, assignedQuestion ->
@@ -44,10 +45,16 @@ class StFormAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
-            0 -> MultipleChoiceViewHolder(ItemStTaskFormMcBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false))
-            else -> EssayViewHolder(ItemStTaskFormEssayBinding.inflate(
-                LayoutInflater.from(viewGroup.context), viewGroup, false))
+            0 -> MultipleChoiceViewHolder(
+                ItemStTaskFormMcBinding.inflate(
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
+            else -> EssayViewHolder(
+                ItemStTaskFormEssayBinding.inflate(
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
         }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -65,10 +72,11 @@ class StFormAdapter(
 
     override fun getItemCount() = questionList.size
 
-    inner class MultipleChoiceViewHolder ( private val binding : ItemStTaskFormMcBinding) : ViewHolder(binding.root) {
+    inner class MultipleChoiceViewHolder(private val binding: ItemStTaskFormMcBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
-                tvNumber.text = ("${position+1}.")
+                tvNumber.text = ("${position + 1}.")
                 choice1.text = item.choices?.getOrNull(0)
                 choice2.text = item.choices?.getOrNull(1)
                 choice3.text = item.choices?.getOrNull(2)
@@ -108,10 +116,11 @@ class StFormAdapter(
         }
     }
 
-    inner class EssayViewHolder ( private val binding : ItemStTaskFormEssayBinding) : ViewHolder(binding.root) {
+    inner class EssayViewHolder(private val binding: ItemStTaskFormEssayBinding) :
+        ViewHolder(binding.root) {
         fun bind(item: AssignedQuestion, position: Int) {
             with(binding) {
-                tvNumber.text = ("${position+1}.")
+                tvNumber.text = ("${position + 1}.")
                 tvTitle.text = item.title
                 item.answer?.answerText?.let { edtAnswer.setText(it) }
                 tvScoreWeight.text = ("Bobot : ${item.scoreWeight}")
@@ -140,11 +149,13 @@ class StFormAdapter(
     }
 
     private fun takeImage(questionNumber: Int, context: Context, tvCount: TextView) {
-        val path = "$studentId/$taskFormId/${questionNumber+1}/pic${imageList[questionNumber].size}"
+        val path =
+            "$studentId/$taskFormId/${questionNumber + 1}/pic${imageList[questionNumber].size}"
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val photoFile = FireStorage.inst.getPhotoFile(path, context)
 
-        val fileProvider = FileProvider.getUriForFile(context, "com.example.fileprovider", photoFile)
+        val fileProvider =
+            FileProvider.getUriForFile(context, "com.example.fileprovider", photoFile)
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
 
         activity.mARLRequestCamera.launch(takePictureIntent)
@@ -174,7 +185,7 @@ class StFormAdapter(
 
         with(sBinding) {
 
-            tvTitle.text = ("Foto Soal - ${questionNumber+1}")
+            tvTitle.text = ("Foto Soal - ${questionNumber + 1}")
 
             rvContainer.layoutManager = LinearLayoutManager(context)
             rvContainer.adapter = ViewImageViewHolder(imageList[questionNumber]).getAdapter()

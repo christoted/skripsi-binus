@@ -51,9 +51,9 @@ class TcStudyClassTeachingViewModel : ViewModel() {
     }
 
 
-
     fun getAttendanceAbsent(student: Student): Int =
-        student.attendedMeetings?.filter { it.status != Constant.ATTENDANCE_ATTEND && DateHelper.getCurrentTime() > it.endTime }?.size ?: 0
+        student.attendedMeetings?.filter { it.status != Constant.ATTENDANCE_ATTEND && DateHelper.getCurrentTime() > it.endTime }?.size
+            ?: 0
 
     fun getLastAssignmentStatus(student: Student): Pair<String, Int> {
         val asg = student.assignedAssignments?.sortedBy { it.endTime }

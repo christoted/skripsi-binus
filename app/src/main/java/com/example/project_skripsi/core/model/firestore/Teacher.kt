@@ -8,7 +8,7 @@ import com.google.firebase.firestore.PropertyName
 data class Teacher(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val name: String? = null,
 

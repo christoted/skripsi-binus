@@ -12,7 +12,10 @@ import com.example.project_skripsi.module.student.subject_detail.StSubjectViewMo
 import com.example.project_skripsi.module.student.subject_detail._sharing.TaskViewHolder
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
-class StSubjectAssignmentFragment(private val viewModel: StSubjectViewModel, private val listener: ItemClickListener) : Fragment() {
+class StSubjectAssignmentFragment(
+    private val viewModel: StSubjectViewModel,
+    private val listener: ItemClickListener
+) : Fragment() {
 
     private var _binding: FragmentStSubjectAssignmentBinding? = null
     private val binding get() = _binding!!
@@ -28,7 +31,8 @@ class StSubjectAssignmentFragment(private val viewModel: StSubjectViewModel, pri
         binding.rvAssignment.layoutManager = LinearLayoutManager(context)
         viewModel.assignmentList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada tugas")
                 binding.llParent.addView(emptyView.root)
             } else {

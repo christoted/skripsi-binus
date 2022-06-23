@@ -19,7 +19,7 @@ class TcPreviewTaskFormViewModel : ViewModel() {
     private val _taskForm = MutableLiveData<TaskForm>()
     val taskForm: LiveData<TaskForm> = _taskForm
 
-    fun setTaskForm(taskFormId : String) {
+    fun setTaskForm(taskFormId: String) {
         loadTaskForm(taskFormId)
     }
 

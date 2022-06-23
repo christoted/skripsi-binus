@@ -13,13 +13,13 @@ import com.example.project_skripsi.utils.generic.GenericObserver.Companion.obser
 class TcProfileViewModel : ViewModel() {
 
     private val _teacher = MutableLiveData<Teacher>()
-    val teacher : LiveData<Teacher> = _teacher
+    val teacher: LiveData<Teacher> = _teacher
 
     private val _studyClass = MutableLiveData<StudyClass>()
-    val studyClass : LiveData<StudyClass> = _studyClass
+    val studyClass: LiveData<StudyClass> = _studyClass
 
     private val _school = MutableLiveData<School>()
-    val school : LiveData<School> = _school
+    val school: LiveData<School> = _school
 
     init {
         loadCurrentTeacher(AuthRepository.inst.getCurrentUser().uid)

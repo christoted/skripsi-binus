@@ -17,7 +17,7 @@ class AlarmReceiver : BroadcastReceiver() {
         const val EXTRA_MINUTE = "minute"
     }
 
-    fun newIntent(context: Context, title: String, date: Date) : Intent {
+    fun newIntent(context: Context, title: String, date: Date): Intent {
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.putExtra(EXTRA_TITLE, title)
         intent.putExtra(EXTRA_HOUR, convertDateToCalendar(date).get(Calendar.HOUR_OF_DAY))

@@ -8,7 +8,7 @@ import com.google.firebase.firestore.PropertyName
 data class Administrator(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val name: String? = null,
 
@@ -16,4 +16,4 @@ data class Administrator(
     @set: PropertyName("phone_number")
     var phoneNumber: String? = null,
 
-)
+    )

@@ -6,14 +6,14 @@ import com.example.project_skripsi.databinding.ItemPrStudentAnnouncementBinding
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class AnnouncementViewHolder(private val dataSet : List<Announcement>) {
+class AnnouncementViewHolder(private val dataSet: List<Announcement>) {
 
     fun getAdapter(): GenericAdapter<Announcement> {
         val adapter = GenericAdapter(dataSet)
         adapter.expressionOnCreateViewHolder = {
             ItemPrStudentAnnouncementBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item,viewBinding,_ ->
+        adapter.expressionViewHolderBinding = { item, viewBinding, _ ->
             val view = viewBinding as ItemPrStudentAnnouncementBinding
             with(view) {
                 tvTitle.text = item.title

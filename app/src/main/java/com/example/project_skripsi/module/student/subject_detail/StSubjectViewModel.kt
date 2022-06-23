@@ -23,19 +23,19 @@ class StSubjectViewModel : ViewModel() {
     val teacher: LiveData<Teacher> = _teacher
 
     private val _attendanceList = MutableLiveData<List<Attendance>>()
-    val attendanceList : LiveData<List<Attendance>> = _attendanceList
+    val attendanceList: LiveData<List<Attendance>> = _attendanceList
 
     private val _resourceList = MutableLiveData<List<Resource>>()
-    val resourceList : LiveData<List<Resource>> = _resourceList
+    val resourceList: LiveData<List<Resource>> = _resourceList
 
     private val _examList = MutableLiveData<List<TaskFormStatus>>()
-    val examList : LiveData<List<TaskFormStatus>> = _examList
+    val examList: LiveData<List<TaskFormStatus>> = _examList
 
     private val _assignmentList = MutableLiveData<List<TaskFormStatus>>()
-    val assignmentList : LiveData<List<TaskFormStatus>> = _assignmentList
+    val assignmentList: LiveData<List<TaskFormStatus>> = _assignmentList
 
     private val _incompleteResource = MutableLiveData<HandledEvent<Resource>>()
-    val incompleteResource : LiveData<HandledEvent<Resource>> = _incompleteResource
+    val incompleteResource: LiveData<HandledEvent<Resource>> = _incompleteResource
 
     private lateinit var curStudent: Student
     private var className = ""
@@ -43,7 +43,7 @@ class StSubjectViewModel : ViewModel() {
     private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
     private val mAttendedMeetings = HashSet<String>()
 
-    fun setSubject(subjectName : String) {
+    fun setSubject(subjectName: String) {
         this.subjectName = subjectName
         loadStudent(AuthRepository.inst.getCurrentUser().uid)
     }
@@ -90,14 +90,16 @@ class StSubjectViewModel : ViewModel() {
     }
 
 
-
     private fun loadResources(uids: List<String>) {
         FireRepository.inst.getItems<Resource>(uids).first.observeOnce { list ->
             _resourceList.postValue(list.sortedBy { it.meetingNumber })
         }
     }
 
-    private fun loadTaskForms(uids: List<String>, _taskFormList: MutableLiveData<List<TaskFormStatus>>) {
+    private fun loadTaskForms(
+        uids: List<String>,
+        _taskFormList: MutableLiveData<List<TaskFormStatus>>
+    ) {
         FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
             val taskFormList = mutableListOf<TaskFormStatus>()
             list.map { taskForm ->

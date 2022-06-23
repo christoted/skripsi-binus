@@ -12,7 +12,7 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.UUIDHelper
 
-class TcAlterResourceViewModel: ViewModel() {
+class TcAlterResourceViewModel : ViewModel() {
 
     companion object {
         const val QUERY_CLASS = 0
@@ -37,7 +37,7 @@ class TcAlterResourceViewModel: ViewModel() {
 
     private val resourceIds = mutableListOf<String>()
     private val _resourceList = MutableLiveData<List<Resource>>()
-    val resourceList : LiveData<List<Resource>> = _resourceList
+    val resourceList: LiveData<List<Resource>> = _resourceList
 
     private val classIds = mutableListOf<String>()
     private val _classList = MutableLiveData<List<StudyClass>>()
@@ -57,7 +57,7 @@ class TcAlterResourceViewModel: ViewModel() {
     var isFirstTimeCreated = true
 
     init {
-       loadTeacher(AuthRepository.inst.getCurrentUser().uid)
+        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
     fun initData(subjectName: String, gradeLevel: Int) {
@@ -149,7 +149,7 @@ class TcAlterResourceViewModel: ViewModel() {
                     subject.classMeetings
                         ?.sortedBy {
                             it.startTime
-                        }?.getOrNull(meetingNumber-1)?.let {
+                        }?.getOrNull(meetingNumber - 1)?.let {
                             needUpdate = true
                             it.meetingResource = resourceId
                         }
@@ -158,7 +158,7 @@ class TcAlterResourceViewModel: ViewModel() {
                 if (needUpdate) items.add(studyClass)
             }
 
-            FireRepository.inst.alterItems(items).first.observeOnce{
+            FireRepository.inst.alterItems(items).first.observeOnce {
                 _status.postValue(it)
             }
         }

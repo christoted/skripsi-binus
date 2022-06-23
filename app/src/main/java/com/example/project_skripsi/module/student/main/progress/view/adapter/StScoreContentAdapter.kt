@@ -24,11 +24,15 @@ interface ScoreContentListener {
     fun onAttendanceTapped()
 }
 
-class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val tab: Int, private val listener: ScoreContentListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StScoreContentAdapter(
+    private val viewModel: StScoreViewModel,
+    private val tab: Int,
+    private val listener: ScoreContentListener
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val isExpanded = BooleanArray(viewModel.sectionScore.value?.size ?: 0)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when(tab) {
+        when (tab) {
             0 -> {
                 val item = ItemStProgressScoreBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -58,7 +62,7 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        when(tab) {
+        when (tab) {
             0 -> {
                 viewModel.sectionScore.value?.let {
                     val singleData = it[position]
@@ -81,21 +85,28 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         }
     }
 
-    override fun getItemCount(): Int = viewModel.sectionScore.value?.size?: viewModel.achievements.value!!.size
+    override fun getItemCount(): Int =
+        viewModel.sectionScore.value?.size ?: viewModel.achievements.value!!.size
 
-    inner class StScoreContentViewHolder(private val binding: ItemStProgressScoreBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreContentViewHolder(private val binding: ItemStProgressScoreBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ScoreMainSection, adapter: StScoreContentChildAdapter, position: Int) {
             with(binding) {
                 subject.text = item.subjectName
-                tvMid.text =  item.mid_exam?.toString() ?: "-"
+                tvMid.text = item.mid_exam?.toString() ?: "-"
                 tvFinal.text = item.final_exam?.toString() ?: "-"
                 tvAssignment.text = item.total_assignment?.toString() ?: "-"
                 tvTotal.text = item.total_score?.toString() ?: "-"
                 with(binding.sectionItemsRecyclerView) {
                     sectionItemsRecyclerView.layoutManager = LinearLayoutManager(context)
                     sectionItemsRecyclerView.adapter = adapter
-                    binding.sectionItemsRecyclerView.addItemDecoration(DividerItemDecoration(itemView.context, DividerItemDecoration.VERTICAL))
+                    binding.sectionItemsRecyclerView.addItemDecoration(
+                        DividerItemDecoration(
+                            itemView.context,
+                            DividerItemDecoration.VERTICAL
+                        )
+                    )
                 }
                 sectionItemsRecyclerView.isVisible = isExpanded[position]
                 root.setOnClickListener {
@@ -107,7 +118,8 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
         }
     }
 
-    inner class StScoreAttendanceViewHolder(private val binding: ItemStProgressAttendanceBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreAttendanceViewHolder(private val binding: ItemStProgressAttendanceBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: AttendanceMainSection) {
             with(binding) {
                 //title.text = item
@@ -116,18 +128,27 @@ class StScoreContentAdapter(private val viewModel: StScoreViewModel, private val
                 tvPresenceSick.text = item.totalSick.toString()
                 tvPresenceLeave.text = item.totalLeave.toString()
                 tvPresenceNoReason.text = item.totalAlpha.toString()
-                viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.indicator_attendance, null))
+                viewIndicator.setBackgroundColor(
+                    ResourcesCompat.getColor(
+                        App.resourses!!,
+                        R.color.indicator_attendance,
+                        null
+                    )
+                )
                 root.setOnClickListener {
                     listener.onAttendanceTapped()
                     it.findNavController().navigate(
-                        StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectFragment(item.subjectName)
+                        StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectFragment(
+                            item.subjectName
+                        )
                     )
                 }
             }
         }
     }
 
-    inner class StScoreAchievementViewHolder(private val binding: ItemStProgressAchievementBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class StScoreAchievementViewHolder(private val binding: ItemStProgressAchievementBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Achievement) {
             with(binding) {
                 tvTitle.text = item.title

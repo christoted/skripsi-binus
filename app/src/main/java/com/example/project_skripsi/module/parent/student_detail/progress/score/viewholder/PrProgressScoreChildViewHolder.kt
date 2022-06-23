@@ -8,7 +8,7 @@ import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_FINAL_EXAM
 import com.example.project_skripsi.utils.Constant.Companion.TASK_TYPE_MID_EXAM
 import com.example.project_skripsi.utils.generic.GenericAdapter
 
-class PrProgressScoreChildViewHolder(private val dataSet : List<ScoreSectionData>) {
+class PrProgressScoreChildViewHolder(private val dataSet: List<ScoreSectionData>) {
 
     fun getAdapter(): GenericAdapter<ScoreSectionData> {
         val adapter = GenericAdapter(dataSet)

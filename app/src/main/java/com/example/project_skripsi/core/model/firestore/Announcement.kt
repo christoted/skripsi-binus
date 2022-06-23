@@ -9,7 +9,7 @@ import java.util.*
 data class Announcement(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val title: String? = null,
 
@@ -17,4 +17,4 @@ data class Announcement(
 
     val date: Date? = null,
 
-) : HomeSectionData()
+    ) : HomeSectionData()

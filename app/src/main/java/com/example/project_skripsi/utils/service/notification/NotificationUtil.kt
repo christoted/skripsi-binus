@@ -19,12 +19,13 @@ import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.TeacherAgendaMeeting
 import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
-import com.example.project_skripsi.module.student.StMainActivity
+import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.utils.helper.DateHelper
+import com.example.project_skripsi.utils.service.storage.StorageSP
 import java.util.*
 
 class NotificationUtil(base: Context) : ContextWrapper(base) {
-    
+
 
     private var manager: NotificationManager? = null
 
@@ -34,94 +35,120 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         }
     }
 
-
-
     companion object {
         private const val CHANNEL_ID = "App Alert Notification ID"
         private const val CHANNEL_NAME = "App Alert Notification"
-        
+
         private fun getHashAlarmId(id: String?) = id.hashCode()
-        fun scheduleEveryDayNotification(context: Context, title: String, body: String) {
-            val intent = Intent(context, NotificationReceiver::class.java)
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        fun scheduleDailyNotification(context: Context, isStudent: Boolean) {
+            if (StorageSP.getBoolean(context, StorageSP.SP_DAILY_NOTIFICATION, false)) return
+            StorageSP.setBoolean(context, StorageSP.SP_DAILY_NOTIFICATION, true)
+
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, 6)
-                set(Calendar.MINUTE, 0)
+                set(Calendar.HOUR_OF_DAY, 23)
+                set(Calendar.MINUTE, 27)
                 set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
             }
-            if (DateHelper.convertDateToCalendar(calendar.time).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentTime()).timeInMillis)  {
-                cancelEveryDayNotification(context)
-            } else {
-                intent.putExtra("timeinmillis", calendar.timeInMillis)
-                intent.putExtra("title", title)
-                intent.putExtra("body", body)
-                val notificationId = createNotificationId(calendar.timeInMillis)
-                val pendingIntent = PendingIntent.getBroadcast(
-                    context, notificationId, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-                alarmManager.setInexactRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    AlarmManager.INTERVAL_DAY,
-                    pendingIntent
-                )
-            }
+
+            if (calendar.time < DateHelper.getCurrentTime()) calendar.add(Calendar.DATE, 1)
+
+            val notificationId = getHashAlarmId("dailyNotification")
+            val intent = NotificationReceiver.inst.newIntent(
+                context,
+                true,
+                isStudent,
+                notificationId,
+                "",
+                ""
+            )
+
+            Log.d("12345-", "SET $calendar")
+
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val pendingIntent = PendingIntent.getBroadcast(
+                context, notificationId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
         }
-        fun scheduleSingleNotification(context: Context, date: Date, title: String, body: String, id: String) {
+
+        fun scheduleSingleNotification(
+            context: Context,
+            date: Date,
+            title: String,
+            body: String,
+            id: String
+        ) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, NotificationReceiver::class.java)
-            if (DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis < DateHelper.convertDateToCalendar(DateHelper.getCurrentTime()).timeInMillis) {
+            if (DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis < DateHelper.convertDateToCalendar(
+                    DateHelper.getCurrentTime()
+                ).timeInMillis
+            ) {
                 Log.d("987", "already passed current day $date")
                 cancelNotification(context, date, id)
             } else {
-                val timeInMillis =  DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
+                val timeInMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
                 intent.putExtra("timeinmillis", timeInMillis)
                 intent.putExtra("title", title)
                 intent.putExtra("body", body)
                 Log.d("987", "date $date")
                 val notificationId = getHashAlarmId(id)
                 intent.putExtra("id", notificationId)
-                val pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context, notificationId, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
                 Log.d("5555", "scheduleSingleNotification: $notificationId $date")
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis, pendingIntent)
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis,
+                    pendingIntent
+                )
             }
         }
+
         fun cancelNotification(context: Context, date: Date, id: String) {
-              val intent = Intent(context, NotificationReceiver::class.java)
-              val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
-              val notificationId = getHashAlarmId(id)
-              val pending = PendingIntent.getBroadcast(
-                  context,
-                  notificationId,
-                  intent,
-                  PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-              )
-              Log.d("123455", "cancelNotification: on $date timeonMillis $timeMillis")
-              // Cancel notification
-              val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-              manager.cancel(pending)
-        }
-        fun cancelEveryDayNotification(context: Context) {
             val intent = Intent(context, NotificationReceiver::class.java)
-            val calendar = Calendar.getInstance().apply {
-                timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, 6)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-            }
-            val notificationId = createNotificationId(calendar.timeInMillis)
+            val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
+            val notificationId = getHashAlarmId(id)
             val pending = PendingIntent.getBroadcast(
                 context,
                 notificationId,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
+            Log.d("123455", "cancelNotification: on $date timeonMillis $timeMillis")
             // Cancel notification
             val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
             manager.cancel(pending)
+        }
+
+        fun cancelDailyNotification(context: Context, isStudent: Boolean) {
+            StorageSP.setBoolean(context, StorageSP.SP_DAILY_NOTIFICATION, false)
+            val notificationId = getHashAlarmId("dailyNotification")
+            val intent = NotificationReceiver.inst.newIntent(
+                context,
+                true,
+                isStudent,
+                notificationId,
+                "",
+                ""
+            )
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val pendingIntent = PendingIntent.getBroadcast(
+                context, notificationId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            alarmManager.cancel(pendingIntent)
         }
 
         fun cancelAllMeetingNotification(context: Context, meetings: List<ClassMeeting>) {
@@ -135,7 +162,10 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             }
         }
 
-        fun cancelAllMeetingNotificationTeacher(context: Context, meetings: List<TeacherAgendaMeeting>) {
+        fun cancelAllMeetingNotificationTeacher(
+            context: Context,
+            meetings: List<TeacherAgendaMeeting>
+        ) {
             meetings.forEach { teacherAgenda ->
                 teacherAgenda.classMeeting.startTime?.let {
                     cancelNotification(context, date = it, id = teacherAgenda.classMeeting.id!!)
@@ -156,7 +186,11 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 }
             }
         }
-        fun cancelAllExamAndAssignmentNotificationTeacher(context: Context, exams: List<TeacherAgendaTaskForm>) {
+
+        fun cancelAllExamAndAssignmentNotificationTeacher(
+            context: Context,
+            exams: List<TeacherAgendaTaskForm>
+        ) {
             exams.forEach { taskForm ->
                 taskForm.taskForm.startTime?.let {
                     cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
@@ -166,26 +200,26 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 }
             }
         }
-        private fun createNotificationId(timeMillis: Long): Int {
-            return (timeMillis % 2000000000L).toInt()
-        }
     }
+
     // Create channel for Android version 26+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel() {
-        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+        val channel =
+            NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
         channel.enableVibration(true)
         getManager().createNotificationChannel(channel)
     }
 
-    fun getManager() : NotificationManager {
-        if (manager == null) manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    fun getManager(): NotificationManager {
+        if (manager == null) manager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         return manager as NotificationManager
     }
 
     fun getNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
         val pendingIntent = NavDeepLinkBuilder(this)
-            .setComponentName(StMainActivity::class.java)
+            .setComponentName(AuthActivity::class.java)
             .setGraph(R.navigation.st_main_navigation)
             .setDestination(R.id.navigation_home_fragment)
             .createPendingIntent()

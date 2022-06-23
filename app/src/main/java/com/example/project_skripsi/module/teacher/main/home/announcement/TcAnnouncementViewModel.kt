@@ -1,4 +1,5 @@
 package com.example.project_skripsi.module.teacher.main.home.announcement
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,7 @@ import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentD
 class TcAnnouncementViewModel : ViewModel() {
 
     private val _announcementList = MutableLiveData<List<Announcement>>()
-    val announcementList : LiveData<List<Announcement>> = _announcementList
+    val announcementList: LiveData<List<Announcement>> = _announcementList
 
     init {
         loadAnnouncement()
@@ -21,7 +22,7 @@ class TcAnnouncementViewModel : ViewModel() {
     private fun loadAnnouncement() {
         FireRepository.inst.getAllItems<Announcement>().first.observeOnce { list ->
             _announcementList.postValue(
-                list.filter{ convertDateToCalendarDay(it.date) <= getCurrentDate() }
+                list.filter { convertDateToCalendarDay(it.date) <= getCurrentDate() }
                     .sortedByDescending { it.date }
             )
         }

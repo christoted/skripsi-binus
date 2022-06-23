@@ -15,7 +15,7 @@ import com.example.project_skripsi.utils.helper.DateHelper
 
 class TaskViewHolder(private val taskType: Int, private val dataSet: List<TaskFormStatus>) {
 
-    companion object{
+    companion object {
         const val TYPE_EXAM = 1
         const val TYPE_ASSIGNMENT = 2
 
@@ -30,7 +30,7 @@ class TaskViewHolder(private val taskType: Int, private val dataSet: List<TaskFo
         adapter.expressionOnCreateViewHolder = {
             ItemStTaskBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item,viewBinding,_ ->
+        adapter.expressionViewHolderBinding = { item, viewBinding, _ ->
             val view = viewBinding as ItemStTaskBinding
 
             with(view) {

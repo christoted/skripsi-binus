@@ -77,15 +77,14 @@ class StClassViewModel : ViewModel() {
 
     fun getSubjects(page: Int): List<Subject> {
         val startIdx = page * 8
-        val endIdx = min(startIdx + 8, studyClass.value?.subjects?.size?:0)
-        return studyClass.value?.subjects?.subList(startIdx, endIdx)?: emptyList()
+        val endIdx = min(startIdx + 8, studyClass.value?.subjects?.size ?: 0)
+        return studyClass.value?.subjects?.subList(startIdx, endIdx) ?: emptyList()
     }
 
-    fun getSubjectPageCount() : Int{
+    fun getSubjectPageCount(): Int {
         val subjects = studyClass.value?.subjects?.size ?: 0
         return (subjects + 8 - 1) / 8
     }
-
 
 
 }

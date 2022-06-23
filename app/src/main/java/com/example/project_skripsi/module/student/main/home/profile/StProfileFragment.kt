@@ -86,7 +86,7 @@ class StProfileFragment : Fragment() {
                 StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
 
                 // Cancel everyday notification
-                NotificationUtil.cancelEveryDayNotification(requireActivity())
+                NotificationUtil.cancelDailyNotification(requireActivity(), true)
 
                 // Cancel Notification Exam, Assignment and Meeting
                 homeViewModel.listHomeSectionDataClassScheduleOneWeek.observe(viewLifecycleOwner) { list ->

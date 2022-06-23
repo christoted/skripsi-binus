@@ -22,7 +22,7 @@ class ViewImageActivity : AppCompatActivity(), View.OnTouchListener {
     companion object {
         private const val EXTRA_FILE = "extra_file"
 
-        fun newIntent(origin : Context, file : File) : Intent {
+        fun newIntent(origin: Context, file: File): Intent {
             val intent = Intent(origin, ViewImageActivity::class.java)
             intent.putExtra(EXTRA_FILE, file)
             return intent

@@ -26,7 +26,8 @@ class PrProgressScoreFragment(private val viewModel: PrProgressViewModel) : Frag
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.sectionScore.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada nilai")
                 binding.llParent.addView(emptyView.root)
             } else {

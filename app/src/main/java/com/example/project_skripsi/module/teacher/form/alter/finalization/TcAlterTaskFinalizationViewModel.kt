@@ -27,28 +27,28 @@ class TcAlterTaskFinalizationViewModel : ViewModel() {
     var selectedClass = listOf<String>()
 
     private val _oldTaskForm = MutableLiveData<TaskForm>()
-    val oldTaskForm : LiveData<TaskForm> = _oldTaskForm
+    val oldTaskForm: LiveData<TaskForm> = _oldTaskForm
 
     private val _classList = MutableLiveData<List<StudyClass>>()
-    val classList : LiveData<List<StudyClass>> = _classList
+    val classList: LiveData<List<StudyClass>> = _classList
 
     private val _finalizationCompleted = MutableLiveData<Boolean>()
-    val finalizationCompleted : LiveData<Boolean> = _finalizationCompleted
+    val finalizationCompleted: LiveData<Boolean> = _finalizationCompleted
 
-    private lateinit var subjectGroup : SubjectGroup
+    private lateinit var subjectGroup: SubjectGroup
     private val classIds = mutableListOf<String>()
 
     private var formType: Int = -1
 
 
-    fun initData(subjectName: String, gradeLevel: Int, formType : Int, taskFormId : String) {
+    fun initData(subjectName: String, gradeLevel: Int, formType: Int, taskFormId: String) {
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadTaskForm(taskFormId)
     }
 
-    private fun loadTeacher(uid : String) {
+    private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             teacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
                 ?.let { group ->
@@ -58,7 +58,7 @@ class TcAlterTaskFinalizationViewModel : ViewModel() {
     }
 
     private fun loadTaskForm(uid: String) {
-        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce{ _oldTaskForm.postValue(it) }
+        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { _oldTaskForm.postValue(it) }
     }
 
     fun loadClass() {
@@ -126,13 +126,13 @@ class TcAlterTaskFinalizationViewModel : ViewModel() {
                                 answers = taskForm.questions?.map {
                                     if (it.type == TASK_FORM_MC) Answer("0", 0)
                                     else Answer("", 0)
-                                }?: emptyList()
+                                } ?: emptyList()
                             )
                         )
                     items.add(student)
                 }
 
-                FireRepository.inst.alterItems(items).first.observeOnce{
+                FireRepository.inst.alterItems(items).first.observeOnce {
                     _finalizationCompleted.postValue(it)
                 }
             }

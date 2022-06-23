@@ -16,31 +16,41 @@ import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaMeetin
 import com.example.project_skripsi.utils.Constant
 
 class TcHomeChildAdapter(val item: HomeMainSection, private val listener: TcAgendaItemListener) :
-RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (item.sectionName) {
             Constant.SECTION_MEETING -> TcAgendaMeetingViewHolder(
                 ItemTcAgendaGeneralBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false), listener)
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                ), listener
+            )
             Constant.SECTION_EXAM -> TcAgendaExamViewHolder(
                 ItemTcAgendaGeneralBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false),listener)
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                ), listener
+            )
             Constant.SECTION_ASSIGNMENT -> TcAgendaAssignmentViewHolder(
                 ItemTcAgendaGeneralBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false),listener)
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                ), listener
+            )
             Constant.SECTION_PAYMENT -> StHomePaymentViewHolder(
                 ItemStHomeSectionPaymentBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
             else -> StHomeAnnouncementViewHolder(
                 ItemStHomeSectionAnnouncementBinding.inflate(
-                    LayoutInflater.from(viewGroup.context), viewGroup, false))
+                    LayoutInflater.from(viewGroup.context), viewGroup, false
+                )
+            )
         }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val singleData = item.sectionItem[position]
         when (item.sectionName) {
             Constant.SECTION_MEETING -> (holder as TcAgendaMeetingViewHolder).bind(singleData)
-            Constant.SECTION_EXAM  -> (holder as TcAgendaExamViewHolder).bind(singleData)
+            Constant.SECTION_EXAM -> (holder as TcAgendaExamViewHolder).bind(singleData)
             Constant.SECTION_ASSIGNMENT -> (holder as TcAgendaAssignmentViewHolder).bind(singleData)
             Constant.SECTION_PAYMENT -> (holder as StHomePaymentViewHolder).bind(singleData)
             else -> (holder as StHomeAnnouncementViewHolder).bind(singleData)

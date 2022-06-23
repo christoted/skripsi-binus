@@ -14,16 +14,18 @@ import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.helper.UIHelper
 
 
-class PrHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMainSection>):
+class PrHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMainSection>) :
     RecyclerView.Adapter<PrHomeRecyclerViewMainAdapter.PrHomeMainSectionViewHolder>() {
 
-    val isExpanded = BooleanArray(listHomeSectionData.size){true}
-    val hasAddEmptyView = BooleanArray(listHomeSectionData.size){false}
+    val isExpanded = BooleanArray(listHomeSectionData.size) { true }
+    val hasAddEmptyView = BooleanArray(listHomeSectionData.size) { false }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PrHomeMainSectionViewHolder =
         PrHomeMainSectionViewHolder(
             ItemStHomeMainSectionBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false))
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
 
 
     override fun onBindViewHolder(holder: PrHomeMainSectionViewHolder, position: Int) {
@@ -36,7 +38,8 @@ class PrHomeRecyclerViewMainAdapter(private val listHomeSectionData: List<HomeMa
     override fun getItemCount(): Int = listHomeSectionData.size
 
 
-    inner class PrHomeMainSectionViewHolder(private val binding: ItemStHomeMainSectionBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class PrHomeMainSectionViewHolder(private val binding: ItemStHomeMainSectionBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeMainSection) {
             with(binding) {
                 sectionTitle.text = item.sectionName

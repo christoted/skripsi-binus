@@ -77,7 +77,8 @@ class StHomeFragment : Fragment(), ItemListener {
         binding.imvAnnouncement.setOnClickListener {
             view?.findNavController()?.navigate(
                 StHomeFragmentDirections
-                .actionNavigationHomeFragmentToStAnnouncementFragment())
+                    .actionNavigationHomeFragmentToStAnnouncementFragment()
+            )
         }
 
         binding.imvSettings.setOnClickListener {
@@ -113,39 +114,7 @@ class StHomeFragment : Fragment(), ItemListener {
     }
 
     private fun everyDayNotification() {
-        var totalClassMeeting = 0
-        var totalAssignment = 0
-        var totalExam = 0
-        var count = 0
-
-        viewModel.listHomeSectionDataExam.observe(viewLifecycleOwner) { listExamTaskForms ->
-            totalExam = listExamTaskForms.size
-            if (++count == 3) triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
-        }
-
-        viewModel.listHomeSectionDataAssignment.observe(viewLifecycleOwner) { listAssignmentTaskForms ->
-            totalAssignment = listAssignmentTaskForms.size
-            if (++count == 3) triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
-        }
-
-        viewModel.listHomeSectionDataClassSchedule.observe(viewLifecycleOwner) { listClassSchedule ->
-            totalClassMeeting = listClassSchedule.size
-            if (++count == 3) triggerEveryDayNotification(totalClassMeeting, totalAssignment, totalExam)
-        }
-    }
-
-    private fun triggerEveryDayNotification(totalMeeting: Int, totalAssignment: Int, totalExam: Int) {
-        NotificationUtil.cancelEveryDayNotification(requireActivity())
-        if (totalAssignment == 0 && totalMeeting == 0 && totalExam == 0){
-            NotificationUtil.scheduleEveryDayNotification(requireActivity(), title = "Hai", body = "Tidak ada agenda hari ini")
-        } else {
-            NotificationUtil.scheduleEveryDayNotification(
-                requireActivity(),
-                title = "Siap untuk belajar hari ini",
-                body = "Kamu punya $totalMeeting Pertemuan, " +
-                        "$totalAssignment tugas , $totalExam ujian"
-            )
-        }
+        NotificationUtil.scheduleDailyNotification(requireContext(), true)
     }
 
     private fun classMeetingNotification() {
@@ -180,7 +149,11 @@ class StHomeFragment : Fragment(), ItemListener {
                 Log.d("987", "triggerNotification Exam start Time: $taskForm")
                 // Start time
                 taskForm.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "start")
+                    NotificationUtil.cancelNotification(
+                        requireActivity(),
+                        dt,
+                        taskForm.id!! + "start"
+                    )
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -199,7 +172,11 @@ class StHomeFragment : Fragment(), ItemListener {
                 // End time
                 taskForm.endTime?.let { dt ->
                     Log.d("987", "triggerNotification Exam end Time: $taskForm")
-                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "end")
+                    NotificationUtil.cancelNotification(
+                        requireActivity(),
+                        dt,
+                        taskForm.id!! + "end"
+                    )
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -218,7 +195,11 @@ class StHomeFragment : Fragment(), ItemListener {
             it.map { taskForm ->
                 // Start time
                 taskForm.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "start")
+                    NotificationUtil.cancelNotification(
+                        requireActivity(),
+                        dt,
+                        taskForm.id!! + "start"
+                    )
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -236,7 +217,11 @@ class StHomeFragment : Fragment(), ItemListener {
                 }
                 // End time
                 taskForm.endTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt, taskForm.id!! + "end")
+                    NotificationUtil.cancelNotification(
+                        requireActivity(),
+                        dt,
+                        taskForm.id!! + "end"
+                    )
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -257,7 +242,10 @@ class StHomeFragment : Fragment(), ItemListener {
 
     override fun onClassItemClicked(classMeeting: ClassMeeting) {
         MeetingHandler.inst.startMeetingAsStudent(viewModel.currentStudent.value, classMeeting.id)
-        ZoomService.inst.joinMeeting(requireContext(), "Siswa - ${viewModel.currentStudent.value?.name}")
+        ZoomService.inst.joinMeeting(
+            requireContext(),
+            "Siswa - ${viewModel.currentStudent.value?.name}"
+        )
     }
 
     override fun onResourceItemClicked(resourceId: String) {

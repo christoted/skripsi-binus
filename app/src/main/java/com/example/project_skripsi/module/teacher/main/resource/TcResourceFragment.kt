@@ -21,7 +21,7 @@ class TcResourceFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: TcResourceViewModel
 
-    private var curEmptyView : View? = null
+    private var curEmptyView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,10 +37,15 @@ class TcResourceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getData()
-        binding.imvAdd.setOnClickListener{
+        binding.imvAdd.setOnClickListener {
             viewModel.currentSubjectGroup?.let { resource ->
                 resource.subjectName.let { subjectName ->
-                    val action = TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(subjectName, resource.gradeLevel, null)
+                    val action =
+                        TcResourceFragmentDirections.actionTcResourceFragmentToTcAlterResourceFragment(
+                            subjectName,
+                            resource.gradeLevel,
+                            null
+                        )
                     view.findNavController().navigate(action)
                 }
             }
@@ -65,7 +70,11 @@ class TcResourceFragment : Fragment() {
             var hasItem = false
             var roundRobin = 0
             it.map { subjectGroup ->
-                val chip = layoutInflater.inflate(R.layout.item_tc_chip, binding.cgSubjectGroup, false) as Chip
+                val chip = layoutInflater.inflate(
+                    R.layout.item_tc_chip,
+                    binding.cgSubjectGroup,
+                    false
+                ) as Chip
                 chip.id = View.generateViewId()
                 chip.text = ("${subjectGroup.gradeLevel}-${subjectGroup.subjectName}")
 
@@ -88,7 +97,8 @@ class TcResourceFragment : Fragment() {
         viewModel.resources.observe(viewLifecycleOwner) { list ->
             curEmptyView?.let { binding.llParent.removeView(it) }
             if (list.isEmpty()) {
-                val emptyView = UIHelper.getEmptyList("Tidak ada materi", layoutInflater, binding.llParent)
+                val emptyView =
+                    UIHelper.getEmptyList("Tidak ada materi", layoutInflater, binding.llParent)
                 binding.llParent.addView(emptyView)
                 curEmptyView = emptyView
             }

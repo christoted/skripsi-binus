@@ -28,7 +28,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
     private var _binding: FragmentPrCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private var curEmptyView : View? = null
+    private var curEmptyView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,10 +85,11 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
         refreshList(date)
     }
 
-    private fun refreshList(date : CalendarDay){
+    private fun refreshList(date: CalendarDay) {
         curEmptyView?.let { binding.llRvParent.removeView(it) }
         if (viewModel.currentDataList[date].isNullOrEmpty()) {
-            val emptyView = UIHelper.getEmptyItem("Tidak ada kegiatan", layoutInflater, binding.llRvParent)
+            val emptyView =
+                UIHelper.getEmptyItem("Tidak ada kegiatan", layoutInflater, binding.llRvParent)
             binding.llRvParent.addView(emptyView)
             curEmptyView = emptyView
         }
@@ -101,7 +102,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
     }
 
     private fun retrieveArgs() {
-        val args : PrCalendarFragmentArgs by navArgs()
-        viewModel.setStudent(args.studentId);
+        val args: PrCalendarFragmentArgs by navArgs()
+        viewModel.setStudent(args.studentId)
     }
 }

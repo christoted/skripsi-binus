@@ -22,13 +22,13 @@ data class Attendance(
     )
 
     companion object {
-        fun getStatus(attendedMeeting: AttendedMeeting) : String =
+        fun getStatus(attendedMeeting: AttendedMeeting): String =
             when {
                 attendedMeeting.startTime!! > DateHelper.getCurrentTime() -> "-"
-                else -> attendedMeeting.status  ?: "-"
+                else -> attendedMeeting.status ?: "-"
             }
 
-        fun getStatusColor(attendedMeeting: AttendedMeeting) : Int =
+        fun getStatusColor(attendedMeeting: AttendedMeeting): Int =
             when {
                 attendedMeeting.startTime!! > DateHelper.getCurrentTime() -> R.color.attendance_incoming
                 attendedMeeting.status == "hadir" -> R.color.attendance_attend

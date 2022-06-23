@@ -18,7 +18,7 @@ import com.example.project_skripsi.utils.helper.UIHelper
 
 class TcStudyClassHomeroomFragment : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel : TcStudyClassHomeroomViewModel
+    private lateinit var viewModel: TcStudyClassHomeroomViewModel
     private var _binding: FragmentTcStudyClassHomeroomBinding? = null
     private val binding get() = _binding!!
 
@@ -40,7 +40,8 @@ class TcStudyClassHomeroomFragment : Fragment(), ItemClickListener {
         viewModel.classChief.observe(viewLifecycleOwner) { student ->
             with(binding) {
                 tvChiefName.text = student.name
-                student.phoneNumber?.let { imvChiefPhone.setImageResource(R.drawable.whatsapp)
+                student.phoneNumber?.let {
+                    imvChiefPhone.setImageResource(R.drawable.whatsapp)
                     imvChiefPhone.setOnClickListener {
                         student?.phoneNumber?.let {
                             goToWhatsApp(it)
@@ -79,14 +80,16 @@ class TcStudyClassHomeroomFragment : Fragment(), ItemClickListener {
         startActivity(intent)
     }
 
-    private fun retrieveArgs(){
+    private fun retrieveArgs() {
         val args: TcStudyClassHomeroomFragmentArgs by navArgs()
         viewModel.setClass(args.studyClassId)
     }
 
     override fun onItemClick(itemId: String) {
-        view?.findNavController()?.navigate(TcStudyClassHomeroomFragmentDirections
-            .actionTcStudyClassHomeroomFragmentToTcStudentFragment(itemId))
+        view?.findNavController()?.navigate(
+            TcStudyClassHomeroomFragmentDirections
+                .actionTcStudyClassHomeroomFragmentToTcStudentFragment(itemId)
+        )
     }
 
 

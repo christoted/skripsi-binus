@@ -45,10 +45,13 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     }
 
     fun getAttendanceAbsent(student: Student): Int =
-        student.attendedMeetings?.filter { it.status != ATTENDANCE_ATTEND && getCurrentTime() > it.endTime }?.size ?: 0
+        student.attendedMeetings?.filter { it.status != ATTENDANCE_ATTEND && getCurrentTime() > it.endTime }?.size
+            ?: 0
 
     fun getPaymentStatus(student: Student): Pair<String, Int> {
-        if ((student.payments?.filter { it.paymentDate == null && it.paymentDeadline!! < getCurrentTime() }?.size ?: 0) > 0)
+        if ((student.payments?.filter { it.paymentDate == null && it.paymentDeadline!! < getCurrentTime() }?.size
+                ?: 0) > 0
+        )
             return Pair("jatuh tempo", R.color.payment_late)
 
         if ((student.payments?.filter { it.paymentDate == null }?.size ?: 0) > 0)

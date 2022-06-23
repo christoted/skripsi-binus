@@ -33,7 +33,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
     private var _binding: FragmentStCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private var curEmptyView : View? = null
+    private var curEmptyView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,7 +96,7 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
         refreshList(date)
     }
 
-    private fun refreshList(date : CalendarDay){
+    private fun refreshList(date: CalendarDay) {
         curEmptyView?.let { binding.llRvParent.removeView(it) }
         if (viewModel.currentDataList[date].isNullOrEmpty()) {
             val emptyView = ViewEmptyItemBinding.inflate(layoutInflater, binding.llRvParent, false)
@@ -118,7 +118,9 @@ class StCalendarFragment : Fragment(), OnDateSelectedListener, ItemListener {
 
     override fun onTaskFormItemClicked(taskFormId: String, subjectName: String) {
         view?.findNavController()?.navigate(
-            StCalendarFragmentDirections.actionNavigationCalendarFragmentToStTaskFormFragment(taskFormId)
+            StCalendarFragmentDirections.actionNavigationCalendarFragmentToStTaskFormFragment(
+                taskFormId
+            )
         )
     }
 

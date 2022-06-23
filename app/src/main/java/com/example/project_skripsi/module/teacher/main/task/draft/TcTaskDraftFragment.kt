@@ -20,7 +20,7 @@ import com.example.project_skripsi.utils.helper.UIHelper
 
 class TcTaskDraftFragment : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel : TcTaskDraftViewModel
+    private lateinit var viewModel: TcTaskDraftViewModel
     private var _binding: FragmentTcTaskDraftBinding? = null
     private val binding get() = _binding!!
 
@@ -44,7 +44,7 @@ class TcTaskDraftFragment : Fragment(), ItemClickListener {
     }
 
     private fun retrieveArgs() {
-        val args : TcTaskDraftFragmentArgs by navArgs()
+        val args: TcTaskDraftFragmentArgs by navArgs()
         viewModel.setSubjectGroup(SubjectGroup(args.subjectName, args.gradeLevel))
         binding.tvTitle.text = ("Draf Formulir Kelas ${args.gradeLevel} - ${args.subjectName}")
     }
@@ -72,11 +72,11 @@ class TcTaskDraftFragment : Fragment(), ItemClickListener {
         }
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        private var examEmptyView : View? = null
-        private var assignmentEmptyView : View? = null
+        private var examEmptyView: View? = null
+        private var assignmentEmptyView: View? = null
 
         override fun getCount(): Int =
             TcTaskViewModel.tabCount
@@ -93,27 +93,37 @@ class TcTaskDraftFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 TcTaskDraftViewModel.TAB_EXAM -> {
                     viewModel.examList.observe(viewLifecycleOwner, { list ->
                         examEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada ujian",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             examEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(list, this@TcTaskDraftFragment).getAdapter()
+                        bindingRV.rvContainer.adapter =
+                            TaskViewHolder(list, this@TcTaskDraftFragment).getAdapter()
                     })
                 }
                 TcTaskDraftViewModel.TAB_ASSIGNMENT -> {
                     viewModel.assignmentList.observe(viewLifecycleOwner, { list ->
                         assignmentEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada tugas",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             assignmentEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(list, this@TcTaskDraftFragment).getAdapter()
+                        bindingRV.rvContainer.adapter =
+                            TaskViewHolder(list, this@TcTaskDraftFragment).getAdapter()
                     })
                 }
             }
