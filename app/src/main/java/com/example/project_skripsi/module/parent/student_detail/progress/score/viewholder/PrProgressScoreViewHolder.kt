@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.parent.student_detail.progress.score.viewholder
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible

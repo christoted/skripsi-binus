@@ -48,7 +48,7 @@ class StPaymentVariantFragment(private val viewModel: StPaymentViewModel, privat
     private fun getPaymentVariant() : LiveData<List<Payment>> {
         return when (viewType) {
             TYPE_UPCOMING -> viewModel.upcomingPayment
-            StPaymentVariantViewHolder.TYPE_UNPAID -> viewModel.unpaidPayment
+            TYPE_UNPAID -> viewModel.unpaidPayment
             else -> viewModel.paidPayment
         }
     }

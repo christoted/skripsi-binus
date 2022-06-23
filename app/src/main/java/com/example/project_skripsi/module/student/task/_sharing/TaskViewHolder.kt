@@ -13,7 +13,7 @@ import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.helper.DateHelper
 
-class TaskViewHolder(private val taskType : Int, private val dataSet : List<TaskFormStatus>, private val isStudent: Boolean) {
+class TaskViewHolder(private val taskType: Int, private val dataSet: List<TaskFormStatus>) {
 
     companion object{
         const val TYPE_EXAM = 1
@@ -55,26 +55,33 @@ class TaskViewHolder(private val taskType : Int, private val dataSet : List<Task
                 }
 
                 tvDuration.text = ("${item.duration} menit")
-                if (isStudent) {
-                    root.setOnClickListener {
-                        when {
-                            DateHelper.getCurrentTime() < item.startTime ->
-                                Toast.makeText(root.context, "${mapOfTask[taskType]} belum dimulai", Toast.LENGTH_SHORT).show()
-                            DateHelper.getCurrentTime() > item.endTime && item.isChecked == false ->
-                                Toast.makeText(root.context, "${mapOfTask[taskType]} belum dikoreksi", Toast.LENGTH_SHORT).show()
-                            else -> {
-                                item.id?.let { id ->
-                                    it.findNavController().navigate(
-                                        when (taskType) {
-                                            TYPE_EXAM -> StTaskExamFragmentDirections
-                                                .actionStTaskExamFragmentToStTaskFormFragment(id)
-                                            else -> StTaskAssignmentFragmentDirections
-                                                .actionStTaskAssignmentFragmentToStTaskFormFragment(
-                                                    id
-                                                )
-                                        }
-                                    )
-                                }
+
+                root.setOnClickListener {
+                    when {
+                        DateHelper.getCurrentTime() < item.startTime ->
+                            Toast.makeText(
+                                root.context,
+                                "${mapOfTask[taskType]} belum dimulai",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        DateHelper.getCurrentTime() > item.endTime && item.isChecked == false ->
+                            Toast.makeText(
+                                root.context,
+                                "${mapOfTask[taskType]} belum dikoreksi",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        else -> {
+                            item.id?.let { id ->
+                                it.findNavController().navigate(
+                                    when (taskType) {
+                                        TYPE_EXAM -> StTaskExamFragmentDirections
+                                            .actionStTaskExamFragmentToStTaskFormFragment(id)
+                                        else -> StTaskAssignmentFragmentDirections
+                                            .actionStTaskAssignmentFragmentToStTaskFormFragment(
+                                                id
+                                            )
+                                    }
+                                )
                             }
                         }
                     }

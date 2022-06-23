@@ -1,13 +1,12 @@
 package com.example.project_skripsi.module.common.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.AlarmClock
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.repository.AuthRepository.Companion.LOGIN_PARENT
@@ -18,16 +17,11 @@ import com.example.project_skripsi.databinding.ActivityAuthBinding
 import com.example.project_skripsi.module.parent.PrMainActivity
 import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.module.teacher.TcMainActivity
-import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithMinuteOffset
-import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithSecondOffset
-import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithZeroSecond
+import com.example.project_skripsi.utils.helper.ValidationHelper
 import com.example.project_skripsi.utils.service.storage.StorageSP
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_EMAIL
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_PASSWORD
-import com.example.project_skripsi.utils.helper.ValidationHelper
-import com.example.project_skripsi.utils.service.alarm.AlarmService
 import com.example.project_skripsi.utils.service.zoom.ZoomService
 import us.zoom.sdk.ZoomError
 import us.zoom.sdk.ZoomSDKInitializeListener

@@ -26,20 +26,9 @@ class AuthRepository {
     }
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    val loggedOutLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    
+
     private var currentUser : FirebaseUser? = null
     fun getCurrentUser() = currentUser!!
-
-//    ### don't remove yet
-//    val userLiveData: MutableLiveData<FirebaseUser?> = MutableLiveData()
-//    init {
-//        if (firebaseAuth.currentUser != null) {
-//            userLiveData.postValue(firebaseAuth.currentUser)
-//            loggedOutLiveData.postValue(false)
-//        }
-//    }
-
 
     // return firebaseUser, isFailure
     fun login(email : String, password : String, loginAs : Int) : Pair<LiveData<FirebaseUser>, LiveData<Boolean>> {
@@ -50,7 +39,6 @@ class AuthRepository {
                 .addOnCompleteListener { task: Task<AuthResult> ->
                     if(task.isSuccessful){
                         Log.d("12345-AuthRepository", "Auth Login Successful")
-                        Log.d("12345-AuthRepository", firebaseAuth.currentUser?.uid ?: "NULL")
                         firebaseAuth.currentUser?.let { user ->
                             currentUser = firebaseAuth.currentUser
                             FireRepository.inst
@@ -70,7 +58,6 @@ class AuthRepository {
                             failure.postValue(true)
                         }
                     } else {
-                        Log.d("12345-AuthRepository","Error Login")
                         failure.postValue(true)
                     }
                 }
@@ -81,23 +68,5 @@ class AuthRepository {
 
     fun logOut() {
         firebaseAuth.signOut()
-        loggedOutLiveData.postValue(true)
     }
-
-//    fun register(email: String?, password: String?) {
-//        firebaseAuth.createUserWithEmailAndPassword(email!!, password!!)
-//            .addOnCompleteListener(application.mainExecutor,
-//                { task ->
-//                    if (task.isSuccessful) {
-//                        userLiveData.postValue(firebaseAuth.currentUser)
-//                    } else {
-//                        Toast.makeText(
-//                            application.applicationContext,
-//                            "Registration Failure: " + (task.exception?.message ?: "null message"),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                })
-//    }
-
 }

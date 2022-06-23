@@ -1,13 +1,8 @@
 package com.example.project_skripsi.module.student
 
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -16,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ActivityStMainBinding
-import com.example.project_skripsi.module.student.task.form.StTaskFormViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class StMainActivity : AppCompatActivity() {
 

@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.teacher.main.calendar
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,14 +8,12 @@ import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.*
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel
 import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
-import kotlin.collections.ArrayList
 
 class TcCalendarViewModel : ViewModel() {
 

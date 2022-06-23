@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.BottomSheetTcChooseMeetingBinding
-import com.example.project_skripsi.databinding.DialogStViewImageBinding
 import com.example.project_skripsi.databinding.FragmentTcAlterResourceBinding
 import com.example.project_skripsi.module.teacher._sharing.ClassViewHolder
 import com.example.project_skripsi.module.teacher._sharing.ResourceViewHolder

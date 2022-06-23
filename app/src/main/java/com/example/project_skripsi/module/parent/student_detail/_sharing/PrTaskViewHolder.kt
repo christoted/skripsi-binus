@@ -21,10 +21,10 @@ class PrTaskViewHolder(private val dataSet : List<TaskFormStatus>) {
 
             with(view) {
                 tvTitle.text = item.title
-                tvStatus.text = item.status
-                tvSubjectName.text = item.subjectName
                 tvScore.text = if (item.score == null) "-" else item.score.toString()
+                tvSubjectName.text = item.subjectName
                 tvClassName.visibility = View.GONE
+                tvStatus.text = item.status
 
                 item.statusColor?.let {
                     tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it, null))

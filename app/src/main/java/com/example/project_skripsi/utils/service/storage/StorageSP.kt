@@ -1,8 +1,6 @@
 package com.example.project_skripsi.utils.service.storage
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
 
 class StorageSP {
 
@@ -28,7 +26,6 @@ class StorageSP {
 
         fun getInt(context: Context, spKey: String, default: Int) : Int {
             val sharedPref = context.getSharedPreferences(SP_KEY, Context.MODE_PRIVATE)
-//            Toast.makeText(context, "get (${spKey}) => ${sharedPref.getInt(spKey, default)}", Toast.LENGTH_LONG).show()
             return sharedPref.getInt(spKey, default)
         }
 
@@ -38,7 +35,6 @@ class StorageSP {
                 putInt(spKey, value)
                 apply()
             }
-//            Toast.makeText(context, "set (${spKey}) => $value", Toast.LENGTH_LONG).show()
         }
     }
 }

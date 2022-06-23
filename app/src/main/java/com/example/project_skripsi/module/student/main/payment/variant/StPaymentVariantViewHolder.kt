@@ -33,7 +33,7 @@ class StPaymentVariantViewHolder(private val taskType : Int, private val dataSet
             }
             when(taskType){
                 PrPaymentVariantViewHolder.TYPE_PAID -> {
-                    view.tvDateTitle.text = "Terbayar pada"
+                    view.tvDateTitle.text = ("Terbayar pada")
                     view.viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.payment_complete, null))
                 }
                 PrPaymentVariantViewHolder.TYPE_UNPAID -> {

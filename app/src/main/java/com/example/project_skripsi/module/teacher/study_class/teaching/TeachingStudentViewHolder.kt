@@ -1,8 +1,6 @@
 package com.example.project_skripsi.module.teacher.study_class.teaching
 
 import android.graphics.drawable.Drawable
-import android.util.Log
-import com.example.project_skripsi.utils.generic.GenericAdapter
 import android.view.LayoutInflater
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -11,6 +9,7 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.databinding.ItemTcStudyClassStudentBinding
 import com.example.project_skripsi.utils.app.App
+import com.example.project_skripsi.utils.generic.GenericAdapter
 
 
 class TeachingStudentViewHolder(

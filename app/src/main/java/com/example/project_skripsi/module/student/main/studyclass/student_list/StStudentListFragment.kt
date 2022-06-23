@@ -9,10 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.databinding.FragmentStAnnouncementBinding
 import com.example.project_skripsi.databinding.FragmentStStudentListBinding
 import com.example.project_skripsi.databinding.ViewEmptyListBinding
-import com.example.project_skripsi.module.parent.student_detail.announcement.AnnouncementViewHolder
 
 class StStudentListFragment : Fragment() {
 

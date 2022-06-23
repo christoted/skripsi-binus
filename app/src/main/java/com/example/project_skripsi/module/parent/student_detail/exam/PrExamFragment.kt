@@ -15,11 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentPrExamBinding
-import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
 import com.example.project_skripsi.module.student.main.progress.graphic.StSubjectFilterViewHolder
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 import com.example.project_skripsi.module.student.task.exam.StTaskExamViewModel
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.UIHelper
@@ -121,7 +119,7 @@ class PrExamFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, list, false).getAdapter()
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(list).getAdapter()
                     })
                 }
                 PrExamViewModel.EXAM_PAST -> {
@@ -132,7 +130,7 @@ class PrExamFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_EXAM, list, false).getAdapter()
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(list).getAdapter()
                     })
                 }
             }

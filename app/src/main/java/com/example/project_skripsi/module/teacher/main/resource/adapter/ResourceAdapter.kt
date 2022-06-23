@@ -7,11 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.core.model.firestore.Resource
 import com.example.project_skripsi.databinding.ItemTcResourceBinding
 import com.example.project_skripsi.module.teacher.main.resource.TcResourceFragmentDirections
-import com.example.project_skripsi.module.teacher.main.resource.viewmodel.TcResourceViewModel
-import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ResourceAdapter(private val listResource: List<Resource>): RecyclerView.Adapter<ResourceAdapter.ResourceViewHolder>() {
 

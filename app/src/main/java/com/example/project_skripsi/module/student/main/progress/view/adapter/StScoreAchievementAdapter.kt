@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.student.main.progress.view.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat

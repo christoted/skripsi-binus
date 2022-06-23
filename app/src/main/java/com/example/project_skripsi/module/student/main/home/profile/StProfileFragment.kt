@@ -2,7 +2,6 @@ package com.example.project_skripsi.module.student.main.home.profile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +15,11 @@ import com.example.project_skripsi.databinding.FragmentStProfileBinding
 import com.example.project_skripsi.module.common.auth.AuthActivity
 import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeViewModel
 import com.example.project_skripsi.utils.service.alarm.AlarmService
+import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.service.storage.StorageSP
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_EMAIL
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_PASSWORD
-import com.example.project_skripsi.utils.service.notification.NotificationUtil
 
 class StProfileFragment : Fragment() {
 
@@ -76,8 +75,6 @@ class StProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    private fun getHashAlarmId(id: String?) = id.hashCode()
 
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(context!!)

@@ -13,10 +13,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.databinding.FragmentPrCalendarBinding
-import com.example.project_skripsi.databinding.FragmentPrHomeBinding
-import com.example.project_skripsi.databinding.ViewEmptyItemBinding
-import com.example.project_skripsi.module.student.main.calendar.StCalendarAdapter
-import com.example.project_skripsi.module.teacher.main.calendar.TcCalendarAdapter
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.UIHelper

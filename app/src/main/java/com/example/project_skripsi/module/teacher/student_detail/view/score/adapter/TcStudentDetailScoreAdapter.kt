@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.teacher.student_detail.view.score.adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
@@ -57,9 +56,8 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
         when(tab) {
             0 -> {
                 viewModel.sectionScore.value?.let {
-                    Log.d("Data Subject", ": " + position)
                     val singleData = it[position]
-                    val adapter = TcStudentDetailScoreChildAdapter(viewModel, singleData)
+                    val adapter = TcStudentDetailScoreChildAdapter(singleData)
                     (holder as StScoreContentViewHolder).bind(singleData, adapter, position)
                 }
             }

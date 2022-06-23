@@ -3,11 +3,8 @@ package com.example.project_skripsi.module.teacher.form.assessment
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.project_skripsi.R
@@ -22,7 +19,7 @@ import com.example.project_skripsi.utils.app.App
 class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
     Adapter<ViewHolder>() {
 
-    val imageList : List<MutableList<String>> = List(questionList.size) { mutableListOf() }
+    private val imageList : List<MutableList<String>> = List(questionList.size) { mutableListOf() }
 
     init {
         questionList.mapIndexed { index, assignedQuestion ->

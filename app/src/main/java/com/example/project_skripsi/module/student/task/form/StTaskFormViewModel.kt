@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.student.task.form
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,11 +13,9 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_ESSAY
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
 import com.example.project_skripsi.utils.Constant.Companion.isExam
-import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.generic.HandledEvent
 import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.service.alarm.AlarmService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

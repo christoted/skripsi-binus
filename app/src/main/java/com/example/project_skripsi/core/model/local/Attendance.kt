@@ -2,7 +2,6 @@ package com.example.project_skripsi.core.model.local
 
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.AttendedMeeting
-import com.example.project_skripsi.core.model.firestore.ClassMeeting
 import com.example.project_skripsi.utils.helper.DateHelper
 import java.util.*
 

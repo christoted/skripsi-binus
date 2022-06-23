@@ -1,25 +1,21 @@
 package com.example.project_skripsi.module.student.main.home.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
 import com.example.project_skripsi.core.model.local.HomeMainSection
-import com.example.project_skripsi.core.model.local.TeacherAgendaTaskForm
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
-import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ANNOUNCEMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_ASSIGNMENT
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_EXAM
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
+import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.generic.HandledEvent
-import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentTime

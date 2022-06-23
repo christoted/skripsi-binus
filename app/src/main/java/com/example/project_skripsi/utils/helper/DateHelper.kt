@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 class DateHelper {
 
     companion object {
 
-//        const val EDMY = "EEEE, dd - MM - yyyy"
-        const val E = "EEEE"
+        private const val EE = "EEEE"
         const val DMY = "dd - MM - yyyy"
         const val hm = "HH:mm"
         private val mapWeekDay = mapOf(
@@ -81,7 +79,7 @@ class DateHelper {
         @SuppressLint("SimpleDateFormat")
         fun getFormattedDateTimeWithWeekDay(date: Date?): String {
             if (date == null) return "null date"
-            val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
+            val weekday = mapWeekDay[getFormattedDateTime(EE, date)]?:""
             return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }
 

@@ -2,8 +2,6 @@ package com.example.project_skripsi.module.student.main.calendar
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.core.model.firestore.ClassMeeting
+import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.databinding.FragmentStCalendarBinding
 import com.example.project_skripsi.databinding.ViewEmptyItemBinding
 import com.example.project_skripsi.module.common.zoom.MeetingHandler

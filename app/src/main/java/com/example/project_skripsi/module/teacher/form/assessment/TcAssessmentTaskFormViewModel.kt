@@ -90,12 +90,12 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
             when(taskForm.type) {
                 Constant.TASK_TYPE_ASSIGNMENT -> currentStudent.assignedAssignments
                 else -> currentStudent.assignedExams
-            }?.let {
-                val pos = it.indexOfFirst { item -> item.id == taskForm.id }
-                it.set(pos, newAssignedTaskForm)
+            }?.let { list ->
+                val pos = list.indexOfFirst { item -> item.id == taskForm.id }
+                list.set(pos, newAssignedTaskForm)
             }
-            FireRepository.inst.alterItems(listOf(currentStudent)).first.observeOnce{
-                _assessmentComplete.postValue(it)
+            FireRepository.inst.alterItems(listOf(currentStudent)).first.observeOnce{ status ->
+                _assessmentComplete.postValue(status)
             }
         }
     }

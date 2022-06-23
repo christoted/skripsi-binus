@@ -15,7 +15,6 @@ import com.example.project_skripsi.utils.Constant.Companion.SECTION_MEETING
 import com.example.project_skripsi.utils.Constant.Companion.SECTION_PAYMENT
 import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 
@@ -46,7 +45,7 @@ class TcHomeViewModel: ViewModel() {
     private val _isDataFetchFinished = MutableLiveData<Boolean>()
     val isFetchDataCompleted : LiveData<Boolean> = _isDataFetchFinished
 
-    var counterData = 0
+    private var counterData = 0
 
     init {
         initData()

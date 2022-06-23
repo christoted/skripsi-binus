@@ -10,7 +10,6 @@ import androidx.transition.TransitionManager
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.local.HomeMainSection
 import com.example.project_skripsi.databinding.ItemTcHomeMainSectionBinding
-import com.example.project_skripsi.databinding.ViewEmptyItemBinding
 import com.example.project_skripsi.module.teacher._sharing.agenda.TcAgendaItemListener
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.helper.UIHelper

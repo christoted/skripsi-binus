@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.teacher.study_class.resource
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.core.model.firestore.Resource
 import com.example.project_skripsi.databinding.FragmentTcStudyClassResourceBinding
-import com.example.project_skripsi.utils.generic.GenericLinkHandler
 import com.example.project_skripsi.utils.generic.GenericLinkHandler.Companion.goToLink
-import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.generic.LinkClickListener
 import com.example.project_skripsi.utils.helper.UIHelper
 

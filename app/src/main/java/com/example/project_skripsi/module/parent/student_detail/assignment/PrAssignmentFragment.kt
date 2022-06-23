@@ -19,7 +19,6 @@ import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
 import com.example.project_skripsi.module.parent.student_detail.exam.PrExamFragmentArgs
 import com.example.project_skripsi.module.student.main.progress.graphic.StSubjectFilterViewHolder
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 import com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentViewModel
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.UIHelper
@@ -120,7 +119,7 @@ class PrAssignmentFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, false).getAdapter()
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(list).getAdapter()
                     })
                 }
                 StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
@@ -131,7 +130,7 @@ class PrAssignmentFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, false).getAdapter()
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(list).getAdapter()
                     })
                 }
             }

@@ -10,13 +10,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
-import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTaskDetailBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
-import com.example.project_skripsi.module.teacher.study_class.task.TcStudyClassTaskFragmentDirections
 import com.example.project_skripsi.utils.generic.ItemClickListener
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.UIHelper
 
 

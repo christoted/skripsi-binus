@@ -85,9 +85,9 @@ class TcResourceFragment : Fragment() {
                 }
             }
         }
-        viewModel.resources.observe(viewLifecycleOwner) {
+        viewModel.resources.observe(viewLifecycleOwner) { list ->
             curEmptyView?.let { binding.llParent.removeView(it) }
-            if (it.isEmpty()) {
+            if (list.isEmpty()) {
                 val emptyView = UIHelper.getEmptyList("Tidak ada materi", layoutInflater, binding.llParent)
                 binding.llParent.addView(emptyView)
                 curEmptyView = emptyView
@@ -95,7 +95,7 @@ class TcResourceFragment : Fragment() {
             with(binding) {
                 recyclerView.layoutManager = LinearLayoutManager(context)
                 recyclerView.setHasFixedSize(true)
-                recyclerView.adapter = ResourceAdapter(it)
+                recyclerView.adapter = ResourceAdapter(list)
             }
         }
     }

@@ -3,19 +3,14 @@ package com.example.project_skripsi.module.student.main._sharing.agenda
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.example.project_skripsi.databinding.ItemStHomeSectionItemBinding
 import com.example.project_skripsi.module.student.main.home.view.adapter.ItemListener
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
-import com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentFragmentDirections
-import com.example.project_skripsi.module.student.task.exam.StTaskExamFragmentDirections
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
-import java.util.*
 
 class StHomeExamViewHolder(private val binding: ItemStHomeSectionItemBinding, private val listener: ItemListener):
     RecyclerView.ViewHolder(binding.root) {

@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

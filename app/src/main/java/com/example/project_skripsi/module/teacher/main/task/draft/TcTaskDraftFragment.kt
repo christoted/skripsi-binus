@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.main.task.draft
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +10,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
-import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.local.SubjectGroup
-import com.example.project_skripsi.databinding.DialogTcTaskTypeBinding
-import com.example.project_skripsi.databinding.FragmentTcTaskBinding
 import com.example.project_skripsi.databinding.FragmentTcTaskDraftBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
-import com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskViewModel
 import com.example.project_skripsi.module.teacher.main.task.TcTaskViewModel
 import com.example.project_skripsi.module.teacher.study_class.task.TaskViewHolder
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.UIHelper
-import com.google.android.material.chip.Chip
 
 class TcTaskDraftFragment : Fragment(), ItemClickListener {
 
@@ -100,7 +94,7 @@ class TcTaskDraftFragment : Fragment(), ItemClickListener {
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
             when(position) {
-                TcTaskViewModel.TAB_EXAM -> {
+                TcTaskDraftViewModel.TAB_EXAM -> {
                     viewModel.examList.observe(viewLifecycleOwner, { list ->
                         examEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
@@ -111,7 +105,7 @@ class TcTaskDraftFragment : Fragment(), ItemClickListener {
                         bindingRV.rvContainer.adapter = TaskViewHolder(list, this@TcTaskDraftFragment).getAdapter()
                     })
                 }
-                TcTaskViewModel.TAB_ASSIGNMENT -> {
+                TcTaskDraftViewModel.TAB_ASSIGNMENT -> {
                     viewModel.assignmentList.observe(viewLifecycleOwner, { list ->
                         assignmentEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {

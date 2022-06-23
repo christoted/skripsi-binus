@@ -12,7 +12,6 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import java.util.*
 
 class EventDecorator(private val eventDay: CalendarDay, private val dayEventList : List<DayEvent>) : DayViewDecorator {
 

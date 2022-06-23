@@ -1,9 +1,9 @@
 package com.example.project_skripsi.module.teacher.form.alter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.*
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.project_skripsi.core.model.firestore.Question
 import com.example.project_skripsi.databinding.ItemTcAlterTaskFormEssayBinding
 import com.example.project_skripsi.databinding.ItemTcAlterTaskFormMcBinding

@@ -24,9 +24,9 @@ class Constant {
         const val ATTENDANCE_ALPHA = "alfa"
 
         // Notification
-        const val NOTIF_CLASS_MEETING = "Meeting"
-        const val NOTIF_EXAM= "Exam"
-        const val NOTIF_ASSIGNMENT = "Assignment"
+//        const val NOTIF_CLASS_MEETING = "Meeting"
+//        const val NOTIF_EXAM= "Exam"
+//        const val NOTIF_ASSIGNMENT = "Assignment"
 
         const val MID_EXAM_WEIGHT = 40
         const val FINAL_EXAM_WEIGHT = 40

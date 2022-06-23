@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.FragmentStTaskAssignmentBinding
-import com.example.project_skripsi.databinding.ViewEmptyListBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.student.main.progress.graphic.StSubjectFilterViewHolder
 import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
@@ -115,7 +114,10 @@ class StTaskAssignmentFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, true).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(
+                            TaskViewHolder.TYPE_ASSIGNMENT,
+                            list
+                        ).getAdapter()
                     })
                 }
                 StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
@@ -126,7 +128,10 @@ class StTaskAssignmentFragment : Fragment(), ItemClickListener {
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, true).getAdapter()
+                        bindingRV.rvContainer.adapter = TaskViewHolder(
+                            TaskViewHolder.TYPE_ASSIGNMENT,
+                            list
+                        ).getAdapter()
                     })
                 }
             }
