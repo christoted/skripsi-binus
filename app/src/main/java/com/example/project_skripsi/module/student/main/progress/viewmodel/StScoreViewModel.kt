@@ -57,8 +57,16 @@ class StScoreViewModel : ViewModel() {
         _subjects.observeOnce { subjects ->
             subjects.forEach { subject ->
                 subject.subjectName?.let { subjectName ->
-                    listDataScore.add(getScore(subjectName, mutableListOfTask.filter { it.subjectName == subjectName }))
-                    listDataAttendance.add(getAttendance(subjectName, mutableListOfAttendance.filter { it.subjectName == subjectName }))
+                    listDataScore.add(
+                        getScore(
+                            subjectName,
+                            mutableListOfTask.filter { it.subjectName == subjectName })
+                    )
+                    listDataAttendance.add(
+                        getAttendance(
+                            subjectName,
+                            mutableListOfAttendance.filter { it.subjectName == subjectName })
+                    )
                 }
             }
             _scoreFragmentData.postValue(
@@ -77,12 +85,14 @@ class StScoreViewModel : ViewModel() {
 
     private fun loadCurrentStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
-            student.assignedExams?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
-            student.assignedAssignments?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }
+            student.assignedExams?.filter { it.isChecked == true }
+                ?.let { mutableListOfTask.addAll(it) }
+            student.assignedAssignments?.filter { it.isChecked == true }
+                ?.let { mutableListOfTask.addAll(it) }
             student.studyClass?.let { loadStudyClass(it) }
 
             student.attendedMeetings?.let {
-                _mapAttendanceBySubject.postValue( it.groupBy { subject -> subject.subjectName!! })
+                _mapAttendanceBySubject.postValue(it.groupBy { subject -> subject.subjectName!! })
                 mutableListOfAttendance.addAll(it)
             }
             student.achievements?.let { _achievements.postValue(it) }
@@ -95,7 +105,7 @@ class StScoreViewModel : ViewModel() {
         }
     }
 
-    private fun getScore(subjectName: String, itemList : List<AssignedTaskForm>) : ScoreMainSection {
+    private fun getScore(subjectName: String, itemList: List<AssignedTaskForm>): ScoreMainSection {
         val midExam: Int? = itemList.filter {
             getTaskFilter(it, Constant.TASK_TYPE_MID_EXAM)
         }.let {
@@ -108,7 +118,7 @@ class StScoreViewModel : ViewModel() {
             if (it.isEmpty()) null else it[0].score ?: 0
         }
 
-        val totalAssignment : Int? = itemList.filter {
+        val totalAssignment: Int? = itemList.filter {
             getTaskFilter(it, Constant.TASK_TYPE_ASSIGNMENT)
         }.let {
             if (it.isEmpty()) null else it.averageOf { task -> task.score ?: 0 }
@@ -135,7 +145,10 @@ class StScoreViewModel : ViewModel() {
 
     }
 
-    private fun getAttendance(subjectName: String, itemList : List<AttendedMeeting>) : AttendanceMainSection {
+    private fun getAttendance(
+        subjectName: String,
+        itemList: List<AttendedMeeting>
+    ): AttendanceMainSection {
         return AttendanceMainSection(
             subjectName = subjectName,
             totalPresence = itemList.count { it.status == ATTENDANCE_ATTEND && it.endTime!! < getCurrentTime() },
@@ -146,7 +159,7 @@ class StScoreViewModel : ViewModel() {
         )
     }
 
-    private fun getTaskFilter(atf: AssignedTaskForm, taskType : String) =
+    private fun getTaskFilter(atf: AssignedTaskForm, taskType: String) =
         atf.type == taskType && atf.isChecked == true
 }
 

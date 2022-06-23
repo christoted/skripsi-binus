@@ -25,22 +25,22 @@ class TcPreviewTaskViewModel : ViewModel() {
 
 
     private val _oldTaskForm = MutableLiveData<TaskForm>()
-    val oldTaskForm : LiveData<TaskForm> = _oldTaskForm
+    val oldTaskForm: LiveData<TaskForm> = _oldTaskForm
 
-    private lateinit var subjectGroup : SubjectGroup
+    private lateinit var subjectGroup: SubjectGroup
     private val classIds = mutableListOf<String>()
 
     private var formType: Int = -1
 
 
-    fun initData(subjectName: String, gradeLevel: Int, formType : Int, taskFormId : String) {
+    fun initData(subjectName: String, gradeLevel: Int, formType: Int, taskFormId: String) {
         subjectGroup = SubjectGroup(subjectName, gradeLevel)
         this.formType = formType
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadTaskForm(taskFormId)
     }
 
-    private fun loadTeacher(uid : String) {
+    private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             teacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
                 ?.let { group ->
@@ -50,7 +50,7 @@ class TcPreviewTaskViewModel : ViewModel() {
     }
 
     private fun loadTaskForm(uid: String) {
-        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce{ _oldTaskForm.postValue(it) }
+        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { _oldTaskForm.postValue(it) }
     }
 
 }

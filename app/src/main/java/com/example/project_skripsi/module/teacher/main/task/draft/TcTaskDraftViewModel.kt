@@ -21,15 +21,15 @@ class TcTaskDraftViewModel : ViewModel() {
     }
 
     private val _assignmentList = MutableLiveData<List<TaskForm>>()
-    val assignmentList : LiveData<List<TaskForm>> = _assignmentList
+    val assignmentList: LiveData<List<TaskForm>> = _assignmentList
 
     private val _examList = MutableLiveData<List<TaskForm>>()
-    val examList : LiveData<List<TaskForm>> = _examList
+    val examList: LiveData<List<TaskForm>> = _examList
 
     private val examIds = mutableListOf<String>()
     private val assignmentIds = mutableListOf<String>()
 
-    lateinit var currentSubjectGroup : SubjectGroup
+    lateinit var currentSubjectGroup: SubjectGroup
 
     fun setSubjectGroup(subjectGroup: SubjectGroup) {
         currentSubjectGroup = subjectGroup
@@ -39,7 +39,7 @@ class TcTaskDraftViewModel : ViewModel() {
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
-    private fun loadTeacher(uid : String) {
+    private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             with(teacher) {
                 teachingGroups?.firstOrNull { group ->
@@ -66,7 +66,7 @@ class TcTaskDraftViewModel : ViewModel() {
         }
     }
 
-    fun getTaskFormType(taskFormId: String) : Int? {
+    fun getTaskFormType(taskFormId: String): Int? {
         examIds.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_EXAM }
         assignmentIds.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_ASSIGNMENT }
         return null

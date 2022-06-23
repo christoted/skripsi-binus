@@ -10,19 +10,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
-import com.example.project_skripsi.core.model.local.TaskFormStatus
 import com.example.project_skripsi.databinding.FragmentTcStudyClassTaskDetailBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
-import com.example.project_skripsi.module.teacher.study_class.task.TcStudyClassTaskFragmentDirections
 import com.example.project_skripsi.utils.generic.ItemClickListener
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.UIHelper
 
 
 class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel : TcStudyClassTaskDetailViewModel
+    private lateinit var viewModel: TcStudyClassTaskDetailViewModel
     private var _binding: FragmentTcStudyClassTaskDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -55,15 +51,16 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
     }
 
     private fun retrieveArgs() {
-        val args : TcStudyClassTaskDetailFragmentArgs by navArgs()
+        val args: TcStudyClassTaskDetailFragmentArgs by navArgs()
         viewModel.setData(args.studyClassId, args.subjectName, args.taskFormId)
     }
 
-    private inner class ScreenSlidePagerAdapter(private val listener: ItemClickListener) : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter(private val listener: ItemClickListener) :
+        PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        var unCheckedEmptyView : View? = null
-        var checkedEmptyView : View? = null
+        var unCheckedEmptyView: View? = null
+        var checkedEmptyView: View? = null
 
         override fun getCount(): Int =
             TcStudyClassTaskDetailViewModel.tabCount
@@ -80,7 +77,7 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 TcStudyClassTaskDetailViewModel.TASK_UNCHECKED -> {
                     viewModel.uncheckedList.observe(viewLifecycleOwner, {
                         unCheckedEmptyView?.let { bindingRV.llParent.removeView(unCheckedEmptyView) }
@@ -133,7 +130,10 @@ class TcStudyClassTaskDetailFragment : Fragment(), ItemClickListener {
     override fun onItemClick(itemId: String) {
         view?.findNavController()?.navigate(
             TcStudyClassTaskDetailFragmentDirections
-                .actionTcStudyClassTaskDetailFragmentToTcAssessmentTaskFormFragment(itemId, viewModel.taskFormId)
+                .actionTcStudyClassTaskDetailFragmentToTcAssessmentTaskFormFragment(
+                    itemId,
+                    viewModel.taskFormId
+                )
         )
     }
 }

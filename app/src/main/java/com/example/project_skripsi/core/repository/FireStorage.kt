@@ -15,7 +15,10 @@ class FireStorage {
         var inst = FireStorage()
     }
 
-    fun getImage(pathFile: String, context: Context): Pair<MutableLiveData<File>, MutableLiveData<Exception>> {
+    fun getImage(
+        pathFile: String,
+        context: Context
+    ): Pair<MutableLiveData<File>, MutableLiveData<Exception>> {
         val data = MutableLiveData<File>()
         val exception = MutableLiveData<Exception>()
 
@@ -32,7 +35,10 @@ class FireStorage {
         return Pair(data, exception)
     }
 
-    fun uploadImage(pathFile: String, localFile: File): Pair<MutableLiveData<Boolean>, MutableLiveData<Exception>> {
+    fun uploadImage(
+        pathFile: String,
+        localFile: File
+    ): Pair<MutableLiveData<Boolean>, MutableLiveData<Exception>> {
         val isSuccess = MutableLiveData<Boolean>()
         val exception = MutableLiveData<Exception>()
 
@@ -53,7 +59,7 @@ class FireStorage {
         return Pair(isSuccess, exception)
     }
 
-    private fun splitPath(pathFile : String) : Pair<String, String> {
+    private fun splitPath(pathFile: String): Pair<String, String> {
         val split = pathFile.split("/")
         var path = ""
         repeat(split.size - 1) {
@@ -66,7 +72,8 @@ class FireStorage {
 
     fun getPhotoFile(pathFile: String, context: Context): File {
         val split = splitPath(pathFile)
-        val storageDirectory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/" + split.first)
+        val storageDirectory =
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/" + split.first)
         return File.createTempFile(split.second, ".jpg", storageDirectory)
     }
 

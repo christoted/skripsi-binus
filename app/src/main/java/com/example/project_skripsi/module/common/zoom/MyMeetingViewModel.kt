@@ -1,7 +1,6 @@
 package com.example.project_skripsi.module.common.zoom
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,10 +12,9 @@ import com.example.project_skripsi.utils.service.storage.StorageSP
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.math.max
 import kotlin.math.min
 
-class MyMeetingViewModel : ViewModel()  {
+class MyMeetingViewModel : ViewModel() {
 
     companion object {
 //        const val readinessDelay = 2 * 60
@@ -29,9 +27,9 @@ class MyMeetingViewModel : ViewModel()  {
     }
 
     private val _timeLeft = MutableLiveData<Int>()
-    val timeLeft : LiveData<Int> = _timeLeft
+    val timeLeft: LiveData<Int> = _timeLeft
 
-    var startTime : Date = DateHelper.getCurrentTime()
+    var startTime: Date = DateHelper.getCurrentTime()
 
     init {
         if (MeetingHandler.inst.isStudent) generateReadinessDialog(3)
@@ -63,7 +61,7 @@ class MyMeetingViewModel : ViewModel()  {
             val sleep = interval - triggerAt
 //            delay(sleep * 60 * 1000L)
             delay(sleep * 60 * 50L) // test
-            generateReadinessDialog(counter-1)
+            generateReadinessDialog(counter - 1)
         }
     }
 
@@ -83,7 +81,8 @@ class MyMeetingViewModel : ViewModel()  {
     // studentID-meetID-time
 
     fun addReadinessCheck(context: Context) {
-        val id = getReadinessId(MeetingHandler.inst.studentEntity?.id, MeetingHandler.inst.meetingId)
+        val id =
+            getReadinessId(MeetingHandler.inst.studentEntity?.id, MeetingHandler.inst.meetingId)
         StorageSP.setInt(context, id, min(3, StorageSP.getInt(context, id, 0) + 1))
     }
 
@@ -112,7 +111,7 @@ class MyMeetingViewModel : ViewModel()  {
         // 2 checks with 75% time 30 menit
         // 1 checks with 100% time 40 menit
         val verdict = ((readinessCheck == 3 && verdictTimePassed(time, 60)) ||
-                (readinessCheck == 2 && verdictTimePassed(time, 75))  ||
+                (readinessCheck == 2 && verdictTimePassed(time, 75)) ||
                 (readinessCheck == 1 && verdictTimePassed(time, 100)))
 
 //        Toast.makeText(context, "Verdict :$verdict",Toast.LENGTH_SHORT).show()
@@ -126,7 +125,8 @@ class MyMeetingViewModel : ViewModel()  {
 
     private fun verdictTimePassed(time: Int, percent: Int) = time >= meetingTime * percent / 100
 
-    private fun getReadinessId(studentId: String?, meetId: String?) = "${studentId}-${meetId}-readiness"
+    private fun getReadinessId(studentId: String?, meetId: String?) =
+        "${studentId}-${meetId}-readiness"
 
     private fun getTimeId(studentId: String?, meetId: String?) = "${studentId}-${meetId}-time"
 }

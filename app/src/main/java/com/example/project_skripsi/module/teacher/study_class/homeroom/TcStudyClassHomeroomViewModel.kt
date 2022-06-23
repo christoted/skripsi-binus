@@ -7,13 +7,8 @@ import com.example.project_skripsi.R
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.utils.Constant
-import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ALPHA
 import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_ATTEND
-import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_LEAVE
-import com.example.project_skripsi.utils.Constant.Companion.ATTENDANCE_SICK
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentTime
 
 class TcStudyClassHomeroomViewModel : ViewModel() {
@@ -50,10 +45,13 @@ class TcStudyClassHomeroomViewModel : ViewModel() {
     }
 
     fun getAttendanceAbsent(student: Student): Int =
-        student.attendedMeetings?.filter { it.status != ATTENDANCE_ATTEND && getCurrentTime() > it.endTime }?.size ?: 0
+        student.attendedMeetings?.filter { it.status != ATTENDANCE_ATTEND && getCurrentTime() > it.endTime }?.size
+            ?: 0
 
     fun getPaymentStatus(student: Student): Pair<String, Int> {
-        if ((student.payments?.filter { it.paymentDate == null && it.paymentDeadline!! < getCurrentTime() }?.size ?: 0) > 0)
+        if ((student.payments?.filter { it.paymentDate == null && it.paymentDeadline!! < getCurrentTime() }?.size
+                ?: 0) > 0
+        )
             return Pair("jatuh tempo", R.color.payment_late)
 
         if ((student.payments?.filter { it.paymentDate == null }?.size ?: 0) > 0)

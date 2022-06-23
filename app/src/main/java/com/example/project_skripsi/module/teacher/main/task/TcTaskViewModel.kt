@@ -21,18 +21,18 @@ class TcTaskViewModel : ViewModel() {
     }
 
     private val _subjectGroupList = MutableLiveData<List<SubjectGroup>>()
-    val subjectGroupList : LiveData<List<SubjectGroup>> = _subjectGroupList
+    val subjectGroupList: LiveData<List<SubjectGroup>> = _subjectGroupList
 
     private val _assignmentList = MutableLiveData<List<TaskForm>>()
-    val assignmentList : LiveData<List<TaskForm>> = _assignmentList
+    val assignmentList: LiveData<List<TaskForm>> = _assignmentList
 
     private val _examList = MutableLiveData<List<TaskForm>>()
-    val examList : LiveData<List<TaskForm>> = _examList
+    val examList: LiveData<List<TaskForm>> = _examList
 
     private val examIds = mutableMapOf<SubjectGroup, MutableList<String>>()
     private val assignmentIds = mutableMapOf<SubjectGroup, MutableList<String>>()
 
-    var currentSubjectGroup : SubjectGroup? = null
+    var currentSubjectGroup: SubjectGroup? = null
 
     fun refreshData() {
         examIds.clear()
@@ -40,15 +40,17 @@ class TcTaskViewModel : ViewModel() {
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
-    private fun loadTeacher(uid : String) {
+    private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             val subjectGroups = mutableListOf<SubjectGroup>()
             with(teacher) {
                 teachingGroups?.map { group ->
                     val sg = SubjectGroup(group.subjectName!!, group.gradeLevel!!)
                     subjectGroups.add(sg)
-                    group.createdExams?.map { examIds.getOrPut(sg) { mutableListOf()}.add(it) }
-                    group.createdAssignments?.map { assignmentIds.getOrPut(sg) { mutableListOf()}.add(it) }
+                    group.createdExams?.map { examIds.getOrPut(sg) { mutableListOf() }.add(it) }
+                    group.createdAssignments?.map {
+                        assignmentIds.getOrPut(sg) { mutableListOf() }.add(it)
+                    }
                 }
             }
             _subjectGroupList.postValue(subjectGroups)
@@ -62,12 +64,12 @@ class TcTaskViewModel : ViewModel() {
     }
 
 
-    private fun loadExam(subjectGroup : SubjectGroup) {
-        loadTaskForm((examIds[subjectGroup]?.toList()?: emptyList()), _examList)
+    private fun loadExam(subjectGroup: SubjectGroup) {
+        loadTaskForm((examIds[subjectGroup]?.toList() ?: emptyList()), _examList)
     }
 
-    private fun loadAssignment(subjectGroup : SubjectGroup) {
-        loadTaskForm((assignmentIds[subjectGroup]?.toList()?: emptyList()), _assignmentList)
+    private fun loadAssignment(subjectGroup: SubjectGroup) {
+        loadTaskForm((assignmentIds[subjectGroup]?.toList() ?: emptyList()), _assignmentList)
     }
 
     private fun loadTaskForm(uids: List<String>, mutableLiveData: MutableLiveData<List<TaskForm>>) {
@@ -79,7 +81,7 @@ class TcTaskViewModel : ViewModel() {
         }
     }
 
-    fun getTaskFormType(taskFormId: String) : Int? {
+    fun getTaskFormType(taskFormId: String): Int? {
         examIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_EXAM }
         assignmentIds[currentSubjectGroup]?.let { if (it.contains(taskFormId)) return TcAlterTaskViewModel.TYPE_ASSIGNMENT }
         return null

@@ -25,7 +25,7 @@ class WrapContentViewPager : ViewPager {
                     widthMeasureSpec,
                     MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
                 )
-                val childMeasuredHeight: Int = child.getMeasuredHeight()
+                val childMeasuredHeight: Int = child.measuredHeight
                 if (childMeasuredHeight > height) {
                     height = childMeasuredHeight
                 }
@@ -42,12 +42,12 @@ class WrapContentViewPager : ViewPager {
 
     fun nextPage() {
         if (!hasNext()) return
-        setCurrentItem(currentItem+1, true)
+        setCurrentItem(currentItem + 1, true)
     }
 
     fun prevPage() {
         if (!hasPrev()) return
-        setCurrentItem(currentItem-1, true)
+        setCurrentItem(currentItem - 1, true)
     }
 
 

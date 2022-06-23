@@ -16,19 +16,19 @@ import com.example.project_skripsi.utils.helper.DateHelper
 class PrStudentDetailViewModel : ViewModel() {
 
     private val _student = MutableLiveData<Student>()
-    val student : LiveData<Student> = _student
+    val student: LiveData<Student> = _student
 
     private val _school = MutableLiveData<School>()
-    val school : LiveData<School> = _school
+    val school: LiveData<School> = _school
 
     private val _studyClass = MutableLiveData<StudyClass>()
-    val studyClass : LiveData<StudyClass> = _studyClass
+    val studyClass: LiveData<StudyClass> = _studyClass
 
     private val _homeroomTeacher = MutableLiveData<Teacher>()
-    val homeroomTeacher : LiveData<Teacher> = _homeroomTeacher
+    val homeroomTeacher: LiveData<Teacher> = _homeroomTeacher
 
     private val _subjectList = MutableLiveData<List<ParentSubject>>()
-    val subjectList : LiveData<List<ParentSubject>> = _subjectList
+    val subjectList: LiveData<List<ParentSubject>> = _subjectList
 
     private val mapSubjectToParentSubject = mutableMapOf<String, ParentSubject>()
 
@@ -55,7 +55,14 @@ class PrStudentDetailViewModel : ViewModel() {
 
             val teacherSubjectId = mutableListOf<TeacherSubjectId>()
             studyClass.subjects?.map { subject ->
-                subject.teacher?.let { teacherSubjectId.add(TeacherSubjectId(it, subject.subjectName!!)) }
+                subject.teacher?.let {
+                    teacherSubjectId.add(
+                        TeacherSubjectId(
+                            it,
+                            subject.subjectName!!
+                        )
+                    )
+                }
 
                 subject.subjectName?.let { name ->
                     var countAttendance = 0

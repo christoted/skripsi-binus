@@ -19,7 +19,7 @@ data class AssignedQuestion(
 
     var answer: Answer? = null,
 ) {
-    constructor(question: Question, answer: Answer?) : this (
+    constructor(question: Question, answer: Answer?) : this(
         title = question.title,
         scoreWeight = question.scoreWeight,
         type = question.type,

@@ -6,14 +6,17 @@ import com.example.project_skripsi.databinding.ItemPrHomeStudentBinding
 import com.example.project_skripsi.utils.generic.GenericAdapter
 import com.example.project_skripsi.utils.generic.ItemClickListener
 
-class StudentViewHolder(private val dataSet : List<Student>, private val listener: ItemClickListener) {
+class StudentViewHolder(
+    private val dataSet: List<Student>,
+    private val listener: ItemClickListener
+) {
 
     fun getAdapter(): GenericAdapter<Student> {
         val adapter = GenericAdapter(dataSet)
         adapter.expressionOnCreateViewHolder = {
             ItemPrHomeStudentBinding.inflate(LayoutInflater.from(it.context), it, false)
         }
-        adapter.expressionViewHolderBinding = { item,viewBinding,_ ->
+        adapter.expressionViewHolderBinding = { item, viewBinding, _ ->
             val view = viewBinding as ItemPrHomeStudentBinding
             with(view) {
                 tvStudentName.text = item.name

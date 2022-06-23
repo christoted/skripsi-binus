@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project_skripsi.core.model.firestore.*
-import com.example.project_skripsi.core.model.local.*
+import com.example.project_skripsi.core.model.local.CalendarItem
+import com.example.project_skripsi.core.model.local.DayEvent
+import com.example.project_skripsi.core.model.local.HomeSectionData
 import com.example.project_skripsi.core.repository.FireRepository
-import com.example.project_skripsi.module.student.main.calendar.StCalendarViewModel
 import com.example.project_skripsi.utils.custom.comparator.CalendarComparator
 import com.example.project_skripsi.utils.generic.GenericExtension.Companion.compareTo
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -27,10 +27,10 @@ class PrCalendarViewModel : ViewModel() {
 
     var currentSelectedDate: CalendarDay = getCurrentDate()
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
-    val eventList : LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
+    val eventList: LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
-    private val currentList : MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
-    val currentDataList : MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
+    private val currentList: MutableMap<CalendarDay, MutableList<DayEvent>> = mutableMapOf()
+    val currentDataList: MutableMap<CalendarDay, MutableList<CalendarItem>> = mutableMapOf()
 
     fun setStudent(studentId: String) {
         loadStudent(studentId)
@@ -77,7 +77,7 @@ class PrCalendarViewModel : ViewModel() {
         }
     }
 
-    private fun propagateEvent(item : List<HomeSectionData>, type: Int) {
+    private fun propagateEvent(item: List<HomeSectionData>, type: Int) {
         item.map {
             when (it) {
                 is ClassMeeting -> it.startTime
@@ -87,7 +87,8 @@ class PrCalendarViewModel : ViewModel() {
                 else -> null
             }?.let { date ->
                 // push to calendar view
-                currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(DayEvent(date, type))
+                currentList.getOrPut(CalendarDay.from(date)) { mutableListOf() }
+                    .add(DayEvent(date, type))
                 // push to recycler view
                 currentDataList.getOrPut(CalendarDay.from(date)) { mutableListOf() }.add(
                     CalendarItem(it, date, type)

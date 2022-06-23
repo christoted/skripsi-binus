@@ -19,7 +19,8 @@ import com.example.project_skripsi.module.student.StMainActivity
 import com.example.project_skripsi.utils.Constant.Companion.TASK_FORM_MC
 import com.example.project_skripsi.utils.app.App
 import com.example.project_skripsi.utils.helper.DateHelper
-import com.example.project_skripsi.utils.helper.DisplayHelper
+import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDuration
+import com.example.project_skripsi.utils.helper.DisplayHelper.Companion.getDurationDisplay
 import com.example.project_skripsi.utils.service.alarm.AlarmService
 
 class StTaskFormFragment : Fragment() {
@@ -58,8 +59,8 @@ class StTaskFormFragment : Fragment() {
                         btnSubmit.visibility = View.VISIBLE
                     }
                 }
-                val durationDis = DateHelper.getDuration(taskForm.startTime, taskForm.endTime)
-                tvDuration.text = DisplayHelper.getDurationDisplay(durationDis.first, durationDis.second)
+                val durationDis = getDuration(taskForm.startTime, taskForm.endTime)
+                tvDuration.text = getDurationDisplay(durationDis.first, durationDis.second)
             }
         })
 
@@ -72,7 +73,8 @@ class StTaskFormFragment : Fragment() {
         })
 
         viewModel.questionList.observe(viewLifecycleOwner, {
-            val adapter = StFormAdapter(it,
+            val adapter = StFormAdapter(
+                it,
                 viewModel.curStudent.id,
                 viewModel.taskFormId,
                 (activity as StMainActivity),
@@ -88,8 +90,16 @@ class StTaskFormFragment : Fragment() {
                 if (timer.forceSubmit) {
                     submitAnswer(adapter)
                     binding.btnSubmit.isEnabled = false
-                }
-                else binding.btnTime.text = ("${timer.hour} : ${timer.minute} : ${timer.second}")
+                } else binding.btnTime.text = ("${timer.hour} : ${timer.minute} : ${timer.second}")
+                binding.btnTime.setBackgroundColor(
+                    ResourcesCompat.getColor(
+                        App.resourses!!,
+                        if (timer.hour == 0L && timer.minute == 0L)
+                            R.color.timer_alert
+                        else
+                            R.color.timer_normal, null
+                    )
+                )
             })
         })
 
@@ -130,7 +140,8 @@ class StTaskFormFragment : Fragment() {
             Pair(
                 when (question.type) {
                     TASK_FORM_MC -> {
-                        val id = childView.findViewById<RadioGroup>(R.id.choice_group).checkedRadioButtonId
+                        val id =
+                            childView.findViewById<RadioGroup>(R.id.choice_group).checkedRadioButtonId
                         if (id != -1) resources.getResourceEntryName(id).split("_")[1]
                         else "0"
                     }
@@ -148,7 +159,7 @@ class StTaskFormFragment : Fragment() {
         _binding = null
     }
 
-    private fun retrieveArgs(){
+    private fun retrieveArgs() {
         val args: StTaskFormFragmentArgs by navArgs()
         viewModel.setTaskForm(args.taskFormId)
         AlarmService.inst.cancelAlarm(requireContext(), args.taskFormId)

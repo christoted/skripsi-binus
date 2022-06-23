@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 class DateHelper {
 
     companion object {
 
-//        const val EDMY = "EEEE, dd - MM - yyyy"
-        const val E = "EEEE"
+        private const val EE = "EEEE"
         const val DMY = "dd - MM - yyyy"
         const val hm = "HH:mm"
         private val mapWeekDay = mapOf(
@@ -24,7 +22,7 @@ class DateHelper {
             "Sunday" to "Minggu",
         )
 
-        fun getCurrentTime() : Date = Calendar.getInstance().time
+        fun getCurrentTime(): Date = Calendar.getInstance().time
 
         fun getCurrentDate(): CalendarDay = CalendarDay.today()
 
@@ -34,21 +32,21 @@ class DateHelper {
             return CalendarDay.from(date)
         }
 
-        fun Date?.getDateWithMinuteOffset(minute: Int) : Date {
+        fun Date?.getDateWithMinuteOffset(minute: Int): Date {
             val calendar = Calendar.getInstance()
             this?.let { calendar.time = it }
             calendar.add(Calendar.MINUTE, minute)
             return calendar.time
         }
 
-        fun Date?.getDateWithSecondOffset(second: Int) : Date {
+        fun Date?.getDateWithSecondOffset(second: Int): Date {
             val calendar = Calendar.getInstance()
             this?.let { calendar.time = it }
             calendar.add(Calendar.SECOND, second)
             return calendar.time
         }
 
-        fun Date?.getDateWithDayOffset(date: Int) : Date {
+        fun Date?.getDateWithDayOffset(date: Int): Date {
             val calendar = Calendar.getInstance()
             this?.let { calendar.time = it }
             calendar.add(Calendar.DATE, date)
@@ -56,7 +54,7 @@ class DateHelper {
         }
 
         // MARK: 10 min before start
-        fun convertToCalendarDayBeforeStart(date: Date) : Calendar {
+        fun convertToCalendarDayBeforeStart(date: Date): Calendar {
             val calendar = Calendar.getInstance()
             calendar.time = date
             calendar.add(Calendar.MINUTE, -10)
@@ -81,11 +79,11 @@ class DateHelper {
         @SuppressLint("SimpleDateFormat")
         fun getFormattedDateTimeWithWeekDay(date: Date?): String {
             if (date == null) return "null date"
-            val weekday = mapWeekDay[getFormattedDateTime(E, date)]?:""
+            val weekday = mapWeekDay[getFormattedDateTime(EE, date)] ?: ""
             return "$weekday, ${getFormattedDateTime(DMY, date)}"
         }
 
-        fun updateDate(date : Date, time : Long) : Date{
+        fun updateDate(date: Date, time: Long): Date {
             val currentDate = Calendar.getInstance()
             currentDate.time = date
 
@@ -99,7 +97,7 @@ class DateHelper {
             return currentDate.time
         }
 
-        fun updateTime(date : Date, hour : Int, minute : Int) : Date{
+        fun updateTime(date: Date, hour: Int, minute: Int): Date {
             val currentDate = Calendar.getInstance()
             currentDate.time = date
 
@@ -110,21 +108,21 @@ class DateHelper {
             return currentDate.time
         }
 
-        fun Date?.getDateWithZeroSecond() : Date {
+        fun Date?.getDateWithZeroSecond(): Date {
             val currentDate = Calendar.getInstance()
             this?.let { currentDate.time = it }
             currentDate.set(Calendar.SECOND, 0)
             return currentDate.time
         }
 
-        fun getTomorrow() : Date {
+        fun getTomorrow(): Date {
             val c = Calendar.getInstance()
             c.time = Date()
             c.add(Calendar.DATE, 1)
             return c.time
         }
 
-        fun getDuration(startTime : Date?, endTime : Date?) : Pair<Float, String> {
+        fun getDuration(startTime: Date?, endTime: Date?): Pair<Float, String> {
             if (startTime == null || endTime == null) return Pair(0f, "menit")
 
             val minutes = (endTime.time - startTime.time) / (1000 * 60)
@@ -137,7 +135,7 @@ class DateHelper {
             return Pair(days, "hari")
         }
 
-        fun getMinute(startTime : Date?, endTime : Date?) : Long {
+        fun getMinute(startTime: Date?, endTime: Date?): Long {
             if (startTime == null || endTime == null) return 0
             return (endTime.time - startTime.time) / (1000 * 60)
         }

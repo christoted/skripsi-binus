@@ -25,7 +25,8 @@ class PrProgressAchievementFragment(private val viewModel: PrProgressViewModel) 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.achievements.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada nilai")
                 binding.llParent.addView(emptyView.root)
             } else {

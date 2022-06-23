@@ -1,13 +1,8 @@
 package com.example.project_skripsi.module.student
 
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -16,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ActivityStMainBinding
-import com.example.project_skripsi.module.student.task.form.StTaskFormViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class StMainActivity : AppCompatActivity() {
 
@@ -35,7 +30,11 @@ class StMainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_student_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home_fragment, R.id.navigation_class_fragment, R.id.navigation_calendar_fragment, R.id.navigation_score_fragment, R.id.navigation_payment_fragment
+                R.id.navigation_home_fragment,
+                R.id.navigation_class_fragment,
+                R.id.navigation_calendar_fragment,
+                R.id.navigation_score_fragment,
+                R.id.navigation_payment_fragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -63,7 +62,7 @@ class StMainActivity : AppCompatActivity() {
 
     }
 
-    var mARLRequestCamera =  registerForActivityResult(
+    var mARLRequestCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) viewModel.captureImage()

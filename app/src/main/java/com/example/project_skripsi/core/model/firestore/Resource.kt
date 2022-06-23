@@ -8,7 +8,7 @@ import com.google.firebase.firestore.PropertyName
 data class Resource(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val title: String? = null,
 

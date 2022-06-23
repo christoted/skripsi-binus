@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.teacher.main.study_class
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,13 +13,13 @@ class TcStudyClassViewModel : ViewModel() {
 
 
     private val _homeroomClass = MutableLiveData<StudyClass>()
-    val homeroomClass : LiveData<StudyClass> = _homeroomClass
+    val homeroomClass: LiveData<StudyClass> = _homeroomClass
 
     private val _teachingSubjects = MutableLiveData<List<String>>()
-    val teachingSubjects : LiveData<List<String>> = _teachingSubjects
+    val teachingSubjects: LiveData<List<String>> = _teachingSubjects
 
     private val _teachingClasses = MutableLiveData<Pair<String, List<StudyClass>>>()
-    val teachingClasses : LiveData<Pair<String, List<StudyClass>>> = _teachingClasses
+    val teachingClasses: LiveData<Pair<String, List<StudyClass>>> = _teachingClasses
 
     private val subjectClasses = mutableMapOf<String, MutableList<String>>()
 
@@ -28,7 +27,7 @@ class TcStudyClassViewModel : ViewModel() {
         loadTeacher(AuthRepository.inst.getCurrentUser().uid)
     }
 
-    private fun loadTeacher(uid : String) {
+    private fun loadTeacher(uid: String) {
         FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
             with(teacher) {
                 homeroomClass?.let { loadHomeroomClass(it) }
@@ -59,8 +58,8 @@ class TcStudyClassViewModel : ViewModel() {
         }
     }
 
-    private fun customSortConstant(gradeLevel: Int?, name: String?) : String {
-        return "${12-(gradeLevel?:0)}${name}"
+    private fun customSortConstant(gradeLevel: Int?, name: String?): String {
+        return "${12 - (gradeLevel ?: 0)}${name}"
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.project_skripsi.core.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.project_skripsi.core.model.firestore.*
@@ -12,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class FireRepository : OnSuccessListener<Void>, OnFailureListener {
 
-    private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     companion object {
         var inst = FireRepository()
@@ -20,19 +19,45 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         private const val COLLECTION_ADMINISTRATOR = "administrators"
         private const val COLLECTION_TASK_FORM = "task_forms"
         private const val COLLECTION_RESOURCE = "resources"
-//        private const val COLLECTION_STUDENT = "students"
-//        private const val COLLECTION_TEACHER = "teachers"
-//        private const val COLLECTION_PARENT = "parents"
-//        private const val COLLECTION_STUDY_CLASS = "study_classes"
-//        private const val COLLECTION_ANNOUNCEMENT = "announcements"
-//        private const val COLLECTION_SCHOOL = "schools"
-
         private const val COLLECTION_STUDY_CLASS = "admin-study-class"
         private const val COLLECTION_STUDENT = "admin-student"
         private const val COLLECTION_SCHOOL = "admin-school"
         private const val COLLECTION_PARENT = "admin-parent"
         private const val COLLECTION_TEACHER = "admin-lecture"
         private const val COLLECTION_ANNOUNCEMENT = "admin-announcement"
+
+        /** ALL SCHOOL */
+//        private const val COLLECTION_ADMINISTRATOR  = "global-administrator"
+
+        /** SCHOOL 1 */
+//        private const val COLLECTION_STUDENT        = "s1-student"
+//        private const val COLLECTION_TEACHER        = "s1-teacher"
+//        private const val COLLECTION_PARENT         = "s1-parent"
+//        private const val COLLECTION_STUDY_CLASS    = "s1-study_class"
+//        private const val COLLECTION_SCHOOL         = "s1-school"
+//        private const val COLLECTION_RESOURCE       = "s1-resource"
+//        private const val COLLECTION_TASK_FORM      = "s1-task_form"
+//        private const val COLLECTION_ANNOUNCEMENT   = "s1-announcement"
+
+        /** SCHOOL 2 */
+//        private const val COLLECTION_STUDENT        = "s2-student"
+//        private const val COLLECTION_TEACHER        = "s2-teacher"
+//        private const val COLLECTION_PARENT         = "s2-parent"
+//        private const val COLLECTION_STUDY_CLASS    = "s2-study_class"
+//        private const val COLLECTION_SCHOOL         = "s2-school"
+//        private const val COLLECTION_RESOURCE       = "s2-resource"
+//        private const val COLLECTION_TASK_FORM      = "s2-task_form"
+//        private const val COLLECTION_ANNOUNCEMENT   = "s2-announcement"
+
+        /** SCHOOL 3 */
+//        private const val COLLECTION_STUDENT        = "s3-student"
+//        private const val COLLECTION_TEACHER        = "s3-teacher"
+//        private const val COLLECTION_PARENT         = "s3-parent"
+//        private const val COLLECTION_STUDY_CLASS    = "s3-study_class"
+//        private const val COLLECTION_SCHOOL         = "s3-school"
+//        private const val COLLECTION_RESOURCE       = "s3-resource"
+//        private const val COLLECTION_TASK_FORM      = "s3-task_form"
+//        private const val COLLECTION_ANNOUNCEMENT   = "s3-announcement"
 
         val mapCollection = mapOf(
             Student::class to COLLECTION_STUDENT,
@@ -47,7 +72,7 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
         )
     }
 
-    inline fun <reified T> getItem(uid : String) : Pair<LiveData<T>, LiveData<Exception>> {
+    inline fun <reified T> getItem(uid: String): Pair<LiveData<T>, LiveData<Exception>> {
         val data = MutableLiveData<T>()
         val exception = MutableLiveData<Exception>()
         val db = FirebaseFirestore.getInstance()
@@ -59,30 +84,30 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
                     if (result.data != null) data.postValue(result.toObject(T::class.java))
                     else exception.postValue(java.lang.Exception("$collection uid not found"))
                 }
-                .addOnFailureListener { ex -> exception.postValue(ex)}
+                .addOnFailureListener { ex -> exception.postValue(ex) }
         }
 
         return Pair(data, exception)
     }
 
-    inline fun <reified T> getItems(uids : List<String>) : Pair<LiveData<List<T>>, LiveData<Exception>> {
+    inline fun <reified T> getItems(uids: List<String>): Pair<LiveData<List<T>>, LiveData<Exception>> {
         val data = MutableLiveData<List<T>>()
         val exception = MutableLiveData<Exception>()
         val results = mutableListOf<T>()
         uids.map { uid ->
             getItem<T>(uid).let {
-                it.first.observeOnce{ item ->
+                it.first.observeOnce { item ->
                     results.add(item)
                     if (results.size == uids.size) data.postValue(results)
                 }
-                it.second.observeOnce{ _exception -> exception.postValue(_exception) }
+                it.second.observeOnce { _exception -> exception.postValue(_exception) }
             }
         }
         if (results.size == uids.size) data.postValue(results)
         return Pair(data, exception)
     }
 
-    inline fun <reified T> getAllItems() : Pair<LiveData<List<T>>, LiveData<Exception>> {
+    inline fun <reified T> getAllItems(): Pair<LiveData<List<T>>, LiveData<Exception>> {
         val list = mutableListOf<T>()
         val data = MutableLiveData<List<T>>()
         val exception = MutableLiveData<Exception>()
@@ -97,13 +122,13 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
                     }
                     data.postValue(list)
                 }
-                .addOnFailureListener { ex -> exception.postValue(ex)}
+                .addOnFailureListener { ex -> exception.postValue(ex) }
         }
         return Pair(data, exception)
     }
 
 
-    fun alterItems(items : List<Any>) : Pair<LiveData<Boolean>, LiveData<Exception>> {
+    fun alterItems(items: List<Any>): Pair<LiveData<Boolean>, LiveData<Exception>> {
         val isSuccess = MutableLiveData<Boolean>()
         val exception = MutableLiveData<Exception>()
 
@@ -138,12 +163,8 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
     }
 
 
-    override fun onSuccess(p0: Void?) {
-//        TODO("Not yet implemented")
-    }
+    override fun onSuccess(p0: Void?) {}
 
-    override fun onFailure(p0: java.lang.Exception) {
-//        TODO("Not yet implemented")
-    }
+    override fun onFailure(p0: java.lang.Exception) {}
 
 }

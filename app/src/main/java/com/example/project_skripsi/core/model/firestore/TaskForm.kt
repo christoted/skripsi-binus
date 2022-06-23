@@ -10,7 +10,7 @@ import java.util.*
 data class TaskForm(
 
     @DocumentId
-    val id : String? = null,
+    val id: String? = null,
 
     val title: String? = null,
 
@@ -52,7 +52,7 @@ data class TaskForm(
     @set: PropertyName("is_finalized")
     var isFinalized: Boolean? = null,
 
-    ): HomeSectionData()
+    ) : HomeSectionData()
 
 @IgnoreExtraProperties
 data class Question(

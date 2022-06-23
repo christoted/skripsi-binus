@@ -1,4 +1,5 @@
 package com.example.project_skripsi.module.teacher.main.home.announcement
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,8 @@ class TcAnnouncementFragment : Fragment() {
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         viewModel.announcementList.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                val emptyView = ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
+                val emptyView =
+                    ViewEmptyListBinding.inflate(layoutInflater, binding.llParent, false)
                 emptyView.tvEmpty.text = ("Tidak ada pengumuman")
                 binding.llParent.addView(emptyView.root)
             } else {

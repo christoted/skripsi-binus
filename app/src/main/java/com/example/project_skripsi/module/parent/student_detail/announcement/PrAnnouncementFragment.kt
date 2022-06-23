@@ -28,11 +28,13 @@ class PrAnnouncementFragment : Fragment() {
 
         binding.rvContainer.layoutManager = LinearLayoutManager(context)
         viewModel.announcementList.observe(viewLifecycleOwner, {
-            if (it.isEmpty()){
-                binding.llParent.addView(UIHelper.getEmptyList(
-                    "Tidak ada pengumuman",
-                    inflater, binding.llParent
-                ))
+            if (it.isEmpty()) {
+                binding.llParent.addView(
+                    UIHelper.getEmptyList(
+                        "Tidak ada pengumuman",
+                        inflater, binding.llParent
+                    )
+                )
             } else {
                 binding.rvContainer.adapter = AnnouncementViewHolder(it).getAdapter()
             }

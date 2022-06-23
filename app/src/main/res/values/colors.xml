@@ -66,6 +66,9 @@
     <color name="preq_fullfill">#4caf50</color>
     <color name="preq_not_fulfill">#b00020</color>
 
+    <color name="timer_alert">#af0000</color>
+    <color name="timer_normal">#000000</color>
+
 <!--    <color name="accent">#03A9F4</color>-->
 <!--    <color name="primary_text">#212121</color>-->
 <!--    <color name="secondary_text">#727272</color>-->

@@ -1,16 +1,13 @@
 package com.example.project_skripsi.module.teacher
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.NavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import com.example.project_skripsi.R
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.project_skripsi.databinding.ActivityStMainBinding
+import com.example.project_skripsi.R
 import com.example.project_skripsi.databinding.ActivityTcMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

@@ -3,13 +3,17 @@ package com.example.project_skripsi.module.parent.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project_skripsi.core.model.firestore.*
-import com.example.project_skripsi.core.model.local.*
+import com.example.project_skripsi.core.model.firestore.Announcement
+import com.example.project_skripsi.core.model.firestore.Parent
+import com.example.project_skripsi.core.model.firestore.Student
+import com.example.project_skripsi.core.model.local.HomeMainSection
+import com.example.project_skripsi.core.model.local.ParentAgendaMeeting
+import com.example.project_skripsi.core.model.local.ParentAgendaPayment
+import com.example.project_skripsi.core.model.local.ParentAgendaTaskForm
 import com.example.project_skripsi.core.repository.AuthRepository
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
 import kotlin.math.min
@@ -58,7 +62,7 @@ class PrHomeViewModel : ViewModel() {
         }
 
         _listPaymentSectionDataPayment.observeOnce {
-            listData[3] =  HomeMainSection(Constant.SECTION_PAYMENT, sectionItem = it)
+            listData[3] = HomeMainSection(Constant.SECTION_PAYMENT, sectionItem = it)
             _sectionData.postValue(listData)
         }
 
@@ -70,7 +74,6 @@ class PrHomeViewModel : ViewModel() {
         loadParent(AuthRepository.inst.getCurrentUser().uid)
         loadAnnouncements()
     }
-
 
 
     private fun loadParent(uid: String) {
@@ -93,13 +96,16 @@ class PrHomeViewModel : ViewModel() {
                     student.payments?.map { ParentAgendaPayment(student.name, it) } ?: emptyList()
                 )
                 meetingList.addAll(
-                    student.attendedMeetings?.map { ParentAgendaMeeting(student.name, it) } ?: emptyList()
+                    student.attendedMeetings?.map { ParentAgendaMeeting(student.name, it) }
+                        ?: emptyList()
                 )
                 examList.addAll(
-                    student.assignedExams?.map { ParentAgendaTaskForm(student.name, it) } ?: emptyList()
+                    student.assignedExams?.map { ParentAgendaTaskForm(student.name, it) }
+                        ?: emptyList()
                 )
                 assignmentList.addAll(
-                    student.assignedAssignments?.map { ParentAgendaTaskForm(student.name, it) } ?: emptyList()
+                    student.assignedAssignments?.map { ParentAgendaTaskForm(student.name, it) }
+                        ?: emptyList()
                 )
             }
             _listHomeSectionDataClassMeeting.postValue(
@@ -136,11 +142,11 @@ class PrHomeViewModel : ViewModel() {
 
     fun getStudents(page: Int): List<Student> {
         val startIdx = page * contentPerPage
-        val endIdx = min(startIdx + contentPerPage, studentList.value?.size?:0)
-        return studentList.value?.subList(startIdx, endIdx)?: emptyList()
+        val endIdx = min(startIdx + contentPerPage, studentList.value?.size ?: 0)
+        return studentList.value?.subList(startIdx, endIdx) ?: emptyList()
     }
 
-    fun getStudentPageCount() : Int{
+    fun getStudentPageCount(): Int {
         val subjects = studentList.value?.size ?: 0
         return (subjects + contentPerPage - 1) / contentPerPage
     }

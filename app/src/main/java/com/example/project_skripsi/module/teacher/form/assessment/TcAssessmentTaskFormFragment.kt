@@ -46,11 +46,21 @@ class TcAssessmentTaskFormFragment : Fragment() {
                     if (assignedQuestion.type == Constant.TASK_FORM_ESSAY) {
                         with(binding.rvQuestion.getChildAt(index)) {
                             val score = findViewById<TextView>(R.id.edt_score).text.toString()
-                            if (ValidationHelper.isStringEmpty(context, score, "Nilai - ${index+1}")) {
+                            if (ValidationHelper.isStringEmpty(
+                                    context,
+                                    score,
+                                    "Nilai - ${index + 1}"
+                                )
+                            ) {
                                 isOK = false
                                 return@mapIndexed
                             }
-                            if (ValidationHelper.isStringInteger(context, score, "Nilai - ${index+1}")) {
+                            if (ValidationHelper.isStringInteger(
+                                    context,
+                                    score,
+                                    "Nilai - ${index + 1}"
+                                )
+                            ) {
                                 isOK = false
                                 return@mapIndexed
                             }
@@ -72,7 +82,8 @@ class TcAssessmentTaskFormFragment : Fragment() {
                         }
                     } else {
                         with(binding.rvQuestion.getChildAt(index)) {
-                            val score = findViewById<TextView>(R.id.tv_score).text.toString().toInt()
+                            val score =
+                                findViewById<TextView>(R.id.tv_score).text.toString().toInt()
                             adapter.questionList[index].answer = Answer(
                                 assignedQuestion.answer?.answerText,
                                 score,
@@ -108,7 +119,7 @@ class TcAssessmentTaskFormFragment : Fragment() {
 
         viewModel.assessmentCompleted.observe(viewLifecycleOwner, {
             if (it) {
-                Toast.makeText(context,"Penilaian sukses", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Penilaian sukses", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
         })
@@ -121,7 +132,7 @@ class TcAssessmentTaskFormFragment : Fragment() {
         _binding = null
     }
 
-    private fun retrieveArgs(){
+    private fun retrieveArgs() {
         val args: TcAssessmentTaskFormFragmentArgs by navArgs()
         viewModel.setAssignedTaskForm(args.studentId, args.taskFormId)
     }

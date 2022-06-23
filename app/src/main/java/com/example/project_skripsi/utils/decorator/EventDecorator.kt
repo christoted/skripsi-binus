@@ -12,24 +12,48 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import java.util.*
 
-class EventDecorator(private val eventDay: CalendarDay, private val dayEventList : List<DayEvent>) : DayViewDecorator {
+class EventDecorator(private val eventDay: CalendarDay, private val dayEventList: List<DayEvent>) :
+    DayViewDecorator {
 
     val color = mapOf(
-        StCalendarViewModel.TYPE_MEETING to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null),
-        StCalendarViewModel.TYPE_EXAM to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null),
-        StCalendarViewModel.TYPE_ASSIGNMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_assignment, null),
-        StCalendarViewModel.TYPE_PAYMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_payment, null),
-        StCalendarViewModel.TYPE_ANNOUNCEMENT to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_announcement, null),
-        StCalendarViewModel.TYPE_MORE to ResourcesCompat.getColor(App.resourses!!, R.color.indicator_black, null),
+        StCalendarViewModel.TYPE_MEETING to ResourcesCompat.getColor(
+            App.resourses!!,
+            R.color.indicator_meeting,
+            null
+        ),
+        StCalendarViewModel.TYPE_EXAM to ResourcesCompat.getColor(
+            App.resourses!!,
+            R.color.indicator_exam,
+            null
+        ),
+        StCalendarViewModel.TYPE_ASSIGNMENT to ResourcesCompat.getColor(
+            App.resourses!!,
+            R.color.indicator_assignment,
+            null
+        ),
+        StCalendarViewModel.TYPE_PAYMENT to ResourcesCompat.getColor(
+            App.resourses!!,
+            R.color.indicator_payment,
+            null
+        ),
+        StCalendarViewModel.TYPE_ANNOUNCEMENT to ResourcesCompat.getColor(
+            App.resourses!!,
+            R.color.indicator_announcement,
+            null
+        ),
+        StCalendarViewModel.TYPE_MORE to ResourcesCompat.getColor(
+            App.resourses!!,
+            R.color.indicator_black,
+            null
+        ),
     )
 
     companion object {
         const val EVENT_LIMIT = 4
         private const val INDICATOR_START = 7
         const val INDICATOR_DISTANCE = 14
-        val startX = {x : Int -> INDICATOR_START - x * INDICATOR_START }
+        val startX = { x: Int -> INDICATOR_START - x * INDICATOR_START }
         const val startY = 10
     }
 
@@ -41,10 +65,12 @@ class EventDecorator(private val eventDay: CalendarDay, private val dayEventList
 
         if (dayEventList.size > EVENT_LIMIT) {
             var sx = startX(4)
-            for(i in 0..3) {
+            for (i in 0..3) {
                 val it = dayEventList[i]
-                val color = if (i == EVENT_LIMIT -1) color[StCalendarViewModel.TYPE_MORE] else color[it.viewType]
-                val span: LineBackgroundSpan = CustomSpan(color!!, sx, startY, (i == EVENT_LIMIT -1))
+                val color =
+                    if (i == EVENT_LIMIT - 1) color[StCalendarViewModel.TYPE_MORE] else color[it.viewType]
+                val span: LineBackgroundSpan =
+                    CustomSpan(color!!, sx, startY, (i == EVENT_LIMIT - 1))
                 view!!.addSpan(span)
                 sx += INDICATOR_DISTANCE
             }

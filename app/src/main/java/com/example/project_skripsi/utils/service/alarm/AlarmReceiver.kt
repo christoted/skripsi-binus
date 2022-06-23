@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
-import android.util.Log
-import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendar
 import java.util.*
 
@@ -19,7 +17,7 @@ class AlarmReceiver : BroadcastReceiver() {
         const val EXTRA_MINUTE = "minute"
     }
 
-    fun newIntent(context: Context, title: String, date: Date) : Intent {
+    fun newIntent(context: Context, title: String, date: Date): Intent {
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.putExtra(EXTRA_TITLE, title)
         intent.putExtra(EXTRA_HOUR, convertDateToCalendar(date).get(Calendar.HOUR_OF_DAY))
@@ -39,7 +37,7 @@ class AlarmReceiver : BroadcastReceiver() {
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minute)
         alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, title)
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true)
-        alarmIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+        alarmIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(alarmIntent)
     }
 }

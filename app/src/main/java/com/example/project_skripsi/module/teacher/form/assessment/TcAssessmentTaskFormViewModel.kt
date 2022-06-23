@@ -21,12 +21,12 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
         )
     }
 
-    private lateinit var taskForm : TaskForm
+    private lateinit var taskForm: TaskForm
     private lateinit var studentId: String
 
     private lateinit var currentStudent: Student
 
-    lateinit var assignedAnswers : List<Answer>
+    lateinit var assignedAnswers: List<Answer>
 
     private val _student = MutableLiveData<Student>()
     val student: LiveData<Student> = _student
@@ -38,7 +38,7 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
     val questionList: LiveData<List<AssignedQuestion>> = _questionList
 
     private val _assessmentComplete = MutableLiveData<Boolean>()
-    val assessmentCompleted : LiveData<Boolean> = _assessmentComplete
+    val assessmentCompleted: LiveData<Boolean> = _assessmentComplete
 
     fun setAssignedTaskForm(studentId: String, taskFormId: String) {
         this.studentId = studentId
@@ -56,11 +56,11 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             currentStudent = student
             _student.postValue(student)
-            when(taskForm.type) {
+            when (taskForm.type) {
                 Constant.TASK_TYPE_ASSIGNMENT -> student.assignedAssignments
                 else -> student.assignedExams
-            }?.firstOrNull{
-                    item -> item.id == taskForm.id
+            }?.firstOrNull { item ->
+                item.id == taskForm.id
             }.let {
                 _assignedTaskForm.postValue(it)
                 val questions = mutableListOf<AssignedQuestion>()
@@ -87,15 +87,15 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
                 answers = assignedAnswers
             )
 
-            when(taskForm.type) {
+            when (taskForm.type) {
                 Constant.TASK_TYPE_ASSIGNMENT -> currentStudent.assignedAssignments
                 else -> currentStudent.assignedExams
-            }?.let {
-                val pos = it.indexOfFirst { item -> item.id == taskForm.id }
-                it.set(pos, newAssignedTaskForm)
+            }?.let { list ->
+                val pos = list.indexOfFirst { item -> item.id == taskForm.id }
+                list.set(pos, newAssignedTaskForm)
             }
-            FireRepository.inst.alterItems(listOf(currentStudent)).first.observeOnce{
-                _assessmentComplete.postValue(it)
+            FireRepository.inst.alterItems(listOf(currentStudent)).first.observeOnce { status ->
+                _assessmentComplete.postValue(status)
             }
         }
     }

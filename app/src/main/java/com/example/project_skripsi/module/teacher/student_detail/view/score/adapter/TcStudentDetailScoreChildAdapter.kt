@@ -7,11 +7,10 @@ import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.local.ScoreMainSection
 import com.example.project_skripsi.core.model.local.ScoreSectionData
 import com.example.project_skripsi.databinding.ItemStProgressScoreChildBinding
-import com.example.project_skripsi.module.teacher.student_detail.viewmodel.TcStudentDetailViewModel
 import com.example.project_skripsi.utils.Constant
 
 
-class TcStudentDetailScoreChildAdapter(private val viewModel: TcStudentDetailViewModel, private val scoreMainData: ScoreMainSection): RecyclerView.Adapter<TcStudentDetailScoreChildAdapter.StScoreContentChildViewHolder>() {
+class TcStudentDetailScoreChildAdapter(private val scoreMainData: ScoreMainSection): RecyclerView.Adapter<TcStudentDetailScoreChildAdapter.StScoreContentChildViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.project_skripsi.databinding.FragmentPrProgressBinding
 import com.example.project_skripsi.module.parent.student_detail.payment.PrPaymentFragmentArgs
+import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel.Companion.VIEW_TYPE_ACHIEVEMENT
 import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel.Companion.VIEW_TYPE_ATTENDANCE
 import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel.Companion.VIEW_TYPE_SCORE
 import com.example.project_skripsi.module.parent.student_detail.progress.achievement.PrProgressAchievementFragment
 import com.example.project_skripsi.module.parent.student_detail.progress.attendance.PrProgressAttendanceFragment
 import com.example.project_skripsi.module.parent.student_detail.progress.score.PrProgressScoreFragment
 import com.example.project_skripsi.module.student.main.progress.viewmodel.StScoreViewModel
-import com.google.android.material.tabs.TabLayoutMediator
-import com.example.project_skripsi.databinding.FragmentPrProgressBinding
-import com.example.project_skripsi.module.parent.student_detail.progress.PrProgressViewModel.Companion.VIEW_TYPE_ACHIEVEMENT
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class PrProgressFragment : Fragment() {
@@ -46,7 +46,7 @@ class PrProgressFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
             tab.text = StScoreViewModel.tabHeader[position]
         }.attach()
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.position.let { position ->
                     with(binding) {
@@ -54,24 +54,59 @@ class PrProgressFragment : Fragment() {
                         flAttendance.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
                         flAchievement.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-                        val circleExpand = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90f, resources.displayMetrics).toInt()
-                        val circleShrink = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt()
+                        val circleExpand = TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP,
+                            90f,
+                            resources.displayMetrics
+                        ).toInt()
+                        val circleShrink = TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP,
+                            80f,
+                            resources.displayMetrics
+                        ).toInt()
 
-                        flScore.updateLayoutParams { height = if (position == VIEW_TYPE_SCORE) circleExpand else circleShrink }
-                        flAttendance.updateLayoutParams { height = if (position == VIEW_TYPE_ATTENDANCE) circleExpand else circleShrink }
-                        flAchievement.updateLayoutParams { height = if (position == VIEW_TYPE_ACHIEVEMENT) circleExpand else circleShrink }
+                        flScore.updateLayoutParams {
+                            height = if (position == VIEW_TYPE_SCORE) circleExpand else circleShrink
+                        }
+                        flAttendance.updateLayoutParams {
+                            height =
+                                if (position == VIEW_TYPE_ATTENDANCE) circleExpand else circleShrink
+                        }
+                        flAchievement.updateLayoutParams {
+                            height =
+                                if (position == VIEW_TYPE_ACHIEVEMENT) circleExpand else circleShrink
+                        }
                     }
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
         with(binding) {
-            imvBack.setOnClickListener{ view?.findNavController()?.popBackStack() }
-            imvScore.setOnClickListener { Toast.makeText(context, "Rata-rata nilai akhir", Toast.LENGTH_SHORT).show() }
-            imvAttendance.setOnClickListener { Toast.makeText(context, "Jumlah Absen", Toast.LENGTH_SHORT).show() }
-            imvAchievement.setOnClickListener { Toast.makeText(context, "Jumlah Pencapaian", Toast.LENGTH_SHORT).show() }
+            imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
+            imvScore.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Rata-rata nilai akhir",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            imvAttendance.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Jumlah Absen",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            imvAchievement.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Jumlah Pencapaian",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
 
@@ -102,7 +137,9 @@ class PrProgressFragment : Fragment() {
 
         binding.btnGraphic.setOnClickListener {
             view?.findNavController()?.navigate(
-                PrProgressFragmentDirections.actionPrProgressFragmentToPrProgressGraphicFragment(args.studentId)
+                PrProgressFragmentDirections.actionPrProgressFragmentToPrProgressGraphicFragment(
+                    args.studentId
+                )
             )
         }
     }
@@ -112,7 +149,7 @@ class PrProgressFragment : Fragment() {
             PrProgressViewModel.tabCount
 
         override fun createFragment(position: Int): Fragment {
-            return when(position) {
+            return when (position) {
                 VIEW_TYPE_SCORE -> PrProgressScoreFragment(viewModel)
                 VIEW_TYPE_ATTENDANCE -> PrProgressAttendanceFragment(viewModel)
                 else -> PrProgressAchievementFragment(viewModel)

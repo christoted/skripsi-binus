@@ -19,7 +19,6 @@ import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.parent.student_detail._sharing.PrTaskViewHolder
 import com.example.project_skripsi.module.parent.student_detail.exam.PrExamFragmentArgs
 import com.example.project_skripsi.module.student.main.progress.graphic.StSubjectFilterViewHolder
-import com.example.project_skripsi.module.student.task._sharing.TaskViewHolder
 import com.example.project_skripsi.module.student.task.assignment.StTaskAssignmentViewModel
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.UIHelper
@@ -31,7 +30,7 @@ class PrAssignmentFragment : Fragment(), ItemClickListener {
     private var _binding: FragmentPrAssignmentBinding? = null
     private val binding get() = _binding!!
 
-    private var dialog : BottomSheetDialog? = null
+    private var dialog: BottomSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,15 +85,15 @@ class PrAssignmentFragment : Fragment(), ItemClickListener {
     }
 
     private fun retrieveArgs() {
-        val args : PrExamFragmentArgs by navArgs()
+        val args: PrExamFragmentArgs by navArgs()
         viewModel.setStudent(args.studentId)
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        private var ongoingEmptyView : View? = null
-        private var pastEmptyView : View? = null
+        private var ongoingEmptyView: View? = null
+        private var pastEmptyView: View? = null
 
         override fun getCount(): Int =
             StTaskAssignmentViewModel.tabCount
@@ -111,27 +110,35 @@ class PrAssignmentFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 StTaskAssignmentViewModel.ASSIGNMENT_ONGOING -> {
                     viewModel.ongoingList.observe(viewLifecycleOwner, { list ->
                         ongoingEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas yang sedang berlangsung", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada tugas yang sedang berlangsung",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             ongoingEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, false).getAdapter()
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(list).getAdapter()
                     })
                 }
                 StTaskAssignmentViewModel.ASSIGNMENT_PAST -> {
                     viewModel.pastList.observe(viewLifecycleOwner, { list ->
                         pastEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas yang sudah selesai", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada tugas yang sudah selesai",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             pastEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(TaskViewHolder.TYPE_ASSIGNMENT, list, false).getAdapter()
+                        bindingRV.rvContainer.adapter = PrTaskViewHolder(list).getAdapter()
                     })
                 }
             }

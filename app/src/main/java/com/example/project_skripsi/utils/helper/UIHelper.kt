@@ -10,13 +10,13 @@ class UIHelper {
 
     companion object {
 
-        fun getEmptyList(message: String, inflater: LayoutInflater, parent: ViewGroup) : View {
+        fun getEmptyList(message: String, inflater: LayoutInflater, parent: ViewGroup): View {
             val emptyView = ViewEmptyListBinding.inflate(inflater, parent, false)
             emptyView.tvEmpty.text = message
             return emptyView.root
         }
 
-        fun getEmptyItem(message: String, inflater: LayoutInflater, parent: ViewGroup) : View {
+        fun getEmptyItem(message: String, inflater: LayoutInflater, parent: ViewGroup): View {
             val emptyView = ViewEmptyItemBinding.inflate(inflater, parent, false)
             emptyView.tvEmpty.text = message
             return emptyView.root

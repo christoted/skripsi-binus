@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -16,18 +15,14 @@ import com.example.project_skripsi.databinding.DialogTcTaskTypeBinding
 import com.example.project_skripsi.databinding.FragmentTcTaskBinding
 import com.example.project_skripsi.databinding.ViewRecyclerViewBinding
 import com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskViewModel
-import com.example.project_skripsi.module.teacher.form.alter.TcFormAdapter
-import com.example.project_skripsi.module.teacher.main.task.draft.TcTaskDraftFragmentDirections
 import com.example.project_skripsi.module.teacher.study_class.task.TaskViewHolder
-import com.example.project_skripsi.module.teacher.study_class.task.TcStudyClassTaskViewModel
-import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.ItemClickListener
 import com.example.project_skripsi.utils.helper.UIHelper
 import com.google.android.material.chip.Chip
 
 class TcTaskFragment : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel : TcTaskViewModel
+    private lateinit var viewModel: TcTaskViewModel
     private var _binding: FragmentTcTaskBinding? = null
     private val binding get() = _binding!!
 
@@ -45,7 +40,8 @@ class TcTaskFragment : Fragment(), ItemClickListener {
             var hasItem = false
             var roundRobin = 0
             it.map { subjectGroup ->
-                val chip = inflater.inflate(R.layout.item_tc_chip, binding.cgSubjectGroup, false) as Chip
+                val chip =
+                    inflater.inflate(R.layout.item_tc_chip, binding.cgSubjectGroup, false) as Chip
                 chip.id = View.generateViewId()
                 chip.text = ("${subjectGroup.gradeLevel}-${subjectGroup.subjectName}")
 
@@ -151,11 +147,11 @@ class TcTaskFragment : Fragment(), ItemClickListener {
         }
     }
 
-    private inner class ScreenSlidePagerAdapter : PagerAdapter(){
+    private inner class ScreenSlidePagerAdapter : PagerAdapter() {
 
         lateinit var layoutInflater: LayoutInflater
-        private var examEmptyView : View? = null
-        private var assignmentEmptyView : View? = null
+        private var examEmptyView: View? = null
+        private var assignmentEmptyView: View? = null
 
         override fun getCount(): Int =
             TcTaskViewModel.tabCount
@@ -172,27 +168,37 @@ class TcTaskFragment : Fragment(), ItemClickListener {
             val bindingRV = ViewRecyclerViewBinding.inflate(layoutInflater, container, false)
 
             bindingRV.rvContainer.layoutManager = LinearLayoutManager(context)
-            when(position) {
+            when (position) {
                 TcTaskViewModel.TAB_EXAM -> {
                     viewModel.examList.observe(viewLifecycleOwner, { list ->
                         examEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada ujian yang final", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada ujian yang final",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             examEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(list, this@TcTaskFragment).getAdapter()
+                        bindingRV.rvContainer.adapter =
+                            TaskViewHolder(list, this@TcTaskFragment).getAdapter()
                     })
                 }
                 TcTaskViewModel.TAB_ASSIGNMENT -> {
                     viewModel.assignmentList.observe(viewLifecycleOwner, { list ->
                         assignmentEmptyView?.let { bindingRV.llParent.removeView(it) }
                         if (list.isEmpty()) {
-                            val emptyView = UIHelper.getEmptyList("Tidak ada tugas yang final", layoutInflater, bindingRV.llParent)
+                            val emptyView = UIHelper.getEmptyList(
+                                "Tidak ada tugas yang final",
+                                layoutInflater,
+                                bindingRV.llParent
+                            )
                             bindingRV.llParent.addView(emptyView)
                             assignmentEmptyView = emptyView
                         }
-                        bindingRV.rvContainer.adapter = TaskViewHolder(list, this@TcTaskFragment).getAdapter()
+                        bindingRV.rvContainer.adapter =
+                            TaskViewHolder(list, this@TcTaskFragment).getAdapter()
                     })
                 }
             }

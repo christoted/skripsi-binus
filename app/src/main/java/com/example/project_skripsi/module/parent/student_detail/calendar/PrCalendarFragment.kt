@@ -13,10 +13,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_skripsi.databinding.DialogIndicatorInfoBinding
 import com.example.project_skripsi.databinding.FragmentPrCalendarBinding
-import com.example.project_skripsi.databinding.FragmentPrHomeBinding
-import com.example.project_skripsi.databinding.ViewEmptyItemBinding
-import com.example.project_skripsi.module.student.main.calendar.StCalendarAdapter
-import com.example.project_skripsi.module.teacher.main.calendar.TcCalendarAdapter
 import com.example.project_skripsi.utils.decorator.EventDecorator
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.UIHelper
@@ -32,7 +28,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
     private var _binding: FragmentPrCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private var curEmptyView : View? = null
+    private var curEmptyView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,10 +85,11 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
         refreshList(date)
     }
 
-    private fun refreshList(date : CalendarDay){
+    private fun refreshList(date: CalendarDay) {
         curEmptyView?.let { binding.llRvParent.removeView(it) }
         if (viewModel.currentDataList[date].isNullOrEmpty()) {
-            val emptyView = UIHelper.getEmptyItem("Tidak ada kegiatan", layoutInflater, binding.llRvParent)
+            val emptyView =
+                UIHelper.getEmptyItem("Tidak ada kegiatan", layoutInflater, binding.llRvParent)
             binding.llRvParent.addView(emptyView)
             curEmptyView = emptyView
         }
@@ -105,7 +102,7 @@ class PrCalendarFragment : Fragment(), OnDateSelectedListener {
     }
 
     private fun retrieveArgs() {
-        val args : PrCalendarFragmentArgs by navArgs()
-        viewModel.setStudent(args.studentId);
+        val args: PrCalendarFragmentArgs by navArgs()
+        viewModel.setStudent(args.studentId)
     }
 }
