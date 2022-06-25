@@ -42,6 +42,7 @@ class TcAssessmentTaskFormFragment : Fragment() {
             val adapter = TcAssessmentFormAdapter(questions, allowAssessment)
 
             if (allowAssessment) binding.btnConfirm.visibility = View.VISIBLE
+            else Toast.makeText(context, "Form hanya dapat dikoreksi setelah waktu pengerjaan selesai", Toast.LENGTH_SHORT).show()
             binding.rvQuestion.adapter = adapter
             binding.btnConfirm.setOnClickListener {
                 var isOK = true

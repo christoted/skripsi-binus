@@ -23,6 +23,10 @@ class TcPreviewTaskViewModel : ViewModel() {
             TASK_TYPE_FINAL_EXAM to "Ujian Akhir Semester",
             TASK_TYPE_ASSIGNMENT to "Tugas"
         )
+
+        const val GROUP_CLASS = 0
+        const val GROUP_RESOURCE = 1
+        const val GROUP_ASSIGNMENT = 2
     }
 
 
@@ -37,6 +41,8 @@ class TcPreviewTaskViewModel : ViewModel() {
 
     private val _prerequisiteTaskForm = MutableLiveData<List<String>>()
     val prerequisiteTaskForm : LiveData<List<String>> = _prerequisiteTaskForm
+
+    var isExpanded = BooleanArray(3) {false}
 
     private var formType: Int = -1
 
