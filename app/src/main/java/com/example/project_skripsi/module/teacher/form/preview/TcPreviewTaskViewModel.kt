@@ -3,6 +3,8 @@ package com.example.project_skripsi.module.teacher.form.preview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.project_skripsi.core.model.firestore.Resource
+import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.model.firestore.TaskForm
 import com.example.project_skripsi.core.model.firestore.Teacher
 import com.example.project_skripsi.core.model.local.SubjectGroup
@@ -27,30 +29,54 @@ class TcPreviewTaskViewModel : ViewModel() {
     private val _oldTaskForm = MutableLiveData<TaskForm>()
     val oldTaskForm: LiveData<TaskForm> = _oldTaskForm
 
-    private lateinit var subjectGroup: SubjectGroup
-    private val classIds = mutableListOf<String>()
+    private val _studyClasses = MutableLiveData<List<String>>()
+    val studyClasses : LiveData<List<String>> = _studyClasses
+
+    private val _prerequisiteResource = MutableLiveData<List<String>>()
+    val prerequisiteResource : LiveData<List<String>> = _prerequisiteResource
+
+    private val _prerequisiteTaskForm = MutableLiveData<List<String>>()
+    val prerequisiteTaskForm : LiveData<List<String>> = _prerequisiteTaskForm
 
     private var formType: Int = -1
 
 
-    fun initData(subjectName: String, gradeLevel: Int, formType: Int, taskFormId: String) {
-        subjectGroup = SubjectGroup(subjectName, gradeLevel)
+    fun initData(formType: Int, taskFormId: String) {
         this.formType = formType
-        loadTeacher(AuthRepository.inst.getCurrentUser().uid)
         loadTaskForm(taskFormId)
     }
 
-    private fun loadTeacher(uid: String) {
-        FireRepository.inst.getItem<Teacher>(uid).first.observeOnce { teacher ->
-            teacher.teachingGroups?.firstOrNull { it.subjectName == subjectGroup.subjectName && it.gradeLevel == subjectGroup.gradeLevel }
-                ?.let { group ->
-                    group.teachingClasses?.let { classIds.addAll(it) }
-                }
+    private fun loadTaskForm(uid: String) {
+        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { taskForm ->
+            _oldTaskForm.postValue(taskForm)
+            taskForm.assignedClasses?.let { loadClasses(it) }
+            taskForm.prerequisiteResources?.let { loadResources(it) }
+            taskForm.prerequisiteTaskForms?.let { loadTaskForms(it) }
         }
     }
 
-    private fun loadTaskForm(uid: String) {
-        FireRepository.inst.getItem<TaskForm>(uid).first.observeOnce { _oldTaskForm.postValue(it) }
+    private fun loadClasses(uids: List<String>) {
+        FireRepository.inst.getItems<StudyClass>(uids).first.observeOnce { list ->
+            _studyClasses.postValue(
+                list.map { it.name ?: "" }.sortedBy { it }
+            )
+        }
+    }
+
+    private fun loadResources(uids: List<String>) {
+        FireRepository.inst.getItems<Resource>(uids).first.observeOnce { list ->
+            _prerequisiteResource.postValue(
+                list.sortedBy { it.meetingNumber }.map { it.title ?: "" }
+            )
+        }
+    }
+
+    private fun loadTaskForms(uids: List<String>) {
+        FireRepository.inst.getItems<TaskForm>(uids).first.observeOnce { list ->
+            _prerequisiteTaskForm.postValue(
+                list.sortedBy { it.startTime }.map { it.title ?: "" }
+            )
+        }
     }
 
 }

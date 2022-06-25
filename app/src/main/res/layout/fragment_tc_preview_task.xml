@@ -65,150 +65,206 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="8dp">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
-
-            <TableRow>
-                <TextView
-                    android:text="Judul"/>
-                <TextView
-                    android:text=":"/>
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:text="Mulai pada"/>
-                <TextView
-                    android:text=":"/>
-                <TextView
-                    android:id="@+id/tv_start_time"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:text="Selesai pada"/>
-                <TextView
-                    android:text=":"/>
-                <TextView
-                    android:id="@+id/tv_end_time"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:text="Durasi"/>
-                <TextView
-                    android:text=":"/>
-                <TextView
-                    android:id="@+id/tv_duration"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:text="Tipe formulir"
-                    android:layout_marginEnd="8dp"/>
-                <TextView
-                    android:text=":"
-                    android:layout_marginEnd="8dp"/>
-                <TextView
-                    android:id="@+id/tv_form_type"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tr_preq_resource">
-                <TextView
-                    android:text="Jumlah Prasyarat Materi"
-                    android:layout_marginEnd="8dp"/>
-                <TextView
-                    android:text=":"
-                    android:layout_marginEnd="8dp"/>
-                <TextView
-                    android:id="@+id/tv_preq_resource"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tr_preq_assignment">
-                <TextView
-                    android:text="Jumlah Prasyarat Tugas"/>
-                <TextView
-                    android:text=":"/>
-                <TextView
-                    android:id="@+id/tv_preq_assignment"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:text="Jumlah Soal"/>
-                <TextView
-                    android:text=":"/>
-                <TextView
-                    android:id="@+id/tv_question_count"
-                    android:textColor="@color/black"
-                    tools:text="Judul"/>
-            </TableRow>
-
-        </TableLayout>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingBottom="8dp">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <TableRow>
+                    <TextView
+                        android:text="Judul"/>
+                    <TextView
+                        android:text=":"/>
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:textColor="@color/black"
+                        tools:text="Judul"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Mulai pada"/>
+                    <TextView
+                        android:text=":"/>
+                    <TextView
+                        android:id="@+id/tv_start_time"
+                        android:textColor="@color/black"
+                        tools:text="Judul"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Selesai pada"/>
+                    <TextView
+                        android:text=":"/>
+                    <TextView
+                        android:id="@+id/tv_end_time"
+                        android:textColor="@color/black"
+                        tools:text="Judul"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Durasi"/>
+                    <TextView
+                        android:text=":"/>
+                    <TextView
+                        android:id="@+id/tv_duration"
+                        android:textColor="@color/black"
+                        tools:text="Judul"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Tipe formulir"
+                        android:layout_marginEnd="8dp"/>
+                    <TextView
+                        android:text=":"
+                        android:layout_marginEnd="8dp"/>
+                    <TextView
+                        android:id="@+id/tv_form_type"
+                        android:textColor="@color/black"
+                        tools:text="Judul"/>
+                </TableRow>
+
+                <!--            <TableRow-->
+                <!--                android:id="@+id/tr_preq_resource">-->
+                <!--                <TextView-->
+                <!--                    android:text="Jumlah Prasyarat Materi"-->
+                <!--                    android:layout_marginEnd="8dp"/>-->
+                <!--                <TextView-->
+                <!--                    android:text=":"-->
+                <!--                    android:layout_marginEnd="8dp"/>-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_preq_resource"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    tools:text="Judul"/>-->
+                <!--            </TableRow>-->
+
+                <!--            <TableRow-->
+                <!--                android:id="@+id/tr_preq_assignment">-->
+                <!--                <TextView-->
+                <!--                    android:text="Jumlah Prasyarat Tugas"/>-->
+                <!--                <TextView-->
+                <!--                    android:text=":"/>-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_preq_assignment"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    tools:text="Judul"/>-->
+                <!--            </TableRow>-->
+
+                <TableRow>
+                    <TextView
+                        android:text="Jumlah Soal"/>
+                    <TextView
+                        android:text=":"/>
+                    <TextView
+                        android:id="@+id/tv_question_count"
+                        android:textColor="@color/black"
+                        tools:text="Judul"/>
+                </TableRow>
+
+            </TableLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Lihat Formulir Siswa"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/btn_preview_form"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Form"/>
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_preview_form"
-                android:layout_width="wrap_content"
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Form"/>
+                android:text="Kelas"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_item_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/header_resource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prasyarat Materi"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp"
+                android:paddingHorizontal="8dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_item_preq_resource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/header_assignment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prasyarat Tugas"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp"
+                android:paddingHorizontal="8dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_item_preq_assignment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
 
 </LinearLayout>

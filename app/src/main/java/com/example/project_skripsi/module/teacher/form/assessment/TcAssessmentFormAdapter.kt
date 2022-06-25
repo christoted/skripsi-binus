@@ -2,8 +2,11 @@ package com.example.project_skripsi.module.teacher.form.assessment
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.*
@@ -16,7 +19,10 @@ import com.example.project_skripsi.module.common.view_image.ViewImageViewHolder
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.app.App
 
-class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
+class TcAssessmentFormAdapter(
+    val questionList: List<AssignedQuestion>,
+    val allowAssessment: Boolean
+    ) :
     Adapter<ViewHolder>() {
 
     private val imageList: List<MutableList<String>> = List(questionList.size) { mutableListOf() }
@@ -98,13 +104,17 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
                 tvScore.text =
                     if (item.answerKey == item.answer?.answerText) item.scoreWeight.toString() else "0"
 
-                item.answer?.images?.let { list ->
+                item.answer?.images?.takeIf { it.isNotEmpty() }?.let { list ->
                     tvImageCount.text = list.size.toString()
                     btnViewImage.setOnClickListener { showImagesDialog(position, root.context) }
                 } ?: kotlin.run {
                     llImages.visibility = GONE
                 }
 
+                if (!allowAssessment) {
+                    dvScore.visibility = View.GONE
+                    llScore.visibility = View.GONE
+                }
             }
         }
     }
@@ -115,7 +125,21 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
             with(binding) {
                 tvNumber.text = ("${position + 1}.")
                 tvTitle.text = item.title
-                item.answer?.answerText?.let { tvAnswer.text = it }
+                item.answer?.answerText?.let {
+                    if (it.isEmpty()) {
+                        tvAnswer.text = ("jawaban tidak diisi")
+                        tvAnswer.setTypeface(null, Typeface.ITALIC)
+                        tvAnswer.setTextColor(
+                            ResourcesCompat.getColor(
+                                App.resourses!!,
+                                R.color.empty_answer,
+                                null
+                            )
+                        )
+                    } else {
+                        tvAnswer.text = it
+                    }
+                }
                 tvScoreWeight.text = ("Nilai (0 - ${item.scoreWeight}): ")
                 item.answer?.score.let { edtScore.setText(it.toString()) }
                 btnSetZero.text = ("SET 0")
@@ -123,11 +147,16 @@ class TcAssessmentFormAdapter(val questionList: List<AssignedQuestion>) :
                 btnSetMax.text = ("SET ${item.scoreWeight}")
                 btnSetMax.setOnClickListener { edtScore.setText(item.scoreWeight.toString()) }
 
-                item.answer?.images?.let { list ->
+                item.answer?.images?.takeIf { it.isNotEmpty() }?.let { list ->
                     tvImageCount.text = list.size.toString()
                     btnViewImage.setOnClickListener { showImagesDialog(position, root.context) }
                 } ?: kotlin.run {
                     llImages.visibility = GONE
+                }
+
+                if (!allowAssessment) {
+                    dvScore.visibility = View.GONE
+                    llScore.visibility = View.GONE
                 }
             }
         }

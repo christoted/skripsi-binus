@@ -3,6 +3,7 @@ package com.example.project_skripsi.module.teacher.study_class.task_detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.project_skripsi.core.model.firestore.AssignedTaskForm
 import com.example.project_skripsi.core.model.firestore.Student
 import com.example.project_skripsi.core.model.firestore.StudyClass
 import com.example.project_skripsi.core.model.firestore.TaskForm
@@ -73,13 +74,9 @@ class TcStudyClassTaskDetailViewModel : ViewModel() {
         }
     }
 
-    fun getTaskScore(item: Student): Int {
-        item.assignedAssignments?.firstOrNull { it.id == taskFormId }?.score.let {
-            if (it != null) return it
-        }
-        item.assignedExams?.firstOrNull { it.id == taskFormId }?.score.let {
-            if (it != null) return it
-        }
-        return 0
+    fun getTaskScore(item: Student): AssignedTaskForm? {
+        item.assignedExams?.firstOrNull { it.id == taskFormId }?.let { return it }
+        item.assignedAssignments?.firstOrNull { it.id == taskFormId }?.let { return it }
+        return null
     }
 }
