@@ -79,7 +79,8 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp">
+                android:paddingHorizontal="8dp"
+                android:paddingTop="8dp">
 
                 <TableRow>
                     <TextView
@@ -177,7 +178,9 @@
 
             </TableLayout>
 
-
+<!--            <com.google.android.material.divider.MaterialDivider-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"/>-->
 
             <LinearLayout
                 android:id="@+id/ll_header_class"
@@ -213,6 +216,7 @@
                 android:id="@+id/rv_item_class"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
                 android:paddingHorizontal="8dp"
                 android:visibility="gone"/>
 
@@ -256,6 +260,7 @@
                 android:id="@+id/rv_item_preq_resource"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
                 android:paddingHorizontal="8dp"
                 android:visibility="gone"/>
 
@@ -300,6 +305,7 @@
                 android:id="@+id/rv_item_preq_assignment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
                 android:paddingHorizontal="8dp"
                 android:visibility="gone"/>
 
@@ -321,7 +327,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lihat Formulir Siswa"/>
+                    android:text="Lihat Formulir Siswa"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
 
                 <Button
                     android:id="@+id/btn_preview_form"
@@ -334,7 +343,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
 </LinearLayout>
