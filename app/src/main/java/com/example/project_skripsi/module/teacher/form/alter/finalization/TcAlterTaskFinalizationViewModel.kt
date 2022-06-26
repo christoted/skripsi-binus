@@ -124,8 +124,8 @@ class TcAlterTaskFinalizationViewModel : ViewModel() {
                                 isChecked = false,
                                 score = 0,
                                 answers = taskForm.questions?.map {
-                                    if (it.type == TASK_FORM_MC) Answer("0", 0)
-                                    else Answer("", 0)
+                                    if (it.type == TASK_FORM_MC) Answer("0", 0, emptyList())
+                                    else Answer("", 0, emptyList())
                                 } ?: emptyList()
                             )
                         )

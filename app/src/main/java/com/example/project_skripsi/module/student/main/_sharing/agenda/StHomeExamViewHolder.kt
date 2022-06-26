@@ -37,6 +37,8 @@ class StHomeExamViewHolder(
             } else {
                 btnClass.setOnClickListener {
                     when {
+                        DateHelper.getCurrentTime() > item.endTime ->
+                            Toast.makeText(root.context, "Ujian sudah selesai", Toast.LENGTH_SHORT).show()
                         DateHelper.getCurrentTime() < item.startTime ->
                             Toast.makeText(root.context, "Ujian belum dimulai", Toast.LENGTH_SHORT)
                                 .show()

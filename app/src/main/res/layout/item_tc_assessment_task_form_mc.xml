@@ -195,7 +195,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gambar: "
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:paddingVertical="4dp"/>
 
                 <TextView
                     android:id="@+id/tv_image_count"
@@ -218,19 +219,20 @@
         </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/dv_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:dividerInsetStart="16dp"
-            app:dividerInsetEnd="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
+            app:dividerInsetEnd="16dp"/>
 
         <LinearLayout
+            android:id="@+id/ll_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp">
 
             <TextView

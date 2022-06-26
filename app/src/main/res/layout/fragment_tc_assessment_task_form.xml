@@ -84,7 +84,6 @@
             android:id="@+id/rv_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/recyclerview_background"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/item_tc_assessment_task_form_mc" />
 
@@ -102,7 +101,8 @@
                 android:layout_gravity="end"
                 android:text="Konfirmasi"
                 app:tint="@color/white"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

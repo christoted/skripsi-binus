@@ -87,14 +87,14 @@ class StScoreFragment : Fragment() {
             imvAttendance.setOnClickListener {
                 Toast.makeText(
                     context,
-                    "Jumlah Absen",
+                    "Persentase kehadiran siswa",
                     Toast.LENGTH_SHORT
                 ).show()
             }
             imvAchievement.setOnClickListener {
                 Toast.makeText(
                     context,
-                    "Jumlah Pencapaian",
+                    "Jumlah pencapaian",
                     Toast.LENGTH_SHORT
                 ).show()
             }

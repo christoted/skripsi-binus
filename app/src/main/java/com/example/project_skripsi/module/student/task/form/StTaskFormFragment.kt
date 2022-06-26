@@ -81,6 +81,11 @@ class StTaskFormFragment : Fragment() {
                 viewModel.isViewOnly
             )
             binding.rvQuestion.adapter = adapter
+
+            if (viewModel.isViewOnly) {
+                return@observe
+            }
+
             binding.btnSubmit.setOnClickListener {
                 submitAnswer(adapter)
                 binding.btnSubmit.isEnabled = false
@@ -162,6 +167,6 @@ class StTaskFormFragment : Fragment() {
     private fun retrieveArgs() {
         val args: StTaskFormFragmentArgs by navArgs()
         viewModel.setTaskForm(args.taskFormId)
-        AlarmService.inst.cancelAlarm(requireContext(), args.taskFormId)
+        AlarmService.inst.cancelAlarm(requireContext(), args.taskFormId, true)
     }
 }

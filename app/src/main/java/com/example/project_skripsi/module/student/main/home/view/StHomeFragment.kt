@@ -134,7 +134,7 @@ class StHomeFragment : Fragment(), ItemListener {
                     AlarmService.inst.createAlarm(
                         requireContext(),
                         "Kelas ${attendedMeeting.subjectName} sudah mulai 2 menit",
-                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-5),
+                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-15),
                         attendedMeeting.id
                     )
                 }
@@ -161,7 +161,7 @@ class StHomeFragment : Fragment(), ItemListener {
                     AlarmService.inst.createAlarm(
                         requireContext(),
                         "Ujian ${taskForm.subjectName} sudah mulai 2 menit",
-                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-5),
+                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-15),
                         taskForm.id
                     )
                 }
@@ -199,7 +199,7 @@ class StHomeFragment : Fragment(), ItemListener {
                     AlarmService.inst.createAlarm(
                         requireContext(),
                         "Tugas ${taskForm.subjectName} sudah mulai 2 menit",
-                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-5),
+                        dt.getDateWithMinuteOffset(2).getDateWithSecondOffset(-15),
                         taskForm.id
                     )
                 }

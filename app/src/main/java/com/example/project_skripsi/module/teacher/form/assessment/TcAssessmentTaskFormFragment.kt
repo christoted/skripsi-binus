@@ -36,10 +36,14 @@ class TcAssessmentTaskFormFragment : Fragment() {
 
         binding.rvQuestion.layoutManager = LinearLayoutManager(context)
         binding.rvQuestion.isNestedScrollingEnabled = true
-        viewModel.questionList.observe(viewLifecycleOwner, { questions ->
-            val adapter = TcAssessmentFormAdapter(questions)
-            binding.rvQuestion.adapter = adapter
+        viewModel.questionList.observe(viewLifecycleOwner, { pair ->
+            val questions = pair.first
+            val allowAssessment = pair.second
+            val adapter = TcAssessmentFormAdapter(questions, allowAssessment)
 
+            if (allowAssessment) binding.btnConfirm.visibility = View.VISIBLE
+            else Toast.makeText(context, "Form hanya dapat dikoreksi setelah waktu pengerjaan selesai", Toast.LENGTH_SHORT).show()
+            binding.rvQuestion.adapter = adapter
             binding.btnConfirm.setOnClickListener {
                 var isOK = true
                 questions.mapIndexed { index, assignedQuestion ->
