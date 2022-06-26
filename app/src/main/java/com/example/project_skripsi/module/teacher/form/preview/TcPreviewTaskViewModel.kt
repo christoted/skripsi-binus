@@ -47,6 +47,7 @@ class TcPreviewTaskViewModel : ViewModel() {
     private var formType: Int = -1
 
 
+
     fun initData(formType: Int, taskFormId: String) {
         this.formType = formType
         loadTaskForm(taskFormId)

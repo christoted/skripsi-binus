@@ -94,7 +94,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 ).timeInMillis
             ) {
                 Log.d("987", "already passed current day $date")
-                cancelNotification(context, date, id)
+                cancelNotification(context, id)
             } else {
                 val timeInMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
                 intent.putExtra("timeinmillis", timeInMillis)
@@ -116,21 +116,21 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             }
         }
 
-        fun cancelNotification(context: Context, date: Date, id: String) {
-            val intent = Intent(context, NotificationReceiver::class.java)
-            val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
-            val notificationId = getHashAlarmId(id)
-            val pending = PendingIntent.getBroadcast(
-                context,
-                notificationId,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            Log.d("123455", "cancelNotification: on $date timeonMillis $timeMillis")
-            // Cancel notification
-            val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-            manager.cancel(pending)
+        fun cancelNotification(context: Context, id: String) {
+              val intent = Intent(context, NotificationReceiver::class.java)
+              val notificationId = getHashAlarmId(id)
+              val pending = PendingIntent.getBroadcast(
+                  context,
+                  notificationId,
+                  intent,
+                  PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+              )
+              Log.d("123455", "cancelNotification: on ")
+              // Cancel notification
+              val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+              manager.cancel(pending)
         }
+
 
         fun cancelDailyNotification(context: Context, isStudent: Boolean) {
             StorageSP.setBoolean(context, StorageSP.SP_DAILY_NOTIFICATION, false)
@@ -154,10 +154,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         fun cancelAllMeetingNotification(context: Context, meetings: List<ClassMeeting>) {
             meetings.forEach { classMeeting ->
                 classMeeting.startTime?.let {
-                    cancelNotification(context, date = it, id = classMeeting.id!!)
-                }
-                classMeeting.endTime?.let {
-                    cancelNotification(context, date = it, id = classMeeting.id!!)
+                    cancelNotification(context, id = classMeeting.id!! + "notif")
                 }
             }
         }
@@ -168,10 +165,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         ) {
             meetings.forEach { teacherAgenda ->
                 teacherAgenda.classMeeting.startTime?.let {
-                    cancelNotification(context, date = it, id = teacherAgenda.classMeeting.id!!)
-                }
-                teacherAgenda.classMeeting.endTime?.let {
-                    cancelNotification(context, date = it, id = teacherAgenda.classMeeting.id!!)
+                    cancelNotification(context, id = teacherAgenda.classMeeting.id!!)
                 }
             }
         }
@@ -179,10 +173,10 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         fun cancelAllExamAndAssignmentNotification(context: Context, exams: List<TaskForm>) {
             exams.forEach { taskForm ->
                 taskForm.startTime?.let {
-                    cancelNotification(context, date = it, id = taskForm.id!!)
+                    cancelNotification(context, id = taskForm.id!! + "start")
                 }
                 taskForm.endTime?.let {
-                    cancelNotification(context, date = it, id = taskForm.id!!)
+                    cancelNotification(context, id = taskForm.id!! + "end")
                 }
             }
         }
@@ -193,10 +187,10 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
         ) {
             exams.forEach { taskForm ->
                 taskForm.taskForm.startTime?.let {
-                    cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
-            }
+                    cancelNotification(context, id = taskForm.taskForm.id!! + "start")
+                }
                 taskForm.taskForm.endTime?.let {
-                    cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
+                    cancelNotification(context, id = taskForm.taskForm.id!! + "end")
                 }
             }
         }

@@ -91,15 +91,15 @@ class StProfileFragment : Fragment() {
                 // Cancel Notification Exam, Assignment and Meeting
                 homeViewModel.listHomeSectionDataClassScheduleOneWeek.observe(viewLifecycleOwner) { list ->
                     NotificationUtil.cancelAllMeetingNotification(requireActivity(), list)
-                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id, false) }
                 }
                 homeViewModel.listHomeSectionDataExamOneWeek.observe(viewLifecycleOwner) { list ->
                     NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id, false) }
                 }
                 homeViewModel.listHomeSectionDataAssignmentOneWeek.observe(viewLifecycleOwner) { list ->
                     NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id, false) }
                 }
                 AuthRepository.inst.logOut()
                 val intent = Intent(binding.root.context, AuthActivity::class.java)

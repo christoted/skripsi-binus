@@ -20,7 +20,7 @@ class MyMeetingActivity : MeetingActivity() {
 
         viewModel = ViewModelProvider(this)[MyMeetingViewModel::class.java]
 
-        AlarmService.inst.cancelAlarm(applicationContext, MeetingHandler.inst.meetingId)
+        AlarmService.inst.cancelAlarm(applicationContext, MeetingHandler.inst.meetingId, true)
 
         viewModel.timeLeft.observe(this) {
             if (it == MyMeetingViewModel.readinessDelay) {

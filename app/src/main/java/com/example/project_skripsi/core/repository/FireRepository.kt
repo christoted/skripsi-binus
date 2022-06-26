@@ -69,6 +69,39 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
 //        private const val COLLECTION_TASK_FORM      = "s4-task_form"
 //        private const val COLLECTION_ANNOUNCEMENT   = "s4-announcement"
 
+        /** ALL SCHOOL */
+//        private const val COLLECTION_ADMINISTRATOR  = "global-administrator"
+
+        /** SCHOOL 1 */
+//        private const val COLLECTION_STUDENT        = "s1-student"
+//        private const val COLLECTION_TEACHER        = "s1-teacher"
+//        private const val COLLECTION_PARENT         = "s1-parent"
+//        private const val COLLECTION_STUDY_CLASS    = "s1-study_class"
+//        private const val COLLECTION_SCHOOL         = "s1-school"
+//        private const val COLLECTION_RESOURCE       = "s1-resource"
+//        private const val COLLECTION_TASK_FORM      = "s1-task_form"
+//        private const val COLLECTION_ANNOUNCEMENT   = "s1-announcement"
+
+        /** SCHOOL 2 */
+//        private const val COLLECTION_STUDENT        = "s2-student"
+//        private const val COLLECTION_TEACHER        = "s2-teacher"
+//        private const val COLLECTION_PARENT         = "s2-parent"
+//        private const val COLLECTION_STUDY_CLASS    = "s2-study_class"
+//        private const val COLLECTION_SCHOOL         = "s2-school"
+//        private const val COLLECTION_RESOURCE       = "s2-resource"
+//        private const val COLLECTION_TASK_FORM      = "s2-task_form"
+//        private const val COLLECTION_ANNOUNCEMENT   = "s2-announcement"
+
+        /** SCHOOL 3 */
+//        private const val COLLECTION_STUDENT        = "s3-student"
+//        private const val COLLECTION_TEACHER        = "s3-teacher"
+//        private const val COLLECTION_PARENT         = "s3-parent"
+//        private const val COLLECTION_STUDY_CLASS    = "s3-study_class"
+//        private const val COLLECTION_SCHOOL         = "s3-school"
+//        private const val COLLECTION_RESOURCE       = "s3-resource"
+//        private const val COLLECTION_TASK_FORM      = "s3-task_form"
+//        private const val COLLECTION_ANNOUNCEMENT   = "s3-announcement"
+
         val mapCollection = mapOf(
             Student::class to COLLECTION_STUDENT,
             Teacher::class to COLLECTION_TEACHER,
