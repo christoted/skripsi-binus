@@ -194,7 +194,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             exams.forEach { taskForm ->
                 taskForm.taskForm.startTime?.let {
                     cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
-                }
+            }
                 taskForm.taskForm.endTime?.let {
                     cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
                 }

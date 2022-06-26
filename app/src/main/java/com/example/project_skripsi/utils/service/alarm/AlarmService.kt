@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.util.Log
 import com.example.project_skripsi.utils.helper.DateHelper
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getDateWithSecondOffset
 import java.util.*
@@ -26,7 +27,7 @@ class AlarmService {
             context, alarmId, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-//        Log.d("12345-", "Set $id")
+        Log.d("123456-", "Set $id")
         val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         manager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -44,7 +45,7 @@ class AlarmService {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-//        Log.d("12345-", "Cancel $id")
+        Log.d("123456-", "Cancel $id")
         val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         manager.cancel(pending)
     }

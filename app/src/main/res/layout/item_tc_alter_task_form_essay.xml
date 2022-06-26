@@ -59,7 +59,7 @@
                 android:id="@+id/edt_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Judul soal"
+                android:hint="Masukkan soal"
                 android:textSize="16sp"
                 android:maxLines="10"
                 android:paddingStart="8dp"

@@ -95,17 +95,11 @@ class StProfileFragment : Fragment() {
                 }
                 homeViewModel.listHomeSectionDataExamOneWeek.observe(viewLifecycleOwner) { list ->
                     NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                    list.map {
-                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "start")
-                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "end")
-                    }
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
                 }
                 homeViewModel.listHomeSectionDataAssignmentOneWeek.observe(viewLifecycleOwner) { list ->
                     NotificationUtil.cancelAllExamAndAssignmentNotification(requireActivity(), list)
-                    list.map {
-                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "start")
-                        AlarmService.inst.cancelAlarm(requireContext(), it.id + "end")
-                    }
+                    list.map { AlarmService.inst.cancelAlarm(requireContext(), it.id) }
                 }
                 AuthRepository.inst.logOut()
                 val intent = Intent(binding.root.context, AuthActivity::class.java)
