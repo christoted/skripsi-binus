@@ -122,13 +122,13 @@ class StHomeFragment : Fragment(), ItemListener {
         viewModel.listHomeSectionDataClassScheduleOneWeek.observe(viewLifecycleOwner) {
             it.map { attendedMeeting ->
                 attendedMeeting.startTime?.let { dt ->
-                    NotificationUtil.cancelNotification(requireActivity(), dt, attendedMeeting.id!!)
+                    NotificationUtil.cancelNotification(requireActivity(), attendedMeeting.id!! + "notif")
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
                         "Hai, jangan lupa",
                         "Pertemuan kelas ${attendedMeeting.subjectName}",
-                        attendedMeeting.id
+                        attendedMeeting.id + "notif"
                     )
 
                     AlarmService.inst.createAlarm(
@@ -149,11 +149,15 @@ class StHomeFragment : Fragment(), ItemListener {
                 Log.d("987", "triggerNotification Exam start Time: $taskForm")
                 // Start time
                 taskForm.startTime?.let { dt ->
+<<<<<<< Updated upstream
                     NotificationUtil.cancelNotification(
                         requireActivity(),
                         dt,
                         taskForm.id!! + "start"
                     )
+=======
+                    NotificationUtil.cancelNotification(requireActivity(), taskForm.id!! + "start")
+>>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -172,11 +176,15 @@ class StHomeFragment : Fragment(), ItemListener {
                 // End time
                 taskForm.endTime?.let { dt ->
                     Log.d("987", "triggerNotification Exam end Time: $taskForm")
+<<<<<<< Updated upstream
                     NotificationUtil.cancelNotification(
                         requireActivity(),
                         dt,
                         taskForm.id!! + "end"
                     )
+=======
+                    NotificationUtil.cancelNotification(requireActivity(), taskForm.id!! + "end")
+>>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -195,11 +203,15 @@ class StHomeFragment : Fragment(), ItemListener {
             it.map { taskForm ->
                 // Start time
                 taskForm.startTime?.let { dt ->
+<<<<<<< Updated upstream
                     NotificationUtil.cancelNotification(
                         requireActivity(),
                         dt,
                         taskForm.id!! + "start"
                     )
+=======
+                    NotificationUtil.cancelNotification(requireActivity(), taskForm.id!! + "start")
+>>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -217,11 +229,15 @@ class StHomeFragment : Fragment(), ItemListener {
                 }
                 // End time
                 taskForm.endTime?.let { dt ->
+<<<<<<< Updated upstream
                     NotificationUtil.cancelNotification(
                         requireActivity(),
                         dt,
                         taskForm.id!! + "end"
                     )
+=======
+                    NotificationUtil.cancelNotification(requireActivity(),taskForm.id!! + "end")
+>>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
