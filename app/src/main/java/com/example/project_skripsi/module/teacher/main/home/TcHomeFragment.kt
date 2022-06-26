@@ -104,24 +104,9 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
         viewModel.listMeeting.observe(viewLifecycleOwner) {
             it.map { classMeeting ->
                 classMeeting.classMeeting.startTime?.let { date ->
-<<<<<<< Updated upstream
-                    NotificationUtil.cancelNotification(
-                        requireActivity(),
-                        date,
-                        classMeeting.classMeeting.id!!
-                    )
-                    NotificationUtil.scheduleSingleNotification(
-                        requireActivity(),
-                        date,
-                        "Hai bapak/ibu guru",
-                        "10 menit lagi, pertemuan ${classMeeting.studyClassName} dimulai, semangat!",
-                        classMeeting.classMeeting.id
-                    )
-=======
                     NotificationUtil.cancelNotification(requireActivity(),  classMeeting.classMeeting.id!!)
                     NotificationUtil.scheduleSingleNotification(requireActivity()
                     ,date, "Hai bapak/ibu guru", "10 menit lagi, pertemuan ${classMeeting.studyClassName} dimulai, semangat!", classMeeting.classMeeting.id )
->>>>>>> Stashed changes
                 }
             }
         }
@@ -133,15 +118,7 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
             it.map { teacherAgendaTaskForm ->
                 val taskForm = teacherAgendaTaskForm.taskForm
                 taskForm.startTime?.let { dt ->
-<<<<<<< Updated upstream
-                    NotificationUtil.cancelNotification(
-                        requireActivity(),
-                        dt,
-                        teacherAgendaTaskForm.taskForm.id!! + "start"
-                    )
-=======
                     NotificationUtil.cancelNotification(requireActivity(), teacherAgendaTaskForm.taskForm.id!! + "start")
->>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -151,15 +128,7 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
                     )
                 }
                 taskForm.endTime?.let { dt ->
-<<<<<<< Updated upstream
-                    NotificationUtil.cancelNotification(
-                        requireActivity(),
-                        dt,
-                        teacherAgendaTaskForm.taskForm.id!! + "end"
-                    )
-=======
                     NotificationUtil.cancelNotification(requireActivity(),  teacherAgendaTaskForm.taskForm.id!! + "end")
->>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -175,15 +144,7 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
             it.map { teacherAgendaTaskForm ->
                 val taskForm = teacherAgendaTaskForm.taskForm
                 taskForm.startTime?.let { dt ->
-<<<<<<< Updated upstream
-                    NotificationUtil.cancelNotification(
-                        requireActivity(),
-                        dt,
-                        teacherAgendaTaskForm.taskForm.id!! + "start"
-                    )
-=======
                     NotificationUtil.cancelNotification(requireActivity(), teacherAgendaTaskForm.taskForm.id!! + "start")
->>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,
@@ -193,15 +154,7 @@ class TcHomeFragment : Fragment(), TcAgendaItemListener {
                     )
                 }
                 taskForm.endTime?.let { dt ->
-<<<<<<< Updated upstream
-                    NotificationUtil.cancelNotification(
-                        requireActivity(),
-                        dt,
-                        teacherAgendaTaskForm.taskForm.id!! + "end"
-                    )
-=======
                     NotificationUtil.cancelNotification(requireActivity(), teacherAgendaTaskForm.taskForm.id!! + "end")
->>>>>>> Stashed changes
                     NotificationUtil.scheduleSingleNotification(
                         requireActivity(),
                         dt,

@@ -115,10 +115,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 )
             }
         }
-<<<<<<< Updated upstream
 
-        fun cancelNotification(context: Context, date: Date, id: String) {
-=======
         fun cancelNotification(context: Context, id: String) {
               val intent = Intent(context, NotificationReceiver::class.java)
               val notificationId = getHashAlarmId(id)
@@ -133,22 +130,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
               val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
               manager.cancel(pending)
         }
-        fun cancelEveryDayNotification(context: Context) {
->>>>>>> Stashed changes
-            val intent = Intent(context, NotificationReceiver::class.java)
-            val timeMillis = DateHelper.convertToCalendarDayBeforeStart(date).timeInMillis
-            val notificationId = getHashAlarmId(id)
-            val pending = PendingIntent.getBroadcast(
-                context,
-                notificationId,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            Log.d("123455", "cancelNotification: on $date timeonMillis $timeMillis")
-            // Cancel notification
-            val manager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-            manager.cancel(pending)
-        }
+
 
         fun cancelDailyNotification(context: Context, isStudent: Boolean) {
             StorageSP.setBoolean(context, StorageSP.SP_DAILY_NOTIFICATION, false)
