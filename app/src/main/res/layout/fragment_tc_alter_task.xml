@@ -270,7 +270,7 @@
                 android:id="@+id/btn_preq_resource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit"/>
+                android:text="Pilih"/>
 
         </LinearLayout>
 
@@ -318,7 +318,7 @@
                 android:id="@+id/btn_preq_assignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit"/>
+                android:text="Pilih"/>
 
 
         </LinearLayout>

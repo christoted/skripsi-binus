@@ -16,28 +16,28 @@ class FireRepository : OnSuccessListener<Void>, OnFailureListener {
     companion object {
         var inst = FireRepository()
 
-        private const val COLLECTION_ADMINISTRATOR = "administrators"
-        private const val COLLECTION_TASK_FORM = "task_forms"
-        private const val COLLECTION_RESOURCE = "resources"
-        private const val COLLECTION_STUDY_CLASS = "admin-study-class"
-        private const val COLLECTION_STUDENT = "admin-student"
-        private const val COLLECTION_SCHOOL = "admin-school"
-        private const val COLLECTION_PARENT = "admin-parent"
-        private const val COLLECTION_TEACHER = "admin-lecture"
-        private const val COLLECTION_ANNOUNCEMENT = "admin-announcement"
+//        private const val COLLECTION_ADMINISTRATOR = "administrators"
+//        private const val COLLECTION_TASK_FORM = "task_forms"
+//        private const val COLLECTION_RESOURCE = "resources"
+//        private const val COLLECTION_STUDY_CLASS = "admin-study-class"
+//        private const val COLLECTION_STUDENT = "admin-student"
+//        private const val COLLECTION_SCHOOL = "admin-school"
+//        private const val COLLECTION_PARENT = "admin-parent"
+//        private const val COLLECTION_TEACHER = "admin-lecture"
+//        private const val COLLECTION_ANNOUNCEMENT = "admin-announcement"
 
         /** ALL SCHOOL */
-//        private const val COLLECTION_ADMINISTRATOR  = "global-administrator"
+        private const val COLLECTION_ADMINISTRATOR  = "global-administrator"
 
         /** SCHOOL 1 */
-//        private const val COLLECTION_STUDENT        = "s1-student"
-//        private const val COLLECTION_TEACHER        = "s1-teacher"
-//        private const val COLLECTION_PARENT         = "s1-parent"
-//        private const val COLLECTION_STUDY_CLASS    = "s1-study_class"
-//        private const val COLLECTION_SCHOOL         = "s1-school"
-//        private const val COLLECTION_RESOURCE       = "s1-resource"
-//        private const val COLLECTION_TASK_FORM      = "s1-task_form"
-//        private const val COLLECTION_ANNOUNCEMENT   = "s1-announcement"
+        private const val COLLECTION_STUDENT        = "s1-student"
+        private const val COLLECTION_TEACHER        = "s1-teacher"
+        private const val COLLECTION_PARENT         = "s1-parent"
+        private const val COLLECTION_STUDY_CLASS    = "s1-study_class"
+        private const val COLLECTION_SCHOOL         = "s1-school"
+        private const val COLLECTION_RESOURCE       = "s1-resource"
+        private const val COLLECTION_TASK_FORM      = "s1-task_form"
+        private const val COLLECTION_ANNOUNCEMENT   = "s1-announcement"
 
         /** SCHOOL 2 */
 //        private const val COLLECTION_STUDENT        = "s2-student"

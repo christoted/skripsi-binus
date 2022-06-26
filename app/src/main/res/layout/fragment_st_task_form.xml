@@ -228,7 +228,7 @@
         app:iconTint="@color/white"
         app:layout_anchor="@id/mainview"
         app:layout_anchorGravity="bottom|start"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout >
 

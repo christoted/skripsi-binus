@@ -81,6 +81,11 @@ class StTaskFormFragment : Fragment() {
                 viewModel.isViewOnly
             )
             binding.rvQuestion.adapter = adapter
+
+            if (viewModel.isViewOnly) {
+                return@observe
+            }
+
             binding.btnSubmit.setOnClickListener {
                 submitAnswer(adapter)
                 binding.btnSubmit.isEnabled = false

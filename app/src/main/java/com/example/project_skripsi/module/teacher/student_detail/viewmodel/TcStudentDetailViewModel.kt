@@ -1,5 +1,6 @@
 package com.example.project_skripsi.module.teacher.student_detail.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -82,6 +83,7 @@ class TcStudentDetailViewModel: ViewModel() {
     private fun loadCurrentStudent(uid: String) {
         FireRepository.inst.getItem<Student>(uid).first.observeOnce { student ->
             _student.postValue(student)
+            Log.d("12345-", "!" + student.parent.toString())
             student.parent?.let { loadParent(it) }
 
             student.assignedExams?.filter { it.isChecked == true }?.let { mutableListOfTask.addAll(it) }

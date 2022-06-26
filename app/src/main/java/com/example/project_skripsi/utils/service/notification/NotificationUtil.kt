@@ -47,8 +47,8 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
 
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, 23)
-                set(Calendar.MINUTE, 27)
+                set(Calendar.HOUR_OF_DAY, 6)
+                set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }
@@ -194,7 +194,7 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
             exams.forEach { taskForm ->
                 taskForm.taskForm.startTime?.let {
                     cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
-                }
+            }
                 taskForm.taskForm.endTime?.let {
                     cancelNotification(context, date = it, id = taskForm.taskForm.id!!)
                 }

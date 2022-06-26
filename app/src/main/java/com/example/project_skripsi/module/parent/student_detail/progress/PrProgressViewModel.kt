@@ -85,7 +85,7 @@ class PrProgressViewModel : ViewModel() {
             _scoreFragmentData.postValue(
                 Score(
                     listDataScore.averageOf { it.total_score ?: 0 },
-                    listDataAttendance.sumOf { it.totalSick + it.totalLeave + it.totalAlpha },
+                    (listDataAttendance.sumOf { it.totalPresence } * 100) / listDataAttendance.size,
                     achievements.value?.count() ?: 0
                 )
             )

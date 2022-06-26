@@ -11,6 +11,7 @@ import com.example.project_skripsi.core.model.local.AssignedQuestion
 import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.Constant
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
+import com.example.project_skripsi.utils.helper.DateHelper
 
 class TcAssessmentTaskFormViewModel : ViewModel() {
 
@@ -34,8 +35,8 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
     private val _assignedTaskForm = MutableLiveData<AssignedTaskForm>()
     val assignedTaskForm: LiveData<AssignedTaskForm> = _assignedTaskForm
 
-    private val _questionList = MutableLiveData<List<AssignedQuestion>>()
-    val questionList: LiveData<List<AssignedQuestion>> = _questionList
+    private val _questionList = MutableLiveData<Pair<List<AssignedQuestion>, Boolean>>()
+    val questionList: LiveData<Pair<List<AssignedQuestion>, Boolean>> = _questionList
 
     private val _assessmentComplete = MutableLiveData<Boolean>()
     val assessmentCompleted: LiveData<Boolean> = _assessmentComplete
@@ -61,13 +62,13 @@ class TcAssessmentTaskFormViewModel : ViewModel() {
                 else -> student.assignedExams
             }?.firstOrNull { item ->
                 item.id == taskForm.id
-            }.let {
+            }?.let {
                 _assignedTaskForm.postValue(it)
                 val questions = mutableListOf<AssignedQuestion>()
                 taskForm.questions?.mapIndexed { index, question ->
-                    questions.add(AssignedQuestion(question, it?.answers?.get(index)))
+                    questions.add(AssignedQuestion(question, it.answers?.get(index)))
                 }
-                _questionList.postValue(questions)
+                _questionList.postValue(Pair(questions, it.endTime!! < DateHelper.getCurrentTime()))
             }
         }
     }

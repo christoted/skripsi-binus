@@ -104,7 +104,7 @@ class StFormAdapter(
                     if (imageList[position].isNotEmpty()) {
                         showImagesDialog(position, root.context)
                     } else {
-                        Toast.makeText(root.context, "Tidak ada gambar", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(root.context, "Tidak ada gambar yang disimpan", Toast.LENGTH_SHORT).show()
                     }
                 }
                 btnDeleteImage.setOnClickListener {
@@ -135,7 +135,7 @@ class StFormAdapter(
                     if (imageList[position].isNotEmpty()) {
                         showImagesDialog(position, root.context)
                     } else {
-                        Toast.makeText(root.context, "Tidak ada gambar", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(root.context, "Tidak ada gambar yang disimpan", Toast.LENGTH_SHORT).show()
                     }
                 }
                 btnDeleteImage.setOnClickListener {

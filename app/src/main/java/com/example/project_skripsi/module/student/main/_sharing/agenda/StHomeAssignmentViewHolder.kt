@@ -37,9 +37,10 @@ class StHomeAssignmentViewHolder(
             } else {
                 btnClass.setOnClickListener {
                     when {
+                        DateHelper.getCurrentTime() > item.endTime ->
+                            Toast.makeText(root.context, "Tugas sudah selesai", Toast.LENGTH_SHORT).show()
                         DateHelper.getCurrentTime() < item.startTime ->
-                            Toast.makeText(root.context, "Tugas belum dimulai", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(root.context, "Tugas belum dimulai", Toast.LENGTH_SHORT).show()
                         else -> {
                             data.id?.let { id ->
                                 listener.onTaskFormItemClicked(
