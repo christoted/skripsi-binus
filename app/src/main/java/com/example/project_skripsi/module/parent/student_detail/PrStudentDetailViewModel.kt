@@ -122,6 +122,7 @@ class PrStudentDetailViewModel : ViewModel() {
                         teacher.phoneNumber
                 }
             }
+            _subjectList.postValue(mapSubjectToParentSubject.map { it.value })
         }
     }
 
