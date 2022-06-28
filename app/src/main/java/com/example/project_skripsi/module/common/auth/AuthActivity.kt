@@ -107,7 +107,7 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
 
         FirestoreDummy()
         // initialize zoom sdk, if successful run initEvent()
-        ZoomService.inst.initializeSdk(applicationContext, this@AuthActivity)
+//        ZoomService.inst.initializeSdk(applicationContext, this@AuthActivity)
     }
 
     private fun initEvent() {
