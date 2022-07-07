@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -54,6 +55,14 @@ class TcProfileFragment : Fragment() {
         viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
         viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
 
+        binding.btnNotification.setCheckedImmediately(
+            !StorageSP.getBoolean(requireContext(), StorageSP.SP_DISABLE_NOTIFICATION, false)
+        )
+        binding.btnNotification.setOnCheckedChangeListener { _, b ->
+            StorageSP.setBoolean(requireContext(), StorageSP.SP_DISABLE_NOTIFICATION, !b)
+            Toast.makeText(context, "Notification ${if (b) "enabled" else "disabled"}", Toast.LENGTH_SHORT).show()
+        }
+
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
@@ -86,9 +95,10 @@ class TcProfileFragment : Fragment() {
         builder.setTitle("Konfirmasi")
             .setMessage("Apakah anda yakin untuk logout?")
             .setPositiveButton("Ok") { _, _ ->
-                StorageSP.setString(requireActivity(), StorageSP.SP_EMAIL, "")
-                StorageSP.setString(requireActivity(), StorageSP.SP_PASSWORD, "")
-                StorageSP.setInt(requireActivity(), StorageSP.SP_LOGIN_AS, -1)
+                StorageSP.setString(requireContext(), StorageSP.SP_EMAIL, "")
+                StorageSP.setString(requireContext(), StorageSP.SP_PASSWORD, "")
+                StorageSP.setInt(requireContext(), StorageSP.SP_LOGIN_AS, -1)
+                StorageSP.setBoolean(requireContext(), StorageSP.SP_DISABLE_NOTIFICATION, false)
                 cancelNotification()
                 AuthRepository.inst.logOut()
                 val intent = Intent(binding.root.context, AuthActivity::class.java)

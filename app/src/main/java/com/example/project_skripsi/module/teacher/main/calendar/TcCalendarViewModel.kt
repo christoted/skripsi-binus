@@ -30,8 +30,8 @@ class TcCalendarViewModel : ViewModel() {
     private val _eventList = MutableLiveData<Map<CalendarDay, List<DayEvent>>>()
     val eventList: LiveData<Map<CalendarDay, List<DayEvent>>> = _eventList
 
-    private val currentList: MutableMap<CalendarDay, ArrayList<DayEvent>> = mutableMapOf()
-    val currentDataList: MutableMap<CalendarDay, ArrayList<CalendarItem>> = mutableMapOf()
+    private val currentList = mutableMapOf<CalendarDay, MutableList<DayEvent>>()
+    val currentDataList = mutableMapOf<CalendarDay, MutableList<CalendarItem>>()
 
     lateinit var curTeacher: Teacher
 

@@ -35,7 +35,7 @@ class PrProgressAttendanceViewHolder(private val dataSet: List<AttendanceMainSec
                 rvContainer.addItemDecoration(
                     DividerItemDecoration(
                         view.root.context,
-                        androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
+                        DividerItemDecoration.VERTICAL
                     )
                 )
                 rvContainer.isVisible = isExpanded[holder.absoluteAdapterPosition]

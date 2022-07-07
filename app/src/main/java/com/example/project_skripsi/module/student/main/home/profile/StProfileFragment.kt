@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,8 @@ import com.example.project_skripsi.module.student.main.home.viewmodel.StHomeView
 import com.example.project_skripsi.utils.service.alarm.AlarmService
 import com.example.project_skripsi.utils.service.notification.NotificationUtil
 import com.example.project_skripsi.utils.service.storage.StorageSP
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_DISABLE_ALARM
+import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_DISABLE_NOTIFICATION
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_EMAIL
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_LOGIN_AS
 import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_PASSWORD
@@ -66,6 +69,22 @@ class StProfileFragment : Fragment() {
         viewModel.studyClass.observe(viewLifecycleOwner, { binding.tvClassName.text = it.name })
         viewModel.school.observe(viewLifecycleOwner, { binding.tvSchoolName.text = it.name })
 
+        binding.btnNotification.setCheckedImmediately(
+            !StorageSP.getBoolean(requireContext(), SP_DISABLE_NOTIFICATION, false)
+        )
+        binding.btnNotification.setOnCheckedChangeListener { _, b ->
+            StorageSP.setBoolean(requireContext(), SP_DISABLE_NOTIFICATION, !b)
+            Toast.makeText(context, "Notification ${if (b) "enabled" else "disabled"}",Toast.LENGTH_SHORT).show()
+        }
+
+        binding.btnAlarm.setCheckedImmediately(
+            !StorageSP.getBoolean(requireContext(), SP_DISABLE_ALARM, false)
+        )
+        binding.btnAlarm.setOnCheckedChangeListener { _, b ->
+            StorageSP.setBoolean(requireContext(), SP_DISABLE_ALARM, !b)
+            Toast.makeText(context, "Alarm ${if (b) "enabled" else "disabled"}",Toast.LENGTH_SHORT).show()
+        }
+
         binding.imvBack.setOnClickListener { view?.findNavController()?.popBackStack() }
 
         return binding.root
@@ -81,12 +100,13 @@ class StProfileFragment : Fragment() {
         builder.setTitle("Konfirmasi")
             .setMessage("Apakah anda yakin untuk logout?")
             .setPositiveButton("Ok") { _, _ ->
-                StorageSP.setString(requireActivity(), SP_EMAIL, "")
-                StorageSP.setString(requireActivity(), SP_PASSWORD, "")
-                StorageSP.setInt(requireActivity(), SP_LOGIN_AS, -1)
-
+                StorageSP.setString(requireContext(), SP_EMAIL, "")
+                StorageSP.setString(requireContext(), SP_PASSWORD, "")
+                StorageSP.setInt(requireContext(), SP_LOGIN_AS, -1)
+                StorageSP.setBoolean(requireContext(), SP_DISABLE_NOTIFICATION, false)
+                StorageSP.setBoolean(requireContext(), SP_DISABLE_ALARM, false)
                 // Cancel everyday notification
-                NotificationUtil.cancelDailyNotification(requireActivity(), true)
+                NotificationUtil.cancelDailyNotification(requireContext(), true)
 
                 // Cancel Notification Exam, Assignment and Meeting
                 homeViewModel.listHomeSectionDataClassScheduleOneWeek.observe(viewLifecycleOwner) { list ->

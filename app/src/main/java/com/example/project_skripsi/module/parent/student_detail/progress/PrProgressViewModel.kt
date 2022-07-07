@@ -57,7 +57,6 @@ class PrProgressViewModel : ViewModel() {
 
     // Attendance
     private val listDataAttendance = mutableListOf<AttendanceMainSection>()
-    private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
     private val mutableListOfAttendance: MutableList<AttendedMeeting> = mutableListOf()
 
 
@@ -103,11 +102,10 @@ class PrProgressViewModel : ViewModel() {
                 ?.let { mutableListOfTask.addAll(it) }
             student.achievements?.let { _achievements.postValue(it) }
 
-            student.attendedMeetings.let {
-                _mapAttendanceBySubject.postValue(it?.groupBy { subject -> subject.subjectName!! })
-                if (it != null) {
-                    mutableListOfAttendance.addAll(it)
-                }
+            student.attendedMeetings?.let { list ->
+                mutableListOfAttendance.addAll(
+                    list.filter { it.endTime!! < DateHelper.getCurrentTime() }
+                )
             }
             student.studyClass?.let { loadStudyClass(it) }
         }

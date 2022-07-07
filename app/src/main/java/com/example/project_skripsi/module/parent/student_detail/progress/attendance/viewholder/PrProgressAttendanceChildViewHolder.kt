@@ -18,23 +18,8 @@ class PrProgressAttendanceChildViewHolder(private val dataSet: List<AttendedMeet
             with(view) {
                 tvDate.text =
                     item.startTime?.let { DateHelper.getFormattedDateTime(DateHelper.DMY, it) }
-                tvTime.text = ("${
-                    item.startTime?.let {
-                        DateHelper.getFormattedDateTime(
-                            DateHelper.hm,
-                            it
-                        )
-                    }
-                } - " +
-                        "${
-                            item.endTime?.let {
-                                DateHelper.getFormattedDateTime(
-                                    DateHelper.hm,
-                                    it
-                                )
-                            }
-                        }")
-
+                tvTime.text = ("${item.startTime?.let { DateHelper.getFormattedDateTime(DateHelper.hm, it) }} - " +
+                        "${item.endTime?.let { DateHelper.getFormattedDateTime(DateHelper.hm, it) }}")
                 tvStatus.text = item.status
             }
         }

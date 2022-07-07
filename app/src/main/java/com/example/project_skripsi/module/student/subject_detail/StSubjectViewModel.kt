@@ -40,8 +40,8 @@ class StSubjectViewModel : ViewModel() {
     private lateinit var curStudent: Student
     private var className = ""
     private var subjectName = ""
-    private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
-    private val mAttendedMeetings = HashSet<String>()
+    private val mAssignedTaskForms = mutableMapOf<String, AssignedTaskForm>()
+    private val mAttendedMeetings = mutableSetOf<String>()
 
     fun setSubject(subjectName: String) {
         this.subjectName = subjectName
