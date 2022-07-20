@@ -98,7 +98,16 @@ class StHomeFragment : Fragment(), ItemListener {
 
         triggerNotification()
 
+
+
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        view?.findNavController()?.navigate(
+            StHomeFragmentDirections.actionNavigationHomeFragmentToTestFragment()
+        )
     }
 
     override fun onDestroyView() {

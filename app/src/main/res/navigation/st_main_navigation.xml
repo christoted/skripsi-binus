@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_navigation_home_fragment_to_stAnnouncementFragment"
             app:destination="@id/stAnnouncementFragment" />
+        <action
+            android:id="@+id/action_navigation_home_fragment_to_testFragment"
+            app:destination="@id/testFragment" />
     </fragment>
 
     <fragment
@@ -134,7 +137,11 @@
         android:name="com.example.project_skripsi.module.student.main.progress.graphic.StProgressGraphicFragment"
         android:label="fragment_st_progress_graphic"
         tools:layout="@layout/fragment_st_progress_graphic" />
-
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.example.project_skripsi.module.testing.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
 
 
 </navigation>
