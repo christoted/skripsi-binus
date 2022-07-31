@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,11 @@ import com.example.project_skripsi.utils.service.storage.StorageSP.Companion.SP_
 import com.example.project_skripsi.utils.service.zoom.ZoomService
 import us.zoom.sdk.ZoomError
 import us.zoom.sdk.ZoomSDKInitializeListener
+import kotlin.reflect.KVisibility
+import kotlin.reflect.full.functions
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.full.valueParameters
 
 class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
 
@@ -109,6 +115,8 @@ class AuthActivity : AppCompatActivity(), ZoomSDKInitializeListener {
                 }
             }
         }
+
+
 
         FirestoreDummy()
         // initialize zoom sdk, if successful run initEvent()

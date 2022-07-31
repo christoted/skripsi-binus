@@ -40,7 +40,7 @@ class TcStudentDetailPaymentAdapter(private val dataset: List<TcStudentDetailPay
                         if (!hasAddEmptyView[viewHolder.absoluteAdapterPosition]) {
                             llCollapseGroup.addView(
                                 UIHelper.getEmptyList(
-                                    if (item.title == "Jatuh Tempo") "Tidak ada pembayaran jatuh tempo"
+                                    if (item.title == paymentType[0]) "Tidak ada pembayaran jatuh tempo"
                                     else "Tidak ada pembayaran mendatang",
                                     LayoutInflater.from(root.context), llCollapseGroup
                                 )

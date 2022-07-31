@@ -32,10 +32,10 @@ class StTaskAssignmentViewModel : ViewModel() {
     val pastList: LiveData<List<TaskFormStatus>> = _pastList
 
     private var className = ""
-    private val mAssignedTaskForms = HashMap<String, AssignedTaskForm>()
+    private val mAssignedTaskForms = mutableMapOf<String, AssignedTaskForm>()
 
-    private val ongoingTaskForms = ArrayList<TaskFormStatus>()
-    private val pastTaskForms = ArrayList<TaskFormStatus>()
+    private val ongoingTaskForms = mutableListOf<TaskFormStatus>()
+    private val pastTaskForms = mutableListOf<TaskFormStatus>()
 
     fun reInit() {
         loadStudent(AuthRepository.inst.getCurrentUser().uid)

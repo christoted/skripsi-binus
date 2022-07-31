@@ -11,6 +11,8 @@ class StorageSP {
         const val SP_PASSWORD = "sp_password"
         const val SP_LOGIN_AS = "sp_login_as"
         const val SP_DAILY_NOTIFICATION = "sp_daily_notification"
+        const val SP_DISABLE_NOTIFICATION = "sp_disable_notification"
+        const val SP_DISABLE_ALARM = "sp_disable_alarm"
 
         fun getString(context: Context, spKey: String): String? {
             val sharedPref = context.getSharedPreferences(SP_KEY, Context.MODE_PRIVATE)

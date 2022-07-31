@@ -48,7 +48,7 @@ class TcStudentDetailViewModel: ViewModel() {
 
     private val _subjects = MutableLiveData<List<Subject>>()
     private val mutableListOfTask: MutableList<AssignedTaskForm> = mutableListOf()
-    private val listDataScore = arrayListOf<ScoreMainSection>()
+    private val listDataScore = mutableListOf<ScoreMainSection>()
 
     // Attendance
     private val _sectionAttendance = MutableLiveData<List<AttendanceMainSection>>()
@@ -56,7 +56,7 @@ class TcStudentDetailViewModel: ViewModel() {
 
     private var _mapAttendanceBySubject = MutableLiveData<Map<String, List<AttendedMeeting>>>()
     private val mutableListOfAttendance: MutableList<AttendedMeeting> = mutableListOf()
-    private val listDataAttendance = arrayListOf<AttendanceMainSection>()
+    private val listDataAttendance = mutableListOf<AttendanceMainSection>()
 
     // Payment
     private val _sectionPayment: MutableLiveData<List<TcStudentDetailPaymentSection>> = MutableLiveData()

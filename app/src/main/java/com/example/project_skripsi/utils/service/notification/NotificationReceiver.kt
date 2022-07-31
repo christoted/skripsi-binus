@@ -17,6 +17,7 @@ import com.example.project_skripsi.core.repository.FireRepository
 import com.example.project_skripsi.utils.generic.GenericObserver.Companion.observeOnce
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendarDay
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.getCurrentDate
+import com.example.project_skripsi.utils.service.storage.StorageSP
 
 class NotificationReceiver : BroadcastReceiver() {
 
@@ -48,6 +49,7 @@ class NotificationReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (StorageSP.getBoolean(context, StorageSP.SP_DISABLE_NOTIFICATION, false)) return
         val bundle = intent.extras
         val isDaily = bundle?.getBoolean(EXTRA_IS_DAILY) ?: false
         val isStudent = bundle?.getBoolean(EXTRA_IS_STUDENT) ?: false

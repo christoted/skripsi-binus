@@ -14,8 +14,10 @@
         android:id="@+id/imv_splash_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/temp_logo"
-        android:scaleType="center"/>
+        android:src="@drawable/logo2"
+        android:scaleType="fitCenter"
+        android:scaleX="0.8"
+        android:scaleY="0.8"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"

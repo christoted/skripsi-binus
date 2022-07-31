@@ -6,6 +6,7 @@ import android.content.Intent
 import android.provider.AlarmClock
 import android.util.Log
 import com.example.project_skripsi.utils.helper.DateHelper.Companion.convertDateToCalendar
+import com.example.project_skripsi.utils.service.storage.StorageSP
 import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -27,6 +28,7 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (StorageSP.getBoolean(context, StorageSP.SP_DISABLE_ALARM, false)) return
         val title = intent.extras?.getString(EXTRA_TITLE) ?: ""
         val hour = intent.extras?.getInt(EXTRA_HOUR) ?: 0
         val minute = intent.extras?.getInt(EXTRA_MINUTE) ?: 0

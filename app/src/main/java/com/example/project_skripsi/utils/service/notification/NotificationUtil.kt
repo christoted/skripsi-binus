@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
@@ -78,6 +79,8 @@ class NotificationUtil(base: Context) : ContextWrapper(base) {
                 AlarmManager.INTERVAL_DAY,
                 pendingIntent
             )
+
+            Toast.makeText(context, "Daily notification set", Toast.LENGTH_SHORT).show()
         }
 
         fun scheduleSingleNotification(
