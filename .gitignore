@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/src/main/java/com/example/project_skripsi/module/student/subject_detail/_sharing/.TaskFormListener.kt.icloud
+*.icloud
+/commonlib
+/mobilertc
+

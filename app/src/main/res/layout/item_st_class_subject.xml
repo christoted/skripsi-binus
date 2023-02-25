@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginBottom="8dp">
+
+    <ImageView
+        android:id="@+id/imv_subject_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/subject_1"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/tv_subject_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        tools:text="B. Indonesia"/>
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="275dp"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Tipe Formulir"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:textColor="@color/black"
+        android:padding="8dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/tv_subject_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Grup: 12 - Biologi"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btn_add_exam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ujian"
+        android:layout_marginHorizontal="8dp"/>
+
+    <Button
+        android:id="@+id/btn_add_assignment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tugas"
+        android:layout_marginHorizontal="8dp"/>
+
+</LinearLayout>

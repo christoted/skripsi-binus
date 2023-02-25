@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tc_main_navigation"
+    app:startDestination="@id/tcHomeFragment">
+
+    <fragment
+        android:id="@+id/tcHomeFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.home.TcHomeFragment"
+        android:label="TcHomeFragment"
+        tools:layout="@layout/fragment_tc_home">
+        <action
+            android:id="@+id/action_tcHomeFragment_to_tcStudyClassTaskDetailFragment"
+            app:destination="@id/tcStudyClassTaskDetailFragment" />
+        <action
+            android:id="@+id/action_tcHomeFragment_to_tcProfileFragment"
+            app:destination="@id/tcProfileFragment" />
+        <action
+            android:id="@+id/action_tcHomeFragment_to_tcAnnouncementFragment"
+            app:destination="@id/tcAnnouncementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcStudyClassFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.study_class.TcStudyClassFragment"
+        android:label="TcStudyClassFragment"
+        tools:layout="@layout/fragment_tc_study_class">
+        <action
+            android:id="@+id/action_tcStudyClassFragment_to_tcStudyClassHomeroomFragment"
+            app:destination="@id/tcStudyClassHomeroomFragment" />
+        <action
+            android:id="@+id/action_tcStudyClassFragment_to_tcStudyClassTeachingFragment"
+            app:destination="@id/tcStudyClassTeachingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcCalendarFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.calendar.TcCalendarFragment"
+        android:label="TcCalendarFragment"
+        tools:layout="@layout/fragment_tc_calendar">
+        <action
+            android:id="@+id/action_tcCalendarFragment_to_tcStudyClassTaskDetailFragment"
+            app:destination="@id/tcStudyClassTaskDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcResourceFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.resource.TcResourceFragment"
+        android:label="TcResourceFragment"
+        tools:layout="@layout/fragment_tc_resource">
+        <action
+            android:id="@+id/action_tcResourceFragment_to_tcAlterResourceFragment"
+            app:destination="@id/tcAlterResourceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.task.TcTaskFragment"
+        android:label="TcTaskFragment"
+        tools:layout="@layout/fragment_tc_task">
+        <action
+            android:id="@+id/action_tcTaskFragment_to_tcTaskDraftFragment"
+            app:destination="@id/tcTaskDraftFragment" />
+        <action
+            android:id="@+id/action_tcTaskFragment_to_tcAlterTaskFragment"
+            app:destination="@id/tcAlterTaskFragment" />
+        <action
+            android:id="@+id/action_tcTaskFragment_to_tcPreviewTaskFragment"
+            app:destination="@id/tcPreviewTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcStudyClassHomeroomFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.homeroom.TcStudyClassHomeroomFragment"
+        android:label="TcStudyClassHomeroomFragment"
+        tools:layout="@layout/fragment_tc_study_class_homeroom">
+        <action
+            android:id="@+id/action_tcStudyClassHomeroomFragment_to_tcStudentFragment"
+            app:destination="@id/tcStudentFragment" />
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcStudyClassTeachingFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.teaching.TcStudyClassTeachingFragment"
+        android:label="TcStudyClassTeachingFragment"
+        tools:layout="@layout/fragment_tc_study_class_teaching">
+        <action
+            android:id="@+id/action_tcStudyClassTeachingFragment_to_tcStudyClassResourceFragment"
+            app:destination="@id/tcStudyClassResourceFragment" />
+        <action
+            android:id="@+id/action_tcStudyClassTeachingFragment_to_tcStudyClassTaskFragment"
+            app:destination="@id/tcStudyClassTaskFragment" />
+
+        <action
+            android:id="@+id/action_tcStudyClassTeachingFragment_to_tcStudentFragment"
+            app:destination="@id/tcStudentFragment" />
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/tcStudyClassResourceFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.resource.TcStudyClassResourceFragment"
+        android:label="TcStudyClassResourceFragment"
+        tools:layout="@layout/fragment_tc_study_class_resource">
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcStudyClassTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.task.TcStudyClassTaskFragment"
+        android:label="TcStudyClassTaskFragment"
+        tools:layout="@layout/fragment_tc_study_class_task">
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_tcStudyClassTaskFragment_to_tcStudyClassTaskDetailFragment"
+            app:destination="@id/tcStudyClassTaskDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcStudyClassTaskDetailFragment"
+        android:name="com.example.project_skripsi.module.teacher.study_class.task_detail.TcStudyClassTaskDetailFragment"
+        android:label="TcStudyClassTaskDetailFragment"
+        tools:layout="@layout/fragment_tc_study_class_task_detail">
+        <argument
+            android:name="studyClassId"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_tcStudyClassTaskDetailFragment_to_tcAssessmentTaskFormFragment"
+            app:destination="@id/tcAssessmentTaskFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcStudentFragment"
+        android:name="com.example.project_skripsi.module.teacher.student_detail.view.TcStudentFragment"
+        android:label="TcStudentFragment"
+        tools:layout="@layout/fragment_tc_student">
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcAlterResourceFragment"
+        android:name="com.example.project_skripsi.module.teacher.resource.view.TcAlterResourceFragment"
+        android:label="fragment_tc_alter_resource"
+        tools:layout="@layout/fragment_tc_alter_resource" >
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="gradeLevel"
+            app:argType="integer" />
+        <argument
+            android:name="documentId"
+            app:argType="string"
+            app:nullable="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/tcAlterTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.alter.TcAlterTaskFragment"
+        android:label="fragment_tc_alter_task"
+        tools:layout="@layout/fragment_tc_alter_task" >
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="gradeLevel"
+            app:argType="integer" />
+        <argument
+            android:name="formType"
+            app:argType="integer" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_tcAlterTaskFragment_to_tcAlterTaskFinalizationFragment"
+            app:destination="@id/tcAlterTaskFinalizationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcPreviewTaskFormFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.preview.form.TcPreviewTaskFormFragment"
+        android:label="fragment_tc_preview_task_form"
+        tools:layout="@layout/fragment_tc_preview_task_form">
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcAssessmentTaskFormFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.assessment.TcAssessmentTaskFormFragment"
+        android:label="fragment_tc_assessment_task_form"
+        tools:layout="@layout/fragment_tc_assessment_task_form" >
+        <argument
+            android:name="studentId"
+            app:argType="string"/>
+        <argument
+            android:name="taskFormId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcProfileFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.home.profile.TcProfileFragment"
+        android:label="fragment_tc_profile"
+        tools:layout="@layout/fragment_tc_profile" />
+    <fragment
+        android:id="@+id/tcTaskDraftFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.task.draft.TcTaskDraftFragment"
+        android:label="fragment_tc_task_draft"
+        tools:layout="@layout/fragment_tc_task_draft" >
+        <action
+            android:id="@+id/action_tcTaskDraftFragment_to_tcAlterTaskFragment"
+            app:destination="@id/tcAlterTaskFragment" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="gradeLevel"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/tcAlterTaskFinalizationFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.alter.finalization.TcAlterTaskFinalizationFragment"
+        android:label="fragment_tc_alter_task_finalization"
+        tools:layout="@layout/fragment_tc_alter_task_finalization">
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="gradeLevel"
+            app:argType="integer" />
+        <argument
+            android:name="formType"
+            app:argType="integer" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/tcPreviewTaskFragment"
+        android:name="com.example.project_skripsi.module.teacher.form.preview.TcPreviewTaskFragment"
+        android:label="fragment_tc_preview_task"
+        tools:layout="@layout/fragment_tc_preview_task" >
+        <action
+            android:id="@+id/action_tcPreviewTaskFragment_to_tcStudyClassTaskDetailFragment"
+            app:destination="@id/tcStudyClassTaskDetailFragment" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+        <argument
+            android:name="gradeLevel"
+            app:argType="integer" />
+        <argument
+            android:name="formType"
+            app:argType="integer" />
+        <argument
+            android:name="taskFormId"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_tcPreviewTaskFragment_to_tcPreviewTaskFormFragment"
+            app:destination="@id/tcPreviewTaskFormFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tcAnnouncementFragment"
+        android:name="com.example.project_skripsi.module.teacher.main.home.announcement.TcAnnouncementFragment"
+        android:label="fragment_tc_announcement"
+        tools:layout="@layout/fragment_tc_announcement" />
+
+</navigation>

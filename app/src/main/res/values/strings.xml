@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">project-skripsi</string>
+    <string name="app_name">OneClick</string>
+    <string name="title_activity_student_main">StudentMainActivity</string>
+    <string name="title_home">Home</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

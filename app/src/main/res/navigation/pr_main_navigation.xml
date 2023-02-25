@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tc_main_navigation"
+    app:startDestination="@id/prHomeFragment">
+
+    <fragment
+        android:id="@+id/prHomeFragment"
+        android:name="com.example.project_skripsi.module.parent.home.PrHomeFragment"
+        android:label="fragment_pr_home"
+        tools:layout="@layout/fragment_pr_home" >
+        <action
+            android:id="@+id/action_prHomeFragment_to_prStudentDetailFragment"
+            app:destination="@id/prStudentDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/prStudentDetailFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.PrStudentDetailFragment"
+        android:label="fragment_pr_student_detail"
+        tools:layout="@layout/fragment_pr_student_detail" >
+        <action
+            android:id="@+id/action_prStudentDetailFragment_to_prPaymentFragment"
+            app:destination="@id/prPaymentFragment" />
+        <action
+            android:id="@+id/action_prStudentDetailFragment_to_prCalendarFragment"
+            app:destination="@id/prCalendarFragment" />
+        <action
+            android:id="@+id/action_prStudentDetailFragment_to_prProgressFragment"
+            app:destination="@id/prProgressFragment" />
+        <action
+            android:id="@+id/action_prStudentDetailFragment_to_prExamFragment"
+            app:destination="@id/prExamFragment" />
+        <action
+            android:id="@+id/action_prStudentDetailFragment_to_prAssignmentFragment"
+            app:destination="@id/prAssignmentFragment" />
+        <action
+            android:id="@+id/action_prStudentDetailFragment_to_prAnnouncementFragment"
+            app:destination="@id/prAnnouncementFragment" />
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/prAnnouncementFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.announcement.PrAnnouncementFragment"
+        android:label="fragment_pr_announcement"
+        tools:layout="@layout/fragment_pr_announcement" />
+    <fragment
+        android:id="@+id/prAssignmentFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.assignment.PrAssignmentFragment"
+        android:label="fragment_pr_assignment"
+        tools:layout="@layout/fragment_pr_assignment" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/prCalendarFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.calendar.PrCalendarFragment"
+        android:label="fragment_pr_calendar"
+        tools:layout="@layout/fragment_pr_calendar" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/prExamFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.exam.PrExamFragment"
+        android:label="fragment_pr_exam"
+        tools:layout="@layout/fragment_pr_exam" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/prPaymentFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.payment.PrPaymentFragment"
+        android:label="fragment_pr_payment"
+        tools:layout="@layout/fragment_pr_payment" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/prProgressFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.progress.PrProgressFragment"
+        android:label="fragment_pr_progress"
+        tools:layout="@layout/fragment_pr_progress" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_prProgressFragment_to_prProgressGraphicFragment"
+            app:destination="@id/prProgressGraphicFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/prProgressGraphicFragment"
+        android:name="com.example.project_skripsi.module.parent.student_detail.progress.graphic.PrProgressGraphicFragment"
+        android:label="fragment_pr_progress_graphic"
+        tools:layout="@layout/fragment_pr_progress_graphic" >
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

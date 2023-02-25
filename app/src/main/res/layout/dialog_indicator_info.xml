@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="200dp"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipe Indikator"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:textColor="@color/black"
+        android:padding="8dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="8dp">
+
+        <TableRow
+            android:gravity="center_vertical">
+            <ImageView
+                android:src="@drawable/circle_shape_full"
+                app:tint="@color/indicator_meeting"
+                android:layout_margin="8dp"/>
+            <TextView
+                android:text="Kelas"
+                android:textColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_vertical">
+            <ImageView
+                android:src="@drawable/circle_shape_full"
+                app:tint="@color/indicator_exam"
+                android:layout_margin="8dp"/>
+            <TextView
+                android:text="Ujian"
+                android:textColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_vertical">
+            <ImageView
+                android:src="@drawable/circle_shape_full"
+                app:tint="@color/indicator_assignment"
+                android:layout_margin="8dp"/>
+            <TextView
+                android:text="Tugas"
+                android:textColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_vertical">
+            <ImageView
+                android:src="@drawable/circle_shape_full"
+                app:tint="@color/indicator_payment"
+                android:layout_margin="8dp"/>
+            <TextView
+                android:text="Pembayaran"
+                android:textColor="@color/black" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_vertical">
+            <ImageView
+                android:src="@drawable/circle_shape_full"
+                app:tint="@color/indicator_announcement"
+                android:layout_margin="8dp"/>
+            <TextView
+                android:text="Pengumuman"
+                android:textColor="@color/black" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

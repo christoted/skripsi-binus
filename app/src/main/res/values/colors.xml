@@ -3,8 +3,78 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+
+    <color name="blue_200">#BBDEFB</color>
+    <color name="blue_500">#1e88e5</color>
+    <color name="blue_700">#005cb2</color>
+    <color name="blue_header">#1976d2</color>
+
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="warning_red">#ef5350</color>
+
+    <color name="indicator_meeting">#29b6f6</color>
+    <color name="indicator_assignment">#fbc02d</color>
+    <color name="indicator_exam">#f44336</color>
+    <color name="indicator_payment">#673ab7</color>
+    <color name="indicator_announcement">#b69573</color>
+    <color name="indicator_black">#000000</color>
+
+    <color name="indicator_score">#0000FF</color>
+    <color name="indicator_attendance">#006400</color>
+    <color name="indicator_achievement">#ffd700</color>
+
+    <color name="form_multiple_choice">#90caf9</color>
+    <color name="form_essay">#90caf9</color>
+    <color name="form_header">#005cb2</color>
+
+    <color name="form_not_submit">#ef5350</color>
+    <color name="form_submit">#4caf50</color>
+
+    <color name="task_not_submit">#ef5350</color>
+    <color name="task_submit">#4caf50</color>
+    <color name="task_ongoing">#8e8e8e</color>
+
+    <color name="attendance_attend">#4caf50</color>
+    <color name="attendance_not_attend">#ef5350</color>
+    <color name="attendance_incoming">#8e8e8e</color>
+
+    <color name="recyclerview_background">#eeeeee</color>
+
+    <color name="payment_late">#ff5350</color>
+    <color name="payment_incoming">#fbc02d</color>
+    <color name="payment_complete">#4caf50</color>
+
+    <color name="last_assignment_not_submit">#ff5350</color>
+    <color name="last_assignment_submit">#4caf50</color>
+    <color name="last_assignment_null">#8e8e8e</color>
+
+    <color name="answer_correct">#98ee99</color>
+    <color name="answer_incorrect">#ff867c</color>
+
+    <color name="divider_color">#1FFFFFFF</color>
+
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+
+    <color name="logout">#b61827</color>
+
+    <color name="preq_fullfill">#4caf50</color>
+    <color name="preq_not_fulfill">#b00020</color>
+
+    <color name="timer_alert">#af0000</color>
+    <color name="timer_normal">#000000</color>
+
+    <color name="empty_answer">#808080</color>
+
+<!--    <color name="accent">#03A9F4</color>-->
+<!--    <color name="primary_text">#212121</color>-->
+<!--    <color name="secondary_text">#727272</color>-->
+<!--    <color name="icons">#FFFFFF</color>-->
+<!--    <color name="divider">#B6B6B6</color>-->
+
 </resources>
