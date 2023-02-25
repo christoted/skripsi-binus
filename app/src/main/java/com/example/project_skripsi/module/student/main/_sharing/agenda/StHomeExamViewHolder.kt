@@ -22,7 +22,7 @@ class StHomeExamViewHolder(
         val data = item as TaskForm
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_exam, null)
             )
             tvTitle.text = data.subjectName
             tvLocation.text = data.location

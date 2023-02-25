@@ -37,7 +37,7 @@ class StSubjectAttendanceAdapter(private val assignmentList: List<Attendance>) :
                         tvDate.text = DateHelper.getFormattedDateTime(DateHelper.DMY, it)
                     }
                     statusColor?.let {
-                        tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it, null))
+                        tvStatus.setTextColor(ResourcesCompat.getColor(App.res!!, it, null))
                     }
                 }
 

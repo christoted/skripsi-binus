@@ -15,5 +15,4 @@ data class Administrator(
     @get: PropertyName("phone_number")
     @set: PropertyName("phone_number")
     var phoneNumber: String? = null,
-
-    )
+)

@@ -37,7 +37,7 @@ class PrHomeFragment : Fragment(), ItemClickListener {
         viewModel = ViewModelProvider(this)[PrHomeViewModel::class.java]
         _binding = FragmentPrHomeBinding.inflate(inflater, container, false)
 
-        viewModel.studentList.observe(viewLifecycleOwner, {
+        viewModel.studentList.observe(viewLifecycleOwner) {
             with(binding) {
                 vpStudent.adapter = ScreenSlidePagerAdapter()
                 val pageCount = viewModel.getStudentPageCount()
@@ -62,7 +62,7 @@ class PrHomeFragment : Fragment(), ItemClickListener {
                 imvLeft.setOnClickListener { vpStudent.prevPage() }
                 imvRight.setOnClickListener { vpStudent.nextPage() }
             }
-        })
+        }
 
         with(binding.recyclerviewClass) {
             layoutManager = LinearLayoutManager(context)

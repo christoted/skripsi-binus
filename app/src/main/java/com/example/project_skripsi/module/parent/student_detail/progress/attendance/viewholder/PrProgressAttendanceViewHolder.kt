@@ -47,7 +47,7 @@ class PrProgressAttendanceViewHolder(private val dataSet: List<AttendanceMainSec
 
                 viewIndicator.setBackgroundColor(
                     ResourcesCompat.getColor(
-                        App.resourses!!,
+                        App.res!!,
                         R.color.indicator_attendance,
                         null
                     )

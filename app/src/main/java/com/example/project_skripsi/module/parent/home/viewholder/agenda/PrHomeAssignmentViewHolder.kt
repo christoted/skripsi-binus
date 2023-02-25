@@ -31,7 +31,7 @@ class PrHomeAssignmentViewHolder(private val binding: ItemPrHomeGeneralBinding) 
                         )
                     }")
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_assignment, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_assignment, null)
             )
         }
     }

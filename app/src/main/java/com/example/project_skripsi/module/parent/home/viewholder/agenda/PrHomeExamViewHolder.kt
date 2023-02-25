@@ -31,7 +31,7 @@ class PrHomeExamViewHolder(private val binding: ItemPrHomeGeneralBinding) :
                         )
                     }")
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_exam, null)
             )
         }
     }

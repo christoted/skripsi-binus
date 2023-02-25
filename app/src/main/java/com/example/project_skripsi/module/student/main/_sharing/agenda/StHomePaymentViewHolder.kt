@@ -16,7 +16,7 @@ class StHomePaymentViewHolder(private val binding: ItemStHomeSectionPaymentBindi
         val data = item as Payment
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_payment, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_payment, null)
             )
             tvTitle.text = data.title
             tvNominal.text = CurrencyHelper.toRupiah(data.nominal!!)

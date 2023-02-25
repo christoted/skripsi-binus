@@ -19,7 +19,7 @@ class TcAgendaMeetingViewHolder(
         val data = item as TeacherAgendaMeeting
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_meeting, null)
             )
             tvTitle.text = data.classMeeting.subjectName
             tvClassName.text = data.studyClassName

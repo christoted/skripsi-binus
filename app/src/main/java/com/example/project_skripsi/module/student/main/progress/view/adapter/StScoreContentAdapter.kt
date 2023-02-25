@@ -130,7 +130,7 @@ class StScoreContentAdapter(
                 tvPresenceNoReason.text = item.totalAlpha.toString()
                 viewIndicator.setBackgroundColor(
                     ResourcesCompat.getColor(
-                        App.resourses!!,
+                        App.res!!,
                         R.color.indicator_attendance,
                         null
                     )

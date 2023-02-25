@@ -16,7 +16,7 @@ class PrCalendarMeetingViewHolder(private val binding: ItemPrCalendarGeneralBind
         val data = item as ClassMeeting
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_meeting, null)
             )
             tvTitle.text = data.subjectName
             tvLocation.text = data.location

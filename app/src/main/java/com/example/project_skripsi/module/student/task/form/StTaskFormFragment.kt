@@ -68,7 +68,7 @@ class StTaskFormFragment : Fragment() {
         viewModel.formStatus.observe(viewLifecycleOwner, {
             with(binding) {
                 tvStatus.text = it.first
-                tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it.second, null))
+                tvStatus.setTextColor(ResourcesCompat.getColor(App.res!!, it.second, null))
             }
         })
 
@@ -98,7 +98,7 @@ class StTaskFormFragment : Fragment() {
                 } else binding.btnTime.text = ("${timer.hour} : ${timer.minute} : ${timer.second}")
                 binding.btnTime.setBackgroundColor(
                     ResourcesCompat.getColor(
-                        App.resourses!!,
+                        App.res!!,
                         if (timer.hour == 0L && timer.minute == 0L)
                             R.color.timer_alert
                         else

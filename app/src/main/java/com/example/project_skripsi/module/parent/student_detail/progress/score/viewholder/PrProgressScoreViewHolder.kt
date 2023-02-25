@@ -49,7 +49,7 @@ class PrProgressScoreViewHolder(private val dataSet: List<ScoreMainSection>) {
 
                 viewIndicator.setBackgroundColor(
                     ResourcesCompat.getColor(
-                        App.resourses!!,
+                        App.res!!,
                         R.color.indicator_score,
                         null
                     )

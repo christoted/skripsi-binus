@@ -41,7 +41,7 @@ class StScoreAchievementAdapter(private val viewModel: StScoreViewModel) :
                 tvDescription.text = item.description
                 viewIndicator.setBackgroundColor(
                     ResourcesCompat.getColor(
-                        App.resourses!!,
+                        App.res!!,
                         R.color.indicator_achievement,
                         null
                     )

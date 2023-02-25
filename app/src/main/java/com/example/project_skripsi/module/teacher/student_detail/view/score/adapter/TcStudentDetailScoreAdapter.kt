@@ -108,7 +108,7 @@ class TcStudentDetailScoreAdapter(private val viewModel: TcStudentDetailViewMode
                 tvPresenceSick.text = item.totalSick.toString()
                 tvPresenceLeave.text = item.totalLeave.toString()
                 tvPresenceNoReason.text = item.totalAlpha.toString()
-                viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, R.color.indicator_attendance, null))
+                viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.res!!, R.color.indicator_attendance, null))
 //                root.setOnClickListener {
 //                    listener.onAttendanceTapped()
 //                    val toStSubjectActivity = StScoreFragmentDirections.actionNavigationScoreFragmentToStSubjectActivity()

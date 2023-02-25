@@ -92,7 +92,7 @@ class TcAssessmentFormAdapter(
                     else -> null
                 }?.setBackgroundColor(
                     ResourcesCompat.getColor(
-                        App.resourses!!,
+                        App.res!!,
                         if (item.answerKey == item.answer?.answerText) R.color.answer_correct
                         else R.color.answer_incorrect,
                         null
@@ -130,7 +130,7 @@ class TcAssessmentFormAdapter(
                         tvAnswer.setTypeface(null, Typeface.ITALIC)
                         tvAnswer.setTextColor(
                             ResourcesCompat.getColor(
-                                App.resourses!!,
+                                App.res!!,
                                 R.color.empty_answer,
                                 null
                             )

@@ -45,7 +45,7 @@ class HomeroomStudentViewHolder(
                 drawable = DrawableCompat.wrap(drawable!!)
                 DrawableCompat.setTint(
                     drawable,
-                    ResourcesCompat.getColor(App.resourses!!, status.second, null)
+                    ResourcesCompat.getColor(App.res!!, status.second, null)
                 )
                 tvStatusIndicator.background = drawable
 

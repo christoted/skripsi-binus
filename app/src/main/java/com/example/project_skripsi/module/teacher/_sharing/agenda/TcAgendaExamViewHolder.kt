@@ -20,7 +20,7 @@ class TcAgendaExamViewHolder(
         val data = item as TeacherAgendaTaskForm
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_exam, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_exam, null)
             )
             tvTitle.text = data.taskForm.subjectName
             tvClassName.text = data.studyClassName

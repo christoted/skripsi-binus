@@ -31,7 +31,7 @@ class PrHomeMeetingViewHolder(private val binding: ItemPrHomeGeneralBinding) :
                     }")
             tvLocation.text = ("Online")
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_meeting, null)
             )
         }
     }

@@ -22,7 +22,7 @@ class TcStudentDetailPaymentContentViewHolder(private val dataset: List<Payment>
                 tvDate.text =
                     item.paymentDeadline?.let { DateHelper.getFormattedDateTime(DateHelper.DMY, it) }
                 tvNominal.text = CurrencyHelper.toRupiah(item.nominal?:0)
-                view.viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.resourses!!, indicatorColor, null))
+                view.viewIndicator.setBackgroundColor(ResourcesCompat.getColor(App.res!!, indicatorColor, null))
             }
 
         }

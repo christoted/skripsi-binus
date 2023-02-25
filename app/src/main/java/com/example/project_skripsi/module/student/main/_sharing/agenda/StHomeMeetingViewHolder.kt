@@ -1,6 +1,5 @@
 package com.example.project_skripsi.module.student.main._sharing.agenda
 
-import android.util.Log
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +22,7 @@ class StHomeMeetingViewHolder(
         val data = item as ClassMeeting
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_meeting, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_meeting, null)
             )
             tvTitle.text = data.subjectName
             tvLocation.text = data.location

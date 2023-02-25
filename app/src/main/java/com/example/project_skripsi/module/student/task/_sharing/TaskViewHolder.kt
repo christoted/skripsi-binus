@@ -41,7 +41,7 @@ class TaskViewHolder(private val taskType: Int, private val dataSet: List<TaskFo
                 tvStatus.text = item.status
 
                 item.statusColor?.let {
-                    tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, it, null))
+                    tvStatus.setTextColor(ResourcesCompat.getColor(App.res!!, it, null))
                 }
 
                 item.startTime?.let {

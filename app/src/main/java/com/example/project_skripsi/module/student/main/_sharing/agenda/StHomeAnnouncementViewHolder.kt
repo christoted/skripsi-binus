@@ -15,7 +15,7 @@ class StHomeAnnouncementViewHolder(private val binding: ItemStHomeSectionAnnounc
         val data = item as Announcement
         with(binding) {
             viewIndicator.setBackgroundColor(
-                ResourcesCompat.getColor(App.resourses!!, R.color.indicator_announcement, null)
+                ResourcesCompat.getColor(App.res!!, R.color.indicator_announcement, null)
             )
             tvTitle.text = data.title
             tvDescription.text = data.description

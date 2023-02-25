@@ -35,7 +35,7 @@ class TaskAssessmentViewHolder(
                 } else {
                     if (viewModel.getTaskScore(item)?.isSubmitted == true) {
                         tvStatus.text = ("terkumpul")
-                        tvStatus.setTextColor(ResourcesCompat.getColor(App.resourses!!, R.color.form_submit, null))
+                        tvStatus.setTextColor(ResourcesCompat.getColor(App.res!!, R.color.form_submit, null))
                     }
                     tvStatus.visibility = View.VISIBLE
                 }
